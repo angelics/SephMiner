@@ -86,12 +86,12 @@ if ((Get-Command "Get-MpPreference" -ErrorAction SilentlyContinue) -and (Get-MpC
 }
 
 #Check for software updates
-$Downloader = Start-Job -InitializationScript ([scriptblock]::Create("Set-Location('$(Get-Location)')")) -ArgumentList ($Version, $PSVersionTable.PSVersion, "") -FilePath .\Updater.ps1
+$Downloader = Start-Job -InitializationScript ([scriptblock]::Create("Set-Location('$(Get-Location)')")) -ArgumentList ($PSVersionTable.PSVersion, "") -FilePath .\Updater.ps1
 
 #Set donation parameters
 $LastDonated = $Timer.AddDays(-1).AddHours(1)
 $WalletDonate = "19pQKDfdspXm6ouTDnZHpUcmEFN8a1x9zo"
-$UserNameDonate = SephMiner
+$UserNameDonate = "SephMiner"
 $WorkerNameDonate = "SephMiner"
 $WalletType = "BTC"
 
