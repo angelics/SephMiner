@@ -90,7 +90,7 @@ $Downloader = Start-Job -InitializationScript ([scriptblock]::Create("Set-Locati
 
 #Set donation parameters
 $LastDonated = $Timer.AddDays(-1).AddHours(1)
-$WalletDonate = 19pQKDfdspXm6ouTDnZHpUcmEFN8a1x9zo
+$WalletDonate = "19pQKDfdspXm6ouTDnZHpUcmEFN8a1x9zo"
 $UserNameDonate = SephMiner
 $WorkerNameDonate = "SephMiner"
 $WalletType = "BTC"
