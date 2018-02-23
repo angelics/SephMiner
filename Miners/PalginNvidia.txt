@@ -20,14 +20,5 @@
         "API":  "Wrapper",
         "Port":  "23333",
         "URI":  "https://github.com/palginpav/hsrminer/raw/master/Neoscrypt%20algo/Windows/hsrminer_neoscrypt.exe"
-    },
-    {
-        "Type":  "NVIDIA",
-        "Path":  ".\\Bin\\NeoScrypt-Palgin\\hsrminer_neoscrypt_fork_hp.exe",
-        "Arguments":  "-o $($Pools.NeoScrypt.Protocol)://$($Pools.NeoScrypt.Host):$($Pools.NeoScrypt.Port) -u $($Pools.NeoScrypt.User) -p $($Pools.NeoScrypt.Pass)",
-        "HashRates":  {"NeoScrypt":  "$($Stats.PalginNvidia_Neoscrypt_fork_HashRate.Week)"},
-        "API":  "Ccminer",
-        "Port":  "4068",
-        "URI":  "https://github.com/justaminer/hsrm-fork/raw/master/hsrminer_neoscrypt_fork_hp.zip"
     }
 ]
