@@ -1,0 +1,8 @@
+bin/
+stats/
+logs/
+wrapper/
+downloads/
+*.zip
+*.7z
+*.rar
