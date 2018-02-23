@@ -8,17 +8,14 @@ $Commands = [PSCustomObject]@{
     "blakecoin" = "" #Blakecoin
     "veltor" = " -i 23" #Veltor
     #"lyra2v2" = " -i 24" #Lyra2RE2 crash
-    #"nist5" = "" #Nist5 ccminerpolytimos better
     #"c11" = " -i 21" #C11
 	#"myr-gr" = "" #MyriadGroestl ccminerhsr better.
-	#"sib" = " -i 21" #Sib crash
     "x17" = " -i 21" #X17 ccminerpolytimos better
 	#"keccak" = "" #keccak excavatornvidia2 beter
 	"blake2s" = "" #blake2s
 	"sib" = " -i 21" #sib
 	"x11evo" = " -i 21" #x11evo
 	"nist5" = " -i 25" #nist5
-	#"hsr" = "" #hsr
 	"vanilla" = "" #blakevanilla
 	"skein" = " -i 28" #skein
 }
