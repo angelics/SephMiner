@@ -8,7 +8,7 @@ $Commands = [PSCustomObject]@{
     #"blake2s" = "" #Blake2s
     #"blakecoin" = "" #Blakecoin
     #"vanilla" = "" #BlakeVanilla
-    "c11" = "" #C11
+    #"c11" = "" #C11 ccmineralexis78 better
     #"cryptonight" = "" #CryptoNight
     #"decred" = "" #Decred
     #"equihash" = "" #Equihash
@@ -32,7 +32,7 @@ $Commands = [PSCustomObject]@{
     #"tribus" = "" #Tribus
     #"veltor" = "" #Veltor
     #"x11evo" = "" #X11evo
-    "x17" = "" #X17
+    #"x17" = " -i 20" #X17 ccmineralexis78 better
     #"yescrypt" = "" #Yescrypt
     #"xevan" = "" #Xevan
 }

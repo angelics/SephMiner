@@ -1,10 +1,10 @@
 {
     "asia":  "Asia",
-    "br":  "Asia",
+    "br":  "Europe",
     "eu":  "Europe",
     "europe":  "Europe",
     "hk":  "Asia",
-    "in":  "Asia",
+    "in":  "Europe",
     "jp":  "Asia",
     "us":  "US",
     "usa":  "US"

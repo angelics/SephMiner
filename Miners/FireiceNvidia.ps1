@@ -41,7 +41,7 @@ $Port = 3335
     Type      = "NVIDIA"
     Path      = $Path
     Arguments = "-c $($Pools.CryptoNight.Name)_CryptoNight_$($Pools.CryptoNight.User)_Nvidia.txt --noUAC --noAMD --noCPU"
-    HashRates = [PSCustomObject]@{CryptoNight = $Stats."$($Name)_CryptoNight_HashRate".Week}
+    HashRates = [PSCustomObject]@{CryptoNight = $Stats."$($Name)_CryptoNight_HashRate".Week * 0.98}
     API       = "XMRig"
     Port      = $Port
     URI       = $Uri

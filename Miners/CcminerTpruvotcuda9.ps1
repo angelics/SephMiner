@@ -1,10 +1,18 @@
-﻿using module ..\Include.psm1
+using module ..\Include.psm1
 
-$Path = ".\Bin\Sib-NVIDIA\ccminer_x11gost.exe"
-$Uri = "https://github.com/nicehash/ccminer-x11gost/releases/download/ccminer-x11gost_windows/ccminer_x11gost.7z"
+$Path = ".\Bin\NVIDIA-TPruvotcuda9\ccminer.exe"
+$Uri = "https://github.com/tpruvot/ccminer/releases/download/2.2.4-tpruvot/ccminer-x86-2.2.4-cuda9.7z"
 
 $Commands = [PSCustomObject]@{
-    "sib" = "" #Sib
+    "phi" = " -i 23" #Phi ccmineralexis78phi better
+    "jha" = "" #Jha
+    "hmq1725" = "" #hmq1725
+    #"lyra2z" = "" #Lyra2z ccminertpruvot better
+    "timetravel" = "" #Timetravel
+    "tribus" = "" #Tribus
+	#"groestl" = "" #Groestl ccminerklaust better
+	#"x11evo" = "" #X11evo ccmineralexis78 better
+	"skunk" = "" #skunk
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
@@ -18,7 +26,5 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
         API = "Ccminer"
         Port = 4068
         URI = $Uri
-        PrerequisitePath = "$env:SystemRoot\System32\msvcr120.dll"
-        PrerequisiteURI = "http://download.microsoft.com/download/2/E/6/2E61CFA4-993B-4DD4-91DA-3737CD5CD6E3/vcredist_x64.exe"
     }
 }

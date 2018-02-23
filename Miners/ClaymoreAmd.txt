@@ -4,7 +4,7 @@
         "Path":  ".\\Bin\\CryptoNight-Claymore\\NsGpuCNMiner.exe",
         "Arguments":  "\"-r -1 -mport -13333 -xpool $($Pools.CryptoNight.Protocol)://$($Pools.CryptoNight.Host):$($Pools.CryptoNight.Port) -xwal $($Pools.CryptoNight.User) -xpsw $($Pools.CryptoNight.Pass)\"",
         "HashRates":  {
-                          "CryptoNight":  "\"$($Stats.ClaymoreAmd_CryptoNight_HashRate.Week)\""
+                          "CryptoNight":  "\"$($Stats.ClaymoreAmd_CryptoNight_HashRate.Week * 0.985)\""
                       },
         "API":  "Claymore",
         "Port":  "13333"
@@ -14,7 +14,7 @@
         "Path":  ".\\Bin\\Equihash-Claymore\\ZecMiner64.exe",
         "Arguments":  "\"-r -1 -mport -13333 -zpool $($Pools.Equihash.Protocol)://$($Pools.Equihash.Host):$($Pools.Equihash.Port) -zwal $($Pools.Equihash.User) -zpsw $($Pools.Equihash.Pass) -allpools 1\"",
         "HashRates":  {
-                          "Equihash":  "\"$($Stats.ClaymoreAmd_Equihash_HashRate.Week)\""
+                          "Equihash":  "\"$($Stats.ClaymoreAmd_Equihash_HashRate.Week * 0.975)\""
                       },
         "API":  "Claymore",
         "Port":  "13333"

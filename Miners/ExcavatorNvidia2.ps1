@@ -6,15 +6,14 @@ $Path = ".\Bin\Excavator\excavator.exe"
 $Uri = "https://github.com/nicehash/excavator/releases/"
 
 $Commands = [PSCustomObject]@{
-    "blake2s" = @() #Blake2s
-    "decred" = @() #Decred
-    "daggerhashimoto" = @() #Ethash
-    "equihash" = @() #Equihash
-    "lbry" = @() #Lbry
-    "lyra2rev2" = @() #Lyra2RE2
-    "neoscrypt" = @() #NeoScrypt
-    "nist5" = @() #nist5
-    "pascal" = @() #Pascal
+    #"blake2s" = @() #Blake2s alexis78 better
+    #"cryptonight" = @() #cryptonight
+    #"daggerhashimoto" = @() #Ethash
+    #"equihash" = @() #Equihash dstm better
+    "keccak" = @() #keccak
+    #"lyra2rev2" = @() #Lyra2RE2 ccmineralexis78 better
+    #"neoscrypt" = @() #NeoScrypt palginnvidia better
+    #"nist5" = @() #Nist5 ccmineralexis78 better
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName

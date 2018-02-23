@@ -13,7 +13,7 @@ $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty Ba
 $MiningPoolHub_Request = [PSCustomObject]@{}
 
 try {
-    $MiningPoolHub_Request = Invoke-RestMethod "http://miningpoolhub.com/index.php?page=api&action=getautoswitchingandprofitsstatistics" -UseBasicParsing -TimeoutSec 10 -ErrorAction Stop
+    $MiningPoolHub_Request = Invoke-RestMethod "http://miningpoolhub.com/index.php?page=api&action=getautoswitchingandprofitsstatistics&$(Get-Date -Format "yyyy-MM-dd_HH-mm")" -UseBasicParsing -TimeoutSec 10 -ErrorAction Stop
 }
 catch {
     Write-Log -Level Warn "Pool API ($Name) has failed. "
@@ -27,7 +27,7 @@ if (($MiningPoolHub_Request.return | Measure-Object).Count -le 1) {
 
 $MiningPoolHub_Regions = "europe", "us", "asia"
 
-$MiningPoolHub_Request.return | ForEach-Object {
+$MiningPoolHub_Request.return | Where-Object {$_.pool_hash -gt 0} | Where-Object {$_.algo -ne "qubit"} | Where-Object {$_.algo -ne "scrypt"} | Where-Object {$_.algo -ne "x11"} | ForEach-Object {
     $MiningPoolHub_Hosts = $_.all_host_list.split(";")
     $MiningPoolHub_Port = $_.algo_switch_port
     $MiningPoolHub_Algorithm = $_.algo
@@ -38,8 +38,8 @@ $MiningPoolHub_Request.return | ForEach-Object {
 
     $Divisor = 1000000000
 
-    $Stat = Set-Stat -Name "$($Name)_$($MiningPoolHub_Algorithm_Norm)_Profit" -Value ([Double]$_.profit / $Divisor) -Duration $StatSpan -ChangeDetection $true
-
+    $Stat = Set-Stat -Name "$($Name)_$($MiningPoolHub_Algorithm_Norm)_Profit" -Value ([Double]$_.profit / $Divisor * (1-(0.9/100))) -Duration $StatSpan -ChangeDetection $true
+	
     $MiningPoolHub_Regions | ForEach-Object {
         $MiningPoolHub_Region = $_
         $MiningPoolHub_Region_Norm = Get-Region $MiningPoolHub_Region

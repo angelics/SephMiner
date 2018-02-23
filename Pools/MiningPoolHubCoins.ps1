@@ -13,7 +13,7 @@ $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty Ba
 $MiningPoolHubCoins_Request = [PSCustomObject]@{}
 
 try {
-    $MiningPoolHubCoins_Request = Invoke-RestMethod "http://miningpoolhub.com/index.php?page=api&action=getminingandprofitsstatistics" -UseBasicParsing -TimeoutSec 10 -ErrorAction Stop
+    $MiningPoolHubCoins_Request = Invoke-RestMethod "http://miningpoolhub.com/index.php?page=api&action=getminingandprofitsstatistics&$(Get-Date -Format "yyyy-MM-dd_HH-mm")" -UseBasicParsing -TimeoutSec 10 -ErrorAction Stop
 }
 catch {
     Write-Log -Level Warn "Pool API ($Name) has failed. "
@@ -27,19 +27,17 @@ if (($MiningPoolHubCoins_Request.return | Measure-Object).Count -le 1) {
 
 $MiningPoolHubCoins_Regions = "europe", "us", "asia"
 
-$MiningPoolHubCoins_Request.return | Where-Object {$_.pool_hash -gt 0} |ForEach-Object {
+$MiningPoolHubCoins_Request.return | Where-Object {$_.pool_hash -gt 0} | Where-Object {$_.coin_name -ne "maxcoin"} | Where-Object {$_.coin_name -ne "electroneum"} | Where-Object {$_.coin_name -ne "siacoin"} | Where-Object {$_.coin_name -ne "sexcoin"} | Where-Object {$_.coin_name -ne "geocoin"} | Where-Object {$_.coin_name -ne "bitcoin-cash"} | Where-Object {$_.coin_name -ne "startcoin"} | Where-Object {$_.coin_name -ne "adzcoin"} | Where-Object {$_.coin_name -ne "auroracoin-qubit"} | Where-Object {$_.coin_name -ne "digibyte-qubit"} | Where-Object {$_.coin_name -ne "verge-scrypt"} | Where-Object {$_.coin_name -ne "gamecredits"} | Where-Object {$_.coin_name -ne "litecoin"} | Where-Object {$_.coin_name -ne "bitcoin"} | Where-Object {$_.coin_name -ne "dash"} | ForEach-Object {
     $MiningPoolHubCoins_Hosts = $_.host_list.split(";")
     $MiningPoolHubCoins_Port = $_.port
     $MiningPoolHubCoins_Algorithm = $_.algo
     $MiningPoolHubCoins_Algorithm_Norm = Get-Algorithm $MiningPoolHubCoins_Algorithm
     $MiningPoolHubCoins_Coin = (Get-Culture).TextInfo.ToTitleCase(($_.coin_name -replace "-", " " -replace "_", " ")) -replace " "
 
-    if ($MiningPoolHubCoins_Algorithm_Norm -eq "Sia") {$MiningPoolHubCoins_Algorithm_Norm = "SiaClaymore"} #temp fix
-
     $Divisor = 1000000000
 
-    $Stat = Set-Stat -Name "$($Name)_$($MiningPoolHubCoins_Coin)_Profit" -Value ([Double]$_.profit / $Divisor) -Duration $StatSpan -ChangeDetection $true
-
+	$Stat = Set-Stat -Name "$($Name)_$($MiningPoolHubCoins_Coin)_Profit" -Value ([Double]$_.profit / $Divisor * (1-(0.9/100))) -Duration $StatSpan -ChangeDetection $true
+	
     $MiningPoolHubCoins_Regions | ForEach-Object {
         $MiningPoolHubCoins_Region = $_
         $MiningPoolHubCoins_Region_Norm = Get-Region $MiningPoolHubCoins_Region

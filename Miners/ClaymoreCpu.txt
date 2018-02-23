@@ -3,7 +3,7 @@
     "Path":  ".\\Bin\\CryptoNight-Claymore-Cpu\\NsCpuCNMiner64.exe",
     "Arguments":  "\"-r -1 -mport 3333 -o $($Pools.CryptoNight.Protocol)://$($Pools.CryptoNight.Host):$($Pools.CryptoNight.Port) -u $($Pools.CryptoNight.User) -p $($Pools.CryptoNight.Pass)\"",
     "HashRates":  {
-                      "CryptoNight":  "\"$($Stats.ClaymoreCPU_CryptoNight_HashRate.Week)\""
+                      "CryptoNight":  "\"$($Stats.ClaymoreCPU_CryptoNight_HashRate.Week * 0.985)\""
                   },
     "API":  "Claymore",
     "Port":  "-3333",

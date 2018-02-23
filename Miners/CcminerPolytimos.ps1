@@ -5,6 +5,15 @@ $URI = "https://github.com/punxsutawneyphil/ccminer/releases/download/polytimosv
 
 $Commands = [PSCustomObject]@{
     "poly" = "" #Polytimos
+	"c11" = " -i 21" #C11
+	#"skein" = "" #Skein ccmineralexis78 better
+	#"nist5" = "" #Nist5 excavator2 better.
+	#"lyra2v2" = "" #Lyra2RE2 ccmineralexis78 better
+	#"lbry" = "" #Lbry
+	#"keccak" = " -m 2 -i 29" #Keccak excavator2 better
+	"veltor" = " -i 23" #Veltor
+	#"blake2s" = "" #Blake2s excavator2 better
+	#"x17" = " -i 21" #X17 ccmineralexis78 better
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
