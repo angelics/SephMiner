@@ -6,6 +6,7 @@ set then=(
 set else=) else (
 set endif=)
 set greaterequal=GEQ
+set title=SephMiner
 
 REM total number of nvidiagpu
 set nvidiagpu=1
@@ -37,15 +38,14 @@ setx GPU_USE_SYNC_OBJECTS 1
 setx GPU_MAX_ALLOC_PERCENT 100
 setx GPU_SINGLE_ALLOC_PERCENT 100
 
-set title=SephMiner
 set wallet=19pQKDfdspXm6ouTDnZHpUcmEFN8a1x9zo
 set username=SephMiner
 set workername=SephMiner
-set region=europe
+set region=asia
 set currency=usd
 set type=amd,nvidia,cpu
 set poolname=zpool
-set ExcludePoolName=YiiMP,nicehash,miningpoolhub,miningpoolhubcoins
+set ExcludePoolName=miningpoolhubcoins
 REM asic aglo = sha256,scrypt,x11,x13,x14,quark,qubit,decred,lbry,sia,sianicehash,decrednicehash,Pascal,siaclaymore
 set algorithm=equihash,neoscrypt,lyra2z,m7m,xevan,hmq1725,blake2s,c11,phi,x17,bitcore,polytimos,x11evo,hsr,sib,yescrypt,tribus,lyra2v2,blakecoin,groestl,nist5,skunk,skein,myr-gr
 set ExcludeAlgorithm=ethash2gb
