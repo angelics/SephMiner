@@ -5,20 +5,30 @@ Not all of the improvements are included.
 
 made this public availble for those who hate hidden mining windows(after multipoolminer implemented log reader)
 
-Lists of algos added:
+NVIDIA users need to download nvidiainspecter to use OC feature
 
+AMD users need to download OverdriveNTool to use OC feature
+
+# OC profile name:
+default_NVIDIA.bat
+
+default_AMD.bat
+
+ethash blake2s_AMD.bat
+
+ethash keccak_NVIDIA.bat
+
+# Lists of algos added:
 m7m
 x15
 yescrypt16
 
-Lists of algos removed:
-
+# Lists of algos removed:
 decred
 lbry
 pascal
 
-Lists of miner removed:
-
+# Lists of miner removed:
 CcminerHsr
 CcminerSib
 CcminerSkunk
@@ -41,9 +51,6 @@ Removed maxcoin and electroneum from miningpoolhubcoins, until auto-exchange is 
 Removed ASICS coins from all pools and miners.
 
 Default donation 24, minimum 10.
-
-
-
 
 This is a free project feel free to donate be much appreciated:
 
