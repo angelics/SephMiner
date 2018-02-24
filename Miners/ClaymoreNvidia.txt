@@ -7,7 +7,8 @@
                           "Ethash":  "\"$(if(([OpenCl.Platform]::GetPlatformIDs() | ForEach-Object {[OpenCl.Device]::GetDeviceIDs($_, [OpenCl.DeviceType]::All)} | Where-Object {$_.Type -eq 'GPU' -and $_.Vendor -eq 'NVIDIA Corporation'} | Where-Object {$_.GlobalMemsize -ge 3000000000}).Count -eq 0) {0} else {$Stats.ClaymoreNvidia_Ethash_HashRate.Week * 0.99})\""
                       },
         "API":  "Claymore",
-        "Port":  "23333"
+        "Port":  "23333",
+		"URI":  "https://mega.nz/#F!O4YA2JgD!n2b4iSHQDruEsYUvTQP5_w"
     },
     {
         "Type":  "NVIDIA",
@@ -17,6 +18,7 @@
                           "Ethash2gb":  "\"$(if(([OpenCl.Platform]::GetPlatformIDs() | ForEach-Object {[OpenCl.Device]::GetDeviceIDs($_, [OpenCl.DeviceType]::All)} | Where-Object {$_.Type -eq 'GPU' -and $_.Vendor -eq 'NVIDIA Corporation'}).Count -eq 0) {0} else {$Stats.ClaymoreNvidia_Ethash2gb_HashRate.Week})\""
                       },
         "API":  "Claymore",
-        "Port":  "23333"
+        "Port":  "23333",
+		"URI":  "https://mega.nz/#F!O4YA2JgD!n2b4iSHQDruEsYUvTQP5_w"
     }
 ]

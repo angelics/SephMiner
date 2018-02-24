@@ -7,7 +7,8 @@
                           "CryptoNight":  "\"$($Stats.ClaymoreAmd_CryptoNight_HashRate.Week * 0.985)\""
                       },
         "API":  "Claymore",
-        "Port":  "13333"
+        "Port":  "13333",
+		"URI":  "https://mega.nz/#F!O4YA2JgD!n2b4iSHQDruEsYUvTQP5_w"
     },
     {
         "Type":  "AMD",
@@ -17,7 +18,8 @@
                           "Equihash":  "\"$($Stats.ClaymoreAmd_Equihash_HashRate.Week * 0.975)\""
                       },
         "API":  "Claymore",
-        "Port":  "13333"
+        "Port":  "13333",
+		"URI":  "https://mega.nz/#F!O4YA2JgD!n2b4iSHQDruEsYUvTQP5_w"
     },
     {
         "Type":  "AMD",
@@ -27,7 +29,8 @@
                           "Ethash":  "\"$(if(([OpenCl.Platform]::GetPlatformIDs() | ForEach-Object {[OpenCl.Device]::GetDeviceIDs($_, [OpenCl.DeviceType]::All)} | Where-Object {$_.Type -eq 'GPU' -and $_.Vendor -eq 'Advanced Micro Devices, Inc.'} | Where-Object {$_.GlobalMemsize -ge 3000000000}).Count -eq 0) {0} else {$Stats.ClaymoreAmd_Ethash_HashRate.Week})\""
                       },
         "API":  "Claymore",
-        "Port":  "13333"
+        "Port":  "13333",
+		"URI":  "https://mega.nz/#F!O4YA2JgD!n2b4iSHQDruEsYUvTQP5_w"
     },
     {
         "Type":  "AMD",
@@ -37,6 +40,7 @@
                           "Ethash2gb":  "\"$(if(([OpenCl.Platform]::GetPlatformIDs() | ForEach-Object {[OpenCl.Device]::GetDeviceIDs($_, [OpenCl.DeviceType]::All)} | Where-Object {$_.Type -eq 'GPU' -and $_.Vendor -eq 'Advanced Micro Devices, Inc.'}).Count -eq 0) {0} else {$Stats.ClaymoreAmd_Ethash2gb_HashRate.Week})\""
                       },
         "API":  "Claymore",
-        "Port":  "13333"
+        "Port":  "13333",
+		"URI":  "https://mega.nz/#F!O4YA2JgD!n2b4iSHQDruEsYUvTQP5_w"
     }
 ]

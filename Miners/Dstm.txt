@@ -6,5 +6,6 @@
                       "Equihash":  "\"$($Stats.Dstm_Equihash_HashRate.Week * 0.98)\""
                   },
     "API":  "DSTM",
-    "Port":  "2222"
+    "Port":  "2222",
+	"URI":  "https://mega.nz/#!1kRxQRSD!I3ryiEI5eT7datW842QNESyBQpZY6PILYS4HNIEHpYY"
 }
