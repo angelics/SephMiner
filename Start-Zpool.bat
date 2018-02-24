@@ -7,7 +7,12 @@ set else=) else (
 set endif=)
 set greaterequal=GEQ
 
+REM total number of nvidiagpu
 set nvidiagpu=1
+set /a timer = 3+%nvidiagpu%
+
+REM untested uncomment below if mining with amd
+REM OC\OverdriveNTool.exe -r0 -r1 -r2 -r3 -r4 -r5 -r6 -r7 -r8
 
 REM check nvidia gpu if they are working
 set /a gpu=0
@@ -15,8 +20,7 @@ set /a gpu=0
 for /F %%p in ('"C:\Program Files\NVIDIA Corporation\NVSMI\nvidia-smi" --id^=%gpu% --query-gpu^=memory.used --format^=csv^,noheader^,nounits') do set gpu_mem=%%p
 echo.%gpu_mem% | findstr /C:"Unknown">nul && (
 OC\NV_Inspector\nvidiaInspector.exe -restartDisplayDriver
-REM increase when more GPUs are present
-timeout 4
+timeout %timer%
 goto start
 )
 set /a gpu+=1

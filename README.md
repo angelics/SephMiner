@@ -5,6 +5,22 @@ Not all of the improvements are included.
 
 made this public availble for those who hate hidden mining windows(after multipoolminer implemented log reader)
 
+
+NVIDIA users need to download nvidiainspecter to use OC feature
+
+AMD USERS need to download OverdriveNTool to use OC feature
+
+OC profile name:
+
+default_NVIDIA.bat
+
+default_AMD.bat
+
+ethash blake2s_AMD.bat
+
+ethash keccak_NVIDIA.bat
+
+
 Lists of algos added:
 
 m7m

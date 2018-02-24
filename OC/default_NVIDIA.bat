@@ -16,7 +16,7 @@ set temptarget=80
 set baseclockoffsetlow=0
 set memoryclockoffsetlowest=0
 set powertarget=100
-
+set /a timer = 3+%nvidiagpu%
 title  %title%
 
 REM check nvidia gpu if they are working
@@ -26,8 +26,7 @@ for /F %%p in ('"C:\Program Files\NVIDIA Corporation\NVSMI\nvidia-smi" --id^=%gp
 echo.%gpu_mem% | findstr /C:"Unknown">nul && (
 echo %DATE% %TIME% %title% gpu %gpu%>> GPU_Lost.txt
 NV_Inspector\nvidiaInspector.exe -restartDisplayDriver
-REM increase when more GPUs are present
-timeout 4
+timeout %timer%
 goto oc
 )
 set /a gpu+=1
