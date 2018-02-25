@@ -24,7 +24,7 @@ $Job = Start-Job -ArgumentList $FilePath, $ArgumentList, $WorkingDirectory {
     else {Invoke-Expression "& '$FilePath' 2>&1"}
 }
 
-Write-Host "MultiPoolMiner Wrapper Started" -BackgroundColor Yellow -ForegroundColor Black
+Write-Host "SephMiner Wrapper Started" -BackgroundColor Yellow -ForegroundColor Black
 
 do {
     Start-Sleep 1
