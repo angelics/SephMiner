@@ -28,6 +28,8 @@ ethash keccak_NVIDIA.bat
 m7m
 x15
 yescrypt16
+axiom
+hodl
 
 # Lists of algos removed:
 decred

@@ -44,13 +44,13 @@ set workername=SephMiner
 set region=asia
 set currency=usd
 set type=amd,nvidia,cpu
-set poolname=miningpoolhubcoins,zpool
-set ExcludePoolName=miningpoolhub
+set poolname=nicehash
+set ExcludePoolName=miningpoolhubcoins,zpool
 REM asic aglo = sha256,scrypt,x11,x13,x14,quark,qubit,decred,lbry,sia,sianicehash,decrednicehash,Pascal,siaclaymore
-set algorithm=equihash,neoscrypt,m7m,blake2s,phi,yescrypt,tribus,skunk,groestl,nist5,skein,keccak,lyra2re2,myr-gr,blakecoin,X11gost,xevan,x17,lyra2v2,sib,timetravel,hsr,polytimos,bitcore,x11evo,c11,ethash,cryptonight,lyra2z,hmq1725,yescryptR16,x15,lyra2re,whirlpoolx,axiom,lyra2rev2,scryptjanenf16,blake256r8,blake256r14,blake256r8vnl,hodl
+set algorithm=scryptnf,keccak,x15,nist5,neoscrypt,lyra2re,whirlpoolx,axiom,lyra2rev2,scryptjanenf16,blake256r8,blake256r14,blake256r8vnl,hodl,daggerhashimoto,cryptonight,equihash,x11gost,blake2s,skunk
 set ExcludeAlgorithm=ethash2gb
 set ExcludeMinerName=nsgminernvidia,ccminerlyra2re2,ccminersp,prospector
-set switchingprevention=2
+set switchingprevention=1
 set interval=240
 
 set command=%cur%\SephMiner.ps1 -wallet %wallet% -username %username% -workername %workername% -region %region% -currency %currency%,btc -type %type% -poolname %poolname% -algorithm %algorithm% -ExcludeAlgorithm %ExcludeAlgorithm% -ExcludeMinerName %ExcludeMinerName% -donate 24 -watchdog -switchingprevention %switchingprevention% -interval %interval% -ExcludePoolName %ExcludePoolName%
