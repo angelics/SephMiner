@@ -9,8 +9,12 @@ set greaterequal=GEQ
 set title=SephMiner
 
 REM total number of nvidiagpu
-set nvidiagpu=1
+set nvidiagpu=0
 set /a timer = 3+%nvidiagpu%
+
+if %nvidiagpu% == 0 %then%
+goto start
+%endif%
 
 REM untested uncomment below if mining with amd
 REM OC\OverdriveNTool.exe -r0 -r1 -r2 -r3 -r4 -r5 -r6 -r7 -r8
@@ -18,8 +22,8 @@ REM OC\OverdriveNTool.exe -r0 -r1 -r2 -r3 -r4 -r5 -r6 -r7 -r8
 REM check nvidia gpu if they are working
 set /a gpu=0
 :loop1
-for /F %%p in ('"C:\Program Files\NVIDIA Corporation\NVSMI\nvidia-smi" --id^=%gpu% --query-gpu^=memory.used --format^=csv^,noheader^,nounits') do set gpu_mem=%%p
-echo.%gpu_mem% | findstr /C:"Unknown">nul && (
+for /F "tokens=*" %%p in ('"C:\Program Files\NVIDIA Corporation\NVSMI\nvidia-smi" --id^=%gpu% --query-gpu^=memory.used --format^=csv^,noheader^,nounits') do set gpu_mem=%%p
+echo.%gpu_mem% | findstr /C:"Unknown error">nul && (
 timeout %timer%
 goto start
 )
