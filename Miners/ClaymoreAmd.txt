@@ -8,7 +8,7 @@
                       },
         "API":  "Claymore",
         "Port":  "13333",
-		"URI":  "https://mega.nz/#F!O4YA2JgD!n2b4iSHQDruEsYUvTQP5_w"
+		"URI":  "https://mega.co.nz/#F!e4JVEAIJ!l1iF4z10fMyJzY5-LnyC2A"
     },
 	{
         "Type":  "AMD",
@@ -30,7 +30,7 @@
                       },
         "API":  "Claymore",
         "Port":  "13333",
-		"URI":  "https://mega.nz/#F!O4YA2JgD!n2b4iSHQDruEsYUvTQP5_w"
+		"URI":  "https://mega.nz/#F!P0ZjFDjC!Cmb-ZRqlbAnNrajRtp4zvA"
     },
     {
         "Type":  "AMD",
