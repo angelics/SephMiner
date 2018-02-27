@@ -24,6 +24,9 @@ OC\NV_Inspector\nvidiaInspector.exe -restartDisplayDriver
 timeout %timer%
 goto start
 )
+echo.%gpu_mem% | findstr /C:"No">nul && (
+shutdown /r
+)
 set /a gpu+=1
 if %gpu% %greaterequal% %nvidiagpu% %then%
 goto start
@@ -47,7 +50,7 @@ set type=amd,nvidia,cpu
 set poolname=miningpoolhubcoins
 set ExcludePoolName=zpool
 REM asic aglo = sha256,scrypt,x11,x13,x14,quark,qubit,decred,lbry,sia,sianicehash,decrednicehash,Pascal,siaclaymore
-set algorithm=cryptonight,ethash,equihash,groestl,lyra2re2,lyra2z,neoscrypt,siaclaymore,yescrypt,skein,keccak
+set algorithm=cryptonight,ethash,equihash,groestl,lyra2re2,lyra2z,neoscrypt,yescrypt,skein,keccak
 set ExcludeAlgorithm=ethash2gb
 set ExcludeMinerName=nsgminernvidia,ccminerlyra2re2,ccminersp,prospector
 set switchingprevention=2

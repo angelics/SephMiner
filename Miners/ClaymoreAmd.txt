@@ -10,6 +10,17 @@
         "Port":  "13333",
 		"URI":  "https://mega.nz/#F!O4YA2JgD!n2b4iSHQDruEsYUvTQP5_w"
     },
+	{
+        "Type":  "AMD",
+        "Path":  ".\\Bin\\Neoscrypt-Claymore\\NeoScryptMiner.exe",
+        "Arguments":  "\"-r -1 -mport -3333 -powlim 50 -pool $($Pools.Neoscrypt.Protocol)://$($Pools.Neoscrypt.Host):$($Pools.Neoscrypt.Port) -wal $($Pools.Neoscrypt.User) -psw $($Pools.Neoscrypt.Pass)\"",
+        "HashRates":  {
+                      "Neoscrypt":  "\"$($Stats.ClaymoreAmd_Neoscrypt_HashRate.Week * 0.98)\""
+                  },
+        "API":  "Claymore",
+        "Port":  "3333",
+		"URI":  "https://mega.nz/#F!WthSUArb!00pET54lyIF1386tOGs1BQ"
+    },
     {
         "Type":  "AMD",
         "Path":  ".\\Bin\\Equihash-Claymore\\ZecMiner64.exe",

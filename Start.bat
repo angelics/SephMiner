@@ -20,9 +20,11 @@ set /a gpu=0
 :loop1
 for /F %%p in ('"C:\Program Files\NVIDIA Corporation\NVSMI\nvidia-smi" --id^=%gpu% --query-gpu^=memory.used --format^=csv^,noheader^,nounits') do set gpu_mem=%%p
 echo.%gpu_mem% | findstr /C:"Unknown">nul && (
-OC\NV_Inspector\nvidiaInspector.exe -restartDisplayDriver
 timeout %timer%
 goto start
+)
+echo.%gpu_mem% | findstr /C:"No">nul && (
+shutdown /r
 )
 set /a gpu+=1
 if %gpu% %greaterequal% %nvidiagpu% %then%
@@ -47,7 +49,7 @@ set type=amd,nvidia,cpu
 set poolname=miningpoolhubcoins,zpool
 set ExcludePoolName=miningpoolhub
 REM asic aglo = sha256,scrypt,x11,x13,x14,quark,qubit,decred,lbry,sia,sianicehash,decrednicehash,Pascal,siaclaymore
-set algorithm=equihash,neoscrypt,m7m,blake2s,phi,yescrypt,tribus,skunk,groestl,nist5,skein,keccak,lyra2re2,myr-gr,blakecoin,X11gost,xevan,x17,lyra2v2,sib,timetravel,hsr,polytimos,bitcore,x11evo,c11,ethash,cryptonight,lyra2z,hmq1725,yescryptR16,x15,lyra2re,whirlpoolx,axiom,lyra2rev2,scryptjanenf16,blake256r8,blake256r14,blake256r8vnl,hodl
+set algorithm=cryptonight,ethash,lyra2re2,keccak,equihash,neoscrypt,lyra2z,m7m,xevan,hmq1725,blake2s,c11,phi,x17,bitcore,polytimos,x11evo,hsr,sib,yescrypt,tribus,lyra2v2,blakecoin,groestl,nist5,skunk,skein,myr-gr
 set ExcludeAlgorithm=ethash2gb
 set ExcludeMinerName=nsgminernvidia,ccminerlyra2re2,ccminersp,prospector
 set switchingprevention=2

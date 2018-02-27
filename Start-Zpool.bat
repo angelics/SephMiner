@@ -24,6 +24,9 @@ OC\NV_Inspector\nvidiaInspector.exe -restartDisplayDriver
 timeout %timer%
 goto start
 )
+echo.%gpu_mem% | findstr /C:"No">nul && (
+shutdown /r
+)
 set /a gpu+=1
 if %gpu% %greaterequal% %nvidiagpu% %then%
 goto start
