@@ -23,12 +23,12 @@ REM check nvidia gpu if they are working
 set /a gpu=0
 :loop1
 for /F "tokens=*" %%p in ('"C:\Program Files\NVIDIA Corporation\NVSMI\nvidia-smi" --id^=%gpu% --query-gpu^=memory.used --format^=csv^,noheader^,nounits') do set gpu_mem=%%p
-echo.%gpu_mem% | findstr /C:"Unknown">nul && (
+echo.%gpu_mem% | findstr /C:"Unknown error">nul && (
 OC\NV_Inspector\nvidiaInspector.exe -restartDisplayDriver
 timeout %timer%
 goto start
 )
-echo.%gpu_mem% | findstr /C:"No">nul && (
+echo.%gpu_mem% | findstr /C:"No device">nul && (
 shutdown /r
 )
 set /a gpu+=1

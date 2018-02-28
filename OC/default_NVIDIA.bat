@@ -23,13 +23,12 @@ REM check nvidia gpu if they are working
 set /a gpu=0
 :loop
 for /F "tokens=*" %%p in ('"C:\Program Files\NVIDIA Corporation\NVSMI\nvidia-smi" --id^=%gpu% --query-gpu^=memory.used --format^=csv^,noheader^,nounits') do set gpu_mem=%%p
-echo.%gpu_mem% | findstr /C:"Unknown">nul && (
-echo %DATE% %TIME% %title% gpu %gpu%>> GPU_Lost.txt
+echo.%gpu_mem% | findstr /C:"Unknown error">nul && (
 NV_Inspector\nvidiaInspector.exe -restartDisplayDriver
 timeout %timer%
 goto oc
 )
-echo.%gpu_mem% | findstr /C:"No">nul && (
+echo.%gpu_mem% | findstr /C:"No device">nul && (
 shutdown /r
 )
 set /a gpu+=1
@@ -40,5 +39,5 @@ goto loop
 %endif%
 
 :oc
-echo forcepstate=%forcepstate%, fanspeed=%fanspeed%, temptarget=%temptarget%, baseclockoffsetlow=%baseclockoffsetlow%, memoryclockoffset=%memoryclockoffsetlowest%,powertarget=%powertarget%
+echo forcepstate=%forcepstate%, fanspeed=%fanspeed%, temptarget=%temptarget%, baseclockoffsetlow=%baseclockoffsetlow%, memoryclockoffset=%memoryclockoffsetlowest%, powertarget=%powertarget%
 NV_Inspector\nvidiaInspector.exe -forcepstate:0,%forcepstate% -setfanspeed:0,%fanspeed% -settemptarget:0,0,%temptarget% -setbaseclockoffset:0,0,%baseclockoffsetlow% -setmemoryclockoffset:0,0,%memoryclockoffsetlowest% -setpowertarget:0,%powertarget%
