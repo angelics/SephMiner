@@ -4,7 +4,6 @@
     "blake":  "Blakecoin",
     "blake2s":  "Blake2s",
     "blakecoin":  "Blakecoin",
-	"blake256r8":  "Blakecoin",
     "blakevanilla":  "BlakeVanilla",
     "c11":  "C11",
     "cryptonight":  "CryptoNight",
