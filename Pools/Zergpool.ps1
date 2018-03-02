@@ -29,7 +29,7 @@ if (($Zergpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore
 $Zergpool_Regions = "us"
 $Zergpool_Currencies = @("BTC") + ($ZpoolCoins_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name) | Select-Object -Unique | Where-Object {Get-Variable $_ -ValueOnly -ErrorAction SilentlyContinue}
 
-$Zergpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name | Where-Object {$Zergpool_Request.$_.hashrate -gt 0} |ForEach-Object {
+$Zergpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name | Where-Object {$Zergpool_Request.$_.hashrate -gt 0} | Where-Object { [Double]$Zergpool_Request.$_.estimate_current -gt 0.00 } Where-Object {$Zergpool_Request.$_.name -ne "x11"} | Where-Object {$Zergpool_Request.$_.name -ne "scrypt"} | Where-Object {$Zergpool_Request.$_.name -ne "quark"} | Where-Object {$Zergpool_Request.$_.name -ne "qubit"} |ForEach-Object {
     $Zergpool_Host = "mine.zergpool.com"
     $Zergpool_Port = $Zergpool_Request.$_.port
     $Zergpool_Algorithm = $Zergpool_Request.$_.name
@@ -43,6 +43,11 @@ $Zergpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Se
         "blake2s" {$Divisor *= 1000}
         "blakecoin" {$Divisor *= 1000}
 		"keccak" {$Divisor *= 1000}
+        "sha256t"{$Divisor *= 1000}
+        "keccakc"{$Divisor *= 1000}
+        "vanilla"{$Divisor *= 1000}
+		"yescrypt"{$Divisor /= 1000}
+		"yescryptr16"{$Divisor /= 1000}
     }
 
     if ((Get-Stat -Name "$($Name)_$($Zergpool_Algorithm_Norm)_Profit") -eq $null) {$Stat = Set-Stat -Name "$($Name)_$($Zergpool_Algorithm_Norm)_Profit" -Value ([Double]$Zergpool_Request.$_.estimate_last24h / $Divisor * (1-($Zergpool_Request.$_.fees/100))) -Duration (New-TimeSpan -Days 1)}
