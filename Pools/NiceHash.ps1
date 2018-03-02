@@ -27,7 +27,7 @@ if (($NiceHash_Request.result.simplemultialgo | Measure-Object).Count -le 1) {
 
 $NiceHash_Regions = "eu", "usa", "hk", "jp", "in", "br"
 
-$NiceHash_Request.result.simplemultialgo | ForEach-Object {
+$NiceHash_Request.result.simplemultialgo | Where-Object { [Double]$_.paying -gt 0.00 } | Where-Object {$_.name -ne "scrypt" } | Where-Object {$_.name -ne "sha256" } | Where-Object {$_.name -ne "x11" } | Where-Object {$_.name -ne "x13" } | Where-Object {$_.name -ne "qubit" } | Where-Object {$_.name -ne "quark" } | Where-Object {$_.name -ne "blake256r8" } | Where-Object {$_.name -ne "blake256r14" } | Where-Object {$_.name -ne "decred" } | Where-Object {$_.name -ne "lbry" } | Where-Object {$_.name -ne "pascal" } | Where-Object {$_.name -ne "sia" } | ForEach-Object {
     $NiceHash_Host = "nicehash.com"
     $NiceHash_Port = $_.port
     $NiceHash_Algorithm = $_.name
