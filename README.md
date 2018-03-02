@@ -57,6 +57,8 @@ https://forums.guru3d.com/threads/overdriventool-tool-for-amd-gpus.416116/
 * decred
 * lbry
 * pascal
+* skein
+* myr-gr
 
 # Lists of miner removed:
 * CcminerHsr
@@ -67,6 +69,7 @@ https://forums.guru3d.com/threads/overdriventool-tool-for-amd-gpus.416116/
 * claymorelbry
 * claymorepascal
 * ExcavatorNvidia1
+* SgminerSkein
 
 # This is a free project feel free to donate be much appreciated:
 
