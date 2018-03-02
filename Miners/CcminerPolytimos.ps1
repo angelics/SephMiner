@@ -6,7 +6,6 @@ $URI = "https://github.com/punxsutawneyphil/ccminer/releases/download/polytimosv
 $Commands = [PSCustomObject]@{
     "poly" = "" #Polytimos
 	"c11" = " -i 21" #C11
-	#"skein" = "" #Skein ccmineralexis78 better
 	#"nist5" = "" #Nist5 excavator2 better.
 	#"lyra2v2" = "" #Lyra2RE2 ccmineralexis78 better
 	#"lbry" = "" #Lbry

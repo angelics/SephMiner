@@ -5,7 +5,6 @@ $Uri = "https://github.com/nemosminer/ccminer-xevan/releases/download/ccminer-xe
 
 $Commands = [PSCustomObject]@{
     "xevan" = " -i 21" #Xevan
-    #"skein" = "" #skein
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
