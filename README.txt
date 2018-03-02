@@ -15,12 +15,12 @@ multipoolminer 95d4193 with bug fixed or improvements up to e764b03 commit + aac
 
 * Removed auto-update.
 
-* **Default donation 24 minutes, minimum 10.**
+* **Default donation 23 minutes, minimum 9**
 ```
-24mins = 1.66666666666667%
+23mins = 1.597%
 ```
 ```
-10mins = 0.69444444444444%
+9mins = 0.625%
 ```
 
 * **personnaly** recommend only use miningpoolhubcoins and zpool

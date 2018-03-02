@@ -163,9 +163,9 @@ while ($true) {
     }
 
     #Activate or deactivate donation
-    if ($Config.Donate -lt 10) {$Config.Donate = 10}
+    if ($Config.Donate -lt 9) {$Config.Donate = 9}
     if ($Timer.AddDays(-1) -ge $LastDonated) {$LastDonated = $Timer}
-    if ($Timer.AddDays(-1).AddMinutes($Config.Donate) -ge $LastDonated) {
+    if (($Timer.AddDays(-1).AddMinutes($Config.Donate) -ge $LastDonated) -or ($_.HashRates.PSObject.Properties.Value -eq $null)) {
         Get-ChildItem "Pools" | ForEach-Object {
             $Config.Pools | Add-Member $_.BaseName (
                 [PSCustomObject]@{
@@ -582,7 +582,7 @@ while ($true) {
 				Sleep 2
 				}
 			}
-		
+			
 				Write-Log "Starting $($_.Type) miner $($_.Name): '$($_.Path) $($_.Arguments)'"
                 $DecayStart = $Timer
                 $_.StartMining()
@@ -624,9 +624,10 @@ while ($true) {
 	Write-Host "--------------------------------------------------------------------------------"
 	Write-Host " This is a free project feel free to donate be much appreciated:"
     Write-Host " Thank you aaronsace for MultiPoolMiner"
-    Write-Host " Default donation 24 minutes per 24 hour" -foregroundcolor "Yellow"
-	if ($Config.Donate -lt 24) {
-    Write-Host " Current donation = $($Config.Donate) mins Sad but understandable :)" -foregroundcolor "Red"
+    Write-Host " Default donation 23 minutes per 24 hour" -foregroundcolor "Yellow"
+	if ($Config.Donate -lt 23) {
+    Write-Host " Current donation = $($Config.Donate) mins" -foregroundcolor "Red"
+    Write-Host " i see what u did ther. Sad but understandable :)" -foregroundcolor "Red"
 	Write-Log " Donation = $($Config.Donate) mins"
 	}
 	Write-Host " Close this immediately if you do not agree" -foregroundcolor "Red"
