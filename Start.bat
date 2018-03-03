@@ -8,6 +8,9 @@ set endif=)
 set greaterequal=GEQ
 set title=SephMiner
 
+REM uncomment below if mining with amd
+REM OC\OverdriveNTool.exe -r1 -r2 -r3 -r4 -r5 -r6
+
 REM total number of nvidiagpu
 set nvidiagpu=0
 set /a timer = 3+%nvidiagpu%
@@ -15,9 +18,6 @@ set /a timer = 3+%nvidiagpu%
 if %nvidiagpu% == 0 %then%
 goto start
 %endif%
-
-REM untested uncomment below if mining with amd
-REM OC\OverdriveNTool.exe -r0 -r1 -r2 -r3 -r4 -r5 -r6 -r7 -r8
 
 REM check nvidia gpu if they are working
 set /a gpu=0

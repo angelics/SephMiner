@@ -68,8 +68,14 @@ https://forums.guru3d.com/threads/overdriventool-tool-for-amd-gpus.416116/
 * claymoredecred
 * claymorelbry
 * claymorepascal
+* eminer
+* ethmineramd
+* ethminernvidia
 * ExcavatorNvidia1
+* MkxminerAmd
+* NsgminerNvidia
 * SgminerSkein
+* SgminerXevan
 
 # This is a free project feel free to donate be much appreciated:
 
