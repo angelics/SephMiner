@@ -15,12 +15,12 @@ multipoolminer 95d4193 with bug fixed or improvements up to e764b03 commit + aac
 
 * Removed auto-update.
 
-* **Default donation 23 minutes, minimum 9**
+* **Default donation 24 minutes, minimum 10**
 ```
-23mins = 1.597%
+23mins = 1.667%
 ```
 ```
-9mins = 0.625%
+9mins = 0.694%
 ```
 
 * **personnaly** recommend only use miningpoolhubcoins and zpool
@@ -52,6 +52,7 @@ https://forums.guru3d.com/threads/overdriventool-tool-for-amd-gpus.416116/
 * yescrypt16
 * axiom
 * hodl
+* keccakc
 
 # Lists of algos removed:
 * decred

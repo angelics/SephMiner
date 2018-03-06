@@ -4,8 +4,8 @@ $Path = ".\Bin\Enemy-NVIDIA\ccminer.exe"
 $Uri = "https://github.com/Enemy-Mine/ccminer/releases/download/v1.03-RVN/ccminer.zip"
 
 $Commands = [PSCustomObject]@{
-    "x16r" = "" #Raven
-    "x17" = "" #x17
+    #"x16r" = "" #Raven
+    #"x17" = "" #x17
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName

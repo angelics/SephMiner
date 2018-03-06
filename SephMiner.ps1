@@ -164,7 +164,7 @@ while ($true) {
 
     #Activate or deactivate donation
     if ($Config.Donate -lt 10) {$Config.Donate = 10}
-    if ($Timer.AddDays(-1) -ge $LastDonated) {$LastDonated = $Timer}
+    if ($Timer.AddDays(-1) -ge $LastDonated.AddSeconds(59)) {$LastDonated = $Timer}
     if ($Timer.AddDays(-1).AddMinutes($Config.Donate) -ge $LastDonated) {
         Get-ChildItem "Pools" | ForEach-Object {
             $Config.Pools | Add-Member $_.BaseName (
@@ -249,7 +249,7 @@ while ($true) {
 
     Write-Log "Selecting best pool for each algorithm. "
     $AllPools.Algorithm | ForEach-Object {$_.ToLower()} | Select-Object -Unique | ForEach-Object {$Pools | Add-Member $_ ($AllPools | Sort-Object -Descending {$Config.PoolName.Count -eq 0 -or (Compare-Object $Config.PoolName $_.Name -IncludeEqual -ExcludeDifferent | Measure-Object).Count -gt 0}, {($Timer - $_.Updated).TotalMinutes -le ($SyncWindow * $Strikes)}, {$_.StablePrice * (1 - $_.MarginOfError)}, {$_.Region -EQ $Config.Region}, {$_.SSL -EQ $Config.SSL} | Where-Object Algorithm -EQ $_ | Select-Object -First 1)}
-    if (($Pools | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name | ForEach-Object {$Pools.$_} | Measure-Object Updated -Minimum -Maximum | ForEach-Object {$_.Maximum - $_.Minimum} | Select-Object -ExpandProperty TotalMinutes) -gt $SyncWindow) {
+	if (($Pools | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name | ForEach-Object {$Pools.$_.Name} | Select-Object -Unique | ForEach-Object {$AllPools | Where-Object Name -EQ $_ | Measure-Object Updated -Maximum | Select-Object -ExpandProperty Maximum} | Measure-Object -Minimum -Maximum | ForEach-Object {$_.Maximum - $_.Minimum} | Select-Object -ExpandProperty TotalMinutes) -gt $SyncWindow) {
         Write-Log -Level Warn "Pool prices are out of sync ($([Int]($Pools | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name | ForEach-Object {$Pools.$_} | Measure-Object Updated -Minimum -Maximum | ForEach-Object {$_.Maximum - $_.Minimum} | Select-Object -ExpandProperty TotalMinutes)) minutes). "
         $Pools | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name | ForEach-Object {$Pools.$_ | Add-Member Price_Bias ($Pools.$_.StablePrice * (1 - ($Pools.$_.MarginOfError * $Config.SwitchingPrevention * [Math]::Pow($DecayBase, $DecayExponent)))) -Force}
 		$Pools | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name | ForEach-Object {$Pools.$_ | Add-Member Price_Unbias $Pools.$_.StablePrice -Force}
@@ -566,23 +566,25 @@ while ($true) {
     Start-Sleep $Config.Delay #Wait to prevent BSOD
     $ActiveMiners | Where-Object Best -EQ $true | ForEach-Object {
         if ($_.Process -eq $null -or $_.Process.HasExited -ne $false) {
+		If ($_.Type -ne "cpu"){
 		# Launch OC if exists
 		$OCName = ".\OC\"+$_.Algorithm+"_"+$_.Type+".bat"
 		$DefaultOCName = ".\OC\default_"+$_.Type+".bat"
-        If ((Test-Path $OCName) -and ($_.Type -ne "cpu")) {
-			Write-Host -F Yellow "Launching :" $OCName
-			Write-Log "Launching $($_.Algorithm) $($_.Type) : $OCName"
-			Start-Process -Wait $OCName -WorkingDirectory ".\OC"
-			Sleep 2
-			} else {
-				If ((Test-Path $DefaultOCName) -and ($_.Type -ne "cpu")) {
-				Write-Host -F Yellow "Launching :" $DefaultOCName
-				Write-Log "Launching $($_.Algorithm) $($_.Type) : $DefaultOCName"
-				Start-Process -Wait $DefaultOCName -WorkingDirectory  ".\OC"
+			If (Test-Path $OCName) {
+				Write-Host -F Yellow "Launching :" $OCName
+				Write-Log "Launching $($_.Algorithm) $($_.Type) : $OCName"
+				Start-Process -Wait $OCName -WorkingDirectory ".\OC"
 				Sleep 2
+				} else {
+					If (Test-Path $DefaultOCName) {
+					Write-Host -F Yellow "Launching :" $DefaultOCName
+					Write-Log "Launching $($_.Algorithm) $($_.Type) : $DefaultOCName"
+					Start-Process -Wait $DefaultOCName -WorkingDirectory  ".\OC"
+					Sleep 2
+					}
 				}
-			}
-			
+		}
+	
 				Write-Log "Starting $($_.Type) miner $($_.Name): '$($_.Path) $($_.Arguments)'"
                 $DecayStart = $Timer
                 $_.StartMining()
