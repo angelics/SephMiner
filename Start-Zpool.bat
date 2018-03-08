@@ -58,7 +58,7 @@ set algorithm=equihash,neoscrypt,lyra2z,m7m,xevan,hmq1725,blake2s,c11,phi,x17,bi
 set ExcludeAlgorithm=ethash2gb
 set ExcludeMinerName=nsgminernvidia,ccminerlyra2re2,ccminersp,prospector
 set switchingprevention=2
-set interval=240
+set interval=600
 
 set command=%cur%\SephMiner.ps1 -wallet %wallet% -username %username% -workername %workername% -region %region% -currency %currency%,btc -type %type% -poolname %poolname% -algorithm %algorithm% -ExcludeAlgorithm %ExcludeAlgorithm% -ExcludeMinerName %ExcludeMinerName% -donate 24 -watchdog -switchingprevention %switchingprevention% -interval %interval% -ExcludePoolName %ExcludePoolName%
 title  %title%

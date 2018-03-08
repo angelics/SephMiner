@@ -1,7 +1,7 @@
 ﻿using module ..\Include.psm1
 
 $Path = ".\Bin\NVIDIA-TPruvot\ccminer-x64.exe"
-$Uri = "https://github.com/tpruvot/ccminer/releases/download/2.2.4-tpruvot/ccminer-x64-2.2.4-cuda9.7z"
+$Uri = "https://github.com/MSFTserver/ccminer/releases/download/2.2.5-rvn/ccminer-x64-2.2.5-rvn-cuda9.7z"
 
 $Commands = [PSCustomObject]@{
     "bitcore" = "" #Bitcore
@@ -28,7 +28,6 @@ $Commands = [PSCustomObject]@{
     "mjollnir" = "" #mjollnir
     #"neoscrypt" = "" #NeoScrypt palginnvidia better
     #"nist5" = "" #Nist5 ccmineralexis78 better
-    #"pascal" = "" #Pascal
     "penta" = "" #penta
     #"phi" = "" #phi CcminerTpruvotcuda9 better
     #"polytimos" = "" #polytimos ccminerpolytimos better
@@ -42,6 +41,7 @@ $Commands = [PSCustomObject]@{
     #"tribus" = "" #Tribus CcminerTpruvotcuda9 better
 	#"x11evo" = "" #X11evo ccmineralexis78 better
     "x15" = "" #X15
+    "x16r" = "" #X16r
     #"x17" = " -i 20" #X17 ccmineralexis78 better
     #"veltor" = "" #Veltor ccmineralexis78 better
     "vanilla" = "" #BlakeVanilla
