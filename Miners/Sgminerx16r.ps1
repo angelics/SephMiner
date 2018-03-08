@@ -4,7 +4,7 @@ $Path = ".\Bin\AMD-NiceHashx16r\sgminer.exe"
 $Uri = "https://github.com/aceneun/sgminer-gm-x16r/releases/download/5.5.5-x16r/sgminer-x16r.zip"
 
 $Commands = [PSCustomObject]@{
-    "x16r" = "" #Raven
+    "x16r" = " --intensity 19" #Raven
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName

@@ -1,5 +1,5 @@
 # SephMiner
-multipoolminer 95d4193 with bug fixed or improvements up to e764b03 commit + aac63a9 commit
+multipoolminer 95d4193 with bug fixed or improvements commits
 
 * Added gpu reset / oc profiles.
 
@@ -17,10 +17,10 @@ multipoolminer 95d4193 with bug fixed or improvements up to e764b03 commit + aac
 
 * **Default donation 24 minutes, minimum 10**
 ```
-23mins = 1.667%
+24mins = 1.667%
 ```
 ```
-9mins = 0.694%
+10mins = 0.694%
 ```
 
 * **personnaly** recommend only use miningpoolhubcoins and zpool
@@ -41,14 +41,16 @@ https://forums.guru3d.com/threads/overdriventool-tool-for-amd-gpus.416116/
 ```
 
 # OC profile name:
-* default_NVIDIA.bat
-* default_AMD.bat
-* ethash blake2s_AMD.bat
-* ethash keccak_NVIDIA.bat
+* (algorithm)(space)(algorithm)(type).bat
+eg. 
+```
+ethash blake2s_AMD.bat
+```
 
 # Lists of algos added:
 * m7m
 * x15
+* x16r
 * yescrypt16
 * axiom
 * hodl
@@ -65,6 +67,7 @@ https://forums.guru3d.com/threads/overdriventool-tool-for-amd-gpus.416116/
 * CcminerHsr
 * CcminerSib
 * CcminerSkunk
+* CcminerSp
 * bminer
 * claymoredecred
 * claymorelbry
@@ -87,4 +90,3 @@ angelics BTC = 19pQKDfdspXm6ouTDnZHpUcmEFN8a1x9zo
 angelics ETH = 0xBD0e3c16447b68CE01fAA19f65aE9e3882a54C54
 
 angelics LTC = Lex2wqKA44ZGkBvHhWE3STrqicbCdGG125
-
