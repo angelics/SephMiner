@@ -1,15 +1,4 @@
 [
-    {
-        "Type":  "AMD",
-        "Path":  ".\\Bin\\CryptoNight-Claymore\\NsGpuCNMiner.exe",
-        "Arguments":  "\"-r -1 -mport -13333 -xpool $($Pools.CryptoNight.Protocol)://$($Pools.CryptoNight.Host):$($Pools.CryptoNight.Port) -xwal $($Pools.CryptoNight.User) -xpsw $($Pools.CryptoNight.Pass)\"",
-        "HashRates":  {
-                          "CryptoNight":  "\"$($Stats.ClaymoreAmd_CryptoNight_HashRate.Week * 0.985)\""
-                      },
-        "API":  "Claymore",
-        "Port":  "13333",
-		"URI":  "https://mega.co.nz/#F!e4JVEAIJ!l1iF4z10fMyJzY5-LnyC2A"
-    },
 	{
         "Type":  "AMD",
         "Path":  ".\\Bin\\Neoscrypt-Claymore\\NeoScryptMiner.exe",

@@ -6,7 +6,6 @@
     "blakecoin":  "Blakecoin",
     "blakevanilla":  "BlakeVanilla",
     "c11":  "C11",
-    "cryptonight":  "CryptoNight",
     "daggerhashimoto":  "Ethash",
     "darkcoinmod":  "X11",
     "equihash":  "Equihash",
@@ -48,9 +47,7 @@
     "x16r":  "X16r",
     "x17":  "X17",
     "xevan":  "Xevan",
-    "xmr":  "CryptoNight",
     "yescrypt":  "Yescrypt",
     "yescryptR16":  "yescryptR16",
-    "zec":  "Equihash",
-    "zuikkis":  "Scrypt"
+    "zec":  "Equihash"
 }

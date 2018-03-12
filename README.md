@@ -62,13 +62,16 @@ ethash blake2s_AMD.bat
 * pascal
 * skein
 * myr-gr
+* cryptonight
 
 # Lists of miner removed:
+* bminer
+* Cast
 * CcminerHsr
 * CcminerSib
 * CcminerSkunk
 * CcminerSp
-* bminer
+* ClaymoreCpu
 * claymoredecred
 * claymorelbry
 * claymorepascal
@@ -76,10 +79,16 @@ ethash blake2s_AMD.bat
 * ethmineramd
 * ethminernvidia
 * ExcavatorNvidia1
+* FireiceAmd
+* FireiceCPU
+* FireiceNvidia
 * MkxminerAmd
 * NsgminerNvidia
 * SgminerSkein
 * SgminerXevan
+* XmrigAmd
+* XmrigCPU
+* XmrigNvidia
 
 # This is a free project feel free to donate be much appreciated:
 
