@@ -9,7 +9,6 @@ $Commands = [PSCustomObject]@{
     #"blakecoin" = "" #Blakecoin ccmineralexis78 better
     "bmw" = "" #bmw
     #"c11" = "" #C11 ccmineralexis78 better
-    "cryptonight" = "" #CryptoNight
     "deep" = "" #deep
     "dmd-gr" = "" #dmd-gr
     #"equihash" = "" #Equihash bminer better

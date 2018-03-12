@@ -9,7 +9,6 @@ $Commands = [PSCustomObject]@{
     "blakecoin" = "" #Blakecoin
     "vanilla" = "" #BlakeVanilla
     "c11" = "" #C11
-    #"cryptonight" = "" #CryptoNight
     #"equihash" = "" #Equihash
     #"ethash" = "" #Ethash
     "groestl" = "" #Groestl

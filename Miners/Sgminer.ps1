@@ -9,7 +9,6 @@ $Commands = [PSCustomObject]@{
     "blake" = "" #Blakecoin
     "vanilla" = " --intensity d" #BlakeVanilla
     #"c11" = "" #C11
-    #"cryptonight" = " --gpu-threads 1 --worksize 8 --rawintensity 896" #CryptoNight
     #"equihash" = " --gpu-threads 2 --worksize 256" #Equihash
     #"ethash" = " --gpu-threads 1 --worksize 192 --xintensity 1024" #Ethash
     "groestlcoin" = " --gpu-threads 2 --worksize 128 --intensity d" #Groestl
