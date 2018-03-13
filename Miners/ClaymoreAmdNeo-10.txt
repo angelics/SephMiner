@@ -4,7 +4,7 @@
         "Path":  ".\\Bin\\Neoscrypt-Claymore-10\\NeoScryptMiner.exe",
         "Arguments":  "\"-r -1 -mport -3333 -powlim 50 -pool $($Pools.Neoscrypt.Protocol)://$($Pools.Neoscrypt.Host):$($Pools.Neoscrypt.Port) -wal $($Pools.Neoscrypt.User) -psw $($Pools.Neoscrypt.Pass)\"",
         "HashRates":  {
-                      "Neoscrypt":  "\"$($Stats.ClaymoreAmd-10_Neoscrypt_HashRate.Week * 0.98)\""
+                      "Neoscrypt":  "\"$($Stats.ClaymoreAmd_10_Neoscrypt_HashRate.Week * 0.98)\""
                   },
         "API":  "Claymore",
         "Port":  "3333",
