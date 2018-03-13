@@ -1,0 +1,13 @@
+[
+    {
+        "Type":  "AMD",
+        "Path":  ".\\Bin\\Equihash-Claymore-126\\ZecMiner64.exe",
+        "Arguments":  "\"-r -1 -mport -13333 -zpool $($Pools.Equihash.Protocol)://$($Pools.Equihash.Host):$($Pools.Equihash.Port) -zwal $($Pools.Equihash.User) -zpsw $($Pools.Equihash.Pass) -allpools 1\"",
+        "HashRates":  {
+                          "Equihash":  "\"$($Stats.ClaymoreAmd_Equihash_HashRate.Week * 0.975)\""
+                      },
+        "API":  "Claymore",
+        "Port":  "13333",
+		"URI":  "https://mega.nz/#F!P0ZjFDjC!Cmb-ZRqlbAnNrajRtp4zvA"
+    }
+]

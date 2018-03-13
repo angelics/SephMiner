@@ -1,0 +1,13 @@
+[
+    {
+        "Type":  "NVIDIA",
+        "Path":  ".\\Bin\\HSR-Palgin-2e3913c\\hsrminer_hsr.exe",
+        "Arguments":  "\"-o $($Pools.HSR.Protocol)://$($Pools.Hsr.Host):$($Pools.Hsr.Port) -u $($Pools.Hsr.User) -p $($Pools.Hsr.Pass)\"",
+        "HashRates":  {
+                          "HSR":  "\"$($Stats.PalginNvidia_Hsr_HashRate.Week * 0.99)\""
+                      },
+        "API":  "Wrapper",
+        "Port":  "23333",
+        "URI":  "https://github.com/palginpav/hsrminer/raw/master/HSR%20algo/Windows/hsrminer_hsr.exe"
+    }
+]
