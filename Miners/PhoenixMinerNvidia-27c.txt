@@ -4,7 +4,7 @@
         "Path":  ".\\Bin\\PhoenixMiner-27c\\PhoenixMiner.exe",
         "Arguments":  "\"-rmode 0 -cdmport 23334 -cdm 1 -pool $($Pools.Ethash.Host):$($Pools.Ethash.Port) -wal $($Pools.Ethash.User) -pass $($Pools.Ethash.Pass) -proto 4 -coin auto -nvidia$($DeviceID = 1; $DeviceIDs = @();([OpenCl.Platform]::GetPlatformIDs() | ForEach-Object {[OpenCl.Device]::GetDeviceIDs($_, [OpenCl.DeviceType]::All)} | Where-Object {$_.Type -eq 'GPU' -and $_.Vendor -eq 'NVIDIA Corporation'} | ForEach-Object {if ($_.GlobalMemsize -ge 3000000000) {$DeviceIDs += $DeviceID}; $DeviceID++});if($DeviceIDs){' -gpus';$($DeviceIDs -join ',')})\"",
         "HashRates":  {
-                          "Ethash":  "\"$(if(([OpenCl.Platform]::GetPlatformIDs() | ForEach-Object {[OpenCl.Device]::GetDeviceIDs($_, [OpenCl.DeviceType]::All)} | Where-Object {$_.Type -eq 'GPU' -and $_.Vendor -eq 'NVIDIA Corporation'} | Where-Object {$_.GlobalMemsize -ge 3000000000}).Count -eq 0) {0} else {$Stats.PhoenixMinerNvidia-27c_Ethash_HashRate.Week * 0.9935})\""
+                          "Ethash":  "\"$(if(([OpenCl.Platform]::GetPlatformIDs() | ForEach-Object {[OpenCl.Device]::GetDeviceIDs($_, [OpenCl.DeviceType]::All)} | Where-Object {$_.Type -eq 'GPU' -and $_.Vendor -eq 'NVIDIA Corporation'} | Where-Object {$_.GlobalMemsize -ge 3000000000}).Count -eq 0) {0} else {$Stats.PhoenixMinerNvidia_27c_Ethash_HashRate.Week * 0.9935})\""
                       },
         "API":  "Claymore",
         "Port":  "23334",
@@ -15,7 +15,7 @@
         "Path":  ".\\Bin\\PhoenixMiner-27c\\PhoenixMiner.exe",
         "Arguments":  "\"-rmode 0 -cdmport 23334 -cdm 1 -pool $($Pools.Ethash2gb.Host):$($Pools.Ethash2gb.Port) -wal $($Pools.Ethash2gb.User) -pass $($Pools.Ethash2gb.Pass) -proto 4 -coin auto -nvidia\"",
         "HashRates":  {
-                          "Ethash2gb":  "\"$($Stats.PhoenixMinerNvidia-27c_Ethash2gb_HashRate.Week * 0.9935)\""
+                          "Ethash2gb":  "\"$($Stats.PhoenixMinerNvidia_27c_Ethash2gb_HashRate.Week * 0.9935)\""
                       },
         "API":  "Claymore",
         "Port":  "23334",
