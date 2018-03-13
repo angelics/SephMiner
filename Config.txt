@@ -38,7 +38,5 @@
   "Proxy": "$Proxy",
   "Delay": "$Delay",
   "Watchdog": "$Watchdog",
-  "MinerStatusURL": "$MinerStatusURL",
-  "MinerStatusKey": "$MinerStatusKey",
   "SwitchingPrevention": "$SwitchingPrevention"
 }
