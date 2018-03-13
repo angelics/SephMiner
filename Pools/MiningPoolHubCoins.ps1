@@ -27,7 +27,7 @@ if (($MiningPoolHubCoins_Request.return | Measure-Object).Count -le 1) {
 
 $MiningPoolHubCoins_Regions = "europe", "us", "asia"
 
-$MiningPoolHubCoins_Request.return | Where-Object {$_.pool_hash -gt 0} | Where-Object {$_.coin_name -ne "maxcoin"} | Where-Object {$_.coin_name -ne "electroneum"} | Where-Object {$_.coin_name -ne "siacoin"} | Where-Object {$_.coin_name -ne "sexcoin"} | Where-Object {$_.coin_name -ne "geocoin"} | Where-Object {$_.coin_name -ne "bitcoin-cash"} | Where-Object {$_.coin_name -ne "startcoin"} | Where-Object {$_.coin_name -ne "adzcoin"} | Where-Object {$_.coin_name -ne "auroracoin-qubit"} | Where-Object {$_.coin_name -ne "digibyte-qubit"} | Where-Object {$_.coin_name -ne "verge-scrypt"} | Where-Object {$_.coin_name -ne "gamecredits"} | Where-Object {$_.coin_name -ne "litecoin"} | Where-Object {$_.coin_name -ne "bitcoin"} | Where-Object {$_.coin_name -ne "dash"} | Where-Object {$_.coin_name -ne "myriadcoin-groestl"} | Where-Object {$_.coin_name -ne "digibyte-groestl"} | Where-Object {$_.coin_name -ne "digibyte-skein"} | Where-Object {$_.coin_name -ne "myriadcoin-skein"} | Where-Object {$_.coin_name -ne "monero"} | ForEach-Object {
+$MiningPoolHubCoins_Request.return | Where {$DisabledCoins -notcontains $_.coin_name}| Where-Object {$_.pool_hash -gt 0} | ForEach-Object {
     $MiningPoolHubCoins_Hosts = $_.host_list.split(";")
     $MiningPoolHubCoins_Port = $_.port
     $MiningPoolHubCoins_Algorithm = $_.algo

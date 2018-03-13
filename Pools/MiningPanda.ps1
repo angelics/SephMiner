@@ -27,7 +27,7 @@ if (($MiningPanda_Request | Get-Member -MemberType NoteProperty -ErrorAction Ign
 $MiningPanda_Regions = "us"
 $MiningPanda_Currencies = ($MiningPanda_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name) | Select-Object -Unique | Where-Object {Get-Variable $_ -ValueOnly -ErrorAction SilentlyContinue}
 
-$MiningPanda_Currencies | Where-Object {$MiningPanda_Request.$_.hashrate -gt 0} | Where-Object {$MiningPanda_Request.$_.algo -ne "scrypt"} | Where-Object {$MiningPanda_Request.$_.algo -ne "sha256"} | Where-Object {$MiningPanda_Request.$_.algo -ne "x11"} | Where-Object {$MiningPanda_Request.$_.algo -ne "x13"} | Where-Object {$MiningPanda_Request.$_.algo -ne "x14"} | Where-Object {$MiningPanda_Request.$_.algo -ne "qubit"} | Where-Object {$MiningPanda_Request.$_.algo -ne "quark"} | Where-Object {$MiningPanda_Request.$_.algo -ne "lbry"} | Where-Object {$MiningPanda_Request.$_.algo -ne "myr-gr"} | Where-Object {$MiningPanda_Request.$_.algo -ne "skein"} | ForEach-Object {
+$MiningPanda_Currencies | Where-Object {$MiningPanda_Request.$_.hashrate -gt 0} | ForEach-Object {
     $MiningPanda_Host = "miningpanda.site"
     $MiningPanda_Port = $MiningPanda_Request.$_.port
     $MiningPanda_Algorithm = $MiningPanda_Request.$_.algo
