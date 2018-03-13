@@ -3,7 +3,7 @@
     "Path":  ".\\Bin\\Equihash-DSTM-06\\zm.exe",
     "Arguments":  "\"--telemetry --server $(if ($Pools.Equihash.SSL) {'ssl://'})$($Pools.Equihash.Host) --port $($Pools.Equihash.Port) --user $($Pools.Equihash.User) --pass $($Pools.Equihash.Pass) --color\"",
     "HashRates":  {
-                      "Equihash":  "\"$($Stats.Dstm_Equihash_HashRate.Week * 0.98)\""
+                      "Equihash":  "\"$($Stats.Dstm-06_Equihash_HashRate.Week * 0.98)\""
                   },
     "API":  "DSTM",
     "Port":  "2222",
