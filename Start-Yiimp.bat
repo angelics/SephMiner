@@ -56,7 +56,7 @@ set ExcludePoolName=MiningPanda
 REM asic aglo = sha256,scrypt,x11,x13,x14,quark,qubit,decred,lbry,sia,sianicehash,decrednicehash,Pascal,siaclaymore,cryptonight,skein,myr-gr
 set algorithm=x16r
 set ExcludeAlgorithm=ethash2gb
-set ExcludeMinerName=nsgminernvidia,ccminerlyra2re2,ccminersp,prospector
+set ExcludeMinerName=ccminerlyra2re2,prospector
 set switchingprevention=2
 set interval=600
 

@@ -56,7 +56,7 @@ set ExcludePoolName=miningpoolhubcoins,zpool
 REM asic aglo = sha256,scrypt,x11,x13,x14,quark,qubit,decred,lbry,sia,sianicehash,decrednicehash,Pascal,siaclaymore,cryptonight,skein,myr-gr
 set algorithm=bitcore,blake2s,c11,groest,keccak,lyra2v2,lyra2z,m7m,neoscrypt,nist5,sib,skunk,tribus,x17,xevan,yescrypt,yescryptR16,keccakc,x16r
 set ExcludeAlgorithm=ethash2gb
-set ExcludeMinerName=nsgminernvidia,ccminerlyra2re2,ccminersp,prospector
+set ExcludeMinerName=ccminerlyra2re2,prospector
 set switchingprevention=2
 set interval=600
 
