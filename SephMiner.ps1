@@ -405,6 +405,7 @@ while ($true) {
             $_.Wrap -eq $Miner.Wrap -and 
             $_.API -eq $Miner.API -and 
             $_.Port -eq $Miner.Port -and 
+            $_.CName -eq $Miner.CName -and 
             (Compare-Object $_.Algorithm ($Miner.HashRates | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty Name) | Measure-Object).Count -eq 0
         }
         if ($ActiveMiner) {
@@ -447,6 +448,7 @@ while ($true) {
                 Activated            = 0
                 Status               = ""
                 Benchmarked          = 0
+                CName                = $Miner.CName
             }
         }
     }

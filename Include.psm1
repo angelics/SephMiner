@@ -342,7 +342,8 @@ function Start-SubProcess {
 
         $ProcessParam = @{}
         $ProcessParam.Add("FilePath", $FilePath)
-        $ProcessParam.Add("WindowStyle", 'Minimized')
+        #maximized, minimized, normal
+        $ProcessParam.Add("WindowStyle", 'Normal')
         if ($ArgumentList -ne "") {$ProcessParam.Add("ArgumentList", $ArgumentList)}
         if ($WorkingDirectory -ne "") {$ProcessParam.Add("WorkingDirectory", $WorkingDirectory)}
         $Process = Start-Process @ProcessParam -PassThru
@@ -362,8 +363,14 @@ function Start-SubProcess {
 
     do {Start-Sleep 1; $JobOutput = Receive-Job $Job}
     while ($JobOutput -eq $null)
-
-    $Process = Get-Process | Where-Object Id -EQ $JobOutput.ProcessId
+	
+	if ($this.CName -ne $null) {
+	$ProcessId = (get-ciminstance win32_process | ? parentprocessid -eq $JobOutput.ProcessId | ? name -eq $this.CName | select-object -expandproperty processid)
+    $Process = Get-Process | Where-Object Id -EQ $ProcessId
+	}
+	else {
+	$Process = Get-Process | Where-Object Id -EQ $JobOutput.ProcessId
+	}
     $Process.Handle | Out-Null
     $Process
 
@@ -500,11 +507,14 @@ class Miner {
     $Activated
     $Status
     $Benchmarked
+    $CName
 
     StartMining() {
         $this.New = $true
         $this.Activated++
-        if ($this.Process -ne $null) {$this.Active += $this.Process.ExitTime - $this.Process.StartTime}
+        if ($this.Process -ne $null) {
+		$this.Active += $this.Process.ExitTime - $this.Process.StartTime
+		}
         $this.Process = Start-SubProcess -FilePath $this.Path -ArgumentList $this.Arguments -WorkingDirectory (Split-Path $this.Path) -Priority ($this.Type | ForEach-Object {if ($this -eq "CPU") {-2}else {-1}} | Measure-Object -Maximum | Select-Object -ExpandProperty Maximum)
         if ($this.Process -eq $null) {$this.Status = "Failed"}
         else {$this.Status = "Running"}

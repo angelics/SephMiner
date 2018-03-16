@@ -1,0 +1,13 @@
+[
+    {
+        "Type":  "NVIDIA",
+        "Path":  ".\\Bin\\NeoScrypt-Palgin-2e3913c\\hsrminer_neoscrypt.exe",
+        "Arguments":  "\"-o $($Pools.NeoScrypt.Protocol)://$($Pools.NeoScrypt.Host):$($Pools.NeoScrypt.Port) -u $($Pools.NeoScrypt.User) -p $($Pools.NeoScrypt.Pass)\"",
+        "HashRates":  {
+                          "NeoScrypt":  "\"$($Stats.PalginNvidiaNeo2e3913c_Neoscrypt_HashRate.Week * 0.99)\""
+                      },
+        "API":  "Wrapper",
+        "Port":  "23333",
+        "URI":  "https://github.com/palginpav/hsrminer/raw/master/Neoscrypt%20algo/Windows/hsrminer_neoscrypt.exe"
+    }
+]
