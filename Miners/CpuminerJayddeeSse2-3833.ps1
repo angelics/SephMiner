@@ -1,7 +1,7 @@
 ﻿using module ..\Include.psm1
 
-$Path = ".\Bin\CPU-JayDDee-3833\cpuminer-sse2.exe"
-$Uri = "https://github.com/JayDDee/cpuminer-opt/files/1756603/cpuminer-opt-3.8.3.3-windows.zip"
+$Path = ".\Bin\CPU-JayDDee-384\cpuminer-sse2.exe"
+$Uri = "https://github.com/JayDDee/cpuminer-opt/files/1822931/cpuminer-opt-3.8.4-windows.zip"
 
 $Commands = [PSCustomObject]@{
     #"allium" = "" #Garlicoin
@@ -64,6 +64,7 @@ $Commands = [PSCustomObject]@{
     "yescrypt" = "" #Globalboost-Y
     #"yescryptr8" = "" #BitZeny
     "yescryptr16" = "" #Yenten
+    "yescryptr32" = "" #WAVI
     #"zr5" = "" #Ziftr
 }
 

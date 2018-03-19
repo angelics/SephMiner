@@ -41,8 +41,7 @@ https://forums.guru3d.com/threads/overdriventool-tool-for-amd-gpus.416116/
 ```
 
 # OC profile name:
-* (algorithm)(space)(algorithm)(type).bat
-eg. 
+* (algorithm)(space)(algorithm)_(type).bat 
 ```
 ethash blake2s_AMD.bat
 ```
@@ -52,6 +51,7 @@ ethash blake2s_AMD.bat
 * x15
 * x16r
 * yescrypt16
+* yescrypt32
 * axiom
 * hodl
 * keccakc

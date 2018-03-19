@@ -49,5 +49,6 @@
     "xevan":  "Xevan",
     "yescrypt":  "Yescrypt",
     "yescryptR16":  "yescryptR16",
+    "yescryptR32":  "yescryptR32",
     "zec":  "Equihash"
 }
