@@ -31,6 +31,7 @@
 	"phi1612":  "PHI",
     "poly":  "Polytimos",
     "polytimos":  "Polytimos",
+    "sha256t":  "sha256t",
     "sib":  "Sib",
     "sibcoinmod":  "Sib",
     "sigt":  "Skunk",
