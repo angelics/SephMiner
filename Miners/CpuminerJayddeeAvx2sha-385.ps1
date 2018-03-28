@@ -1,12 +1,14 @@
 ﻿using module ..\Include.psm1
 
-$Path = ".\Bin\CPU-JayDDee-3841\cpuminer-aes-avx.exe"
-$Uri = "https://github.com/JayDDee/cpuminer-opt/files/1838763/cpuminer-opt-3.8.4.1-windows.zip"
+$Path = ".\Bin\CPU-JayDDee-385\cpuminer-avx2-sha.exe"
+$Uri = "https://github.com/JayDDee/cpuminer-opt/files/1854173/cpuminer-opt-3.8.5-windows.zip"
 
 $Commands = [PSCustomObject]@{
     #"allium" = "" #Garlicoin
     #"anime" = "" #Animecoin
     #"argon2" = "" #
+	#"argon2d-crds" = "" #Credits
+    #"argon2d-dyn" = "" #Dynamic
     "axiom" = "" #MemoHash
     #"bastion" = "" #
 	"bitcore" = "" #Bitcore
