@@ -3,26 +3,27 @@
     "MiningPoolHub": {
       "User": "$UserName",
       "Worker": "$WorkerName",
-	  "DisabledAlgorithms":  ["ethash2gb", "qubit", "scrypt", "x11", "myr-gr", "skein", "cryptonight", "keccak"],
+	  "DisabledAlgorithms":  ["ethash2gb", "Cryptonight", "Sia", "Skein", "Qubit", "X11", "Myriad-Groestl", "Groestl", "Scrypt"],
       "API_ID": "$API_ID",
       "API_Key": "$API_Key"
     },
     "MiningPoolHubCoins": {
       "User": "$UserName",
       "Worker": "$WorkerName",
-	  "DisabledCoins":  ["maxcoin", "electroneum", "siacoin", "sexcoin", "geocoin", "bitcoin-cash", "startcoin", "adzcoin", "auroracoin-qubit", "digibyte-qubit", "verge-scrypt", "gamecredits", "litecoin", "dash", "startcoin", "bitcoin", "myriadcoin-groestl", "digibyte-groestl", "digibyte-skein", "myriadcoin-skein", "monero"],
+	  "DisabledAlgorithms":  ["ethash2gb", "Cryptonight", "Sia", "Skein", "Qubit", "X11", "Myriad-Groestl", "Groestl", "Scrypt"],
+	  "DisabledCoins":  ["maxcoin"],
       "API_ID": "$API_ID",
       "API_Key": "$API_Key"
     },
     "NiceHash": {
       "BTC": "$Wallet",
       "Worker": "$WorkerName",
-	  "DisabledAlgorithms":  ["ethash2gb", "qubit", "scrypt", "x11", "myr-gr", "skein", "cryptonight", "sha256", "x13", "quark", "blake256r8", "blake256r14", "decred", "lbry", "pascal", "sia"]
+	  "DisabledAlgorithms":  ["ethash2gb", "nist5", "x11gost", "blake256r8vnl", "qubit", "scrypt", "x11", "cryptonight", "sha256", "x13", "quark", "blake256r8", "blake256r14", "decred", "lbry", "pascal", "sia"]
     },
     "Zpool": {
       "BTC": "$Wallet",
       "Worker": "$WorkerName",
-	  "DisabledAlgorithms":  ["ethash2gb", "qubit", "scrypt", "x11", "myr-gr", "skein", "cryptonight", "sha256", "x13", "quark", "blake256r8", "blake256r14", "decred", "lbry", "pascal", "sia", "x14"]
+	  "DisabledAlgorithms":  ["qubit", "blakecoin", "groestl", "nist5", "sib", "scrypt", "x11", "myr-gr", "skein", "sha256", "x13", "quark", "decred", "lbry", "x14"]
     }
   },
   "Miners": {

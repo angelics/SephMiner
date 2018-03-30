@@ -46,6 +46,7 @@
     "x11evo":  "X11evo",
     "x15":  "X15",
     "x16r":  "X16r",
+    "x16s":  "X16s",
     "x17":  "X17",
     "xevan":  "Xevan",
     "yescrypt":  "Yescrypt",
