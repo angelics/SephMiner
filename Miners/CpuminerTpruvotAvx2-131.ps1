@@ -4,28 +4,16 @@ $Path = ".\Bin\CPU-TPruvot-131\cpuminer-gw64-avx2.exe"
 $Uri = "https://github.com/tpruvot/cpuminer-multi/releases/download/v1.3.1-multi/cpuminer-multi-rel1.3.1-x64.zip"
 
 $Commands = [PSCustomObject]@{
-    "bitcore" = "" #Bitcore
     "blake2s" = "" #Blake2s
-    "blakecoin" = "" #Blakecoin
-    "vanilla" = "" #BlakeVanilla
     "c11" = "" #C11
-    #"equihash" = "" #Equihash
-    #"ethash" = "" #Ethash
-    "groestl" = "" #Groestl
-    #"hmq1725" = "" #HMQ1725
-    "jha" = "" #JHA
     "keccak" = "" #Keccak
-    "lyra2v2" = "" #Lyra2RE2
-    #"lyra2z" = "" #Lyra2z
+	"lyra2rev2" = "" #Lyra2RE2
     "neoscrypt" = "" #NeoScrypt
     "nist5" = "" #Nist5
-    "sib" = "" #Sib
-    "skunk" = "" #Skunk
     "timetravel" = "" #Timetravel
-    "tribus" = "" #Tribus
-    "veltor" = "" #Veltor
     "x11evo" = "" #X11evo
     "x17" = "" #X17
+	"xevan" = "" #Xevan
     "yescrypt" = "" #Yescrypt
 }
 
