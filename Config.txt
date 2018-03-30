@@ -23,7 +23,7 @@
     "Zpool": {
       "BTC": "$Wallet",
       "Worker": "$WorkerName",
-	  "DisabledAlgorithms":  ["qubit", "blakecoin", "groestl", "nist5", "sib", "scrypt", "x11", "myr-gr", "skein", "sha256", "x13", "quark", "decred", "lbry", "x14"]
+	  "DisabledAlgorithms":  ["qubit", "blakecoin", "groestl", "nist5", "sib", "scrypt", "x11", "myr-gr", "skein", "sha256", "x13", "quark", "decred", "lbry", "x14", "keccak"]
     }
   },
   "Miners": {

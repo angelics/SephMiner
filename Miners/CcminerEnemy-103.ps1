@@ -1,11 +1,11 @@
 ﻿using module ..\Include.psm1
 
-$Path = ".\Bin\Enemy-NVIDIA\ccminer.exe"
+$Path = ".\Bin\Enemy-NVIDIA-103\ccminer.exe"
 $Uri = "http://newera.dx.am/cme1.03.7z"
 
 $Commands = [PSCustomObject]@{
-    "x16r" = "" #Raven
-    "x17" = "" #x17
+    "x16r" = " -N 3" #Raven
+    "x17" = " -N 1" #x17
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName

@@ -4,24 +4,22 @@ $Path = ".\Bin\NVIDIA-TPruvotcuda9-224\ccminer.exe"
 $Uri = "https://github.com/tpruvot/ccminer/releases/download/2.2.4-tpruvot/ccminer-x86-2.2.4-cuda9.7z"
 
 $Commands = [PSCustomObject]@{
-    "bitcore" = "" #Bitcore
-    "blake2s" = "" #Blake2s
+    #"bitcore" = "" #Bitcore CcminerTpruvot-224 better
+    #"blake2s" = "" #Blake2s CcminerAlexis78-10 better
 	#"groestl" = "" #Groestl ccminerklaust better
 	#"hmq1725" = "" #hmq1725 ccminertpruvot better
 	#"hsr" = "" #Hsr PalginNvidia2e3913c better
     "jha" = "" #Jha
 	"keccakc" = "" #Keccakc
 	"lyra2v2" = " -N 1" #Lyra2RE2
-	"nist5" = "" #Nist5
 	"phi" = " -i 23 -N 1" #Phi ccmineralexis78phi better
 	"polytimos" = "" #polytimos
 	"sha256t" = "" #sha256t
-	"sib" = "" #Sib
 	"skunk" = "" #skunk
 	"timetravel" = "" #Timetravel
     "tribus" = "" #Tribus
 	#"x11evo" = "" #X11evo ccmineralexis78 better
-	"x17" = " -N 1" #X17
+	#"x17" = " -N 1" #X17 CcminerEnemy-103 better
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
