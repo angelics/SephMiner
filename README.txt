@@ -48,8 +48,10 @@ ethash blake2s_AMD.bat
 
 # Lists of algos added:
 * m7m
+* x12
 * x15
 * x16r
+* x16s
 * yescrypt16
 * yescrypt32
 * axiom
@@ -62,11 +64,16 @@ ethash blake2s_AMD.bat
 * pascal
 * skein
 * myr-gr
+* nist5
+* sia
+* groestl
 * cryptonight
+* sib
+* veltor
+* blakecoin
+* vanilla
 
 # Lists of miner removed:
-* bminer
-* Cast
 * CcminerHsr
 * CcminerSib
 * CcminerSkunk

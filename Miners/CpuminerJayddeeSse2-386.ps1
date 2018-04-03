@@ -1,7 +1,7 @@
 ﻿using module ..\Include.psm1
 
-$Path = ".\Bin\CPU-JayDDee-385\cpuminer-sse2.exe"
-$Uri = "https://github.com/JayDDee/cpuminer-opt/files/1854173/cpuminer-opt-3.8.5-windows.zip"
+$Path = ".\Bin\CPU-JayDDee-386\cpuminer-sse2.exe"
+$Uri = "https://github.com/JayDDee/cpuminer-opt/files/1865696/cpuminer-opt-3.8.6-windows.zip"
 
 $Commands = [PSCustomObject]@{
     #"allium" = "" #Garlicoin
@@ -51,10 +51,11 @@ $Commands = [PSCustomObject]@{
     #"whirlpool" = "" #
     "whirlpoolx" = "" #whirlpoolx
     "x11evo" = "" #X11evo
-    #"x12" = "" #Galaxie Cash
+    "x12" = "" #GCH
     #"x13sm3" = "" #hsr
     "x15" = "" #X15
-    "x16r" = "" #Ravencoin
+    "x16r" = "" #x16r
+    "x16s" = "" #x16s
     "x17" = "" #x17
     "xevan" = "" #Bitsend
     "yescrypt" = "" #Globalboost-Y
