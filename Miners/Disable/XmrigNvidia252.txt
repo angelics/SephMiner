@@ -1,0 +1,11 @@
+{
+    "Type":  "NVIDIA",
+    "Path":  ".\\Bin\\CryptoNight-NVIDIA-252\\xmrig-nvidia.exe",
+    "Arguments":  "\"--api-port 3335 -a cryptonight -o $($Pools.CryptoNight.Protocol)://$($Pools.CryptoNight.Host):$($Pools.CryptoNight.Port) -u $($Pools.CryptoNight.User) -p $($Pools.CryptoNight.Pass) --keepalive --nicehash --donate-level 1\"",
+    "HashRates":  {
+                      "CryptoNight":  "\"$(if ($Pools.CryptoNight.SSL) {0}else {$Stats.XmrigNvidia252_CryptoNight_HashRate.Week * 0.99})\""
+                  },
+    "API":  "XMRig",
+    "Port":  "3335",
+    "URI":  "https://github.com/xmrig/xmrig-nvidia/releases/download/v2.5.2/xmrig-nvidia-2.5.2-cuda9-win64.zip"
+}

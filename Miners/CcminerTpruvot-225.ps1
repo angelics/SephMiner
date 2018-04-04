@@ -1,7 +1,7 @@
 ﻿using module ..\Include.psm1
 
-$Path = ".\Bin\NVIDIA-TPruvot-224\ccminer-x64.exe"
-$Uri = "https://github.com/tpruvot/ccminer/releases/download/2.2.4-tpruvot/ccminer-x64-2.2.4-cuda9.7z"
+$Path = ".\Bin\NVIDIA-TPruvot-225\ccminer-x64.exe"
+$Uri = "https://github.com/tpruvot/ccminer/releases/download/2.2.5-tpruvot/ccminer-x64-2.2.5-cuda9.7z"
 
 $Commands = [PSCustomObject]@{
     "bitcore" = "" #Bitcore
@@ -35,7 +35,10 @@ $Commands = [PSCustomObject]@{
     #"timetravel" = "" #Timetravel CcminerTpruvotcuda9 better
     #"tribus" = "" #Tribus CcminerTpruvotcuda9 better
 	#"x11evo" = "" #X11evo ccmineralexis78 better
+    "x12" = "" #X12
     "x15" = "" #X15
+    "x16r" = "" #X16r
+    "x16s" = "" #X16s
     #"x17" = " -i 20" #X17 ccmineralexis78 better
     "whirlpool" = "" #whirlpool
     "wildkeccak" = "" #wildkeccak

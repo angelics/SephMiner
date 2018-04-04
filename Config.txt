@@ -3,15 +3,15 @@
     "MiningPoolHub": {
       "User": "$UserName",
       "Worker": "$WorkerName",
-	  "DisabledAlgorithms":  ["ethash2gb", "Cryptonight", "Sia", "Skein", "Qubit", "X11", "Myriad-Groestl", "Groestl", "Scrypt"],
+	  "DisabledAlgorithms":  ["ethash2gb", "Sia", "Skein", "Qubit", "X11", "Myriad-Groestl", "Groestl", "Scrypt"],
       "API_ID": "$API_ID",
       "API_Key": "$API_Key"
     },
     "MiningPoolHubCoins": {
       "User": "$UserName",
       "Worker": "$WorkerName",
-	  "DisabledAlgorithms":  ["ethash2gb", "Cryptonight", "Sia", "Skein", "Qubit", "X11", "Myriad-Groestl", "Groestl", "Scrypt"],
-	  "DisabledCoins":  ["maxcoin"],
+	  "DisabledAlgorithms":  ["ethash2gb", "Sia", "Skein", "Qubit", "X11", "Myriad-Groestl", "Groestl", "Scrypt"],
+	  "DisabledCoins":  ["maxcoin", "Electroneum"],
       "API_ID": "$API_ID",
       "API_Key": "$API_Key"
     },

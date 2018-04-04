@@ -1,0 +1,11 @@
+{
+    "Type":  "CPU",
+    "Path":  ".\\Bin\\CryptoNight-CPU-260\\xmrig.exe",
+    "Arguments":  "\"--api-port 3334 -a cryptonight -o $($Pools.CryptoNight.Protocol)://$($Pools.CryptoNight.Host):$($Pools.CryptoNight.Port) -u $($Pools.CryptoNight.User) -p $($Pools.CryptoNight.Pass) --keepalive --nicehash --donate-level 1\"",
+    "HashRates":  {
+                      "CryptoNight":  "\"$(if ($Pools.CryptoNight.SSL) {0}else {$Stats.XmrigCpu260_CryptoNight_HashRate.Week * 0.99})\""
+                  },
+    "API":  "XMRig",
+    "Port":  "3334",
+    "URI":  "https://github.com/xmrig/xmrig/releases/download/v2.6.0-beta1/xmrig-2.6.0-beta1-msvc-win64.zip"
+}

@@ -1,7 +1,7 @@
 using module ..\Include.psm1
 
-$Path = ".\Bin\NVIDIA-TPruvotcuda9-224\ccminer.exe"
-$Uri = "https://github.com/tpruvot/ccminer/releases/download/2.2.4-tpruvot/ccminer-x86-2.2.4-cuda9.7z"
+$Path = ".\Bin\NVIDIA-TPruvotcuda9-225\ccminer.exe"
+$Uri = "https://github.com/tpruvot/ccminer/releases/download/2.2.5-tpruvot/ccminer-x86-2.2.5-cuda9.7z"
 
 $Commands = [PSCustomObject]@{
     #"bitcore" = "" #Bitcore CcminerTpruvot-224 better
@@ -20,6 +20,9 @@ $Commands = [PSCustomObject]@{
     "tribus" = "" #Tribus
 	#"x11evo" = "" #X11evo ccmineralexis78 better
 	#"x17" = " -N 1" #X17 CcminerEnemy-103 better
+	"x12" = "" #X12
+	"x16r" = "" #X16r
+	"x16s" = "" #X16s
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
