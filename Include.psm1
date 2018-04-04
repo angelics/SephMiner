@@ -244,7 +244,7 @@ function Get-ChildItemContent {
 filter ConvertTo-Hash { 
     [CmdletBinding()]
     $Hash = $_
-    switch ([math]::truncate(10 - $Offset - [math]::log($BTCRate, 10))) {
+    switch ([math]::truncate([math]::log($Hash, [Math]::Pow(1000, 1)))) {
         "-Infinity" {"0  H"}
         0 {"{0:n2}  H" -f ($Hash / [Math]::Pow(1000, 0))}
         1 {"{0:n2} KH" -f ($Hash / [Math]::Pow(1000, 1))}
@@ -271,7 +271,7 @@ function ConvertTo-LocalCurrency {
 
     $Number = $Number * $BTCRate
 
-    switch ([math]::truncate(10 - $Offset - [math]::log($BTCRate, [Math]::Pow(10, 1)))) {
+    switch ([math]::truncate(10 - $Offset - [math]::log($BTCRate, 10))) {
         0 {$Number.ToString("N0")}
         1 {$Number.ToString("N1")}
         2 {$Number.ToString("N2")}
