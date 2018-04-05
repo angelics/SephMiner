@@ -5,8 +5,8 @@ $URI = "https://github.com/Nanashi-Meiyo-Meijin/ccminer/releases/download/v2.2-m
 
 $Commands = [PSCustomObject]@{
     "jha" = "" #JHA
-	"lyra2z" = " -R 5 -N 3" #Lyra2z
-	"lyra2v2" = "" #Lyra2RE2
+	"lyra2z" = " -N 1" #Lyra2z
+	"lyra2v2" = " -N 1" #Lyra2RE2
     #"neoscrypt" = "" #NeoScrypt palginnvidia better. 1080
 }
 

@@ -8,6 +8,13 @@ set endif=)
 set greaterequal=GEQ
 set title=SephMiner
 
+REM for vega only
+REM devcon compress7z https://mega.nz/#!KbQz3SwT!QI1AWc4iGCfsgIrcWulbfqiP0eXLFcfxQ5SNQbwDwaY
+REM OC\devcon.exe disable "PCI\VEN_1002&DEV_687F"
+REM timeout /t 10
+REM OC\devcon.exe enable "PCI\VEN_1002&DEV_687F"
+REM timeout /t 5
+
 REM uncomment below if mining with amd
 REM OC\OverdriveNTool.exe -r1 -r2 -r3 -r4 -r5 -r6
 

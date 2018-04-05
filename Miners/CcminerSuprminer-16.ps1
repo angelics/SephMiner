@@ -4,8 +4,8 @@ $Path = ".\Bin\NVIDIA-suprminer-16\ccminer.exe"
 $Uri = "https://github.com/ocminer/suprminer/releases/download/1.6/suprminer-1.6.7z"
 
 $Commands = [PSCustomObject]@{
-    "x16s" = "" #X16s
-    "x16r" = "" #X16r
+    "x16s" = " -N 3" #X16s
+    "x16r" = " -N 3" #X16r
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName

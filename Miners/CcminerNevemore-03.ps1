@@ -4,7 +4,7 @@ $Path = ".\Bin\NVIDIA-Nevermore-03\ccminer.exe"
 $Uri = "https://github.com/nemosminer/ccminernevermorex16r/releases/download/nevermorex16rv0.3/ccminernevermorex16rx64v0.3.zip"
 
 $Commands = [PSCustomObject]@{
-    "x16r" = "" #Raven
+    "x16r" = " -N 3" #Raven
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName

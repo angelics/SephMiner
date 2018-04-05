@@ -8,13 +8,9 @@ $Commands = [PSCustomObject]@{
     #"lyra2v2" = " -i 24" #Lyra2RE2 crash
     #"c11" = " -i 21" #C11
     #"x17" = " -i 21" #X17 CcminerEnemy-103 better
-    #"x17" = ",d=0.1 -i 21" #X17 CcminerEnemy-103 better
     #"keccak" = "" #keccak excavatornvidia2 beter
     "blake2s" = "" #blake2s
-    #"blake2s" = ",d=0.016" #blake2s
     "x11evo" = " -i 21" #x11evo
-    #"x11evo" = ",d=0.1 -i 21" #x11evo
-
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
