@@ -80,7 +80,6 @@ ethash blake2s_AMD.bat
 * CcminerSib
 * CcminerSkunk
 * CcminerSp
-* ClaymoreCpu
 * claymoredecred
 * claymorelbry
 * claymorepascal

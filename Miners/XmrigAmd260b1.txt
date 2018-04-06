@@ -1,11 +1,11 @@
 {
     "Type":  "AMD",
-    "Path":  ".\\Bin\\CryptoNight-AMD-252\\xmrig-amd.exe",
+    "Path":  ".\\Bin\\CryptoNight-AMD-260b1\\xmrig-amd.exe",
     "Arguments":  "\"--api-port 3336 -a cryptonight -o $($Pools.CryptoNight.Protocol)://$($Pools.CryptoNight.Host):$($Pools.CryptoNight.Port) -u $($Pools.CryptoNight.User) -p $($Pools.CryptoNight.Pass) --keepalive --nicehash --donate-level 1\"",
     "HashRates":  {
-                      "CryptoNight":  "\"$(if ($Pools.CryptoNight.SSL) {0}else {$Stats.XmrigAmd252_CryptoNight_HashRate.Week * 0.99})\""
+                      "CryptoNight":  "\"$(if ($Pools.CryptoNight.SSL) {0}else {$Stats.XmrigAmd260b1_CryptoNight_HashRate.Week * 0.99})\""
                   },
     "API":  "XMRig",
     "Port":  "3336",
-    "URI":  "https://github.com/xmrig/xmrig-amd/releases/download/v2.5.2/xmrig-amd-2.5.2-win64.zip"
+    "URI":  "https://github.com/xmrig/xmrig-amd/releases/download/v2.6.0-beta1/xmrig-amd-2.6.0-beta1-win64.zip"
 }
