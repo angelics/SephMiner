@@ -17,7 +17,7 @@ $Port = 3334
                 pool_weight     = 1
             }
         )
-        currency        = "monero"
+        currency        = "monero7"
         call_timeout    = 10
         retry_time      = 10
         giveup_limit    = 0
