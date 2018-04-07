@@ -11,6 +11,7 @@ $Port = 3335
                 pool_address    = "$($Pools.CryptoNight.Host):$($Pools.CryptoNight.Port)"
                 wallet_address  = "$($Pools.CryptoNight.User)"
                 pool_password   = "$($Pools.CryptoNight.Pass)"
+                rig_id = ""
                 use_nicehash    = $true
                 use_tls         = $Pools.CryptoNight.SSL
                 tls_fingerprint = ""
@@ -40,7 +41,7 @@ $Port = 3335
 [PSCustomObject]@{
     Type      = "NVIDIA"
     Path      = $Path
-    Arguments = "-c $($Pools.CryptoNight.Name)_CryptoNight_$($Pools.CryptoNight.User)_Nvidia.txt --noUAC --noAMD --noCPU"
+    Arguments = "-C $($Pools.CryptoNight.Name)_CryptoNight_$($Pools.CryptoNight.User)_Nvidia.txt -c $($Pools.CryptoNight.Name)_CryptoNight_$($Pools.CryptoNight.User)_Nvidia.txt --noUAC --noAMD --noCPU"
     HashRates = [PSCustomObject]@{CryptoNight = $Stats."$($Name)_CryptoNight_HashRate".Week * 0.98}
     API       = "XMRig"
     Port      = $Port

@@ -4,13 +4,14 @@ $Path = ".\Bin\CryptoNight-FireIce-242\xmr-stak.exe"
 $Uri = "https://github.com/fireice-uk/xmr-stak/releases/download/2.4.2/xmr-stak-win64.zip"
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
-$Port = 3334
+$Port = 3336
 
 ([PSCustomObject]@{
         pool_list       = @([PSCustomObject]@{
                 pool_address    = "$($Pools.CryptoNight.Host):$($Pools.CryptoNight.Port)"
                 wallet_address  = "$($Pools.CryptoNight.User)"
                 pool_password   = "$($Pools.CryptoNight.Pass)"
+                rig_id = ""
                 use_nicehash    = $true
                 use_tls         = $Pools.CryptoNight.SSL
                 tls_fingerprint = ""
@@ -35,12 +36,12 @@ $Port = 3334
         http_pass       = ""
         prefer_ipv4     = $true
     } | ConvertTo-Json -Depth 10
-) -replace "^{" -replace "}$" | Set-Content "$(Split-Path $Path)\$($Pools.CryptoNight.Name)_CryptoNight_$($Pools.CryptoNight.User)_Cpu.txt" -Force -ErrorAction SilentlyContinue
+) -replace "^{" -replace "}$" | Set-Content "$(Split-Path $Path)\$($Pools.CryptoNight.Name)_CryptoNight_$($Pools.CryptoNight.User)_Amd.txt" -Force -ErrorAction SilentlyContinue
 
 [PSCustomObject]@{
-    Type      = "CPU"
+    Type      = "AMD"
     Path      = $Path
-    Arguments = "-c $($Pools.CryptoNight.Name)_CryptoNight_$($Pools.CryptoNight.User)_Cpu.txt --noUAC --noAMD --noNVIDIA"
+    Arguments = "-C $($Pools.CryptoNight.Name)_CryptoNight_$($Pools.CryptoNight.User)_Amd.txt -c $($Pools.CryptoNight.Name)_CryptoNight_$($Pools.CryptoNight.User)_Amd.txt --noUAC --noCPU --noNVIDIA"
     HashRates = [PSCustomObject]@{CryptoNight = $Stats."$($Name)_CryptoNight_HashRate".Week * 0.98}
     API       = "XMRig"
     Port      = $Port
