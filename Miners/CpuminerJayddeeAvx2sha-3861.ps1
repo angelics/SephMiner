@@ -1,7 +1,7 @@
 ﻿using module ..\Include.psm1
 
-$Path = ".\Bin\CPU-JayDDee-386\cpuminer-aes-sse42.exe"
-$Uri = "https://github.com/JayDDee/cpuminer-opt/files/1865696/cpuminer-opt-3.8.6-windows.zip"
+$Path = ".\Bin\CPU-JayDDee-3861\cpuminer-avx2-sha.exe"
+$Uri = "https://github.com/JayDDee/cpuminer-opt/files/1884641/cpuminer-opt-3.8.6.1-windows.zip"
 
 $Commands = [PSCustomObject]@{
     #"allium" = "" #Garlicoin
@@ -52,7 +52,7 @@ $Commands = [PSCustomObject]@{
     "whirlpoolx" = "" #whirlpoolx
     "x11evo" = "" #X11evo
     "x12" = "" #GCH
-    #"x13sm3" = "" #hsr
+    "x13sm3" = "" #hsr
     "x15" = "" #X15
     "x16r" = "" #x16r
     "x16s" = "" #x16s
