@@ -26,7 +26,7 @@ if (($YiiMPCoins_Request | Get-Member -MemberType NoteProperty -ErrorAction Igno
 $YiiMP_Regions = "us"
 $YiiMP_Currencies = ($YiiMPCoins_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name) | Select-Object -Unique | Where-Object {Get-Variable $_ -ValueOnly -ErrorAction SilentlyContinue}
 
-$YiiMP_Currencies | Where-Object {$DisabledAlgorithms -inotcontains (Get-Algorithm $YiiMPCoins_Request.$_.algo) -and $YiiMPCoins_Request.$_.hashrate -gt 0} | ForEach-Object {
+$YiiMP_Currencies | Where-Object {$ExcludeAlgorithms -inotcontains (Get-Algorithm $YiiMPCoins_Request.$_.algo) -and $YiiMPCoins_Request.$_.hashrate -gt 0} | ForEach-Object {
     $YiiMP_Host = "yiimp.eu"
     $YiiMP_Port = $YiiMPCoins_Request.$_.port
     $YiiMP_Algorithm = $YiiMPCoins_Request.$_.algo
@@ -40,7 +40,6 @@ $YiiMP_Currencies | Where-Object {$DisabledAlgorithms -inotcontains (Get-Algorit
         "equihash" {$Divisor /= 1000}
         "blake2s" {$Divisor *= 1000}
         "blakecoin" {$Divisor *= 1000}
-        "decred" {$Divisor *= 1000}
     }
 
     $Stat = Set-Stat -Name "$($Name)_$($YiiMP_Algorithm_Norm)_Profit" -Value ([Double]$YiiMPCoins_Request.$_.estimate / $Divisor  * (1-($YiiMPCoins_Request.$_.fees/100))) -Duration $StatSpan -ChangeDetection $true

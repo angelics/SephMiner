@@ -27,7 +27,7 @@ if (($MiningPanda_Request | Get-Member -MemberType NoteProperty -ErrorAction Ign
 $MiningPanda_Regions = "us"
 $MiningPanda_Currencies = ($MiningPanda_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name) | Select-Object -Unique | Where-Object {Get-Variable $_ -ValueOnly -ErrorAction SilentlyContinue}
 
-$MiningPanda_Currencies | Where-Object {$DisabledAlgorithms -inotcontains (Get-Algorithm $MiningPanda_Request.$_.algo) -and {$MiningPanda_Request.$_.hashrate -gt 0} | ForEach-Object {
+$MiningPanda_Currencies | Where-Object {$ExcludeAlgorithms -inotcontains (Get-Algorithm $MiningPanda_Request.$_.algo) -and {$MiningPanda_Request.$_.hashrate -gt 0} | ForEach-Object {
     $MiningPanda_Host = "miningpanda.site"
     $MiningPanda_Port = $MiningPanda_Request.$_.port
     $MiningPanda_Algorithm = $MiningPanda_Request.$_.algo
@@ -41,7 +41,6 @@ $MiningPanda_Currencies | Where-Object {$DisabledAlgorithms -inotcontains (Get-A
         "equihash" {$Divisor /= 1000}
         "blake2s" {$Divisor *= 1000}
         "blakecoin" {$Divisor *= 1000}
-        "decred" {$Divisor *= 1000}
     }
 
     $Stat = Set-Stat -Name "$($Name)_$($MiningPanda_Algorithm_Norm)_Profit" -Value ([Double]$MiningPanda_Request.$_.estimate / $Divisor  * (1-($MiningPanda_Request.$_.fees/100))) -Duration $StatSpan -ChangeDetection $true
