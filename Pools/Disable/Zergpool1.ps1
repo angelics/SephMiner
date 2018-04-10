@@ -53,7 +53,7 @@ $Zergpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Se
 	
     switch ($ZergPool_Algorithm_Norm) {
         "blake2s" {$Variety = 0.01}
-        "c11" {$Variety = 0.02} #recheck
+        "c11" {$Variety = 0.02}
         "lyra2v2" {$Variety = 0.03}
         "lyra2z" {$Variety = 0.03}
         "hmq1725" {$Variety = 0.40}
@@ -61,7 +61,7 @@ $Zergpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Se
         "xevan" {$Variety = 0.01}
         "x16r" {$Variety = 0.01}
         "x17" {$Variety = 0.01}
-        "yescrypt" {$Variety = 0.17} #recheck
+        "yescrypt" {$Variety = 0.21}
         "yescryptR16" {$Variety = 0.01}
     }	
 

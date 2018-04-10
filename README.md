@@ -5,11 +5,15 @@ multipoolminer 95d4193 with bug fixed or improvements commits
 
 * Added pool and miner fee.
 
+* Added pool coin variance.
+
 * Moved in,br to Europe.
 
 * Removed monitoring.
 
-* Removed maxcoin and electroneum from miningpoolhubcoins, until auto-exchange is available.
+* Excluded electroneum from miningpoolhubcoins, until auto-exchange is available.
+
+* Excluded maxcoin from miningpoolhubcoins, unless auto-exchange set to BTC.
 
 * Removed ASICS coins from all pools and miners.
 
@@ -25,9 +29,9 @@ multipoolminer 95d4193 with bug fixed or improvements commits
 
 * **personnaly** recommend only use miningpoolhubcoins and zpool
 
-* always remove un-used pools from pools folder
+* always move to disable folder for un-used pools
 
-* always remove un-used miners from miners folder
+* always move to disable folder for un-used miners
 
 # NVIDIA
 NVIDIA users need to download nvidiainspecter to use OC feature

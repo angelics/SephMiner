@@ -55,19 +55,19 @@ $Zpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Selec
         "equihash" {$Variety = 0.03}
         "hmq1725" {$Variety = 0.11}
         "keccak" {$Variety = 0.02}
-        "lyra2v2" {$Variety = 0.01}
+        "lyra2v2" {$Variety = 0.02}
         "lyra2z" {$Variety = 0.03}
         "m7m" {$Variety = 0.03}
-        "neoscrypt" {$Variety = 0.01} #recheck
+        "neoscrypt" {$Variety = 0.06}
         "phi" {$Variety = 0.01}
-        "sha256t" {$Variety = 0.24} #recheck
+        "sha256t" {$Variety = 0.27} #recheck
         "skunk" {$Variety = 0.04}
         "timetravel" {$Variety = 0.05}
-        "tribus" {$Variety = 0.01} #recheck
-        "x11evo" {$Variety = 0.01} #recheck
+        "tribus" {$Variety = 0.01}
+        "x11evo" {$Variety = 0.01}
         "x17" {$Variety = 0.01}
-        "xevan" {$Variety = 0.08}
-        "yescrypt" {$Variety = 0.02} #recheck
+        "xevan" {$Variety = 0.15}
+        "yescrypt" {$Variety = 0.24}
     }	
 
     if ((Get-Stat -Name "$($Name)_$($Zpool_Algorithm_Norm)_Profit") -eq $null) {$Stat = Set-Stat -Name "$($Name)_$($Zpool_Algorithm_Norm)_Profit" -Value ([Double]$Zpool_Request.$_.estimate_last24h / $Divisor * (1-($Zpool_Request.$_.fees/100)) * (1-$Variety)) -Duration (New-TimeSpan -Days 1)}
