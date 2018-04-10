@@ -1,7 +1,7 @@
 ﻿using module ..\Include.psm1
 
-$Path = ".\Bin\CPU-JayDDee-3861\cpuminer-sse2.exe"
-$Uri = "https://github.com/JayDDee/cpuminer-opt/files/1884641/cpuminer-opt-3.8.6.1-windows.zip"
+$Path = ".\Bin\CPU-JayDDee-387\cpuminer-sse2.exe"
+$Uri = "https://github.com/JayDDee/cpuminer-opt/files/1892244/cpuminer-opt-3.8.7-windows.zip"
 
 $Commands = [PSCustomObject]@{
     #"allium" = "" #Garlicoin
