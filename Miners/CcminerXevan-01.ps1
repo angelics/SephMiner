@@ -1,6 +1,6 @@
 ﻿using module ..\Include.psm1
 
-$Path = ".\Bin\NVIDIA-Xevan-01\ccminer_x86.exe"
+$Path = ".\Bin\NVIDIA-Xevan-01\ccminer.exe"
 $Uri = "https://github.com/krnlx/ccminer-xevan/releases/download/0.1/ccminer.exe"
 
 $Commands = [PSCustomObject]@{

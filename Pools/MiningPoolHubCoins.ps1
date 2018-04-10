@@ -35,8 +35,25 @@ $MiningPoolHubCoins_Request.return | Where-Object {$ExcludeCoins -inotcontains $
     $MiningPoolHubCoins_Coin = (Get-Culture).TextInfo.ToTitleCase(($_.coin_name -replace "-", " " -replace "_", " ")) -replace " "
 
     $Divisor = 1000000000
+	
+	$Variety = 0
+	
+    switch ($MiningPoolHubCoins_Coin) {
+        "bitcoingold" {$Variety = 0.06}
+        "feathercoin" {$Variety = 0.01}
+        "Globalboosty" {$Variety = 0.12} #recheck
+        "monacoin" {$Variety = 0.02} #recheck
+        "monero" {$Variety = 0.01}
+        "musicoin" {$Variety = 0.01} #recheck
+        "MyriadcoinYescrypt" {$Variety = 0.03}
+        "vertcoin" {$Variety = 0.05}
+        "zcash" {$Variety = 0.01}
+        "zclassic" {$Variety = 0.01}
+        "zcoin" {$Variety = 0.05}
+        "zencash" {$Variety = 0.05}
+    }	
 
-	$Stat = Set-Stat -Name "$($Name)_$($MiningPoolHubCoins_Coin)_Profit" -Value ([Double]$_.profit / $Divisor * (1-(0.9/100))) -Duration $StatSpan -ChangeDetection $true
+	$Stat = Set-Stat -Name "$($Name)_$($MiningPoolHubCoins_Coin)_Profit" -Value ([Double]$_.profit / $Divisor * (1-(0.9/100)) * (1-$Variety)) -Duration $StatSpan -ChangeDetection $true
 	
     $MiningPoolHubCoins_Regions | ForEach-Object {
         $MiningPoolHubCoins_Region = $_

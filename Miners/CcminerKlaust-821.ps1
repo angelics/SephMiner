@@ -20,8 +20,8 @@ $Commands = [PSCustomObject]@{
     #"spread" = "" #Spread
     #"x14" = "" #X14
     "x15" = "" #X15
-    "x17" = "" #X17
-    "yescrypt" = "" #yescrypt
+    #"x17" = "" #X17
+    #"yescrypt" = "" #yescrypt
     #"whirl" = "" #Whirlcoin
     #"whirlpoolx" = "" #Vanillacoin
 }

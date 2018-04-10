@@ -46,9 +46,32 @@ $Zpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Selec
         "keccakc" {$Divisor *= 1000}
         "sha256t" {$Divisor *= 1000}
     }	
+	
+	$Variety = 0
+	
+    switch ($Zpool_Algorithm_Norm) {
+        "blake2s" {$Variety = 0.02}
+        "c11" {$Variety = 0.01}
+        "equihash" {$Variety = 0.03}
+        "hmq1725" {$Variety = 0.11}
+        "keccak" {$Variety = 0.02}
+        "lyra2v2" {$Variety = 0.01}
+        "lyra2z" {$Variety = 0.03}
+        "m7m" {$Variety = 0.03}
+        "neoscrypt" {$Variety = 0.01} #recheck
+        "phi" {$Variety = 0.01}
+        "sha256t" {$Variety = 0.24} #recheck
+        "skunk" {$Variety = 0.04}
+        "timetravel" {$Variety = 0.05}
+        "tribus" {$Variety = 0.01} #recheck
+        "x11evo" {$Variety = 0.01} #recheck
+        "x17" {$Variety = 0.01}
+        "xevan" {$Variety = 0.08}
+        "yescrypt" {$Variety = 0.02} #recheck
+    }	
 
-    if ((Get-Stat -Name "$($Name)_$($Zpool_Algorithm_Norm)_Profit") -eq $null) {$Stat = Set-Stat -Name "$($Name)_$($Zpool_Algorithm_Norm)_Profit" -Value ([Double]$Zpool_Request.$_.estimate_last24h / $Divisor * (1-($Zpool_Request.$_.fees/100))) -Duration (New-TimeSpan -Days 1)}
-    else {$Stat = Set-Stat -Name "$($Name)_$($Zpool_Algorithm_Norm)_Profit" -Value ([Double]$Zpool_Request.$_.estimate_current / $Divisor * (1-($Zpool_Request.$_.fees/100))) -Duration $StatSpan -ChangeDetection $true}
+    if ((Get-Stat -Name "$($Name)_$($Zpool_Algorithm_Norm)_Profit") -eq $null) {$Stat = Set-Stat -Name "$($Name)_$($Zpool_Algorithm_Norm)_Profit" -Value ([Double]$Zpool_Request.$_.estimate_last24h / $Divisor * (1-($Zpool_Request.$_.fees/100)) * (1-$Variety)) -Duration (New-TimeSpan -Days 1)}
+    else {$Stat = Set-Stat -Name "$($Name)_$($Zpool_Algorithm_Norm)_Profit" -Value ([Double]$Zpool_Request.$_.estimate_current / $Divisor * (1-($Zpool_Request.$_.fees/100)) * (1-$Variety)) -Duration $StatSpan -ChangeDetection $true}
 
     $Zpool_Regions | ForEach-Object {
         $Zpool_Region = $_
