@@ -5,7 +5,6 @@
     "blake2s":  "Blake2s",
     "blakecoin":  "Blakecoin",
     "c11":  "C11",
-	"cryptonight": "CryptoNight",
     "daggerhashimoto":  "Ethash",
     "equihash":  "Equihash",
     "eth":  "Ethash",

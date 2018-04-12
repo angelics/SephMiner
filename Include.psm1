@@ -214,7 +214,7 @@ function Get-ChildItemContent {
         return $Expression
     }
 
-    Get-ChildItem $Path -File | ForEach-Object {
+    Get-ChildItem $Path -File -ErrorAction SilentlyContinue | ForEach-Object {
         $Name = $_.BaseName
         $Content = @()
         if ($_.Extension -eq ".ps1") {
@@ -236,7 +236,12 @@ function Get-ChildItemContent {
             if ($Content -eq $null) {$Content = $_ | Get-Content}
         }
         $Content | ForEach-Object {
-            [PSCustomObject]@{Name = $Name; Content = $_}
+            if ($_.Name) {
+                [PSCustomObject]@{Name = $_.Name; Content = $_}
+            }
+            else {
+                [PSCustomObject]@{Name = $Name; Content = $_}
+            }
         }
     }
 }
