@@ -61,6 +61,7 @@ set type=amd,nvidia,cpu
 set poolname=nicehash
 set ExcludePoolName=miningpoolhubcoins,zpool
 REM asic algo = sha256,scrypt,x11,x13,x14,quark,qubit,decred,lbry,sia,Pascal,cryptonight,cryptonight-light,skein,myr-gr,groestl,nist5,sib,x11gost,veltor,blakecoin,vanilla
+set algorithm=scryptnf,keccak,x15,nist5,neoscrypt,lyra2re,whirlpoolx,axiom,lyra2rev2,scryptjanenf16,blake256r8vnl,hodl,daggerhashimoto,equihash,blake2s,skunk,CryptoNightV7
 set ExcludeAlgorithm=ethash2gb
 set ExcludeMinerName=ccminerlyra2re2,prospector
 set switchingprevention=1
