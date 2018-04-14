@@ -1,6 +1,6 @@
 ﻿using module ..\Include.psm1
 
-$Path = ".\Bin\Enemy-NVIDIA-103a\ccminer.exe"
+$Path = ".\Bin\Enemy-NVIDIA-103\ccminer.exe"
 $Uri = "http://newera.dx.am/cme1.03.7z"
 
 $Commands = [PSCustomObject]@{
