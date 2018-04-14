@@ -2,9 +2,9 @@
     {
         "Type":  "AMD",
         "Path":  ".\\Bin\\CryptoNight-Claymore-113\\NsGpuCNMiner.exe",
-        "Arguments":  "\"-r -1 -mport -13333 -pow7 1 -xpool $($Pools.CryptoNight.Protocol)://$($Pools.CryptoNight.Host):$($Pools.CryptoNight.Port) -xwal $($Pools.CryptoNight.User) -xpsw $($Pools.CryptoNight.Pass)\"",
+        "Arguments":  "\"-r -1 -mport -13333 -pow7 1 -xpool $($Pools.CryptoNightV7.Protocol)://$($Pools.CryptoNightV7.Host):$($Pools.CryptoNightV7.Port) -xwal $($Pools.CryptoNightV7.User) -xpsw $($Pools.CryptoNightV7.Pass)\"",
         "HashRates":  {
-                          "CryptoNight":  "\"$($Stats.ClaymoreAmdCN113_CryptoNight_HashRate.Week)\""
+                          "CryptoNightV7":  "\"$($Stats.ClaymoreAmdCN113_CryptoNightV7_HashRate.Week)\""
                       },
         "API":  "Claymore",
         "Port":  "13333",

@@ -3,27 +3,27 @@
     "MiningPoolHub": {
       "User": "$UserName",
       "Worker": "$WorkerName",
-	  "ExcludeAlgorithms":  ["ethash2gb", "Sia", "Skein", "Qubit", "X11", "Myriad-Groestl", "Groestl", "Scrypt"],
+	  "ExcludeAlgorithm":  ["ethash2gb", "Sia", "Skein", "Qubit", "X11", "Myriad-Groestl", "Groestl", "Scrypt"],
       "API_ID": "$API_ID",
       "API_Key": "$API_Key"
     },
     "MiningPoolHubCoins": {
       "User": "$UserName",
       "Worker": "$WorkerName",
-	  "ExcludeAlgorithms":  ["ethash2gb", "Sia", "Skein", "Qubit", "X11", "Myriad-Groestl", "Groestl", "Scrypt"],
-	  "ExcludeCoins":  ["maxcoin", "Electroneum"],
+	  "ExcludeAlgorithm":  ["ethash2gb", "Sia", "Skein", "Qubit", "X11", "Myriad-Groestl", "Groestl", "Scrypt"],
+	  "ExcludeCoin":  ["maxcoin", "Electroneum"],
       "API_ID": "$API_ID",
       "API_Key": "$API_Key"
     },
     "NiceHash": {
       "BTC": "$Wallet",
       "Worker": "$WorkerName",
-	  "ExcludeAlgorithms":  ["ethash2gb", "nist5", "x11gost", "blake256r8vnl", "qubit", "scrypt", "x11", "cryptonight", "sha256", "x13", "quark", "blake256r8", "blake256r14", "decred", "lbry", "pascal", "sia"]
+	  "ExcludeAlgorithm":  ["ethash2gb", "nist5", "x11gost", "blake256r8vnl", "qubit", "scrypt", "x11", "cryptonight", "sha256", "x13", "quark", "blake256r8", "blake256r14", "decred", "lbry", "pascal", "sia"]
     },
     "Zpool": {
       "BTC": "$Wallet",
       "Worker": "$WorkerName",
-	  "ExcludeAlgorithms":  ["qubit", "blakecoin", "groestl", "nist5", "sib", "scrypt", "x11", "myr-gr", "skein", "sha256", "x13", "quark", "decred", "lbry", "x14", "keccak"]
+	  "ExcludeAlgorithm":  ["qubit", "blakecoin", "groestl", "nist5", "sib", "scrypt", "x11", "myr-gr", "skein", "sha256", "x13", "quark", "decred", "lbry", "x14", "keccak"]
     }
   },
   "Miners": {

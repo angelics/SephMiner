@@ -1,11 +1,24 @@
-{
-    "Type":  "AMD",
-    "Path":  ".\\Bin\\CryptoNight-AMD-260b1\\xmrig-amd.exe",
-    "Arguments":  "\"--api-port 3336 -a cryptonight -o $($Pools.CryptoNight.Protocol)://$($Pools.CryptoNight.Host):$($Pools.CryptoNight.Port) -u $($Pools.CryptoNight.User) -p $($Pools.CryptoNight.Pass) --keepalive --nicehash --donate-level 1\"",
-    "HashRates":  {
-                      "CryptoNight":  "\"$(if ($Pools.CryptoNight.SSL) {0}else {$Stats.XmrigAmd260b1_CryptoNight_HashRate.Week * 0.99})\""
-                  },
-    "API":  "XMRig",
-    "Port":  "3336",
-    "URI":  "https://github.com/xmrig/xmrig-amd/releases/download/v2.6.0-beta1/xmrig-amd-2.6.0-beta1-win64.zip"
-}
+[
+    {
+        "Type":  "AMD",
+        "Path":  ".\\Bin\\CryptoNight-AMD-260b1\\xmrig-amd.exe",
+        "Arguments":  "\"--api-port 3336 -a cn -o $($Pools.CryptoNightV7.Protocol)://$($Pools.CryptoNightV7.Host):$($Pools.CryptoNightV7.Port) -u $($Pools.CryptoNightV7.User) -p $($Pools.CryptoNightV7.Pass) --keepalive --nicehash --donate-level 1\"",
+        "HashRates":  {
+                          "CryptoNightV7":  "\"$(if ($Pools.CryptoNightV7.SSL) {0}else {$Stats.XmrigAmd260b1_CryptoNightV7_HashRate.Week * 0.99})\""
+                      },
+        "API":  "XMRig",
+        "Port":  "3336",
+        "URI":  "https://github.com/xmrig/xmrig-amd/releases/download/v2.5.2/xmrig-amd-2.5.2-win64.zip"
+    },
+    {
+        "Type":  "AMD",
+        "Path":  ".\\Bin\\CryptoNight-AMD-260b1\\xmrig-amd.exe",
+        "Arguments":  "\"--api-port 3336 -a cn-heavy -o $($Pools.CryptoNight-Heavy.Protocol)://$($Pools.CryptoNightHeavy.Host):$($Pools.CryptoNightHeavy.Port) -u $($Pools.CryptoNightHeavy.User) -p $($Pools.CryptoNightHeavy.Pass) --keepalive --nicehash --donate-level 1\"",
+        "HashRates":  {
+                          "CryptoNightHeavy":  "\"$(if ($Pools.CryptoNightHeavy.SSL) {0}else {$Stats.XmrigAmd260b1_CryptoNightHeavy_HashRate.Week 0.99})\""
+                      },
+        "API":  "XMRig",
+        "Port":  "3336",
+        "URI":  "https://github.com/xmrig/xmrig-amd/releases/download/v2.5.2/xmrig-amd-2.5.2-win64.zip"
+    }
+]

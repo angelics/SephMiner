@@ -6,19 +6,27 @@ $Uri = "https://github.com/fireice-uk/xmr-stak/releases/download/2.4.2/xmr-stak-
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
 $Port = 3336
 
+$Commands = [PSCustomObject]@{
+    "cryptonightV7" = "" #CryptoNightV7
+}
+
+$Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty Name | ForEach-Object {
+
+$Algorithm_Norm = Get-Algorithm $_
+
 ([PSCustomObject]@{
         pool_list       = @([PSCustomObject]@{
-                pool_address    = "$($Pools.CryptoNight.Host):$($Pools.CryptoNight.Port)"
-                wallet_address  = "$($Pools.CryptoNight.User)"
-                pool_password   = "$($Pools.CryptoNight.Pass)"
+                pool_address    = "$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port)"
+                wallet_address  = "$($Pools.$Algorithm_Norm.User)"
+                pool_password   = "$($Pools.$Algorithm_Norm.Pass)"
                 rig_id = ""
                 use_nicehash    = $true
-                use_tls         = $Pools.CryptoNight.SSL
+                use_tls         = $Pools.$Algorithm_Norm.SSL
                 tls_fingerprint = ""
                 pool_weight     = 1
             }
         )
-        currency        = "monero7"
+        currency        = if ($Pools.$Algorithm_Norm.Info) {"$($Pools.$Algorithm_Norm.Info -replace '^monero$', 'monero7')"} else {"$_"}
         call_timeout    = 10
         retry_time      = 10
         giveup_limit    = 0
@@ -36,14 +44,15 @@ $Port = 3336
         http_pass       = ""
         prefer_ipv4     = $true
     } | ConvertTo-Json -Depth 10
-) -replace "^{" -replace "}$" | Set-Content "$(Split-Path $Path)\$($Pools.CryptoNight.Name)_CryptoNight_$($Pools.CryptoNight.User)_Amd.txt" -Force -ErrorAction SilentlyContinue
+) -replace "^{" -replace "}$" | Set-Content "$(Split-Path $Path)\$($Pools.$Algorithm_Norm.Name)_$($Algorithm_Norm)_$($Pools.$Algorithm_Norm.User)_Amd.txt" -Force -ErrorAction SilentlyContinue
 
-[PSCustomObject]@{
+	[PSCustomObject]@{
     Type      = "AMD"
     Path      = $Path
-    Arguments = "-C $($Pools.CryptoNight.Name)_CryptoNight_$($Pools.CryptoNight.User)_Amd.txt -c $($Pools.CryptoNight.Name)_CryptoNight_$($Pools.CryptoNight.User)_Amd.txt --noUAC --noCPU --noNVIDIA"
-    HashRates = [PSCustomObject]@{CryptoNight = $Stats."$($Name)_CryptoNight_HashRate".Week * 0.98}
+    Arguments = "-C $($Pools.$Algorithm_Norm.Name)_$($Algorithm_Norm)_$($Pools.$Algorithm_Norm.User)_Amd.txt -c $($Pools.$Algorithm_Norm.Name)_$($Algorithm_Norm)_$($Pools.$Algorithm_Norm.User)_Amd.txt --noUAC --noCPU --noNVIDIA"
+    HashRates = [PSCustomObject]@{$Algorithm_Norm = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * 0.98}
     API       = "XMRig"
     Port      = $Port
     URI       = $Uri
+	}
 }

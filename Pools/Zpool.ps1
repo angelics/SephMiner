@@ -21,7 +21,7 @@ catch {
     return
 }
 
-if (($Zpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Measure-Object Name).Count -le 1) {
+if ((($Zpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Measure-Object Name).Count -le 1) -or (($ZpoolCoins_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Measure-Object Name).Count -le 1)) {
     Write-Log -Level Warn "Pool API ($Name) returned nothing. "
     return
 }
@@ -29,7 +29,7 @@ if (($Zpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | 
 $Zpool_Regions = "us"
 $Zpool_Currencies = @("BTC") + ($ZpoolCoins_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name) | Select-Object -Unique | Where-Object {Get-Variable $_ -ValueOnly -ErrorAction SilentlyContinue}
 
-$Zpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name | Where-Object {$ExcludeAlgorithms -inotcontains (Get-Algorithm $Zpool_Request.$_.name) -and $Zpool_Request.$_.hashrate -gt 0}  | ForEach-Object {
+$Zpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name | Where-Object {$ExcludeAlgorithm -inotcontains (Get-Algorithm $Zpool_Request.$_.name) -and $Zpool_Request.$_.hashrate -gt 0} | ForEach-Object {
     $Zpool_Host = "mine.zpool.ca"
     $Zpool_Port = $Zpool_Request.$_.port
     $Zpool_Algorithm = $Zpool_Request.$_.name
@@ -60,7 +60,7 @@ $Zpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Selec
         "m7m" {$Variety = 0.03}
         "neoscrypt" {$Variety = 0.06}
         "phi" {$Variety = 0.01}
-        "sha256t" {$Variety = 0.27} #recheck
+        "sha256t" {$Variety = 0.32} #recheck
         "skunk" {$Variety = 0.04}
         "timetravel" {$Variety = 0.05}
         "tribus" {$Variety = 0.01}
