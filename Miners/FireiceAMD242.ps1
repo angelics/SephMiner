@@ -7,7 +7,7 @@ $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty Ba
 $Port = 3336
 
 $Commands = [PSCustomObject]@{
-    "cryptonightV7" = "" #CryptoNightV7
+    "monero7" = "" #CryptoNightV7
 }
 
 $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty Name | ForEach-Object {
@@ -26,7 +26,7 @@ $Algorithm_Norm = Get-Algorithm $_
                 pool_weight     = 1
             }
         )
-        currency        = if ($Pools.$Algorithm_Norm.Info) {"$($Pools.$Algorithm_Norm.Info -replace '^monero$', 'monero7')"} else {"$_"}
+        currency        = "$_"
         call_timeout    = 10
         retry_time      = 10
         giveup_limit    = 0
