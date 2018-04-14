@@ -60,7 +60,7 @@ $Zpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Selec
         "m7m" {$Variety = 0.03}
         "neoscrypt" {$Variety = 0.06}
         "phi" {$Variety = 0.01}
-        "sha256t" {$Variety = 0.32} #recheck
+        "sha256t" {$Variety = 0.41} #recheck
         "skunk" {$Variety = 0.04}
         "timetravel" {$Variety = 0.05}
         "tribus" {$Variety = 0.01}
