@@ -24,6 +24,11 @@
       "BTC": "$Wallet",
       "Worker": "$WorkerName",
 	  "ExcludeAlgorithm":  ["qubit", "blakecoin", "groestl", "nist5", "sib", "scrypt", "x11", "myrgr", "skein", "sha256", "x13", "quark", "decred", "lbry", "x14", "keccak"]
+    },
+	"Zergpool1": {
+      "RVN": "RA4LPBCywTDm18fvNxD7gVNEt3VVYKCd5L",
+      "Worker": "$WorkerName",
+	  "ExcludeAlgorithm":  ["qubit", "blakecoin", "groestl", "nist5", "sib", "scrypt", "x11", "myrgr", "skein", "sha256", "x13", "quark"]
     }
   },
   "Miners": {

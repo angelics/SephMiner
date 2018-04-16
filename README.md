@@ -19,6 +19,8 @@ multipoolminer 95d4193 with bug fixed or improvements commits
 
 * Removed auto-update.
 
+* If you are "upgrading" from master copy, remove all folders except Bin , Stats and OC. Run resetprofit after.
+
 * **Default donation 24 minutes, minimum 10**
 ```
 24mins = 1.667%

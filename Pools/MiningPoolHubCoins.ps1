@@ -42,10 +42,10 @@ $MiningPoolHubCoins_Request.return | Where-Object {$ExcludeCoin -inotcontains $_
     switch ($MiningPoolHubCoins_Coin) {
         "bitcoingold" {$Variety = 0.06}
         "feathercoin" {$Variety = 0.01}
-        "Globalboosty" {$Variety = 0.14} #recheck
+        "Globalboosty" {$Variety = 0.14}
         "monacoin" {$Variety = 0.03}
         "monero" {$Variety = 0.01}
-        "musicoin" {$Variety = 0.01} #recheck
+        "musicoin" {$Variety = 0.01}
         "MyriadcoinYescrypt" {$Variety = 0.03}
         "vertcoin" {$Variety = 0.05}
         "zcash" {$Variety = 0.01}

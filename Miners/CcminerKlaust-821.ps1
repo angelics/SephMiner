@@ -5,7 +5,7 @@ $Uri = "https://github.com/KlausT/ccminer/releases/download/8.21/ccminer-821-cud
 
 $Commands = [PSCustomObject]@{
     #"blake" = "" #Blake
-    "c11" = "" #X11
+    #"c11" = "" #X11 CcminerPolytimos-2 better
     #"deep" = "" #Deepcoin
     #"dmd-gr" = "" #Diamond-Groestl
     #"fresh" = "" #Freshcoin

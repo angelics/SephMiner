@@ -12,7 +12,6 @@ $Commands = [PSCustomObject]@{
     "keccak" = @() #keccak
     #"lyra2rev2" = @() #Lyra2RE2 ccmineralexis78 better
     #"neoscrypt" = @() #NeoScrypt palginnvidia better
-    #"nist5" = @() #Nist5 ccmineralexis78 better
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName

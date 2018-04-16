@@ -1,10 +1,12 @@
 ﻿using module ..\Include.psm1
 
-$Path = ".\Bin\AMD-x16r-555\sgminer.exe"
-$Uri = "https://github.com/brian112358/sgminer-x16r/releases/download/v0.3.1-dev/sgminer-x16r-v0.3.1-dev-windows.zip"
+$Path = ".\Bin\AMD-avermore-11\sgminer.exe"
+$Uri = "https://github.com/brian112358/avermore-miner/releases/download/v1.1/avermore-v1.1-windows.zip"
 
 $Commands = [PSCustomObject]@{
     "x16r" = " --intensity 18" #Raven increase 19,21
+    "x16s" = "" #x16s
+    "xevan" = "" #Xevan
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
@@ -14,7 +16,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
         Type = "AMD"
         Path = $Path
         Arguments = "--api-listen -k $_ -o $($Pools.(Get-Algorithm $_).Protocol)://$($Pools.(Get-Algorithm $_).Host):$($Pools.(Get-Algorithm $_).Port) -u $($Pools.(Get-Algorithm $_).User) -p $($Pools.(Get-Algorithm $_).Pass)$($Commands.$_) --text-only --gpu-platform $([array]::IndexOf(([OpenCl.Platform]::GetPlatformIDs() | Select-Object -ExpandProperty Vendor), 'Advanced Micro Devices, Inc.'))"
-        HashRates = [PSCustomObject]@{(Get-Algorithm $_) = $Stats."$($Name)_$(Get-Algorithm $_)_HashRate".Week}
+        HashRates = [PSCustomObject]@{(Get-Algorithm $_) = $Stats."$($Name)_$(Get-Algorithm $_)_HashRate".Week * 0.99}
         API = "Xgminer"
         Port = 4028
         URI = $Uri

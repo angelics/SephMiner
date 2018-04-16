@@ -1,11 +1,10 @@
 ﻿using module ..\Include.psm1
 
-$Path = ".\Bin\NVIDIA-suprminer-16\ccminer.exe"
-$Uri = "https://github.com/ocminer/suprminer/releases/download/1.6/suprminer-1.6.7z"
+$Path = ".\Bin\NVIDIA-RavencoinMiner-25\ccminer.exe"
+$Uri = "https://github.com/Ravencoin-Miner/Ravencoin/releases/download/v2.5/Ravencoin.Miner.v2.5.zip"
 
 $Commands = [PSCustomObject]@{
-    "x16s" = " -N 3" #X16s
-    #"x16r" = " -N 3" #X16r
+    "x16r" = "" #Raven
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
