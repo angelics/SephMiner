@@ -65,7 +65,7 @@ set algorithm=x16r
 set ExcludeAlgorithm=ethash2gb
 set ExcludeMinerName=ccminerlyra2re2,prospector
 set switchingprevention=2
-set interval=600
+set interval=480
 
 set command=%cur%\SephMiner.ps1 -wallet %wallet% -username %username% -workername %workername% -region %region% -currency %currency%,btc -type %type% -poolname %poolname% -algorithm %algorithm% -ExcludeAlgorithm %ExcludeAlgorithm% -ExcludeMinerName %ExcludeMinerName% -donate 24 -switchingprevention %switchingprevention% -interval %interval% -ExcludePoolName %ExcludePoolName%
 title  %title%

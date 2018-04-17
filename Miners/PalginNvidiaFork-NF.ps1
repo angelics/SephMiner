@@ -1,10 +1,10 @@
-﻿using module ..\Include.psm1
+using module ..\Include.psm1
 
-$Path = ".\Bin\NVIDIA-RavencoinMiner-25\ccminer.exe"
-$Uri = "https://github.com/Ravencoin-Miner/Ravencoin/releases/download/v2.5/Ravencoin.Miner.v2.5.zip"
+$Path = ".\Bin\\NeoScrypt-Palginfork-NF\\hsrminer_neoscrypt_fork_hp.exe"
+$Uri = "https://mega.nz/#!6GZ2xRYY!Xw9drYz3q7YTr0G1_DsWhWml96YwqdxyL_Ynm9_jMGg"
 
 $Commands = [PSCustomObject]@{
-    "x16r" = " -i 21" #Raven
+    "neoscrypt" = "" #NeoScrypt
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
@@ -13,7 +13,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
     [PSCustomObject]@{
         Type = "NVIDIA"
         Path = $Path
-        Arguments = "-a $_ -o $($Pools.(Get-Algorithm $_).Protocol)://$($Pools.(Get-Algorithm $_).Host):$($Pools.(Get-Algorithm $_).Port) -u $($Pools.(Get-Algorithm $_).User) -p $($Pools.(Get-Algorithm $_).Pass)$($Commands.$_)"
+        Arguments = "-o $($Pools.(Get-Algorithm $_).Protocol)://$($Pools.(Get-Algorithm $_).Host):$($Pools.(Get-Algorithm $_).Port) -u $($Pools.(Get-Algorithm $_).User) -p $($Pools.(Get-Algorithm $_).Pass)$($Commands.$_)"
         HashRates = [PSCustomObject]@{(Get-Algorithm $_) = $Stats."$($Name)_$(Get-Algorithm $_)_HashRate".Week}
         API = "Ccminer"
         Port = 4068

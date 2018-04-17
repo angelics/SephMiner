@@ -5,7 +5,7 @@ $Uri = "https://github.com/ocminer/suprminer/releases/download/1.6/suprminer-1.6
 
 $Commands = [PSCustomObject]@{
     "x16s" = " -N 3" #X16s
-    #"x16r" = " -N 3" #X16r
+    #"x16r" = " -i 21 -N 3" #X16r
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName

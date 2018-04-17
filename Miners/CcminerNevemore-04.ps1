@@ -4,7 +4,7 @@ $Path = ".\Bin\NVIDIA-Nevermore-04\ccminer.exe"
 $Uri = "https://github.com/nemosminer/ccminerx16r-x16s/releases/download/x16rx16sv0.4/ccminerx16rx16sv0.4.zip"
 
 $Commands = [PSCustomObject]@{
-    #"x16r" = " -N 3" #Raven ravenminer faster
+    #"x16r" = " -i 21 -N 3" #Raven ravenminer faster
     "x16s" = " -N 3" #Pigeon
 }
 

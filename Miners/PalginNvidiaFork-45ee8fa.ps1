@@ -1,6 +1,6 @@
 using module ..\Include.psm1
 
-$Path = ".\Bin\\NeoScrypt-Palginfork-6b4a981\\hsrminer_neoscrypt_fork_hp.exe"
+$Path = ".\Bin\\NeoScrypt-Palginfork-45ee8fa\\hsrminer_neoscrypt_fork_hp.exe"
 $Uri = "https://github.com/justaminer/hsrm-fork/raw/master/hsrminer_neoscrypt_fork_hp.zip"
 
 $Commands = [PSCustomObject]@{
