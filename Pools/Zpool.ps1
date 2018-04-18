@@ -47,29 +47,30 @@ $Zpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Selec
         "sha256t" {$Divisor *= 1000}
     }	
 	
-	$Variety = 0
-	
+    $Variety = 0
+
     switch ($Zpool_Algorithm_Norm) {
-        "blake2s" {$Variety = 0.02}
-        "c11" {$Variety = 0.01}
+        "blake2s" {$Variety = 0.09} #ninja +1
+        #"bitcore" {$Variety = 0}
+        "c11" {$Variety = 0.06}
         "equihash" {$Variety = 0.03}
-        "hmq1725" {$Variety = 0.11}
+        "hmq1725" {$Variety = 0.09}
+        #"hsr" {$Variety = 0}
         "keccak" {$Variety = 0.02}
-        "lyra2v2" {$Variety = 0.02}
-        "lyra2z" {$Variety = 0.03}
-        "m7m" {$Variety = 0.03}
-        "neoscrypt" {$Variety = 0.06}
+        #"keccakc" {$Variety = 0}
+        "lyra2v2" {$Variety = 0.05} #ninja +1
+        #"lyra2z" {$Variety = 0}
+        "neoscrypt" {$Variety = 0.06} #ninja +1
         "phi" {$Variety = 0.01}
-        "sha256t" {$Variety = 0.41}
-        "skunk" {$Variety = 0.04}
-        "timetravel" {$Variety = 0.05}
+        "sha256t" {$Variety = 0.39}
+        "timetravel" {$Variety = 0.04}
         "tribus" {$Variety = 0.01}
         "x11evo" {$Variety = 0.01}
-        "x17" {$Variety = 0.01}
-        "xevan" {$Variety = 0.15}
-        "yescrypt" {$Variety = 0.24}
-    }	
-
+        "x17" {$Variety = 1} #mkt 12days
+        "xevan" {$Variety = 0.14}
+        "yescrtpt" {$Variety = 0.25}
+    }
+	
     if ((Get-Stat -Name "$($Name)_$($Zpool_Algorithm_Norm)_Profit") -eq $null) {$Stat = Set-Stat -Name "$($Name)_$($Zpool_Algorithm_Norm)_Profit" -Value ([Double]$Zpool_Request.$_.estimate_last24h / $Divisor * (1-($Zpool_Request.$_.fees/100)) * (1-$Variety)) -Duration (New-TimeSpan -Days 1)}
     else {$Stat = Set-Stat -Name "$($Name)_$($Zpool_Algorithm_Norm)_Profit" -Value ([Double]$Zpool_Request.$_.estimate_current / $Divisor * (1-($Zpool_Request.$_.fees/100)) * (1-$Variety)) -Duration $StatSpan -ChangeDetection $true}
 
