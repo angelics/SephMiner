@@ -26,6 +26,14 @@ if (($Zergpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore
     return
 }
 
+try {
+    $Zergpool_Variance = Invoke-RestMethod "https://semitest.000webhostapp.com/variance/zergpool.variance.txt" -UseBasicParsing -TimeoutSec 10 -ErrorAction Stop
+}
+catch {
+    Write-Log -Level Warn "Pool Variance ($Name) has failed. "
+    return
+}
+
 $Zergpool_Regions = "us"
 $Zergpool_Currencies = @("BTC") + ($ZpoolCoins_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name) | Select-Object -Unique | Where-Object {Get-Variable $_ -ValueOnly -ErrorAction SilentlyContinue}
 
@@ -49,27 +57,15 @@ $Zergpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Se
 		"yescryptr16"{$Divisor /= 1000}
     }
 	
-    $Variety = 0
-	
-    switch ($ZergPool_Algorithm_Norm) {
-		"c11" {$Variety = 0.05}
-		"hmq1725" {$Variety = 1}
-		"lyra2v2" {$Variety = 0.04}
-		"lyra2z" {$Variety = 0.03}
-		"neoscrypt" {$Variety = 0.06}
-		"skunk" {$Variety = 0.01}
-		"timetravel" {$Variety = 0.04}
-		"phi" {$Variety = 0.01}
-		"x16s" {$Variety = 0.01}
-		"x16r" {$Variety = 0.01}
-		"x17" {$Variety = 0.03}
-		"xevan" {$Variety = 0.01}
-		"yescrypt" {$Variety = 0.22}
-		"yescryptR16" {$Variety = 0.03}
+    if ($Zergpool_Variance -and $Zergpool_Variance."$Zergpool_Algorithm_Norm") {
+    $Variance = 1 - $Zergpool_Variance."$Zergpool_Algorithm_Norm"
+    }
+    else {
+    $Variance = 1
     }
 
-    if ((Get-Stat -Name "$($Name)_$($Zergpool_Algorithm_Norm)_Profit") -eq $null) {$Stat = Set-Stat -Name "$($Name)_$($Zergpool_Algorithm_Norm)_Profit" -Value ([Double]$Zergpool_Request.$_.estimate_last24h / $Divisor * (1-($Zergpool_Request.$_.fees/100)) * (1-$Variety)) -Duration (New-TimeSpan -Days 1)}
-    else {$Stat = Set-Stat -Name "$($Name)_$($Zergpool_Algorithm_Norm)_Profit" -Value ([Double]$Zergpool_Request.$_.estimate_current / $Divisor * (1-($Zergpool_Request.$_.fees/100)) * (1-$Variety)) -Duration $StatSpan -ChangeDetection $true}
+    if ((Get-Stat -Name "$($Name)_$($Zergpool_Algorithm_Norm)_Profit") -eq $null) {$Stat = Set-Stat -Name "$($Name)_$($Zergpool_Algorithm_Norm)_Profit" -Value ([Double]$Zergpool_Request.$_.estimate_last24h / $Divisor * (1-($Zergpool_Request.$_.fees/100)) * $Variance) -Duration (New-TimeSpan -Days 1)}
+    else {$Stat = Set-Stat -Name "$($Name)_$($Zergpool_Algorithm_Norm)_Profit" -Value ([Double]$Zergpool_Request.$_.estimate_current / $Divisor * (1-($Zergpool_Request.$_.fees/100)) * $Variance) -Duration $StatSpan -ChangeDetection $true}
 
     $Zergpool_Regions | ForEach-Object {
         $Zergpool_Region = $_

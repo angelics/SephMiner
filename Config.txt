@@ -27,6 +27,7 @@
     },
 	"Zergpool1": {
       "RVN": "RA4LPBCywTDm18fvNxD7gVNEt3VVYKCd5L",
+      "LTC": "Lex2wqKA44ZGkBvHhWE3STrqicbCdGG125",
       "Worker": "$WorkerName",
 	  "ExcludeAlgorithm":  ["qubit", "blakecoin", "groestl", "nist5", "sib", "scrypt", "x11", "myrgr", "skein", "sha256", "x13", "quark"]
     }

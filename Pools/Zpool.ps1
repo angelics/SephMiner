@@ -26,6 +26,14 @@ if ((($Zpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore |
     return
 }
 
+try {
+    $Zpool_Variance = Invoke-RestMethod "https://semitest.000webhostapp.com/variance/zpool.variance.txt" -UseBasicParsing -TimeoutSec 10 -ErrorAction Stop
+}
+catch {
+    Write-Log -Level Warn "Pool Variance ($Name) has failed. "
+    return
+}
+
 $Zpool_Regions = "us"
 $Zpool_Currencies = @("BTC") + ($ZpoolCoins_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name) | Select-Object -Unique | Where-Object {Get-Variable $_ -ValueOnly -ErrorAction SilentlyContinue}
 
@@ -47,32 +55,15 @@ $Zpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Selec
         "sha256t" {$Divisor *= 1000}
     }	
 	
-    $Variety = 0
-
-    switch ($Zpool_Algorithm_Norm) {
-        "blake2s" {$Variety = 0.09} #ninja +1
-        #"bitcore" {$Variety = 0}
-        "c11" {$Variety = 0.06}
-        "equihash" {$Variety = 0.03}
-        "hmq1725" {$Variety = 0.09}
-        #"hsr" {$Variety = 0}
-        "keccak" {$Variety = 0.02}
-        #"keccakc" {$Variety = 0}
-        "lyra2v2" {$Variety = 0.05} #ninja +1
-        #"lyra2z" {$Variety = 0}
-        "neoscrypt" {$Variety = 0.06} #ninja +1
-        "phi" {$Variety = 0.01}
-        "sha256t" {$Variety = 0.39}
-        "timetravel" {$Variety = 0.04}
-        "tribus" {$Variety = 0.01}
-        "x11evo" {$Variety = 0.01}
-        "x17" {$Variety = 1} #mkt 12days
-        "xevan" {$Variety = 0.14}
-        "yescrtpt" {$Variety = 0.25}
+	if ($Zpool_Variance -and $Zpool_Variance."$Zpool_Algorithm_Norm") {
+    $Variance = 1 - $Zpool_Variance."$Zpool_Algorithm_Norm"
+    }
+    else {
+    $Variance = 1
     }
 	
-    if ((Get-Stat -Name "$($Name)_$($Zpool_Algorithm_Norm)_Profit") -eq $null) {$Stat = Set-Stat -Name "$($Name)_$($Zpool_Algorithm_Norm)_Profit" -Value ([Double]$Zpool_Request.$_.estimate_last24h / $Divisor * (1-($Zpool_Request.$_.fees/100)) * (1-$Variety)) -Duration (New-TimeSpan -Days 1)}
-    else {$Stat = Set-Stat -Name "$($Name)_$($Zpool_Algorithm_Norm)_Profit" -Value ([Double]$Zpool_Request.$_.estimate_current / $Divisor * (1-($Zpool_Request.$_.fees/100)) * (1-$Variety)) -Duration $StatSpan -ChangeDetection $true}
+    if ((Get-Stat -Name "$($Name)_$($Zpool_Algorithm_Norm)_Profit") -eq $null) {$Stat = Set-Stat -Name "$($Name)_$($Zpool_Algorithm_Norm)_Profit" -Value ([Double]$Zpool_Request.$_.estimate_last24h / $Divisor * (1-($Zpool_Request.$_.fees/100)) * $Variance) -Duration (New-TimeSpan -Days 1)}
+    else {$Stat = Set-Stat -Name "$($Name)_$($Zpool_Algorithm_Norm)_Profit" -Value ([Double]$Zpool_Request.$_.estimate_current / $Divisor * (1-($Zpool_Request.$_.fees/100)) * $Variance) -Duration $StatSpan -ChangeDetection $true}
 
     $Zpool_Regions | ForEach-Object {
         $Zpool_Region = $_

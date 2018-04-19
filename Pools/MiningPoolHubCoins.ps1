@@ -25,6 +25,14 @@ if (($MiningPoolHubCoins_Request.return | Measure-Object).Count -le 1) {
     return
 }
 
+try {
+    $MiningPoolHubCoins_Variance = Invoke-RestMethod "https://semitest.000webhostapp.com/variance/mph.variance.txt" -UseBasicParsing -TimeoutSec 10 -ErrorAction Stop
+}
+catch {
+    Write-Log -Level Warn "Pool Variance ($Name) has failed. "
+    return
+}
+
 $MiningPoolHubCoins_Regions = "europe", "us-east", "asia"
 
 $MiningPoolHubCoins_Request.return | Where-Object {$ExcludeCoin -inotcontains $_.coin_name -and ($Coin.count -eq 0 -or $Coin -icontains $_.coin_name) -and $_.pool_hash -gt 0} | Where-Object {$ExcludeAlgorithm -inotcontains (Get-Algorithm $_.algo)} |ForEach-Object {
@@ -37,24 +45,14 @@ $MiningPoolHubCoins_Request.return | Where-Object {$ExcludeCoin -inotcontains $_
 
     $Divisor = 1000000000
 	
-	$Variety = 0
-	
-    switch ($MiningPoolHubCoins_Coin) {
-        "bitcoingold" {$Variety = 0.06}
-        "feathercoin" {$Variety = 0.01}
-        "Globalboosty" {$Variety = 0.14}
-        "monacoin" {$Variety = 0.03}
-        "monero" {$Variety = 0.01}
-        "musicoin" {$Variety = 0.01}
-        "MyriadcoinYescrypt" {$Variety = 0.03}
-        "vertcoin" {$Variety = 0.05}
-        "zcash" {$Variety = 0.01}
-        "zclassic" {$Variety = 0.01}
-        "zcoin" {$Variety = 0.05}
-        "zencash" {$Variety = 0.05}
+	if ($MiningPoolHubCoins_Variance -and $MiningPoolHubCoins_Variance."$Zpool_Algorithm_Norm") {
+    $Variance = 1 - $MiningPoolHubCoins_Variance."$Zpool_Algorithm_Norm"
+    }
+    else {
+    $Variance = 1
     }	
 
-	$Stat = Set-Stat -Name "$($Name)_$($MiningPoolHubCoins_Coin)_Profit" -Value ([Double]$_.profit / $Divisor * (1-(0.9/100)) * (1-$Variety)) -Duration $StatSpan -ChangeDetection $true
+	$Stat = Set-Stat -Name "$($Name)_$($MiningPoolHubCoins_Coin)_Profit" -Value ([Double]$_.profit / $Divisor * (1-(0.9/100)) * $Variance) -Duration $StatSpan -ChangeDetection $true
 	
     $MiningPoolHubCoins_Regions | ForEach-Object {
         $MiningPoolHubCoins_Region = $_
