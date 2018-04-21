@@ -4,7 +4,7 @@ $Path = ".\Bin\NVIDIA-TPruvot-225\ccminer-x64.exe"
 $Uri = "https://github.com/tpruvot/ccminer/releases/download/2.2.5-tpruvot/ccminer-x64-2.2.5-cuda9.7z"
 
 $Commands = [PSCustomObject]@{
-    "bitcore" = " -N 3" #Bitcore
+    #"bitcore" = " -N 3" #Bitcore CcminerZEnemy-108 faster
     #"blake2s" = "" #Blake2s excavatornvidia2 better
     "bmw" = "" #bmw
     #"c11" = "" #C11 ccmineralexis78 better
@@ -32,7 +32,7 @@ $Commands = [PSCustomObject]@{
     #"sha256t" = "" #sha256t CcminerTpruvotcuda-9224 better
     "skein2" = "" #Skein2
     #"skunk" = "" #Skunk ccminerskunk better
-    "timetravel" = " -i 25" #Timetravel
+    #"timetravel" = " -i 24.5" #Timetravel
     #"tribus" = "" #Tribus CcminerTpruvotcuda9 better
 	#"x11evo" = "" #X11evo ccmineralexis78 better
     "x12" = "" #X12

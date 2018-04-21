@@ -1,7 +1,7 @@
 ﻿using module ..\Include.psm1
 
-$Path = ".\Bin\AMD-x17-01\sgminer.exe"
-$Uri = "https://mega.nz/#!vnJ0UCaL!8bcpqNl8tP-uzvRg9C042ArmaGJXzrlhfVVXgkDgqY0"
+$Path = ".\Bin\AMD-x17-02\sgminer.exe"
+$Uri = "https://mega.nz/#F!v6JSXBqK!2jQLwNjgaIV3IoN8OHgfzw"
 
 $Commands = [PSCustomObject]@{
     "x17" = " --gpu-threads 2 --worksize 256 --intensity 21" #x17
