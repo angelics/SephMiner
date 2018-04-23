@@ -25,6 +25,14 @@ if (($MiningPoolHub_Request.return | Measure-Object).Count -le 1) {
     return
 }
 
+try {
+    $MiningPoolHub_Variance = Invoke-RestMethod "https://semitest.000webhostapp.com/variance/mph.variance.txt" -UseBasicParsing -TimeoutSec 10 -ErrorAction SilentlyContinue
+}
+catch {
+    Write-Log -Level Warn "Pool Variance ($Name) has failed. "
+    return
+}
+
 $MiningPoolHub_Regions = "europe", "us-east", "asia"
 
 $MiningPoolHub_Request.return | Where-Object {$ExcludeAlgorithm -inotcontains (Get-Algorithm $_.algo)} | Where-Object {$ExcludeCoin -inotcontains $_.current_mining_coin -and ($Coin.count -eq 0 -or $Coin -icontains $_.current_mining_coin)} | ForEach-Object {
@@ -33,10 +41,13 @@ $MiningPoolHub_Request.return | Where-Object {$ExcludeAlgorithm -inotcontains (G
     $MiningPoolHub_Algorithm = $_.algo
     $MiningPoolHub_Algorithm_Norm = Get-Algorithm $MiningPoolHub_Algorithm
     $MiningPoolHub_Coin = (Get-Culture).TextInfo.ToTitleCase(($_.current_mining_coin -replace "-", " " -replace "_", " ")) -replace " "
+	$MiningPoolHub_Fee = 0.9
 
     $Divisor = 1000000000
+	
+	$MiningPoolHub_Fees = 1-($MiningPoolHub_Fee/100)
 
-    $Stat = Set-Stat -Name "$($Name)_$($MiningPoolHub_Algorithm_Norm)_Profit" -Value ([Double]$_.profit / $Divisor * (1-(0.9/100))) -Duration $StatSpan -ChangeDetection $true
+    $Stat = Set-Stat -Name "$($Name)_$($MiningPoolHub_Algorithm_Norm)_Profit" -Value ([Double]$_.profit / $Divisor * $MiningPoolHub_Fees) -Duration $StatSpan -ChangeDetection $true
 	
     $MiningPoolHub_Regions | ForEach-Object {
         $MiningPoolHub_Region = $_
@@ -58,6 +69,7 @@ $MiningPoolHub_Request.return | Where-Object {$ExcludeAlgorithm -inotcontains (G
                     Region        = $MiningPoolHub_Region_Norm
                     SSL           = $false
                     Updated       = $Stat.Updated
+					Fees          = $MiningPoolHub_Fee
                 }
                 [PSCustomObject]@{
                     Algorithm     = $MiningPoolHub_Algorithm_Norm
@@ -73,6 +85,7 @@ $MiningPoolHub_Request.return | Where-Object {$ExcludeAlgorithm -inotcontains (G
                     Region        = $MiningPoolHub_Region_Norm
                     SSL           = $true
                     Updated       = $Stat.Updated
+					Fees          = $MiningPoolHub_Fee
                 }
             }
             else {
@@ -90,6 +103,7 @@ $MiningPoolHub_Request.return | Where-Object {$ExcludeAlgorithm -inotcontains (G
                     Region        = $MiningPoolHub_Region_Norm
                     SSL           = $false
                     Updated       = $Stat.Updated
+					Fees          = $MiningPoolHub_Fee
                 }
             
                 if ($MiningPoolHub_Algorithm_Norm -eq "Equihash") {
@@ -107,6 +121,7 @@ $MiningPoolHub_Request.return | Where-Object {$ExcludeAlgorithm -inotcontains (G
                         Region        = $MiningPoolHub_Region_Norm
                         SSL           = $true
                         Updated       = $Stat.Updated
+						Fees          = $MiningPoolHub_Fee
                     }
                 }
             }

@@ -27,7 +27,7 @@ if ((($Zpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore |
 }
 
 try {
-    $Zpool_Variance = Invoke-RestMethod "https://semitest.000webhostapp.com/variance/zpool.variance.txt" -UseBasicParsing -TimeoutSec 10 -ErrorAction Stop
+    $Zpool_Variance = Invoke-RestMethod "https://semitest.000webhostapp.com/variance/zpool.variance.txt" -UseBasicParsing -TimeoutSec 10 -ErrorAction SilentlyContinue
 }
 catch {
     Write-Log -Level Warn "Pool Variance ($Name) has failed. "
@@ -42,6 +42,7 @@ $Zpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Selec
     $Zpool_Port = $Zpool_Request.$_.port
     $Zpool_Algorithm = $Zpool_Request.$_.name
     $Zpool_Algorithm_Norm = Get-Algorithm $Zpool_Algorithm
+	$Zpool_Fee = $Zpool_Request.$_.fees
     $Zpool_Coin = ""
 
     $Divisor = 1000000
@@ -55,6 +56,8 @@ $Zpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Selec
         "sha256t" {$Divisor *= 1000}
     }	
 	
+	$Zpool_Fees = 1-($Zpool_Fee/100)
+	
 	if ($Zpool_Variance -and $Zpool_Variance."$Zpool_Algorithm_Norm") {
     $Variance = 1 - $Zpool_Variance."$Zpool_Algorithm_Norm"
     }
@@ -62,8 +65,8 @@ $Zpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Selec
     $Variance = 1
     }
 	
-    if ((Get-Stat -Name "$($Name)_$($Zpool_Algorithm_Norm)_Profit") -eq $null) {$Stat = Set-Stat -Name "$($Name)_$($Zpool_Algorithm_Norm)_Profit" -Value ([Double]$Zpool_Request.$_.estimate_last24h / $Divisor * (1-($Zpool_Request.$_.fees/100)) * $Variance) -Duration (New-TimeSpan -Days 1)}
-    else {$Stat = Set-Stat -Name "$($Name)_$($Zpool_Algorithm_Norm)_Profit" -Value ([Double]$Zpool_Request.$_.estimate_current / $Divisor * (1-($Zpool_Request.$_.fees/100)) * $Variance) -Duration $StatSpan -ChangeDetection $true}
+    if ((Get-Stat -Name "$($Name)_$($Zpool_Algorithm_Norm)_Profit") -eq $null) {$Stat = Set-Stat -Name "$($Name)_$($Zpool_Algorithm_Norm)_Profit" -Value ([Double]$Zpool_Request.$_.estimate_last24h / $Divisor * $Zpool_Fees * $Variance) -Duration (New-TimeSpan -Days 1)}
+    else {$Stat = Set-Stat -Name "$($Name)_$($Zpool_Algorithm_Norm)_Profit" -Value ([Double]$Zpool_Request.$_.estimate_current / $Divisor * $Zpool_Fees * $Variance) -Duration $StatSpan -ChangeDetection $true}
 
     $Zpool_Regions | ForEach-Object {
         $Zpool_Region = $_
@@ -84,6 +87,7 @@ $Zpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Selec
                 Region        = $Zpool_Region_Norm
                 SSL           = $false
                 Updated       = $Stat.Updated
+                Fees          = $Zpool_Fee
             }
         }
     }
