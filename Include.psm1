@@ -369,13 +369,13 @@ function Start-SubProcess {
     do {Start-Sleep 1; $JobOutput = Receive-Job $Job}
     while ($JobOutput -eq $null)
 	
-	if ($this.CName -ne $null) {
-	$ProcessId = (get-ciminstance win32_process | ? parentprocessid -eq $JobOutput.ProcessId | ? name -eq $this.CName | select-object -expandproperty processid)
-    $Process = Get-Process | Where-Object Id -EQ $ProcessId
-	}
-	else {
-	$Process = Get-Process | Where-Object Id -EQ $JobOutput.ProcessId
-	}
+    if ($this.CName -ne $null) {
+        $ProcessId = (get-ciminstance win32_process | ? parentprocessid -eq $JobOutput.ProcessId | ? name -eq $this.CName | select-object -expandproperty processid)
+        $Process = Get-Process | Where-Object Id -EQ $ProcessId
+        }
+        else {
+        $Process = Get-Process | Where-Object Id -EQ $JobOutput.ProcessId
+        }
     $Process.Handle | Out-Null
     $Process
 

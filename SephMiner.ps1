@@ -627,17 +627,17 @@ while ($true) {
         @{Label = "Variance"; Expression = {$_.Pools.PSObject.Properties.Value | ForEach-Object  {"$($_.Variance)"}}; Align='center'}
     ) | Out-Host
 
-	Write-Host "--------------------------------------------------------------------------------"
-	Write-Host " This is a free project feel free to donate be much appreciated:"
+    Write-Host "--------------------------------------------------------------------------------"
+    Write-Host " This is a free project feel free to donate be much appreciated:"
     Write-Host " Thank you aaronsace for MultiPoolMiner"
     Write-Host " Default donation 24 minutes per 24 hour" -foregroundcolor "Yellow"
-	if ($Config.Donate -lt 24) {
+    if ($Config.Donate -lt 24) {
     Write-Host " Current donation = $($Config.Donate) mins" -foregroundcolor "Red"
     Write-Host " i see what u did ther. Sad but understandable :)" -foregroundcolor "Red"
-	Write-Log " Donation = $($Config.Donate) mins"
-	}
-	Write-Host " Close this immediately if you do not agree" -foregroundcolor "Red"
-	Write-Host " Thank you for choosing SephMiner"
+    Write-Log " Donation = $($Config.Donate) mins"
+    }
+    Write-Host " Close this immediately if you do not agree" -foregroundcolor "Red"
+    Write-Host " Thank you for choosing SephMiner"
     Write-Host "--------------------------------------------------------------------------------"
 	
 	

@@ -43,7 +43,7 @@ $YiiMP_Currencies | Where-Object {$ExcludeAlgorithm -inotcontains (Get-Algorithm
         "blakecoin" {$Divisor *= 1000}
     }
 
-	$YiiMP_Fees = 1-($YiiMP_Fee/100)
+    $YiiMP_Fees = 1-($YiiMP_Fee/100)
 	
     $Stat = Set-Stat -Name "$($Name)_$($YiiMP_Algorithm_Norm)_Profit" -Value ([Double]$YiiMPCoins_Request.$_.estimate / $Divisor  * $YiiMP_Fees) -Duration $StatSpan -ChangeDetection $true
 

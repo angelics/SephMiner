@@ -42,7 +42,7 @@ $Zpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Selec
     $Zpool_Port = $Zpool_Request.$_.port
     $Zpool_Algorithm = $Zpool_Request.$_.name
     $Zpool_Algorithm_Norm = Get-Algorithm $Zpool_Algorithm
-	$Zpool_Fee = $Zpool_Request.$_.fees
+    $Zpool_Fee = $Zpool_Request.$_.fees
     $Zpool_Coin = ""
 
     $Divisor = 1000000
@@ -56,23 +56,23 @@ $Zpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Selec
         "sha256t" {$Divisor *= 1000}
     }	
 	
-	$Zpool_Fees = 1-($Zpool_Fee/100)
+    $Zpool_Fees = 1-($Zpool_Fee/100)
 	
-	$Variance = 1
+    $Variance = 1
 
-	$Variance = 1 - $Zpool_Variance."$Zpool_Algorithm_Norm"
+    $Variance = 1 - $Zpool_Variance."$Zpool_Algorithm_Norm"
 	
-	if($CREA -and $Zpool_Algorithm_Norm -eq "Keccakc"){$Variance = 1}
-	if($OC -and $Zpool_Algorithm_Norm -eq "sha256t"){$Variance = 1}
-	if($MAX -and $Zpool_Algorithm_Norm -eq "Keccak"){$Variance = 1}
-	if($XZC -and $Zpool_Algorithm_Norm -eq "lyra2z"){$Variance = 1}
-	if($BSD -and $Zpool_Algorithm_Norm -eq "xevan"){$Variance = 1}
-	if($HSR -and $Zpool_Algorithm_Norm -eq "hsr"){$Variance = 1}
-	if($ESP -and $Zpool_Algorithm_Norm -eq "hmq1725"){$Variance = 1}
-	if($XRE -and $Zpool_Algorithm_Norm -eq "x11evo"){$Variance = 1}
-	if($LUX -and $Zpool_Algorithm_Norm -eq "phi"){$Variance = 1}
-	if($BTX -and $Zpool_Algorithm_Norm -eq "bitcore"){$Variance = 1}
-	if($MAC -and $Zpool_Algorithm_Norm -eq "timetravel"){$Variance = 1}
+    if($CREA -and $Zpool_Algorithm_Norm -eq "Keccakc"){$Variance = 1}
+    if($OC -and $Zpool_Algorithm_Norm -eq "sha256t"){$Variance = 1}
+    if($MAX -and $Zpool_Algorithm_Norm -eq "Keccak"){$Variance = 1}
+    if($XZC -and $Zpool_Algorithm_Norm -eq "lyra2z"){$Variance = 1}
+    if($BSD -and $Zpool_Algorithm_Norm -eq "xevan"){$Variance = 1}
+    if($HSR -and $Zpool_Algorithm_Norm -eq "hsr"){$Variance = 1}
+    if($ESP -and $Zpool_Algorithm_Norm -eq "hmq1725"){$Variance = 1}
+    if($XRE -and $Zpool_Algorithm_Norm -eq "x11evo"){$Variance = 1}
+    if($LUX -and $Zpool_Algorithm_Norm -eq "phi"){$Variance = 1}
+    if($BTX -and $Zpool_Algorithm_Norm -eq "bitcore"){$Variance = 1}
+    if($MAC -and $Zpool_Algorithm_Norm -eq "timetravel"){$Variance = 1}
 
     if ((Get-Stat -Name "$($Name)_$($Zpool_Algorithm_Norm)_Profit") -eq $null) {$Stat = Set-Stat -Name "$($Name)_$($Zpool_Algorithm_Norm)_Profit" -Value ([Double]$Zpool_Request.$_.estimate_last24h / $Divisor * $Zpool_Fees * $Variance) -Duration (New-TimeSpan -Days 1)}
     else {$Stat = Set-Stat -Name "$($Name)_$($Zpool_Algorithm_Norm)_Profit" -Value ([Double]$Zpool_Request.$_.estimate_current / $Divisor * $Zpool_Fees * $Variance) -Duration $StatSpan -ChangeDetection $true}

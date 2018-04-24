@@ -41,13 +41,13 @@ $MiningPoolHub_Request.return | Where-Object {$ExcludeAlgorithm -inotcontains (G
     $MiningPoolHub_Algorithm = $_.algo
     $MiningPoolHub_Algorithm_Norm = Get-Algorithm $MiningPoolHub_Algorithm
     $MiningPoolHub_Coin = (Get-Culture).TextInfo.ToTitleCase(($_.current_mining_coin -replace "-", " " -replace "_", " ")) -replace " "
-	$MiningPoolHub_Fee = 0.9
+    $MiningPoolHub_Fee = 0.9
 
     $Divisor = 1000000000
 	
-	$MiningPoolHub_Fees = 1-($MiningPoolHub_Fee/100)
+    $MiningPoolHub_Fees = 1-($MiningPoolHub_Fee/100)
 
-	$Variance = 1
+    $Variance = 1
 	
     $Variance = 1 - $MiningPoolHub_Variance."$MiningPoolHub_Algorithm_Norm"
 	

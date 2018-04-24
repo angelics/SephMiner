@@ -42,19 +42,19 @@ $MiningPoolHubCoins_Request.return | Where-Object {$ExcludeCoin -inotcontains $_
     $MiningPoolHubCoins_Algorithm = $_.algo
     $MiningPoolHubCoins_Algorithm_Norm = Get-Algorithm $MiningPoolHubCoins_Algorithm
     $MiningPoolHubCoins_Coin = (Get-Culture).TextInfo.ToTitleCase(($_.coin_name -replace "-", " " -replace "_", " ")) -replace " "
-	$MiningPoolHubCoins_Fee = 0.9
+    $MiningPoolHubCoins_Fee = 0.9
 
     $Divisor = 1000000000
 	
-	$Variance = 1
+    $Variance = 1
 	
     $Variance = 1 - $MiningPoolHubCoins_Variance."$MiningPoolHubCoins_Coin"
 
-	if($Ethereum -and $MiningPoolHubCoins_Coin -eq "Ethereum"){$Variance = 1}
+    if($Ethereum -and $MiningPoolHubCoins_Coin -eq "Ethereum"){$Variance = 1}
 	
-	$MiningPoolHubCoins_Fees = 1-($MiningPoolHubCoins_Fee/100)
+    $MiningPoolHubCoins_Fees = 1-($MiningPoolHubCoins_Fee/100)
 	
-	$Stat = Set-Stat -Name "$($Name)_$($MiningPoolHubCoins_Coin)_Profit" -Value ([Double]$_.profit / $Divisor * $MiningPoolHubCoins_Fees * $Variance) -Duration $StatSpan -ChangeDetection $true
+    $Stat = Set-Stat -Name "$($Name)_$($MiningPoolHubCoins_Coin)_Profit" -Value ([Double]$_.profit / $Divisor * $MiningPoolHubCoins_Fees * $Variance) -Duration $StatSpan -ChangeDetection $true
 	
     $MiningPoolHubCoins_Regions | ForEach-Object {
         $MiningPoolHubCoins_Region = $_

@@ -33,11 +33,11 @@ $NiceHash_Request.result.simplemultialgo | Where-Object {$ExcludeAlgorithm -inot
     $NiceHash_Algorithm = $_.name
     $NiceHash_Algorithm_Norm = Get-Algorithm $NiceHash_Algorithm
     $NiceHash_Coin = ""
-	$NiceHash_Fee = 4
+    $NiceHash_Fee = 4
 
     $Divisor = 1000000000
 	
-	$NiceHash_Fees = 1-($NiceHash_Fee/100)
+    $NiceHash_Fees = 1-($NiceHash_Fee/100)
 
     $Stat = Set-Stat -Name "$($Name)_$($NiceHash_Algorithm_Norm)_Profit" -Value ([Double]$_.paying / $Divisor * $NiceHash_Fees) -Duration $StatSpan -ChangeDetection $true
 

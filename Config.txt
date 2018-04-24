@@ -3,7 +3,7 @@
     "MiningPoolHub": {
       "User": "$UserName",
       "Worker": "$WorkerName",
-	  "ExcludeAlgorithm":  ["ethash2gb", "Sia", "Skein", "Qubit", "X11", "MyriadGroestl", "Groestl", "Scrypt"],
+      "ExcludeAlgorithm":  ["ethash2gb", "Sia", "Skein", "Qubit", "X11", "MyriadGroestl", "Groestl", "Scrypt"],
       "API_ID": "$API_ID",
       "API_Key": "$API_Key",
       "Ethereum": "autoexchange"
@@ -11,8 +11,8 @@
     "MiningPoolHubCoins": {
       "User": "$UserName",
       "Worker": "$WorkerName",
-	  "ExcludeAlgorithm":  ["ethash2gb", "Sia", "Skein", "Qubit", "X11", "MyriadGroestl", "Groestl", "Scrypt"],
-	  "ExcludeCoin":  ["maxcoin", "Electroneum"],
+      "ExcludeAlgorithm":  ["ethash2gb", "Sia", "Skein", "Qubit", "X11", "MyriadGroestl", "Groestl", "Scrypt"],
+      "ExcludeCoin":  ["maxcoin", "Electroneum"],
       "API_ID": "$API_ID",
       "API_Key": "$API_Key",
       "Ethereum": "autoexchange"
@@ -20,17 +20,17 @@
     "NiceHash": {
       "BTC": "$Wallet",
       "Worker": "$WorkerName",
-	  "ExcludeAlgorithm":  ["ethash2gb", "nist5", "x11gost", "blake256r8vnl", "qubit", "scrypt", "x11", "x15", "cryptonight", "sha256", "x13", "quark", "blake256r8", "blake256r14", "decred", "lbry", "pascal", "sia"]
+      "ExcludeAlgorithm":  ["ethash2gb", "nist5", "x11gost", "blake256r8vnl", "qubit", "scrypt", "x11", "x15", "cryptonight", "sha256", "x13", "quark", "blake256r8", "blake256r14", "decred", "lbry", "pascal", "sia"]
     },
     "Zpool": {
       "BTC": "$Wallet",
       "Worker": "$WorkerName",
-	  "ExcludeAlgorithm":  ["qubit", "blakecoin", "groestl", "nist5", "sib", "scrypt", "x11", "myrgr", "skein", "sha256", "x13", "quark", "decred", "lbry", "x14"]
+      "ExcludeAlgorithm":  ["qubit", "blakecoin", "groestl", "nist5", "sib", "scrypt", "x11", "myrgr", "skein", "sha256", "x13", "quark", "decred", "lbry", "x14"]
     },
-	"Zergpool1": {
+    "Zergpool1": {
       "LTC": "Lex2wqKA44ZGkBvHhWE3STrqicbCdGG125",
       "Worker": "$WorkerName",
-	  "ExcludeAlgorithm":  ["qubit", "blakecoin", "groestl", "nist5", "sib", "scrypt", "x11", "myrgr", "skein", "sha256", "x13", "quark"]
+      "ExcludeAlgorithm":  ["qubit", "blakecoin", "groestl", "nist5", "sib", "scrypt", "x11", "myrgr", "skein", "sha256", "x13", "quark"]
     }
   },
   "Miners": {

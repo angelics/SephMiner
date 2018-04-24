@@ -44,7 +44,7 @@ $MiningPanda_Currencies | Where-Object {$ExcludeAlgorithm -inotcontains (Get-Alg
         "blakecoin" {$Divisor *= 1000}
     }
 
-	$MiningPanda_Fees = 1-($MiningPanda_Fee/100)
+    $MiningPanda_Fees = 1-($MiningPanda_Fee/100)
 	
     $Stat = Set-Stat -Name "$($Name)_$($MiningPanda_Algorithm_Norm)_Profit" -Value ([Double]$MiningPanda_Request.$_.estimate / $Divisor  * $MiningPanda_Fees) -Duration $StatSpan -ChangeDetection $true
 
