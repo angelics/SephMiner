@@ -52,6 +52,13 @@ https://forums.guru3d.com/threads/overdriventool-tool-for-amd-gpus.416116/
 ethash blake2s_AMD.bat
 ```
 
+# OhGodAnETHlargementPill
+* recommended for heavymem miners
+```
+https://github.com/OhGodACompany/OhGodAnETHlargementPill
+https://github.com/OhGodACompany/OhGodAnETHlargementPill/blob/master/OhGodAnETHlargementPill.exe
+```
+
 # Lists of algos added:
 * m7m
 * x12

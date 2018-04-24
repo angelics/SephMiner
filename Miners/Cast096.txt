@@ -1,0 +1,24 @@
+[
+{
+    "Type":  "AMD",
+    "Path":  ".\\Bin\\CryptoNight-Cast-096\\cast_xmr-vega.exe",
+    "Arguments":  "\"--remoteaccess --algo=1 -S $($Pools.CryptoNightV7.Host):$($Pools.CryptoNightV7.Port) -u $($Pools.CryptoNightV7.User) -p $($Pools.CryptoNightV7.Pass) --forcecompute --fastjobswitch$($DeviceID = 0; $DeviceIDs = @();([OpenCl.Platform]::GetPlatformIDs() | ForEach-Object {[OpenCl.Device]::GetDeviceIDs($_, [OpenCl.DeviceType]::All)} | Where {$_.Type -eq 'GPU' -and $_.Vendor -match 'Advanced Micro Devices, Inc.'} | ForEach-Object {$DeviceIDs += $DeviceID; $DeviceID++});if($DeviceIDs){' -G';$($DeviceIDs -join ',')})\"",
+    "HashRates":  {
+                      "CryptoNightV7":  "\"$(if ($Pools.CryptoNightV7.SSL) {0}else {$Stats.Cast096_CryptoNightV7_HashRate.Week * 0.985})\""
+                  },
+    "API":  "Cast",
+    "Port":  "7777",
+    "URI":  "http://www.gandalph3000.com/download/cast_xmr-vega-win64_096.zip"
+},
+    {
+        "Type":  "AMD",
+        "Path":  ".\\Bin\\CryptoNight-Cast-096\\cast_xmr-vega.exe",
+        "Arguments":  "\"--remoteaccess --algo=2 -S $($Pools.CryptoNightHeavy.Host):$($Pools.CryptoNightHeavy.Port) -u $($Pools.CryptoNightHeavy.User) -p $($Pools.CryptoNightHeavy.Pass) --forcecompute --fastjobswitch$($DeviceID = 0; $DeviceIDs = @();([OpenCl.Platform]::GetPlatformIDs() | ForEach-Object {[OpenCl.Device]::GetDeviceIDs($_, [OpenCl.DeviceType]::All)} | Where {$_.Type -eq 'GPU' -and $_.Vendor -match 'Advanced Micro Devices, Inc.'} | ForEach-Object {$DeviceIDs += $DeviceID; $DeviceID++});if($DeviceIDs){' -G';$($DeviceIDs -join ',')})\"",
+        "HashRates":  {
+                          "CryptoNightHeavy":  "\"$(if ($Pools.CryptoNightHeavy.SSL) {0}else {$Stats.Cast096_CryptoNightHeavy_HashRate.Week * 0.985})\""
+                      },
+        "API":  "Cast",
+        "Port":  "7777",
+        "URI":  "http://www.gandalph3000.com/download/cast_xmr-vega-win64_096.zip"
+    }
+]
