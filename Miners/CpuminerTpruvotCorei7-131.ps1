@@ -9,7 +9,6 @@ $Commands = [PSCustomObject]@{
     "keccak" = "" #Keccak
 	"lyra2rev2" = "" #Lyra2RE2
     "neoscrypt" = "" #NeoScrypt
-    "nist5" = "" #Nist5
     "timetravel" = "" #Timetravel
     "x11evo" = "" #X11evo
     "x17" = "" #X17

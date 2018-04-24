@@ -33,6 +33,7 @@ $YiiMP_Currencies | Where-Object {$ExcludeAlgorithm -inotcontains (Get-Algorithm
     $YiiMP_Algorithm_Norm = Get-Algorithm $YiiMP_Algorithm
     $YiiMP_Coin = $YiiMPCoins_Request.$_.name
     $YiiMP_Currency = $_
+    $YiiMP_Fee = $YiiMPCoins_Request.$_.fees
 
     $Divisor = 1000000000
 
@@ -42,7 +43,9 @@ $YiiMP_Currencies | Where-Object {$ExcludeAlgorithm -inotcontains (Get-Algorithm
         "blakecoin" {$Divisor *= 1000}
     }
 
-    $Stat = Set-Stat -Name "$($Name)_$($YiiMP_Algorithm_Norm)_Profit" -Value ([Double]$YiiMPCoins_Request.$_.estimate / $Divisor  * (1-($YiiMPCoins_Request.$_.fees/100))) -Duration $StatSpan -ChangeDetection $true
+	$YiiMP_Fees = 1-($YiiMP_Fee/100)
+	
+    $Stat = Set-Stat -Name "$($Name)_$($YiiMP_Algorithm_Norm)_Profit" -Value ([Double]$YiiMPCoins_Request.$_.estimate / $Divisor  * $YiiMP_Fees) -Duration $StatSpan -ChangeDetection $true
 
     $YiiMP_Regions | ForEach-Object {
         $YiiMP_Region = $_
@@ -62,6 +65,7 @@ $YiiMP_Currencies | Where-Object {$ExcludeAlgorithm -inotcontains (Get-Algorithm
             Region        = $YiiMP_Region_Norm
             SSL           = $false
             Updated       = $Stat.Updated
+			Fees          = $YiiMP_Fee
         }
     }
 }

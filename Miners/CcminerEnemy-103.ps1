@@ -4,7 +4,7 @@ $Path = ".\Bin\Enemy-NVIDIA-103\ccminer.exe"
 $Uri = "http://newera.dx.am/cme1.03.7z"
 
 $Commands = [PSCustomObject]@{
-    "x16r" = " -N 3" #Raven
+    #"x16r" = " -N 3" #Raven
     "x17" = " -N 1" #x17
 }
 

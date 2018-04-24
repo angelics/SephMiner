@@ -62,7 +62,6 @@ https://github.com/OhGodACompany/OhGodAnETHlargementPill/blob/master/OhGodAnETHl
 # Lists of algos added:
 * m7m
 * x12
-* x15
 * x16r
 * x16s
 * yescrypt16

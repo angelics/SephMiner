@@ -36,7 +36,6 @@ $Commands = [PSCustomObject]@{
     #"tribus" = "" #Tribus CcminerTpruvotcuda9 better
 	#"x11evo" = "" #X11evo ccmineralexis78 better
     "x12" = "" #X12
-    "x15" = "" #X15
     #"x16r" = " -N 3" #X16r
     #"x16s" = " -N 3" #X16s
     #"x17" = " -i 20" #X17 ccmineralexis78 better

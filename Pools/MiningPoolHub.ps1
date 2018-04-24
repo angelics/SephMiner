@@ -47,6 +47,10 @@ $MiningPoolHub_Request.return | Where-Object {$ExcludeAlgorithm -inotcontains (G
 	
 	$MiningPoolHub_Fees = 1-($MiningPoolHub_Fee/100)
 
+	$Variance = 1
+	
+    $Variance = 1 - $MiningPoolHub_Variance."$MiningPoolHub_Algorithm_Norm"
+	
     $Stat = Set-Stat -Name "$($Name)_$($MiningPoolHub_Algorithm_Norm)_Profit" -Value ([Double]$_.profit / $Divisor * $MiningPoolHub_Fees) -Duration $StatSpan -ChangeDetection $true
 	
     $MiningPoolHub_Regions | ForEach-Object {
@@ -70,6 +74,7 @@ $MiningPoolHub_Request.return | Where-Object {$ExcludeAlgorithm -inotcontains (G
                     SSL           = $false
                     Updated       = $Stat.Updated
 					Fees          = $MiningPoolHub_Fee
+					Variance      = $Variance
                 }
                 [PSCustomObject]@{
                     Algorithm     = $MiningPoolHub_Algorithm_Norm
@@ -86,6 +91,7 @@ $MiningPoolHub_Request.return | Where-Object {$ExcludeAlgorithm -inotcontains (G
                     SSL           = $true
                     Updated       = $Stat.Updated
 					Fees          = $MiningPoolHub_Fee
+					Variance      = $Variance
                 }
             }
             else {
@@ -104,6 +110,7 @@ $MiningPoolHub_Request.return | Where-Object {$ExcludeAlgorithm -inotcontains (G
                     SSL           = $false
                     Updated       = $Stat.Updated
 					Fees          = $MiningPoolHub_Fee
+					Variance      = $Variance
                 }
             
                 if ($MiningPoolHub_Algorithm_Norm -eq "Equihash") {
@@ -122,6 +129,7 @@ $MiningPoolHub_Request.return | Where-Object {$ExcludeAlgorithm -inotcontains (G
                         SSL           = $true
                         Updated       = $Stat.Updated
 						Fees          = $MiningPoolHub_Fee
+						Variance      = $Variance
                     }
                 }
             }

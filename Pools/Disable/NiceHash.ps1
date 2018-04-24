@@ -33,10 +33,13 @@ $NiceHash_Request.result.simplemultialgo | Where-Object {$ExcludeAlgorithm -inot
     $NiceHash_Algorithm = $_.name
     $NiceHash_Algorithm_Norm = Get-Algorithm $NiceHash_Algorithm
     $NiceHash_Coin = ""
+	$NiceHash_Fee = 4
 
     $Divisor = 1000000000
+	
+	$NiceHash_Fees = 1-($NiceHash_Fee/100)
 
-    $Stat = Set-Stat -Name "$($Name)_$($NiceHash_Algorithm_Norm)_Profit" -Value ([Double]$_.paying / $Divisor * (1-(4/100))) -Duration $StatSpan -ChangeDetection $true
+    $Stat = Set-Stat -Name "$($Name)_$($NiceHash_Algorithm_Norm)_Profit" -Value ([Double]$_.paying / $Divisor * $NiceHash_Fees) -Duration $StatSpan -ChangeDetection $true
 
     $NiceHash_Regions | ForEach-Object {
         $NiceHash_Region = $_
@@ -57,6 +60,7 @@ $NiceHash_Request.result.simplemultialgo | Where-Object {$ExcludeAlgorithm -inot
                 Region        = $NiceHash_Region_Norm
                 SSL           = $false
                 Updated       = $Stat.Updated
+				Fees          = $NiceHash_Fee
             }
 
             if ($NiceHash_Algorithm_Norm -eq "Cryptonight" -or $NiceHash_Algorithm_Norm -eq "Equihash") {
@@ -74,6 +78,7 @@ $NiceHash_Request.result.simplemultialgo | Where-Object {$ExcludeAlgorithm -inot
                     Region        = $NiceHash_Region_Norm
                     SSL           = $true
                     Updated       = $Stat.Updated
+					Fees          = $NiceHash_Fee
                 }
             }
         }

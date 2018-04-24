@@ -34,6 +34,7 @@ $MiningPanda_Currencies | Where-Object {$ExcludeAlgorithm -inotcontains (Get-Alg
     $MiningPanda_Algorithm_Norm = Get-Algorithm $MiningPanda_Algorithm
     $MiningPanda_Coin = $MiningPanda_Request.$_.name
     $MiningPanda_Currency = $_
+    $MiningPanda_Fee = $MiningPanda_Request.$_.fees
 
     $Divisor = 1000000000
 
@@ -43,7 +44,9 @@ $MiningPanda_Currencies | Where-Object {$ExcludeAlgorithm -inotcontains (Get-Alg
         "blakecoin" {$Divisor *= 1000}
     }
 
-    $Stat = Set-Stat -Name "$($Name)_$($MiningPanda_Algorithm_Norm)_Profit" -Value ([Double]$MiningPanda_Request.$_.estimate / $Divisor  * (1-($MiningPanda_Request.$_.fees/100))) -Duration $StatSpan -ChangeDetection $true
+	$MiningPanda_Fees = 1-($MiningPanda_Fee/100)
+	
+    $Stat = Set-Stat -Name "$($Name)_$($MiningPanda_Algorithm_Norm)_Profit" -Value ([Double]$MiningPanda_Request.$_.estimate / $Divisor  * $MiningPanda_Fees) -Duration $StatSpan -ChangeDetection $true
 
     $MiningPanda_Regions | ForEach-Object {
         $MiningPanda_Region = $_
@@ -63,6 +66,7 @@ $MiningPanda_Currencies | Where-Object {$ExcludeAlgorithm -inotcontains (Get-Alg
             Region        = $MiningPanda_Region_Norm
             SSL           = $false
             Updated       = $Stat.Updated
+            Fees          = $MiningPanda_Fee
         }
     }
 }

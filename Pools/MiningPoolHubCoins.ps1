@@ -46,13 +46,12 @@ $MiningPoolHubCoins_Request.return | Where-Object {$ExcludeCoin -inotcontains $_
 
     $Divisor = 1000000000
 	
-	if ($MiningPoolHubCoins_Variance -and $MiningPoolHubCoins_Variance."$Zpool_Algorithm_Norm") {
-    $Variance = 1 - $MiningPoolHubCoins_Variance."$Zpool_Algorithm_Norm"
-    }
-    else {
-    $Variance = 1
-    }	
+	$Variance = 1
+	
+    $Variance = 1 - $MiningPoolHubCoins_Variance."$MiningPoolHubCoins_Coin"
 
+	if($Ethereum -and $MiningPoolHubCoins_Coin -eq "Ethereum"){$Variance = 1}
+	
 	$MiningPoolHubCoins_Fees = 1-($MiningPoolHubCoins_Fee/100)
 	
 	$Stat = Set-Stat -Name "$($Name)_$($MiningPoolHubCoins_Coin)_Profit" -Value ([Double]$_.profit / $Divisor * $MiningPoolHubCoins_Fees * $Variance) -Duration $StatSpan -ChangeDetection $true
@@ -78,6 +77,7 @@ $MiningPoolHubCoins_Request.return | Where-Object {$ExcludeCoin -inotcontains $_
                     SSL           = $false
                     Updated       = $Stat.Updated
 					Fees          = $MiningPoolHubCoins_Fee
+					Variance      = $Variance
                 }
                 [PSCustomObject]@{
                     Algorithm     = $MiningPoolHubCoins_Algorithm_Norm
@@ -94,6 +94,7 @@ $MiningPoolHubCoins_Request.return | Where-Object {$ExcludeCoin -inotcontains $_
                     SSL           = $true
                     Updated       = $Stat.Updated
 					Fees          = $MiningPoolHubCoins_Fee
+					Variance      = $Variance
                 }
             }
             else {
@@ -112,6 +113,7 @@ $MiningPoolHubCoins_Request.return | Where-Object {$ExcludeCoin -inotcontains $_
                     SSL           = $false
                     Updated       = $Stat.Updated
 					Fees          = $MiningPoolHubCoins_Fee
+					Variance      = $Variance
                 }
 
                 if ($MiningPoolHubCoins_Algorithm_Norm -eq "Ethash" -and $MiningPoolHubCoins_Coin -NotLike "*ethereum*") {
@@ -130,6 +132,7 @@ $MiningPoolHubCoins_Request.return | Where-Object {$ExcludeCoin -inotcontains $_
                         SSL           = $false
                         Updated       = $Stat.Updated
 						Fees          = $MiningPoolHubCoins_Fee
+						Variance      = $Variance
                     }
                 }
 
@@ -149,6 +152,7 @@ $MiningPoolHubCoins_Request.return | Where-Object {$ExcludeCoin -inotcontains $_
                         SSL           = $true
                         Updated       = $Stat.Updated
 						Fees          = $MiningPoolHubCoins_Fee
+						Variance      = $Variance
                     }
                 }
             }
