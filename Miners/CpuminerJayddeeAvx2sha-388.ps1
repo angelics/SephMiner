@@ -1,7 +1,7 @@
 ﻿using module ..\Include.psm1
 
-$Path = ".\Bin\CPU-JayDDee-3872\cpuminer-aes-sse42.exe"
-$Uri = "https://github.com/JayDDee/cpuminer-opt/files/1899884/cpuminer-opt-3.8.7.2-windows.zip"
+$Path = ".\Bin\CPU-JayDDee-388\cpuminer-avx2-sha.exe"
+$Uri = "https://github.com/JayDDee/cpuminer-opt/files/1939225/cpuminer-opt-3.8.8-windows.zip"
 
 $Commands = [PSCustomObject]@{
     #"allium" = "" #Garlicoin
@@ -16,6 +16,7 @@ $Commands = [PSCustomObject]@{
     "blake2s" = "" #Blake2s
     #"bmw" = "" #BMW 256
     "c11" = "" #C11
+    "cryptonightv7" = "" #CryptoNightV7
     #"deep" = "" #Deepcoin
     #"dmd-gr" = "" #Diamond-Groestl
     #"drop" = "" #Dropcoin

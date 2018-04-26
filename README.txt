@@ -71,6 +71,7 @@ https://github.com/OhGodACompany/OhGodAnETHlargementPill/blob/master/OhGodAnETHl
 * keccakc
 * cryptonight-heavy
 * cryptonight-v7
+* cryptonight-v7 lite
 
 # Lists of algos removed:
 * decred

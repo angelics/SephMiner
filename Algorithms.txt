@@ -8,6 +8,7 @@
     "cryptonight-heavy":  "CryptoNight-Heavy",
     "cryptonight_heavy":  "CryptoNight-Heavy",
     "cryptonight-monero":  "CryptoNightV7",
+    "cryptonight-lite":  "CryptoNightLiteV7",
     "cryptonightmonero":  "CryptoNightV7",
     "cryptonightv7": "CryptoNightV7",
     "monero7": "CryptoNightV7",
