@@ -513,6 +513,7 @@ class Miner {
     $Status
     $Benchmarked
     $CName
+    $Pool
 
     StartMining() {
         $this.New = $true

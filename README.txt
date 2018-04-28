@@ -14,12 +14,16 @@ multipoolminer 95d4193 with bug fixed or improvements commits
 * Excluded electroneum from miningpoolhubcoins, until auto-exchange is available.
 
 * Excluded maxcoin from miningpoolhubcoins, unless auto-exchange set to BTC.
-
+```
+default config.txt for miningpoolhub/coins have Ethereum set as auto-exchange. change to Bitcoin and remove maxcoin from excludecoin
+```
 * Removed ASICS coins from all pools and miners.
 
 * Removed auto-update.
 
 * If you are "upgrading" from master copy, remove all folders except Bin , Stats and OC. Run resetprofit after.
+
+* Default zergpool1, zergpool3 mining address in config.txt will be LTC. change to "BTC": "$Wallet", if mining using BTC wallet.
 
 * **Default donation 24 minutes, minimum 10**
 ```
@@ -29,7 +33,7 @@ multipoolminer 95d4193 with bug fixed or improvements commits
 10mins = 0.694%
 ```
 
-* **personnaly** recommend only use miningpoolhubcoins and zpool
+* **personnaly** recommend only use miningpoolhub or miningpoolhubcoins,zpool and zergpool1 or zergpool3
 
 * always move to disable folder for un-used pools
 
@@ -53,10 +57,9 @@ ethash blake2s_AMD.bat
 ```
 
 # OhGodAnETHlargementPill
-* recommended for heavymem miners
+* recommended for heavymem miners, only supports 1080 / 1080ti atm
 ```
 https://github.com/OhGodACompany/OhGodAnETHlargementPill
-https://github.com/OhGodACompany/OhGodAnETHlargementPill/blob/master/OhGodAnETHlargementPill.exe
 ```
 
 # Lists of algos added:
@@ -114,3 +117,5 @@ angelics BTC = 19pQKDfdspXm6ouTDnZHpUcmEFN8a1x9zo
 angelics ETH = 0xBD0e3c16447b68CE01fAA19f65aE9e3882a54C54
 
 angelics LTC = Lex2wqKA44ZGkBvHhWE3STrqicbCdGG125
+
+angelics ZEC = t1Ti2W2HTLDwNe8KSqsTt4pEpWdjpbBfKTb

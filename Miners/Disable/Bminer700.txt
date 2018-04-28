@@ -1,0 +1,24 @@
+{
+    {
+        "Type":  "NVIDIA",
+        "Path":  ".\\Bin\\NVIDIA-BMiner-700\\BMiner.exe",
+        "Arguments":  "\"-api 127.0.0.1:1880 -uri $(if ($Pools.Equihash.SSL) {'stratum+ssl'}else {'stratum'})://$($Pools.Equihash.User):$($Pools.Equihash.Pass)@$($Pools.Equihash.Host):$($Pools.Equihash.Port) -watchdog=false\"",
+        "HashRates":  {
+                          "Equihash":  "\"$($Stats.Bminer700_Equihash_HashRate.Week * 0.98)\""
+                      },
+        "API":  "Bminer",
+        "Port":  "1880",
+        "URI":  "https://www.bminercontent.com/releases/bminer-v7.0.0-9c7291b-amd64.zip"
+    },
+    {
+        "Type":  "NVIDIA",
+        "Path":  ".\\Bin\\NVIDIA-BMiner-700\\BMiner.exe",
+        "Arguments":  "\"-api 127.0.0.1:1880 -uri $(if ($Pools.Ethash.SSL) {'stratum+ssl'}else {'stratum'})://$($Pools.Ethash.User):$($Pools.Ethash.Pass)@$($Pools.Ethash.Host):$($Pools.Equihash.Port) -watchdog=false\"",
+        "HashRates":  {
+                          "Ethash":  "\"$($Stats.Bminer700_Ethash_HashRate.Week * 0.9935})\""
+                      },
+        "API":  "Bminer",
+        "Port":  "1880",
+        "URI":  "https://www.bminercontent.com/releases/bminer-v7.0.0-9c7291b-amd64.zip"
+    }
+}

@@ -10,7 +10,7 @@ $Commands = [PSCustomObject]@{
     #"daggerhashimoto" = @() #Ethash
     #"equihash" = @() #Equihash dstm better
     "keccak" = @() #keccak
-    #"lyra2rev2" = @() #Lyra2RE2 ccmineralexis78 better
+    "lyra2rev2" = @() #Lyra2RE2 ccmineralexis78 better
     #"neoscrypt" = @() #NeoScrypt palginnvidia better
 }
 

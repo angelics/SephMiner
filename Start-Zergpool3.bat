@@ -18,6 +18,9 @@ REM timeout /t 5
 REM uncomment below if mining with amd
 REM OC\OverdriveNTool.exe -r1 -r2 -r3 -r4 -r5 -r6
 
+REM for 1080 and 1080ti only
+REM OC\OhGodAnETHlargementPill-r2.exe --revA 0,1,2
+
 REM total number of nvidiagpu
 set nvidiagpu=0
 set /a timer = 3+%nvidiagpu%
@@ -58,16 +61,17 @@ set workername=SephMiner
 set region=asia
 set currency=usd
 set type=amd,nvidia,cpu
-set poolname=miningpoolhubcoins,miningpoolhub
-set ExcludePoolName=zpool,zergpool1
+set poolname=Zergpool3
+set ExcludePoolName=zpool
 REM asic algo = sha256,scrypt,x11,x13,x14,15,quark,qubit,decred,lbry,sia,Pascal,cryptonight,cryptonight-light,skein,myr-gr,groestl,nist5,sib,x11gost,veltor,blakecoin,vanilla
-set algorithm=ethash,equihash,groestl,lyra2re2,lyra2z,neoscrypt,yescrypt,CryptoNightV7
-set ExcludeAlgorithm=ethash2gb,keccak
+set algorithm=bitcore,blake2s,c11,keccak,lyra2v2,lyra2z,m7m,neoscrypt,skunk,tribus,x17,xevan,yescrypt,yescryptR16,keccakc,x16r,x16s
+set ExcludeAlgorithm=ethash2gb
 set ExcludeMinerName=ccminerlyra2re2,prospector
 set switchingprevention=2
-set interval=480
+REM min 240, api interval confirmed by PINPIN 180424
+set interval=240
 
-set command=%cur%\SephMiner.ps1 -wallet %wallet% -username %username% -workername %workername% -region %region% -currency %currency%,btc -type %type% -poolname %poolname% -algorithm %algorithm% -ExcludeAlgorithm %ExcludeAlgorithm% -ExcludeMinerName %ExcludeMinerName% -donate 24 -watchdog -switchingprevention %switchingprevention% -interval %interval% -ExcludePoolName %ExcludePoolName%
+set command=%cur%\SephMiner.ps1 -wallet %wallet% -username %username% -workername %workername% -region %region% -currency %currency%,btc -type %type% -poolname %poolname% -algorithm %algorithm% -ExcludeAlgorithm %ExcludeAlgorithm% -ExcludeMinerName %ExcludeMinerName% -donate 24 -switchingprevention %switchingprevention% -interval %interval% -ExcludePoolName %ExcludePoolName%
 title  %title%
 
 pwsh -noexit -executionpolicy bypass -windowstyle maximized -command "%command%"

@@ -18,6 +18,9 @@ REM timeout /t 5
 REM uncomment below if mining with amd
 REM OC\OverdriveNTool.exe -r1 -r2 -r3 -r4 -r5 -r6
 
+REM for 1080 and 1080ti only
+REM OC\OhGodAnETHlargementPill-r2.exe --revA 0,1,2
+
 REM total number of nvidiagpu
 set nvidiagpu=0
 set /a timer = 3+%nvidiagpu%
@@ -59,7 +62,7 @@ set region=asia
 set currency=usd
 set type=amd,nvidia,cpu
 set poolname=nicehash
-set ExcludePoolName=miningpoolhubcoins,zpool,zergpool1,miningpoolhub
+set ExcludePoolName=zpool
 REM asic algo = sha256,scrypt,x11,x13,x14,15,quark,qubit,decred,lbry,sia,Pascal,cryptonight,cryptonight-light,skein,myr-gr,groestl,nist5,sib,x11gost,veltor,blakecoin,vanilla
 set algorithm=scryptnf,keccak,nist5,neoscrypt,lyra2re,whirlpoolx,axiom,lyra2rev2,scryptjanenf16,blake256r8vnl,hodl,daggerhashimoto,equihash,blake2s,skunk,CryptoNightV7
 set ExcludeAlgorithm=ethash2gb

@@ -34,7 +34,7 @@ catch {
     return
 }
 
-$Zergpool_Regions = "us"
+$Zergpool_Regions = "us", "europe"
 $Zergpool_Currencies = @("BTC","LTC") + ($ZpoolCoins_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name) | Select-Object -Unique | Where-Object {Get-Variable $_ -ValueOnly -ErrorAction SilentlyContinue}
 
 $Zergpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name | Where-Object {$ExcludeAlgorithm -inotcontains (Get-Algorithm $Zergpool_Request.$_.name) -and $Zergpool_Request.$_.hashrate -gt 0} | ForEach-Object {
@@ -51,11 +51,11 @@ $Zergpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Se
         "equihash" {$Divisor /= 1000}
         "blake2s" {$Divisor *= 1000}
         "blakecoin" {$Divisor *= 1000}
-		"keccak" {$Divisor *= 1000}
+        "keccak" {$Divisor *= 1000}
         "sha256t"{$Divisor *= 1000}
         "keccakc"{$Divisor *= 1000}
-		"yescrypt"{$Divisor /= 1000}
-		"yescryptr16"{$Divisor /= 1000}
+        "yescrypt"{$Divisor /= 1000}
+        "yescryptr16"{$Divisor /= 1000}
     }
 	
     $Zergpool_Fees = 1-($Zergpool_Fee/100)

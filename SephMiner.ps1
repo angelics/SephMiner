@@ -58,6 +58,10 @@ $Strikes = 3
 $SyncWindow = 5 #minutes
 
 Set-Location (Split-Path $MyInvocation.MyCommand.Path)
+Import-Module NetSecurity -ErrorAction Ignore
+Import-Module Defender -ErrorAction Ignore
+Import-Module "$env:Windir\System32\WindowsPowerShell\v1.0\Modules\NetSecurity\NetSecurity.psd1" -ErrorAction Ignore
+Import-Module "$env:Windir\System32\WindowsPowerShell\v1.0\Modules\Defender\Defender.psd1" -ErrorAction Ignore
 
 $Algorithm = $Algorithm | ForEach-Object {Get-Algorithm $_}
 $ExcludeAlgorithm = $ExcludeAlgorithm | ForEach-Object {Get-Algorithm $_}
@@ -143,7 +147,16 @@ while ($true) {
         }
     }
 
-    Get-ChildItem "Pools"  -File | Where-Object {-not $Config.Pools.($_.BaseName)} | ForEach-Object {
+    #Error in Config.txt
+    if ($Config -isnot [PSCustomObject]) {
+        Write-Log -Level Error "---------------------------------------"
+        Write-Log -Level Error "Critical error: Config.txt is invalid. "
+        Write-Log -Level Error "---------------------------------------"
+        Start-Sleep 10
+        Exit
+    }
+
+    Get-ChildItem "Pools" -File | Where-Object {-not $Config.Pools.($_.BaseName)} | ForEach-Object {
         $Config.Pools | Add-Member $_.BaseName (
             [PSCustomObject]@{
                 BTC     = $Wallet
@@ -155,23 +168,16 @@ while ($true) {
         )
     }
 
-    Get-ChildItem "Miners" | Where-Object {-not $Config.Miners.($_.BaseName)} | ForEach-Object {
-        $Config.Miners | Add-Member $_.BaseName (
-            [PSCustomObject]@{
-            }
-        )
-    }
-
     #Activate or deactivate donation
     if ($Config.Donate -lt 10) {$Config.Donate = 10}
-    if ($Timer.AddDays(-1) -ge $LastDonated.AddSeconds(59)) {$LastDonated = $Timer}
+    if ($Timer.AddDays(-1) -ge $LastDonated) {$LastDonated = $Timer}
     if ($Timer.AddDays(-1).AddMinutes($Config.Donate) -ge $LastDonated) {
         Get-ChildItem "Pools" -File | ForEach-Object {
             $Config.Pools | Add-Member $_.BaseName (
                 [PSCustomObject]@{
-                    $WalletType    = $WalletDonate
-                    User   = $UserNameDonate
-                    Worker = $WorkerNameDonate
+                    $WalletType = $WalletDonate
+                    User        = $UserNameDonate
+                    Worker      = $WorkerNameDonate
                 }
             ) -Force
         }
@@ -216,7 +222,7 @@ while ($true) {
     Write-Log "Loading pool information. "
     $NewPools = @()
     if (Test-Path "Pools") {
-		$NewPools = Get-ChildItem "Pools" -File | Where-Object {$Config.Pools.$($_.BaseName) -and $Config.ExcludePoolName -inotcontains $_.BaseName} | ForEach-Object {
+        $NewPools = Get-ChildItem "Pools" -File | Where-Object {$Config.Pools.$($_.BaseName) -and $Config.ExcludePoolName -inotcontains $_.BaseName} | ForEach-Object {
             $Pool_Name = $_.BaseName
             $Pool_Parameters = @{StatSpan = $StatSpan}
             $Config.Pools.$Pool_Name | Get-Member -MemberType NoteProperty | ForEach-Object {$Pool_Parameters.($_.Name) = $Config.Pools.$Pool_Name.($_.Name)}
@@ -249,14 +255,14 @@ while ($true) {
 
     Write-Log "Selecting best pool for each algorithm. "
     $AllPools.Algorithm | ForEach-Object {$_.ToLower()} | Select-Object -Unique | ForEach-Object {$Pools | Add-Member $_ ($AllPools | Sort-Object -Descending {$Config.PoolName.Count -eq 0 -or (Compare-Object $Config.PoolName $_.Name -IncludeEqual -ExcludeDifferent | Measure-Object).Count -gt 0}, {($Timer - $_.Updated).TotalMinutes -le ($SyncWindow * $Strikes)}, {$_.StablePrice * (1 - $_.MarginOfError)}, {$_.Region -EQ $Config.Region}, {$_.SSL -EQ $Config.SSL} | Where-Object Algorithm -EQ $_ | Select-Object -First 1)}
-	if (($Pools | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name | ForEach-Object {$Pools.$_.Name} | Select-Object -Unique | ForEach-Object {$AllPools | Where-Object Name -EQ $_ | Measure-Object Updated -Maximum | Select-Object -ExpandProperty Maximum} | Measure-Object -Minimum -Maximum | ForEach-Object {$_.Maximum - $_.Minimum} | Select-Object -ExpandProperty TotalMinutes) -gt $SyncWindow) {
+    if (($Pools | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name | ForEach-Object {$Pools.$_.Name} | Select-Object -Unique | ForEach-Object {$AllPools | Where-Object Name -EQ $_ | Measure-Object Updated -Maximum | Select-Object -ExpandProperty Maximum} | Measure-Object -Minimum -Maximum | ForEach-Object {$_.Maximum - $_.Minimum} | Select-Object -ExpandProperty TotalMinutes) -gt $SyncWindow) {
         Write-Log -Level Warn "Pool prices are out of sync ($([Int]($Pools | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name | ForEach-Object {$Pools.$_} | Measure-Object Updated -Minimum -Maximum | ForEach-Object {$_.Maximum - $_.Minimum} | Select-Object -ExpandProperty TotalMinutes)) minutes). "
         $Pools | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name | ForEach-Object {$Pools.$_ | Add-Member Price_Bias ($Pools.$_.StablePrice * (1 - ($Pools.$_.MarginOfError * $Config.SwitchingPrevention * [Math]::Pow($DecayBase, $DecayExponent)))) -Force}
-		$Pools | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name | ForEach-Object {$Pools.$_ | Add-Member Price_Unbias $Pools.$_.StablePrice -Force}
+        $Pools | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name | ForEach-Object {$Pools.$_ | Add-Member Price_Unbias $Pools.$_.StablePrice -Force}
     }
     else {
         $Pools | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name | ForEach-Object {$Pools.$_ | Add-Member Price_Bias ($Pools.$_.Price * (1 - ($Pools.$_.MarginOfError * $Config.SwitchingPrevention * [Math]::Pow($DecayBase, $DecayExponent)))) -Force}
-		$Pools | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name | ForEach-Object {$Pools.$_ | Add-Member Price_Unbias $Pools.$_.Price -Force}
+        $Pools | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name | ForEach-Object {$Pools.$_ | Add-Member Price_Unbias $Pools.$_.Price -Force}
     }
 
     #Load information about the miners
@@ -284,7 +290,7 @@ while ($true) {
         $Miner_Profits_Comparison = [PSCustomObject]@{}
         $Miner_Profits_MarginOfError = [PSCustomObject]@{}
         $Miner_Profits_Bias = [PSCustomObject]@{}
-		$Miner_Profits_Unbias = [PSCustomObject]@{}
+        $Miner_Profits_Unbias = [PSCustomObject]@{}
 
         $Miner_Types = $Miner.Type | Select-Object -Unique
         $Miner_Indexes = $Miner.Index | Select-Object -Unique
@@ -297,13 +303,13 @@ while ($true) {
             $Miner_Profits | Add-Member $_ ([Double]$Miner.HashRates.$_ * $Pools.$_.Price)
             $Miner_Profits_Comparison | Add-Member $_ ([Double]$Miner.HashRates.$_ * $Pools.$_.StablePrice)
             $Miner_Profits_Bias | Add-Member $_ ([Double]$Miner.HashRates.$_ * $Pools.$_.Price_Bias)
-			$Miner_Profits_Unbias | Add-Member $_ ([Double]$Miner.HashRates.$_ * $Pools.$_.Price_Unbias)
+            $Miner_Profits_Unbias | Add-Member $_ ([Double]$Miner.HashRates.$_ * $Pools.$_.Price_Unbias)
         }
 
         $Miner_Profit = [Double]($Miner_Profits.PSObject.Properties.Value | Measure-Object -Sum).Sum
         $Miner_Profit_Comparison = [Double]($Miner_Profits_Comparison.PSObject.Properties.Value | Measure-Object -Sum).Sum
         $Miner_Profit_Bias = [Double]($Miner_Profits_Bias.PSObject.Properties.Value | Measure-Object -Sum).Sum
-		$Miner_Profit_Unbias = [Double]($Miner_Profits_Unbias.PSObject.Properties.Value | Measure-Object -Sum).Sum
+        $Miner_Profit_Unbias = [Double]($Miner_Profits_Unbias.PSObject.Properties.Value | Measure-Object -Sum).Sum
 
         $Miner.HashRates | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty Name | ForEach-Object {
             $Miner_Profits_MarginOfError | Add-Member $_ ([Double]$Pools.$_.MarginOfError * (& {if ($Miner_Profit) {([Double]$Miner.HashRates.$_ * $Pools.$_.StablePrice) / $Miner_Profit}else {1}}))
@@ -317,12 +323,12 @@ while ($true) {
                 $Miner_Profits.$_ = $null
                 $Miner_Profits_Comparison.$_ = $null
                 $Miner_Profits_Bias.$_ = $null
-				$Miner_Profits_Unbias.$_ = $null
+                $Miner_Profits_Unbias.$_ = $null
                 $Miner_Profit = $null
                 $Miner_Profit_Comparison = $null
                 $Miner_Profits_MarginOfError = $null
                 $Miner_Profit_Bias = $null
-				$Miner_Profit_Unbias = $null
+                $Miner_Profit_Unbias = $null
             }
         }
 
@@ -338,12 +344,12 @@ while ($true) {
         $Miner | Add-Member Profits $Miner_Profits
         $Miner | Add-Member Profits_Comparison $Miner_Profits_Comparison
         $Miner | Add-Member Profits_Bias $Miner_Profits_Bias
-		$Miner | Add-Member Profits_Unbias $Miner_Profits_Unbias
+        $Miner | Add-Member Profits_Unbias $Miner_Profits_Unbias
         $Miner | Add-Member Profit $Miner_Profit
         $Miner | Add-Member Profit_Comparison $Miner_Profit_Comparison
         $Miner | Add-Member Profit_MarginOfError $Miner_Profit_MarginOfError
         $Miner | Add-Member Profit_Bias $Miner_Profit_Bias
-		$Miner | Add-Member Profit_Unbias $Miner_Profit_Unbias
+        $Miner | Add-Member Profit_Unbias $Miner_Profit_Unbias
 
         $Miner | Add-Member Type ($Miner_Types | Sort-Object) -Force
         $Miner | Add-Member Index ($Miner_Indexes | Sort-Object) -Force
@@ -353,6 +359,8 @@ while ($true) {
 
         $Miner.Path = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($Miner.Path)
         if ($Miner.PrerequisitePath) {$Miner.PrerequisitePath = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($Miner.PrerequisitePath)}
+
+        if ($Miner.Arguments -isnot [String]) {$Miner.Arguments = $Miner.Arguments | ConvertTo-Json -Compress}
 
         if (-not $Miner.API) {$Miner | Add-Member API "Miner" -Force}
     }
@@ -392,7 +400,7 @@ while ($true) {
         $_.Profit_Comparison = 0
         $_.Profit_MarginOfError = 0
         $_.Profit_Bias = 0
-		$_.Profit_Unbias = 0
+        $_.Profit_Unbias = 0
         $_.Best = $false
         $_.Best_Comparison = $false
     }
@@ -417,7 +425,7 @@ while ($true) {
             $ActiveMiner.Profit_Comparison = $Miner.Profit_Comparison
             $ActiveMiner.Profit_MarginOfError = $Miner.Profit_MarginOfError
             $ActiveMiner.Profit_Bias = $Miner.Profit_Bias
-			$ActiveMiner.Profit_Unbias = $Miner.Profit_Unbias
+            $ActiveMiner.Profit_Unbias = $Miner.Profit_Unbias
             $ActiveMiner.Speed = $Miner.HashRates.PSObject.Properties.Value #temp fix, must use 'PSObject.Properties' to preserve order
         }
         else {
@@ -437,7 +445,7 @@ while ($true) {
                 Profit_Comparison    = $Miner.Profit_Comparison
                 Profit_MarginOfError = $Miner.Profit_MarginOfError
                 Profit_Bias          = $Miner.Profit_Bias
-				Profit_Unbias        = $Miner.Profit_Unbias
+                Profit_Unbias        = $Miner.Profit_Unbias
                 Speed                = $Miner.HashRates.PSObject.Properties.Value #temp fix, must use 'PSObject.Properties' to preserve order
                 Speed_Live           = 0
                 Best                 = $false
@@ -449,6 +457,7 @@ while ($true) {
                 Status               = ""
                 Benchmarked          = 0
                 CName                = $Miner.CName
+                Pool                 = $Miner.Pools.PSObject.Properties.Value.Name
             }
         }
     }
