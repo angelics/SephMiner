@@ -49,17 +49,23 @@ $MiningPoolHubCoins_Request.return | Where-Object {$ExcludeCoin -inotcontains $_
     $Variance = 1
 	
     $Variance = 1 - $MiningPoolHubCoins_Variance."$MiningPoolHubCoins_Coin"
+	
+    if ($Variance -ne 0){$Variance -= 0.01}
 
     if($Ethereum -and $MiningPoolHubCoins_Coin -eq "Ethereum"){$Variance = 1}
     if($Zcash -and $MiningPoolHubCoins_Coin -eq "Zcash"){$Variance = 1}
 	
     $MiningPoolHubCoins_Fees = 1-($MiningPoolHubCoins_Fee/100)
 	
-    $Stat = Set-Stat -Name "$($Name)_$($MiningPoolHubCoins_Coin)_Profit" -Value ([Double]$_.profit / $Divisor * $MiningPoolHubCoins_Fees * $Variance) -Duration $StatSpan -ChangeDetection $true
+    $Stat = Set-Stat -Name "$($Name)_$($MiningPoolHubCoins_Coin)_Profit" -Value ([Double]$_.profit / $Divisor) -Duration $StatSpan -ChangeDetection $true
+	
+    $Stat.Live = $Stat.Live * $MiningPoolHubCoins_Fees * $Variance
+    $Stat.Week = $Stat.Week * $MiningPoolHubCoins_Fees * $Variance
+    $Stat.Week_Fluctuation = $Stat.Week_Fluctuation * $MiningPoolHubCoins_Fees * $Variance
 	
     $MiningPoolHubCoins_Regions | ForEach-Object {
         $MiningPoolHubCoins_Region = $_
-        $MiningPoolHubCoins_Region_Norm = Get-Region $MiningPoolHubCoins_Region
+        $MiningPoolHubCoins_Region_Norm = Get-Region ($MiningPoolHubCoins_Region -replace "^us-east$", "us")
 
         if ($User) {
             if ($MiningPoolHubCoins_Algorithm_Norm -eq "CryptonightV7") {
@@ -160,4 +166,3 @@ $MiningPoolHubCoins_Request.return | Where-Object {$ExcludeCoin -inotcontains $_
         }
     }
 }
-Sleep 0

@@ -23,7 +23,7 @@ default config.txt for miningpoolhub/coins have Ethereum set as auto-exchange. c
 
 * If you are "upgrading" from master copy, remove all folders except Bin , Stats and OC. Run resetprofit after.
 
-* Default zergpool1, zergpool3 mining address in config.txt will be LTC. change to "BTC": "$Wallet", if mining using BTC wallet.
+* Default zergpool, zergpoolcoins mining address in config.txt is LTC. please change to "BTC": "$Wallet", if you are going to use BTC wallet.
 
 * **Default donation 24 minutes, minimum 10**
 ```
@@ -102,7 +102,6 @@ https://github.com/OhGodACompany/OhGodAnETHlargementPill
 * eminer
 * ethmineramd
 * ethminernvidia
-* ExcavatorNvidia1
 * MkxminerAmd
 * NsgminerNvidia
 * SgminerSkein

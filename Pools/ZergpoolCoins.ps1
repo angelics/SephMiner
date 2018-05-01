@@ -24,7 +24,7 @@ if (($ZergPoolCoins_Request | Get-Member -MemberType NoteProperty -ErrorAction I
     Write-Log -Level Warn "Pool API ($Name) returned nothing. "
     return
 }
-
+	
 try {
     $ZergpoolCoins_Variance = Invoke-RestMethod "https://semitest.000webhostapp.com/variance/zergpoolc.variance.txt" -UseBasicParsing -TimeoutSec 10 -ErrorAction SilentlyContinue
 }
@@ -33,7 +33,7 @@ catch {
     return
 }
 
-$ZergPoolCoins_Regions = "us", "europe"
+$ZergPoolCoins_Regions = "us"
 $ZergPoolCoins_Currencies = @("BTC", "LTC") + ($ZergPoolCoins_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name) | Select-Object -Unique | Where-Object {Get-Variable $_ -ValueOnly -ErrorAction SilentlyContinue}
 
 $ZergPoolCoins_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name | Where-Object {$ExcludeCoin -inotcontains $ZergPoolCoins_Request.$_.name -and $ExcludeAlgorithm -inotcontains (Get-Algorithm $ZergPoolCoins_Request.$_.algo) -and ($Coin.count -eq 0 -or $Coin -icontains $ZergPoolCoins_Request.$_.name) -and $ZergPoolCoins_Request.$_.hashrate -gt 0 -and $ZergPoolCoins_Request.$_.noautotrade -eq 0} | ForEach-Object {
@@ -57,12 +57,14 @@ $ZergPoolCoins_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore
         "yescrypt"{$Divisor /= 1000}
         "yescryptr16"{$Divisor /= 1000}
     }
-	
-	$ZergpoolCoins_Fees = 1-($ZergpoolCoins_Fee/100)
-	
+    
+    $ZergpoolCoins_Fees = 1-($ZergpoolCoins_Fee/100)
+    
     $Variance = 1
 	
     $Variance = 1 - $ZergpoolCoins_Variance."$ZergPoolCoins_Currency".variance
+	
+    if ($Variance -ne 0){$Variance -= 0.01}
 	
     if($CREA -and $ZergPoolCoins_Currency -eq "CREA"){$Variance = 1}
     if($YTN -and $ZergPoolCoins_Currency -eq "YTN"){$Variance = 1}
@@ -72,8 +74,12 @@ $ZergPoolCoins_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore
     if($BTX -and $ZergPoolCoins_Currency -eq "BTX"){$Variance = 1}
     if($MAC -and $ZergPoolCoins_Currency -eq "MAC"){$Variance = 1}
 	
-    $Stat = Set-Stat -Name "$($Name)_$($_)_Profit" -Value ([Double]$ZergPoolCoins_Request.$_.estimate / $Divisor * $ZergpoolCoins_Fees * $Variance) -Duration $StatSpan -ChangeDetection $true
+    $Stat = Set-Stat -Name "$($Name)_$($_)_Profit" -Value ([Double]$ZergPoolCoins_Request.$_.estimate / $Divisor) -Duration $StatSpan -ChangeDetection $true
 
+    $Stat.Live = $Stat.Live * $ZergpoolCoins_Fees * $Variance
+    $Stat.Week = $Stat.Week * $ZergpoolCoins_Fees * $Variance
+    $Stat.Week_Fluctuation = $Stat.Week_Fluctuation * $ZergpoolCoins_Fees * $Variance
+	
     $ZergPoolCoins_Regions | ForEach-Object {
         $ZergPoolCoins_Region = $_
         $ZergPoolCoins_Region_Norm = Get-Region $ZergPoolCoins_Region

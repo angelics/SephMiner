@@ -62,6 +62,8 @@ $Zpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Selec
 
     $Variance = 1 - $Zpool_Variance."$Zpool_Algorithm_Norm"
 	
+    if ($Variance -ne 0){$Variance -= 0.01}
+	
     if($CREA -and $Zpool_Algorithm_Norm -eq "Keccakc"){$Variance = 1}
     if($OC -and $Zpool_Algorithm_Norm -eq "sha256t"){$Variance = 1}
     if($MAX -and $Zpool_Algorithm_Norm -eq "Keccak"){$Variance = 1}
@@ -75,9 +77,13 @@ $Zpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Selec
     if($MAC -and $Zpool_Algorithm_Norm -eq "timetravel"){$Variance = 1}
     if($YTN -and $Zpool_Algorithm_Norm -eq "yescryptR16"){$Variance = 1}
 
-    if ((Get-Stat -Name "$($Name)_$($Zpool_Algorithm_Norm)_Profit") -eq $null) {$Stat = Set-Stat -Name "$($Name)_$($Zpool_Algorithm_Norm)_Profit" -Value ([Double]$Zpool_Request.$_.estimate_last24h / $Divisor * $Zpool_Fees * $Variance) -Duration (New-TimeSpan -Days 1)}
-    else {$Stat = Set-Stat -Name "$($Name)_$($Zpool_Algorithm_Norm)_Profit" -Value ([Double]$Zpool_Request.$_.estimate_current / $Divisor * $Zpool_Fees * $Variance) -Duration $StatSpan -ChangeDetection $true}
+    if ((Get-Stat -Name "$($Name)_$($Zpool_Algorithm_Norm)_Profit") -eq $null) {$Stat = Set-Stat -Name "$($Name)_$($Zpool_Algorithm_Norm)_Profit" -Value ([Double]$Zpool_Request.$_.estimate_last24h / $Divisor) -Duration (New-TimeSpan -Days 1)}
+    else {$Stat = Set-Stat -Name "$($Name)_$($Zpool_Algorithm_Norm)_Profit" -Value ([Double]$Zpool_Request.$_.estimate_current / $Divisor) -Duration $StatSpan -ChangeDetection $true}
 
+    $Stat.Live = $Stat.Live * $Zpool_Fees * $Variance
+    $Stat.Week = $Stat.Week * $Zpool_Fees * $Variance
+    $Stat.Week_Fluctuation = $Stat.Week_Fluctuation * $Zpool_Fees * $Variance
+	
     $Zpool_Regions | ForEach-Object {
         $Zpool_Region = $_
         $Zpool_Region_Norm = Get-Region $Zpool_Region

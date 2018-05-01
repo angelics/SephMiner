@@ -51,11 +51,17 @@ $MiningPoolHub_Request.return | Where-Object {$ExcludeAlgorithm -inotcontains (G
 	
     $Variance = 1 - $MiningPoolHub_Variance."$MiningPoolHub_Algorithm_Norm"
 	
-    $Stat = Set-Stat -Name "$($Name)_$($MiningPoolHub_Algorithm_Norm)_Profit" -Value ([Double]$_.profit / $Divisor * $MiningPoolHub_Fees) -Duration $StatSpan -ChangeDetection $true
+    if ($Variance -ne 0){$Variance -= 0.01}
+	
+    $Stat = Set-Stat -Name "$($Name)_$($MiningPoolHub_Algorithm_Norm)_Profit" -Value ([Double]$_.profit / $Divisor) -Duration $StatSpan -ChangeDetection $true
+	
+    $Stat.Live = $Stat.Live * $MiningPoolHub_Fees * $Variance
+    $Stat.Week = $Stat.Week * $MiningPoolHub_Fees * $Variance
+    $Stat.Week_Fluctuation = $Stat.Week_Fluctuation * $MiningPoolHub_Fees * $Variance
 	
     $MiningPoolHub_Regions | ForEach-Object {
         $MiningPoolHub_Region = $_
-        $MiningPoolHub_Region_Norm = Get-Region $MiningPoolHub_Region
+        $MiningPoolHub_Region_Norm = Get-Region ($MiningPoolHub_Region -replace "^us-east$", "us")
 
         if ($User) {
             if ($MiningPoolHub_Algorithm_Norm -eq "CryptonightV7") {
@@ -136,4 +142,3 @@ $MiningPoolHub_Request.return | Where-Object {$ExcludeAlgorithm -inotcontains (G
         }
     }
 }
-Sleep 0

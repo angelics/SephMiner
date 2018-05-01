@@ -34,7 +34,7 @@ catch {
     return
 }
 
-$Zergpool_Regions = "us", "europe"
+$Zergpool_Regions = "us"
 $Zergpool_Currencies = @("BTC","LTC") + ($ZpoolCoins_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name) | Select-Object -Unique | Where-Object {Get-Variable $_ -ValueOnly -ErrorAction SilentlyContinue}
 
 $Zergpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name | Where-Object {$ExcludeAlgorithm -inotcontains (Get-Algorithm $Zergpool_Request.$_.name) -and $Zergpool_Request.$_.hashrate -gt 0} | ForEach-Object {
@@ -64,6 +64,8 @@ $Zergpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Se
 	
     $Variance = 1 - $Zergpool_Variance."$Zergpool_Algorithm_Norm"
 	
+    if ($Variance -ne 0){$Variance -= 0.01}
+	
     if($CREA -and $Zergpool_Algorithm_Norm -eq "Keccakc"){$Variance = 1}
     if($YTN -and $Zergpool_Algorithm_Norm -eq "yescryptr16"){$Variance = 1}
     if($PGN -and $Zergpool_Algorithm_Norm -eq "x16s"){$Variance = 1}
@@ -71,9 +73,13 @@ $Zergpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Se
     if($BTX -and $Zergpool_Algorithm_Norm -eq "bitcore"){$Variance = 1}
     if($MAC -and $Zergpool_Algorithm_Norm -eq "timetravel"){$Variance = 1}
 	
-    if ((Get-Stat -Name "$($Name)_$($Zergpool_Algorithm_Norm)_Profit") -eq $null) {$Stat = Set-Stat -Name "$($Name)_$($Zergpool_Algorithm_Norm)_Profit" -Value ([Double]$Zergpool_Request.$_.estimate_last24h / $Divisor * $Zergpool_Fees * $Variance) -Duration (New-TimeSpan -Days 1)}
-    else {$Stat = Set-Stat -Name "$($Name)_$($Zergpool_Algorithm_Norm)_Profit" -Value ([Double]$Zergpool_Request.$_.estimate_current / $Divisor * $Zergpool_Fees * $Variance) -Duration $StatSpan -ChangeDetection $true}
+    if ((Get-Stat -Name "$($Name)_$($Zergpool_Algorithm_Norm)_Profit") -eq $null) {$Stat = Set-Stat -Name "$($Name)_$($Zergpool_Algorithm_Norm)_Profit" -Value ([Double]$Zergpool_Request.$_.estimate_last24h / $Divisor) -Duration (New-TimeSpan -Days 1)}
+    else {$Stat = Set-Stat -Name "$($Name)_$($Zergpool_Algorithm_Norm)_Profit" -Value ([Double]$Zergpool_Request.$_.estimate_current / $Divisor) -Duration $StatSpan -ChangeDetection $true}
 
+    $Stat.Live = $Stat.Live * $Zergpool_Fees * $Variance
+    $Stat.Week = $Stat.Week * $Zergpool_Fees * $Variance
+    $Stat.Week_Fluctuation = $Stat.Week_Fluctuation * $Zergpool_Fees * $Variance
+	
     $Zergpool_Regions | ForEach-Object {
         $Zergpool_Region = $_
         $Zergpool_Region_Norm = Get-Region $Zergpool_Region
