@@ -30,7 +30,7 @@ try {
     $Zpool_Variance = Invoke-RestMethod "https://semitest.000webhostapp.com/variance/zpool.variance.txt" -UseBasicParsing -TimeoutSec 10 -ErrorAction SilentlyContinue
 }
 catch {
-    Write-Log -Level Warn "Pool Variance ($Name) has failed. "
+    Write-Log -Level Warn "Pool Variance ($Name) has failed. Mining Without variance / fees in calcualtion."
 }
 
 $Zpool_Regions = "us"

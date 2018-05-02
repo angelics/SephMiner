@@ -30,7 +30,7 @@ try {
     $Zergpool_Variance = Invoke-RestMethod "https://semitest.000webhostapp.com/variance/zergpool.variance.txt" -UseBasicParsing -TimeoutSec 10 -ErrorAction SilentlyContinue
 }
 catch {
-    Write-Log -Level Warn "Pool Variance ($Name) has failed. "
+    Write-Log -Level Warn "Pool Variance ($Name) has failed. Mining Without variance / fees in calcualtion."
 }
 
 $Zergpool_Regions = "us"
