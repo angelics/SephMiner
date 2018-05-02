@@ -31,7 +31,6 @@ try {
 }
 catch {
     Write-Log -Level Warn "Pool Variance ($Name) has failed. "
-    return
 }
 
 $Zergpool_Regions = "us"

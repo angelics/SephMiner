@@ -31,7 +31,6 @@ try {
 }
 catch {
     Write-Log -Level Warn "Pool Variance ($Name) has failed. "
-    return
 }
 
 $Zpool_Regions = "us"

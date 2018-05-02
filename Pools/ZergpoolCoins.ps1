@@ -30,7 +30,6 @@ try {
 }
 catch {
     Write-Log -Level Warn "Pool Variance ($Name) has failed. "
-    return
 }
 
 $ZergPoolCoins_Regions = "us"
