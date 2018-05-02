@@ -15,7 +15,7 @@ multipoolminer 95d4193 with bug fixed or improvements commits
 
 * Excluded maxcoin from miningpoolhubcoins, unless auto-exchange set to BTC.
 ```
-default config.txt for miningpoolhub/coins have Ethereum set as auto-exchange. change to Bitcoin and remove maxcoin from excludecoin
+default config.txt for miningpoolhubcoins have Ethereum and Zcash with disabledexchange.
 ```
 * Removed ASICS coins from all pools and miners.
 

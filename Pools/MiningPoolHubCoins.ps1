@@ -51,8 +51,7 @@ $MiningPoolHubCoins_Request.return | Where-Object {$ExcludeCoin -inotcontains $_
 	
     if ($Variance -ne 0){$Variance -= 0.01}
 
-    if($Ethereum -and $MiningPoolHubCoins_Coin -eq "Ethereum"){$Variance = 1}
-    if($Zcash -and $MiningPoolHubCoins_Coin -eq "Zcash"){$Variance = 1}
+    if($DisableExchange -contains $MiningPoolHubCoins_Coin){$Variance = 1}
 	
     $MiningPoolHubCoins_Fees = 1-($MiningPoolHubCoins_Fee/100)
 	
