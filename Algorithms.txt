@@ -1,9 +1,7 @@
 {
     "axiom":  "MemoHash",
     "bitcore":  "Bitcore",
-    "blake":  "Blakecoin",
     "blake2s":  "Blake2s",
-    "blakecoin":  "Blakecoin",
     "c11":  "C11",
     "cryptonight-heavy":  "CryptoNight-Heavy",
     "cryptonight_heavy":  "CryptoNight-Heavy",

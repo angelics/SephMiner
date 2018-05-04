@@ -12,7 +12,7 @@
       "User": "$UserName",
       "Worker": "$WorkerName",
       "ExcludeAlgorithm":  ["ethash2gb", "Sia", "Skein", "Qubit", "X11", "MyriadGroestl", "Groestl", "Scrypt"],
-      "DisableExchange":  ["zcash","Ethereum"],
+      "DisableExchange":  ["Ethereum"],
       "ExcludeCoin":  ["maxcoin", "Electroneum"],
       "API_ID": "$API_ID",
       "API_Key": "$API_Key"

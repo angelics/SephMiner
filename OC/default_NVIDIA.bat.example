@@ -11,11 +11,12 @@ REM total number of nvidiagpu
 set nvidiagpu=1
 
 set forcepstate=2
-set fanspeed=100
+set fanspeed01=90
 set temptarget=80
-set baseclockoffsetlow=0
-set memoryclockoffsetlowest=0
-set powertarget=100
+set baseclockoffset01=0
+set memoryclockoffset01=0
+set powertarget01=100
+
 set /a timer = 3+%nvidiagpu%
 title  %title%
 
@@ -39,5 +40,4 @@ goto loop
 %endif%
 
 :oc
-echo forcepstate=%forcepstate%, fanspeed=%fanspeed%, temptarget=%temptarget%, baseclockoffsetlow=%baseclockoffsetlow%, memoryclockoffset=%memoryclockoffsetlowest%, powertarget=%powertarget%
-NV_Inspector\nvidiaInspector.exe -forcepstate:0,%forcepstate% -setfanspeed:0,%fanspeed% -settemptarget:0,0,%temptarget% -setbaseclockoffset:0,0,%baseclockoffsetlow% -setmemoryclockoffset:0,0,%memoryclockoffsetlowest% -setpowertarget:0,%powertarget%
+NV_Inspector\nvidiaInspector.exe -forcepstate:0,%forcepstate% -setfanspeed:0,%fanspeed01% -settemptarget:0,0,%temptarget% -setbaseclockoffset:0,0,%baseclockoffset01% -setmemoryclockoffset:0,0,%memoryclockoffset01% -setpowertarget:0,%powertarget01%

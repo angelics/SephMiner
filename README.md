@@ -15,7 +15,7 @@ multipoolminer 95d4193 with bug fixed or improvements commits
 
 * Excluded maxcoin from miningpoolhubcoins, unless auto-exchange set to BTC.
 ```
-default config.txt for miningpoolhubcoins have Ethereum and Zcash with disabledexchange.
+default config.txt for miningpoolhubcoins have Ethereum with disabledexchange.
 ```
 * Removed ASICS coins from all pools and miners.
 
@@ -91,6 +91,11 @@ https://github.com/OhGodACompany/OhGodAnETHlargementPill
 * blakecoin
 * vanilla
 
+
+# Lists of algos to be removed:
+* ethash
+* equihash
+
 # Lists of miner removed:
 * CcminerHsr
 * CcminerSib
@@ -116,5 +121,3 @@ angelics BTC = 19pQKDfdspXm6ouTDnZHpUcmEFN8a1x9zo
 angelics ETH = 0xBD0e3c16447b68CE01fAA19f65aE9e3882a54C54
 
 angelics LTC = Lex2wqKA44ZGkBvHhWE3STrqicbCdGG125
-
-angelics ZEC = t1Ti2W2HTLDwNe8KSqsTt4pEpWdjpbBfKTb
