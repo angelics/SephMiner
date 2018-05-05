@@ -573,28 +573,30 @@ while ($true) {
     Start-Sleep $Config.Delay #Wait to prevent BSOD
     $ActiveMiners | Where-Object Best -EQ $true | ForEach-Object {
         if ($_.Process -eq $null -or $_.Process.HasExited -ne $false) {
-		If ($_.Type -ne "cpu"){
-		# Launch OC if exists
-		$OCName = ".\OC\"+$_.Algorithm+"_"+$_.Type+".bat"
-		$DefaultOCName = ".\OC\default_"+$_.Type+".bat"
-			If (Test-Path $OCName) {
-				Write-Host -F Yellow "Launching :" $OCName
-				Write-Log "Launching $($_.Algorithm) $($_.Type) : $OCName"
-				Start-Process -Wait $OCName -WorkingDirectory ".\OC"
-				Sleep 2
-				} else {
-					If (Test-Path $DefaultOCName) {
-					Write-Host -F Yellow "Launching :" $DefaultOCName
-					Write-Log "Launching $($_.Algorithm) $($_.Type) : $DefaultOCName"
-					Start-Process -Wait $DefaultOCName -WorkingDirectory  ".\OC"
+		
+			# Launch OC if exists
+			if ($_.Type -ne "cpu"){
+			$OCName = ".\OC\"+$_.Algorithm+"_"+$_.Type+".bat"
+			$DefaultOCName = ".\OC\default_"+$_.Type+".bat"
+				if (Test-Path $OCName) {
+					Write-Host -F Yellow "Launching :" $OCName
+					Write-Log "Launching $($_.Algorithm) $($_.Type) : $OCName"
+					Start-Process -Wait $OCName -WorkingDirectory ".\OC"
 					Sleep 2
+				}
+				else {
+					if (Test-Path $DefaultOCName) {
+						Write-Host -F Yellow "Launching :" $DefaultOCName
+						Write-Log "Launching $($_.Algorithm) $($_.Type) : $DefaultOCName"
+						Start-Process -Wait $DefaultOCName -WorkingDirectory  ".\OC"
+						Sleep 2
 					}
 				}
-		}
+		    }
 	
-				Write-Log "Starting $($_.Type) miner $($_.Name): '$($_.Path) $($_.Arguments)'"
-                $DecayStart = $Timer
-                $_.StartMining()
+            Write-Log "Starting $($_.Type) miner $($_.Name): '$($_.Path) $($_.Arguments)'"
+            $DecayStart = $Timer
+            $_.StartMining()
 		
             #Add watchdog timer
             if ($Config.Watchdog -and $_.Profit -ne $null) {
@@ -636,11 +638,7 @@ while ($true) {
     Write-Host " This is a free project feel free to donate be much appreciated:"
     Write-Host " Thank you aaronsace for MultiPoolMiner"
     Write-Host " Default donation 24 minutes per 24 hour" -foregroundcolor "Yellow"
-    if ($Config.Donate -lt 24) {
     Write-Host " Current donation = $($Config.Donate) mins" -foregroundcolor "Red"
-    Write-Host " i see what u did ther. Sad but understandable :)" -foregroundcolor "Red"
-    Write-Log " Donation = $($Config.Donate) mins"
-    }
     Write-Host " Close this immediately if you do not agree" -foregroundcolor "Red"
     Write-Host " Thank you for choosing SephMiner"
     Write-Host "--------------------------------------------------------------------------------"

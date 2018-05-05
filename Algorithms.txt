@@ -35,7 +35,7 @@
     "skunk":  "Skunk",
     "timetravel":  "Timetravel",
     "tribus":  "Tribus",
-    "blake256r8vnl":  "VCash",
+    "vit":  "Vitalium",
     "whirlpoolx":  "whirlpoolx",
     "x11evo":  "X11evo",
     "x12":  "X12",

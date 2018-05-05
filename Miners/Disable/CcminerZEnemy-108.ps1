@@ -6,7 +6,7 @@ $Uri = "https://mega.nz/#!7D53kQjL!tV1vUsFdBIDqCzBrcMoXVR2G9YHD6xqct5QB2nBiuzM"
 $Commands = [PSCustomObject]@{
     "bitcore" = " -N 3" #Bitcore
     "phi" = " -N 1" #Phi
-    "x16s" = " -N 3" #Raven
+    "x16s" = " -N 3" #Pigeon
     "x16r" = " -N 3" #Raven
 }
 
