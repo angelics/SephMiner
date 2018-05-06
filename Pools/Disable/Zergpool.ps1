@@ -34,7 +34,7 @@ catch {
 }
 
 $Zergpool_Regions = "us"
-$Zergpool_Currencies = @("BTC","LTC") + ($ZpoolCoins_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name) | Select-Object -Unique | Where-Object {Get-Variable $_ -ValueOnly -ErrorAction SilentlyContinue}
+$Zergpool_Currencies = @("BTC","LTC","DASH") + ($ZpoolCoins_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name) | Select-Object -Unique | Where-Object {Get-Variable $_ -ValueOnly -ErrorAction SilentlyContinue}
 
 $Zergpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name | Where-Object {$ExcludeAlgorithm -inotcontains (Get-Algorithm $Zergpool_Request.$_.name) -and $Zergpool_Request.$_.hashrate -gt 0} | ForEach-Object {
     $Zergpool_Host = "mine.zergpool.com"

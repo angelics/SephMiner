@@ -69,9 +69,7 @@ $Zpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Selec
     if($XZC -and $Zpool_Algorithm_Norm -eq "lyra2z"){$Variance = 1}
     if($BSD -and $Zpool_Algorithm_Norm -eq "xevan"){$Variance = 1}
     if($HSR -and $Zpool_Algorithm_Norm -eq "hsr"){$Variance = 1}
-    if($ESP -and $Zpool_Algorithm_Norm -eq "hmq1725"){$Variance = 1}
     if($XRE -and $Zpool_Algorithm_Norm -eq "x11evo"){$Variance = 1}
-    if($LUX -and $Zpool_Algorithm_Norm -eq "phi"){$Variance = 1}
     if($BTX -and $Zpool_Algorithm_Norm -eq "bitcore"){$Variance = 1}
     if($MAC -and $Zpool_Algorithm_Norm -eq "timetravel"){$Variance = 1}
     if($YTN -and $Zpool_Algorithm_Norm -eq "yescryptR16"){$Variance = 1}
