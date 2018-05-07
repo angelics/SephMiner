@@ -1,4 +1,5 @@
 {
+    "allium":  "Allium",
     "axiom":  "MemoHash",
     "bitcore":  "Bitcore",
     "blake2s":  "Blake2s",
