@@ -4,7 +4,7 @@ $Path = ".\Bin\NVIDIA-allium-226\ccminer-x64.exe"
 $Uri = "http://ccminer.org/preview/ccminer-x64-2.2.6-xmr-allium-cuda9.7z"
 
 $Commands = [PSCustomObject]@{
-    "allium" = ",d=25" #Allium
+    "allium" = "" #Allium
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
