@@ -64,7 +64,6 @@ https://github.com/OhGodACompany/OhGodAnETHlargementPill
 
 # Lists of algos added:
 * m7m
-* x12
 * x16r
 * x16s
 * yescrypt16
@@ -75,6 +74,7 @@ https://github.com/OhGodACompany/OhGodAnETHlargementPill
 * cryptonight-heavy
 * cryptonight-v7
 * cryptonight-v7 lite
+* allium
 
 # Lists of algos removed:
 * decred
