@@ -5,8 +5,7 @@
       "Worker": "$WorkerName",
       "ExcludeAlgorithm":  ["ethash2gb", "Sia", "Skein", "Qubit", "X11", "MyriadGroestl", "Groestl", "Scrypt"],
       "API_ID": "$API_ID",
-      "API_Key": "$API_Key",
-      "Ethereum": "autoexchange"
+      "API_Key": "$API_Key"
     },
     "MiningPoolHubCoins": {
       "User": "$UserName",

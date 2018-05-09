@@ -1,7 +1,7 @@
 ﻿using module ..\Include.psm1
 
 $Path = ".\Bin\ZEnemy-NVIDIA-109\z-enemy.exe"
-$Uri = "https://mega.nz/#!fCRnXJQS!SHXhuW12C9a44Usc3SY4oVJyYQahqVx-Q0F-OJbBhFQ"
+$Uri = "https://mega.nz/#!bahTEazb!bCzvEWWRIhWq_4CZoUet1PiiEkAkCrgM7dmBTJvMaTE"
 
 $Commands = [PSCustomObject]@{
     "bitcore" = " -N 3" #Bitcore

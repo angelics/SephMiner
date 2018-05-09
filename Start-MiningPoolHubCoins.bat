@@ -24,6 +24,7 @@ REM OC\OhGodAnETHlargementPill-r2.exe --revA 0,1,2
 REM total number of nvidiagpu
 set nvidiagpu=0
 set /a timer = 3+%nvidiagpu%
+set /a interval = 60 + ((%nvidiagpu%/2)-1)*60
 
 if %nvidiagpu% == 0 %then%
 goto start
@@ -64,12 +65,11 @@ set currency=usd
 set type=amd,nvidia,cpu
 set poolname=miningpoolhubcoins
 set ExcludePoolName=zpool
-REM asic algo = sha256,scrypt,x11,x13,x14,15,quark,qubit,decred,lbry,sia,Pascal,cryptonight,cryptonight-light,skein,myr-gr,groestl,nist5,sib,x11gost,veltor,blakecoin,vanilla,equihash
+REM asic algo = sha256,scrypt,x11,x13,x14,15,quark,qubit,decred,lbry,sia,Pascal,cryptonight,cryptonight-light,skein,myr-gr,groestl,nist5,sib,x11gost,veltor,blakecoin,vanilla,equihash,ethash
 set algorithm=ethash,lyra2re2,lyra2z,neoscrypt,yescrypt,CryptoNightV7
 set ExcludeAlgorithm=ethash2gb,keccak
 set ExcludeMinerName=ccminerlyra2re2,prospector
 set switchingprevention=2
-set interval=480
 
 set command=%cur%\SephMiner.ps1 -wallet %wallet% -username %username% -workername %workername% -region %region% -currency %currency%,btc -type %type% -poolname %poolname% -algorithm %algorithm% -ExcludeAlgorithm %ExcludeAlgorithm% -ExcludeMinerName %ExcludeMinerName% -donate 24 -watchdog -switchingprevention %switchingprevention% -interval %interval% -ExcludePoolName %ExcludePoolName%
 title  %title%

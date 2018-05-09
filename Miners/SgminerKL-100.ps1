@@ -1,11 +1,12 @@
 ﻿using module ..\Include.psm1
 
-$Path = ".\Bin\AMD-KL-556\sgminer.exe"
-$Uri = "https://github.com/KL0nLutiy/sgminer-gm-x16r/releases/download/5.5.6-kl/sgminer-5.5.6-kl-windows.zip"
+$Path = ".\Bin\AMD-KL-100\sgminer.exe"
+$Uri = "https://github.com/KL0nLutiy/sgminer-kl/releases/download/kl-1.0.0/sgminer-kl-1.0.0-windows.zip"
 
 $Commands = [PSCustomObject]@{
     "x16r" = " --intensity 18" #Raven increase 19,21
     "x16s" = "" #x16s
+    "x17" = "" #x17
     "xevan" = "" #Xevan
 }
 
