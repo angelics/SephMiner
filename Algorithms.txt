@@ -47,7 +47,10 @@
     "xmr":  "CryptoNightV7",
     "xevan":  "Xevan",
     "yescrypt":  "Yescrypt",
+    "yescryptR8" = "yescryptR8",
     "yescryptR16":  "yescryptR16",
+    "yescryptR16v2" = "PPNP",
+    "yescryptR24" = "yescryptR24"
     "yescryptR32":  "yescryptR32",
     "zec":  "Equihash"
 }
