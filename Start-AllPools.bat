@@ -5,6 +5,7 @@ set cur=%cd%
 set then=(
 set else=) else (
 set endif=)
+set less=LSS
 set greaterequal=GEQ
 set title=SephMiner
 
@@ -71,7 +72,7 @@ if %interval% %less% 240 %then%
 set interval=240
 %endif%
 
-set command=%cur%\SephMiner.ps1 -wallet %wallet% -username %username% -workername %workername% -region %region% -currency %currency%,btc -type %type% -ExcludeMinerName %ExcludeMinerName% -donate 24 -switchingprevention %switchingprevention% -interval %interval% -ExcludePoolName %ExcludePoolName% -watchdog
+set command=%cur%\SephMiner.ps1 -wallet %wallet% -username %username% -workername %workername% -region %region% -currency %currency%,btc -type %type% -ExcludeMinerName %ExcludeMinerName% -donate 24 -switchingprevention %switchingprevention% -interval %interval%
 title  %title%
 
 pwsh -noexit -executionpolicy bypass -windowstyle maximized -command "%command%"

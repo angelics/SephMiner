@@ -1,7 +1,7 @@
 ﻿using module ..\Include.psm1
 
-$Path = ".\Bin\ZEnemy-NVIDIA-109\z-enemy.exe"
-$Uri = "https://mega.nz/#!bahTEazb!bCzvEWWRIhWq_4CZoUet1PiiEkAkCrgM7dmBTJvMaTE"
+$Path = ".\Bin\ZEnemy-NVIDIA-109a\z-enemy.exe"
+$Uri = "https://mega.nz/#!CP5giJSb!p4mtA2Ullr4V4Ocd-siNAaxZYHXmDhGQvC0ztYgTuQE"
 
 $Commands = [PSCustomObject]@{
     "bitcore" = " -N 3" #Bitcore
@@ -10,6 +10,7 @@ $Commands = [PSCustomObject]@{
     "x16s" = " -N 3" #Pigeon
     "x16r" = " -N 3" #Raven
     "x17" = " -N 1" #X17
+    "xevan" = "" #Xevan
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
