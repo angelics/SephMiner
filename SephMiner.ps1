@@ -574,6 +574,13 @@ while ($true) {
     $ActiveMiners | Where-Object Best -EQ $true | ForEach-Object {
         if ($_.Process -eq $null -or $_.Process.HasExited -ne $false) {
 		
+			# Launch custom miner variable
+			$MinerNameProfile = ".\OC\"+$_.Name+".bat"
+			if (Test-Path $MinerNameProfile) {
+				Write-Host -F Yellow "Launching :" $MinerNameProfile
+				Sleep 2
+			}
+			
 			# Launch OC if exists
 			if ($_.Type -ne "cpu"){
 			$OCName = ".\OC\"+$_.Algorithm+"_"+$_.Type+".bat"

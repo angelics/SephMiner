@@ -1,13 +1,13 @@
 ﻿using module ..\Include.psm1
 
-$Path = ".\Bin\AMD-KL-100\sgminer.exe"
-$Uri = "https://github.com/KL0nLutiy/sgminer-kl/releases/download/kl-1.0.0/sgminer-kl-1.0.0-windows.zip"
+$Path = ".\Bin\AMD-KL-101\sgminer.exe"
+$Uri = "https://github.com/KL0nLutiy/sgminer-kl/releases/download/kl-1.0.1/sgminer-kl-1.0.1-windows.zip"
 
 $Commands = [PSCustomObject]@{
-    "x16r" = " --intensity 18" #Raven increase 19,21
-    "x16s" = "" #x16s
-    "x17" = "" #x17
-    "xevan" = "" #Xevan
+    "x16r" = " -X 256 -g 2 --intensity 18" #Raven increase 19,21
+    "x16s" = " -X 256 -g 2" #x16s
+    "x17" = " -X 256 -g 2" #x17
+    "xevan" = " -X 256 -g 2" #Xevan
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
