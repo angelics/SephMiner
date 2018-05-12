@@ -35,6 +35,7 @@
     "sigt":  "Skunk",
     "skunk":  "Skunk",
     "timetravel":  "Timetravel",
+    "timetravel10":  "Bitcore",
     "tribus":  "Tribus",
     "vit":  "Vitalium",
     "whirlpoolx":  "whirlpoolx",
