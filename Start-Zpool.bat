@@ -24,7 +24,6 @@ REM OC\OhGodAnETHlargementPill-r2.exe --revA 0,1,2
 REM total number of nvidiagpu
 set nvidiagpu=0
 set /a timer = 3+%nvidiagpu%
-set /a interval = 60 + ((%nvidiagpu%/2)-1)*60
 
 if %nvidiagpu% == 0 %then%
 goto start
@@ -70,6 +69,7 @@ set algorithm=neoscrypt,lyra2z,m7m,xevan,hmq1725,blake2s,c11,phi,x17,bitcore,x11
 set ExcludeAlgorithm=keccak
 set ExcludeMinerName=ccminerlyra2re2,prospector
 set switchingprevention=2
+set interval=240
 
 set command=%cur%\SephMiner.ps1 -wallet %wallet% -username %username% -workername %workername% -region %region% -currency %currency%,btc -type %type% -poolname %poolname% -algorithm %algorithm% -ExcludeAlgorithm %ExcludeAlgorithm% -ExcludeMinerName %ExcludeMinerName% -donate 24 -watchdog -switchingprevention %switchingprevention% -interval %interval% -ExcludePoolName %ExcludePoolName%
 title  %title%

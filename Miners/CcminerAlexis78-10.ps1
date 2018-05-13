@@ -10,7 +10,7 @@ $Commands = [PSCustomObject]@{
     #"x17" = " -i 21" #X17 CcminerEnemy-103 better
     #"keccak" = "" #keccak excavatornvidia2 beter
     "blake2s" = "" #blake2s
-    "x11evo" = " -i 21" #x11evo
+    "x11evo" = " -N 1 -i 21" #x11evo
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName

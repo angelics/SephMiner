@@ -25,7 +25,6 @@ REM OC\OhGodAnETHlargementPill-r2.exe --revA 0,1,2
 REM total number of nvidiagpu
 set nvidiagpu=0
 set /a timer = 3+%nvidiagpu%
-set /a interval = 60 + ((%nvidiagpu%/2)-1)*60
 
 if %nvidiagpu% == 0 %then%
 goto start
@@ -68,13 +67,12 @@ REM asic algo = sha256,scrypt,x11,x13,x14,15,quark,qubit,decred,lbry,sia,Pascal,
 set ExcludeMinerName=ccminerlyra2re2,prospector
 set switchingprevention=2
 REM min 240, api interval confirmed by PINPIN 180424
-if %interval% %less% 240 %then%
 set interval=240
-%endif%
 
-set command=%cur%\SephMiner.ps1 -wallet %wallet% -username %username% -workername %workername% -region %region% -currency %currency%,btc -type %type% -ExcludeMinerName %ExcludeMinerName% -donate 24 -switchingprevention %switchingprevention% -interval %interval%
+set command=%cur%\SephMiner.ps1 -wallet %wallet% -username %username% -workername %workername% -region %region% -currency %currency%,btc -type %type% -ExcludeMinerName %ExcludeMinerName% -donate 24 -switchingprevention %switchingprevention% -interval %interval% -watchdog
 title  %title%
 
+start pwsh -noexit -executionpolicy bypass -command "& .\reader.ps1 -log 'SephMiner_\d\d\d\d-\d\d-\d\d\.txt' -sort '^[^_]*_' -quickstart"
 pwsh -noexit -executionpolicy bypass -windowstyle maximized -command "%command%"
 powershell -version 5.0 -noexit -executionpolicy bypass -windowstyle maximized -command "%command%"
 msiexec -i https://github.com/PowerShell/PowerShell/releases/download/v6.0.2/PowerShell-6.0.2-win-x64.msi -qb!

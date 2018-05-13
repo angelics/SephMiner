@@ -33,7 +33,7 @@ $NiceHash_Request.result.simplemultialgo | Where-Object {$ExcludeAlgorithm -inot
     $NiceHash_Algorithm = $_.name
     $NiceHash_Algorithm_Norm = Get-Algorithm $NiceHash_Algorithm
     $NiceHash_Coin = ""
-    $NiceHash_Fee = 4
+    $NiceHash_Fee = 5.2
 
     $Divisor = 1000000000
 	

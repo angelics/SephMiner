@@ -18,6 +18,10 @@ param(
     [Parameter(Mandatory = $false)]
     [Int]$Interval = 60, #seconds before reading hash rate from miners
     [Parameter(Mandatory = $false)]
+    [Array]$ExtendIntervalAlgorithm = @("X16R", "X16S"), #Extend interval duration by a factor of 10x $Interval for these algorithms
+    [Parameter(Mandatory = $false)]
+    [Array]$ExtendIntervalMinerName = @("PalginNvidia2e3913c", "CcminerZEnemy-109a", "CcminerAlexis78-10"), #Extend interval duration by a factor of 10x $Interval for these miners
+    [Parameter(Mandatory = $false)]
     [Alias("Location")]
     [String]$Region = "europe", #europe/us/asia
     [Parameter(Mandatory = $false)]
@@ -275,6 +279,7 @@ while ($true) {
             Where-Object {$Config.MinerName.Count -eq 0 -or (Compare-Object $Config.MinerName $_.Name -IncludeEqual -ExcludeDifferent | Measure-Object).Count -gt 0} | 
             Where-Object {$Config.ExcludeMinerName.Count -eq 0 -or (Compare-Object $Config.ExcludeMinerName $_.Name -IncludeEqual -ExcludeDifferent | Measure-Object).Count -eq 0}
     }
+    
     Write-Log "Calculating profit for each miner. "
     $AllMiners | ForEach-Object {
         $Miner = $_
@@ -551,7 +556,16 @@ while ($true) {
         else {
             Write-Log "Closing $($Miner.Type) miner $($Miner.Name) [PID $($_.Process.Id)] because it is no longer the most profitable"
             $Miner.StopMining()
-
+			
+            #Revert custom miner variable
+            $MinerProfile = ".\OC\Stop_"+$_.Name+".bat"
+            if (Test-Path $MinerProfile) {
+				Write-Host -F Yellow "Launching :" $MinerProfile
+				Write-Log "Launching $($_.Name) : $MinerProfile"
+				Start-Process -Wait $MinerProfile -WorkingDirectory ".\OC"
+				Sleep 1
+            }
+			
             #Remove watchdog timer
             $Miner_Name = $Miner.Name
             $Miner.Algorithm | ForEach-Object {
@@ -573,12 +587,14 @@ while ($true) {
     Start-Sleep $Config.Delay #Wait to prevent BSOD
     $ActiveMiners | Where-Object Best -EQ $true | ForEach-Object {
         if ($_.Process -eq $null -or $_.Process.HasExited -ne $false) {
-		
-			# Launch custom miner variable
-			$MinerNameProfile = ".\OC\"+$_.Name+".bat"
-			if (Test-Path $MinerNameProfile) {
-				Write-Host -F Yellow "Launching :" $MinerNameProfile
-				Sleep 2
+			
+			#Launch custom miner variable
+			$MinerProfile = ".\OC\Start_"+$_.Name+".bat"
+			if (Test-Path $MinerProfile) {
+				Write-Host -F Yellow "Launching :" $MinerProfile
+				Write-Log "Launching $($_.Name) : $MinerProfile"
+				Start-Process -Wait $MinerProfile -WorkingDirectory ".\OC"
+				Sleep 1
 			}
 			
 			# Launch OC if exists
@@ -589,14 +605,14 @@ while ($true) {
 					Write-Host -F Yellow "Launching :" $OCName
 					Write-Log "Launching $($_.Algorithm) $($_.Type) : $OCName"
 					Start-Process -Wait $OCName -WorkingDirectory ".\OC"
-					Sleep 2
+					Sleep 1
 				}
 				else {
 					if (Test-Path $DefaultOCName) {
 						Write-Host -F Yellow "Launching :" $DefaultOCName
 						Write-Log "Launching $($_.Algorithm) $($_.Type) : $DefaultOCName"
 						Start-Process -Wait $DefaultOCName -WorkingDirectory  ".\OC"
-						Sleep 2
+						Sleep 1
 					}
 				}
 		    }
@@ -691,11 +707,27 @@ while ($true) {
 
         $MinerComparisons | Out-Host
     }
-
+    
+    #Display benchmarking progress
+    $BenchmarksNeeded = ($Miners | Where-Object {$_.HashRates.PSObject.Properties.Value -eq $null}).Count
+    if($BenchmarksNeeded -gt 0) {
+        Write-Log -Level Warn "Benchmarking in progress: $($BenchmarksNeeded) miners left to benchmark."
+    }
+    
     #Reduce Memory
     Get-Job -State Completed | Remove-Job
     [GC]::Collect()
 
+    #When benchmarking miners/algorithm in ExtendInterval... add 3x $Config.Interval to $StatEnd, extend StatSpan, extend watchdog times
+    $BenchmarkingMiners = $RunningMiners | Where-Object {$_.Speed -eq $null}
+    if ($BenchmarkingMiners | Where-Object {$Config.ExtendIntervalMinerName -icontains $_.Name -or ($_.Algorithm | Where-Object {$Config.ExtendIntervalAlgorithm -icontains $_})}) {
+        $StatEnd = $StatEnd.AddSeconds($Config.Interval * 3)
+        $StatSpan = New-TimeSpan $StatStart $StatEnd
+        $WatchdogInterval = ($WatchdogInterval / $Strikes * ($Strikes - 1)) + $StatSpan.TotalSeconds
+        $WatchdogReset = ($WatchdogReset / ($Strikes * $Strikes * $Strikes) * (($Strikes * $Strikes * $Strikes) - 1)) + $StatSpan.TotalSeconds
+        Write-Log "Benchmarking watchdog sensitive algorithm or miner. Increasing interval time temporarily to 3x interval ($($Config.Interval * 3) seconds). "
+    }
+	
     #Do nothing for a few seconds as to not overload the APIs and display miner download status
     Write-Log "Start waiting before next run. "
     for ($i = $Strikes; $i -gt 0 -or $Timer -lt $StatEnd; $i--) {
@@ -714,6 +746,7 @@ while ($true) {
 
         if ($Miner.New) {$Miner.Benchmarked++}
 
+		$Miner_Data = [PSCustomObject]@{}
         $Miner_Data = $Miner.GetMinerData($Miner.Algorithm, ($Miner.New -and $Miner.Benchmarked -lt $Strikes))
         $Miner_Data.Lines | ForEach-Object {Write-Log -Level Verbose "$($Miner.Name): $_"}
 
@@ -721,7 +754,7 @@ while ($true) {
             $Miner.Speed_Live = $Miner_Data.HashRate.PSObject.Properties.Value
 
             $Miner.Algorithm | Where-Object {$Miner_Data.HashRate.$_} | ForEach-Object {
-                $Stat = Set-Stat -Name "$($Miner.Name)_$($_)_HashRate" -Value $Miner_Data.HashRate.$_ -Duration $StatSpan -FaultDetection $true
+                $Stat = Set-Stat -Name "$($Miner.Name)_$($_)_HashRate" -Value $Miner_Data.HashRate.$_ -Duration $StatSpan -FaultDetection ($Config.ExtendIntervalAlgorithm -inotcontains $_ -and $Config.ExtendIntervalMinerName -inotcontains $Miner.Name)
 
                 #Update watchdog timer
                 $Miner_Name = $Miner.Name

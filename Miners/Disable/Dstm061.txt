@@ -1,11 +1,11 @@
 {
     "Type":  "NVIDIA",
-    "Path":  ".\\Bin\\Equihash-DSTM-06\\zm.exe",
+    "Path":  ".\\Bin\\Equihash-DSTM-061\\zm.exe",
     "Arguments":  "\"--telemetry --server $(if ($Pools.Equihash.SSL) {'ssl://'})$($Pools.Equihash.Host) --port $($Pools.Equihash.Port) --user $($Pools.Equihash.User) --pass $($Pools.Equihash.Pass) --color\"",
     "HashRates":  {
-                      "Equihash":  "\"$($Stats.Dstm06_Equihash_HashRate.Week * 0.98)\""
+                      "Equihash":  "\"$($Stats.Dstm061_Equihash_HashRate.Week * 0.98)\""
                   },
     "API":  "DSTM",
     "Port":  "2222",
-	"URI":  "https://mega.nz/#!1kRxQRSD!I3ryiEI5eT7datW842QNESyBQpZY6PILYS4HNIEHpYY"
+	"URI":  "https://mega.nz/#!zLxnhCCS!FSq1L-NNXV7Bg21XTw7ksXPI4DfFDI927Iq1iijyJc0"
 }

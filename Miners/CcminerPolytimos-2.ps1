@@ -7,7 +7,7 @@ $Commands = [PSCustomObject]@{
     "poly" = "" #Polytimos
 	"c11" = " -i 21" #C11
 	#"lyra2v2" = "" #Lyra2RE2 ccmineralexis78 better
-	#"keccak" = " -m 2 -i 29" #Keccak excavator2 better
+	"keccak" = " -m 2 -i 29" #Keccak
 	#"blake2s" = "" #Blake2s excavator2 better
 	#"x17" = " -i 21" #X17 ccmineralexis78 better
 }
