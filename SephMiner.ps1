@@ -676,14 +676,14 @@ while ($true) {
     Get-Job -State Completed | Remove-Job
     [GC]::Collect()
 
-    #When benchmarking miners/algorithm in ExtendInterval... add 3x $Config.Interval to $StatEnd, extend StatSpan, extend watchdog times
+    #When benchmarking miners/algorithm in ExtendInterval... add 2x $Config.Interval to $StatEnd, extend StatSpan, extend watchdog times
     $BenchmarkingMiners = $RunningMiners | Where-Object {$_.Speed -eq $null}
     if ($BenchmarkingMiners | Where-Object {$Config.ExtendIntervalMinerName -icontains $_.Name -or ($_.Algorithm | Where-Object {$Config.ExtendIntervalAlgorithm -icontains $_})}) {
-        $StatEnd = $StatEnd.AddSeconds($Config.Interval * 3)
+        $StatEnd = $StatEnd.AddSeconds($Config.Interval * 2)
         $StatSpan = New-TimeSpan $StatStart $StatEnd
         $WatchdogInterval = ($WatchdogInterval / $Strikes * ($Strikes - 1)) + $StatSpan.TotalSeconds
         $WatchdogReset = ($WatchdogReset / ($Strikes * $Strikes * $Strikes) * (($Strikes * $Strikes * $Strikes) - 1)) + $StatSpan.TotalSeconds
-        Write-Log "Benchmarking watchdog sensitive algorithm or miner. Increasing interval time temporarily to 3x interval ($($Config.Interval * 3) seconds). "
+        Write-Log "Benchmarking watchdog sensitive algorithm or miner. Increasing interval time temporarily to 2x interval ($($Config.Interval * 2) seconds). "
     }
 
     #Do nothing for a few seconds as to not overload the APIs and display miner download status

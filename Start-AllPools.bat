@@ -20,7 +20,7 @@ REM uncomment below if mining with amd
 REM OC\OverdriveNTool.exe -r1 -r2 -r3 -r4 -r5 -r6
 
 REM for 1080 and 1080ti only
-REM start "" OC\OhGodAnETHlargementPill-r2.exe --revA 0,1,2
+REM start /min \OC\OhGodAnETHlargementPill-r2.exe --revA 0,1,2
 
 REM total number of nvidiagpu
 set nvidiagpu=0
