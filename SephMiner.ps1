@@ -20,7 +20,7 @@ param(
     [Parameter(Mandatory = $false)]
     [Array]$ExtendIntervalAlgorithm = @("X16R", "X16S"), #Extend interval duration by a factor of 10x $Interval for these algorithms
     [Parameter(Mandatory = $false)]
-    [Array]$ExtendIntervalMinerName = @("PalginNvidia2e3913c", "CcminerZEnemy-109a", "CcminerAlexis78-10"), #Extend interval duration by a factor of 10x $Interval for these miners
+    [Array]$ExtendIntervalMinerName = @("PalginNvidia2e3913c"), #Extend interval duration by a factor of 10x $Interval for these miners
     [Parameter(Mandatory = $false)]
     [Alias("Location")]
     [String]$Region = "europe", #europe/us/asia
@@ -29,7 +29,7 @@ param(
     [Parameter(Mandatory = $false)]
     [Array]$Type = @(), #AMD/NVIDIA/CPU
     [Parameter(Mandatory = $false)]
-    [Array]$Algorithm = @(), #i.e. Ethash,Equihash,CryptoNight etc.
+    [Array]$Algorithm = @(), #i.e. Ethash, Equihash, CryptoNightV7 etc.
     [Parameter(Mandatory = $false)]
     [Alias("Miner")]
     [Array]$MinerName = @(), 
@@ -37,7 +37,7 @@ param(
     [Alias("Pool")]
     [Array]$PoolName = @(), 
     [Parameter(Mandatory = $false)]
-    [Array]$ExcludeAlgorithm = @(), #i.e. Ethash,Equihash,CryptoNight etc.
+    [Array]$ExcludeAlgorithm = @(), #i.e. Ethash, Equihash, CryptoNightV7 etc.
     [Parameter(Mandatory = $false)]
     [Alias("ExcludeMiner")]
     [Array]$ExcludeMinerName = @(), 
@@ -45,7 +45,7 @@ param(
     [Alias("ExcludePool")]
     [Array]$ExcludePoolName = @(), 
     [Parameter(Mandatory = $false)]
-    [Array]$Currency = ("BTC", "USD"), #i.e. GBP,EUR,ZEC,ETH etc.
+    [Array]$Currency = ("BTC", "USD"), #i.e. GBP, EUR, ZEC, ETH etc.
     [Parameter(Mandatory = $false)]
     [Int]$Donate = 24, #Minutes per Day
     [Parameter(Mandatory = $false)]
@@ -99,6 +99,16 @@ $WalletDonate = "19pQKDfdspXm6ouTDnZHpUcmEFN8a1x9zo"
 $UserNameDonate = "SephMiner"
 $WorkerNameDonate = "SephMiner"
 $WalletType = "BTC"
+# Create config.txt if it is missing
+if (!(Test-Path "Config.txt")) {
+    if(Test-Path "Config.default.txt") {
+        Copy-Item -Path "Config.default.txt" -Destination "Config.txt"
+    } else {
+        Write-Log -Level Error "Config.txt and Config.default.txt are missing. Cannot continue. "
+        Start-Sleep 10
+        Exit
+    }
+}
 
 while ($true) {
     #Load the config
@@ -111,6 +121,8 @@ while ($true) {
             API_ID              = $API_ID
             API_Key             = $API_Key
             Interval            = $Interval
+            ExtendIntervalAlgorithm  = $ExtendIntervalAlgorithm
+            ExtendIntervalMinerName  = $ExtendIntervalMinerName
             Region              = $Region
             SSL                 = $SSL
             Type                = $Type
@@ -128,28 +140,10 @@ while ($true) {
             SwitchingPrevention = $SwitchingPrevention
         } | Select-Object -ExpandProperty Content
     }
-    else {
-        $Config = [PSCustomObject]@{
-            Pools               = [PSCustomObject]@{}
-            Miners              = [PSCustomObject]@{}
-            Interval            = $Interval
-            Region              = $Region
-            SSL                 = $SSL
-            Type                = $Type
-            Algorithm           = $Algorithm
-            MinerName           = $MinerName
-            PoolName            = $PoolName
-            ExcludeAlgorithm    = $ExcludeAlgorithm
-            ExcludeMinerName    = $ExcludeMinerName
-            ExcludePoolName     = $ExcludePoolName
-            Currency            = $Currency
-            Donate              = $Donate
-            Proxy               = $Proxy
-            Delay               = $Delay
-            Watchdog            = $Watchdog
-            SwitchingPrevention = $SwitchingPrevention
-        }
-    }
+
+    #Only use configured types that are present in system
+    #Explicitly include CPU, because it won't show up as a device if OpenGL drivers for CPU are not installed
+    $Config.Type = $Config.Type | Where-Object {$Devices.$_ -or $_ -eq 'CPU'}
 
     #Error in Config.txt
     if ($Config -isnot [PSCustomObject]) {
@@ -219,8 +213,7 @@ while ($true) {
 
     #Load the stats
     Write-Log "Loading saved statistics. "
-    $Stats = [PSCustomObject]@{}
-    if (Test-Path "Stats") {Get-ChildItemContent "Stats" | ForEach-Object {$Stats | Add-Member $_.Name $_.Content}}
+    $Stats = Get-Stat
 
     #Load information about the pools
     Write-Log "Loading pool information. "
@@ -272,14 +265,13 @@ while ($true) {
     # select only the ones that have a HashRate matching our algorithms, and that only include algorithms we have pools for
     # select only the miners that match $Config.MinerName, if specified, and don't match $Config.ExcludeMinerName
     $AllMiners = if (Test-Path "Miners") {
-        Get-ChildItemContent "Miners" -Parameters @{Pools = $Pools; Stats = $Stats; Config = $Config} | ForEach-Object {$_.Content | Add-Member Name $_.Name -PassThru -Force} | 
+        Get-ChildItemContentParallel "Miners" -Parameters @{Pools = $Pools; Stats = $Stats; Config = $Config} | ForEach-Object {$_.Content | Add-Member Name $_.Name -PassThru -Force} | 
             Where-Object {$Config.Type.Count -eq 0 -or (Compare-Object $Config.Type $_.Type -IncludeEqual -ExcludeDifferent | Measure-Object).Count -gt 0} | 
             Where-Object {($Config.Algorithm.Count -eq 0 -or (Compare-Object $Config.Algorithm $_.HashRates.PSObject.Properties.Name | Where-Object SideIndicator -EQ "=>" | Measure-Object).Count -eq 0) -and ((Compare-Object $Pools.PSObject.Properties.Name $_.HashRates.PSObject.Properties.Name | Where-Object SideIndicator -EQ "=>" | Measure-Object).Count -eq 0)} | 
             Where-Object {$Config.ExcludeAlgorithm.Count -eq 0 -or (Compare-Object $Config.ExcludeAlgorithm $_.HashRates.PSObject.Properties.Name -IncludeEqual -ExcludeDifferent | Measure-Object).Count -eq 0} | 
             Where-Object {$Config.MinerName.Count -eq 0 -or (Compare-Object $Config.MinerName $_.Name -IncludeEqual -ExcludeDifferent | Measure-Object).Count -gt 0} | 
             Where-Object {$Config.ExcludeMinerName.Count -eq 0 -or (Compare-Object $Config.ExcludeMinerName $_.Name -IncludeEqual -ExcludeDifferent | Measure-Object).Count -eq 0}
     }
-    
     Write-Log "Calculating profit for each miner. "
     $AllMiners | ForEach-Object {
         $Miner = $_
@@ -295,7 +287,6 @@ while ($true) {
 
         $Miner_Types = $Miner.Type | Select-Object -Unique
         $Miner_Indexes = $Miner.Index | Select-Object -Unique
-        $Miner_Devices = $Miner.Device | Select-Object -Unique
 
         $Miner.HashRates.PSObject.Properties.Name | ForEach-Object { #temp fix, must use 'PSObject.Properties' to preserve order
             $Miner_HashRates | Add-Member $_ ([Double]$Miner.HashRates.$_)
@@ -354,9 +345,6 @@ while ($true) {
 
         $Miner | Add-Member Type ($Miner_Types | Sort-Object) -Force
         $Miner | Add-Member Index ($Miner_Indexes | Sort-Object) -Force
-
-        $Miner | Add-Member Device ($Miner_Devices | Sort-Object) -Force
-        $Miner | Add-Member Device_Auto (($Miner_Devices -eq $null) | Sort-Object) -Force
 
         $Miner.Path = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($Miner.Path)
         if ($Miner.PrerequisitePath) {$Miner.PrerequisitePath = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($Miner.PrerequisitePath)}
@@ -420,8 +408,6 @@ while ($true) {
         if ($ActiveMiner) {
             $ActiveMiner.Type = $Miner.Type
             $ActiveMiner.Index = $Miner.Index
-            $ActiveMiner.Device = $Miner.Device
-            $ActiveMiner.Device_Auto = $Miner.Device_Auto
             $ActiveMiner.Profit = $Miner.Profit
             $ActiveMiner.Profit_Comparison = $Miner.Profit_Comparison
             $ActiveMiner.Profit_MarginOfError = $Miner.Profit_MarginOfError
@@ -440,8 +426,6 @@ while ($true) {
                 Algorithm            = $Miner.HashRates.PSObject.Properties.Name #temp fix, must use 'PSObject.Properties' to preserve order
                 Type                 = $Miner.Type
                 Index                = $Miner.Index
-                Device               = $Miner.Device
-                Device_Auto          = $Miner.Device_Auto
                 Profit               = $Miner.Profit
                 Profit_Comparison    = $Miner.Profit_Comparison
                 Profit_MarginOfError = $Miner.Profit_MarginOfError
@@ -462,23 +446,15 @@ while ($true) {
             }
         }
     }
-    $ActiveMiners | Where-Object Device_Auto | ForEach-Object {
-        $Miner = $_
-        $Miner.Device = ($Miners | Where-Object {(Compare-Object $Miner.Type $_.Type -IncludeEqual -ExcludeDifferent | Measure-Object).Count -gt 0}).Device | Select-Object -Unique | Sort-Object
-        if ($Miner.Device -eq $null) {$Miner.Device = ($Miners | Where-Object {(Compare-Object $Miner.Type $_.Type -IncludeEqual -ExcludeDifferent | Measure-Object).Count -gt 0}).Type | Select-Object -Unique | Sort-Object}
-    }
 
     #Don't penalize active miners
 	$ActiveMiners | Where-Object Status -EQ "Running" | ForEach-Object {$_.Profit_Bias = $_.Profit_Unbias}
 	
     #Get most profitable miner combination i.e. AMD+NVIDIA+CPU
     $BestMiners = $ActiveMiners | Select-Object Type, Index -Unique | ForEach-Object {$Miner_GPU = $_; ($ActiveMiners | Where-Object {(Compare-Object $Miner_GPU.Type $_.Type | Measure-Object).Count -eq 0 -and (Compare-Object $Miner_GPU.Index $_.Index | Measure-Object).Count -eq 0} | Sort-Object -Descending {($_ | Where-Object Profit -EQ $null | Measure-Object).Count}, {($_ | Measure-Object Profit_Bias -Sum).Sum}, {($_ | Where-Object Profit -NE 0 | Measure-Object).Count} | Select-Object -First 1)}
-    $BestDeviceMiners = $ActiveMiners | Select-Object Device -Unique | ForEach-Object {$Miner_GPU = $_; ($ActiveMiners | Where-Object {(Compare-Object $Miner_GPU.Device $_.Device | Measure-Object).Count -eq 0} | Sort-Object -Descending {($_ | Where-Object Profit -EQ $null | Measure-Object).Count}, {($_ | Measure-Object Profit_Bias -Sum).Sum}, {($_ | Where-Object Profit -NE 0 | Measure-Object).Count} | Select-Object -First 1)}
     $BestMiners_Comparison = $ActiveMiners | Select-Object Type, Index -Unique | ForEach-Object {$Miner_GPU = $_; ($ActiveMiners | Where-Object {(Compare-Object $Miner_GPU.Type $_.Type | Measure-Object).Count -eq 0 -and (Compare-Object $Miner_GPU.Index $_.Index | Measure-Object).Count -eq 0} | Sort-Object -Descending {($_ | Where-Object Profit -EQ $null | Measure-Object).Count}, {($_ | Measure-Object Profit_Comparison -Sum).Sum}, {($_ | Where-Object Profit -NE 0 | Measure-Object).Count} | Select-Object -First 1)}
-    $BestDeviceMiners_Comparison = $ActiveMiners | Select-Object Device -Unique | ForEach-Object {$Miner_GPU = $_; ($ActiveMiners | Where-Object {(Compare-Object $Miner_GPU.Device $_.Device | Measure-Object).Count -eq 0} | Sort-Object -Descending {($_ | Where-Object Profit -EQ $null | Measure-Object).Count}, {($_ | Measure-Object Profit_Comparison -Sum).Sum}, {($_ | Where-Object Profit -NE 0 | Measure-Object).Count} | Select-Object -First 1)}
     $Miners_Type_Combos = @([PSCustomObject]@{Combination = @()}) + (Get-Combination ($ActiveMiners | Select-Object Type -Unique) | Where-Object {(Compare-Object ($_.Combination | Select-Object -ExpandProperty Type -Unique) ($_.Combination | Select-Object -ExpandProperty Type) | Measure-Object).Count -eq 0})
     $Miners_Index_Combos = @([PSCustomObject]@{Combination = @()}) + (Get-Combination ($ActiveMiners | Select-Object Index -Unique) | Where-Object {(Compare-Object ($_.Combination | Select-Object -ExpandProperty Index -Unique) ($_.Combination | Select-Object -ExpandProperty Index) | Measure-Object).Count -eq 0})
-    $Miners_Device_Combos = (Get-Combination ($ActiveMiners | Select-Object Device -Unique) | Where-Object {(Compare-Object ($_.Combination | Select-Object -ExpandProperty Device -Unique) ($_.Combination | Select-Object -ExpandProperty Device) | Measure-Object).Count -eq 0})
     $BestMiners_Combos = $Miners_Type_Combos | ForEach-Object {
         $Miner_Type_Combo = $_.Combination
         $Miners_Index_Combos | ForEach-Object {
@@ -496,16 +472,6 @@ while ($true) {
             }
         }
     }
-    $BestMiners_Combos += $Miners_Device_Combos | ForEach-Object {
-        $Miner_Device_Combo = $_.Combination
-        [PSCustomObject]@{
-            Combination = $Miner_Device_Combo | ForEach-Object {
-                $Miner_Device_Count = $_.Device.Count
-                [Regex]$Miner_Device_Regex = "^(" + (($_.Device | ForEach-Object {[Regex]::Escape($_)}) -join "|") + ")$"
-                $BestDeviceMiners | Where-Object {([Array]$_.Device -notmatch $Miner_Device_Regex).Count -eq 0 -and ([Array]$_.Device -match $Miner_Device_Regex).Count -eq $Miner_Device_Count}
-            }
-        }
-    }
     $BestMiners_Combos_Comparison = $Miners_Type_Combos | ForEach-Object {
         $Miner_Type_Combo = $_.Combination
         $Miners_Index_Combos | ForEach-Object {
@@ -520,16 +486,6 @@ while ($true) {
                         $BestMiners_Comparison | Where-Object {([Array]$_.Type -notmatch $Miner_Type_Regex).Count -eq 0 -and ([Array]$_.Index -notmatch $Miner_Index_Regex).Count -eq 0 -and ([Array]$_.Type -match $Miner_Type_Regex).Count -eq $Miner_Type_Count -and ([Array]$_.Index -match $Miner_Index_Regex).Count -eq $Miner_Index_Count}
                     }
                 }
-            }
-        }
-    }
-    $BestMiners_Combos_Comparison += $Miners_Device_Combos | ForEach-Object {
-        $Miner_Device_Combo = $_.Combination
-        [PSCustomObject]@{
-            Combination = $Miner_Device_Combo | ForEach-Object {
-                $Miner_Device_Count = $_.Device.Count
-                [Regex]$Miner_Device_Regex = "^(" + (($_.Device | ForEach-Object {[Regex]::Escape($_)}) -join "|") + ")$"
-                $BestDeviceMiners_Comparison | Where-Object {([Array]$_.Device -notmatch $Miner_Device_Regex).Count -eq 0 -and ([Array]$_.Device -match $Miner_Device_Regex).Count -eq $Miner_Device_Count}
             }
         }
     }
@@ -653,7 +609,7 @@ while ($true) {
         @{Label = "Accuracy"; Expression = {$_.Pools.PSObject.Properties.Value.MarginOfError | ForEach-Object {(1 - $_).ToString("P0")}}; Align = 'right'}, 
         @{Label = "$($Config.Currency | Select-Object -Index 0)/GH/Day"; Expression = {$_.Pools.PSObject.Properties.Value.Price | ForEach-Object {ConvertTo-LocalCurrency $($_ * 1000000000) $($Rates.$($Config.Currency | Select-Object -Index 0)) -Offset 2}}; Align = "right"}, 
         @{Label = "Pool"; Expression = {$_.Pools.PSObject.Properties.Value | ForEach-Object {if ($_.Info) {"$($_.Name)-$($_.Info)"}else {"$($_.Name)"}}}},
-        @{Label = "Fee"; Expression = {$_.Pools.PSObject.Properties.Value | ForEach-Object  {if ($_.Fees) {"$($_.Fees)%"} else {"unknown"}}}; Align='center'},
+        @{Label = "PoolFee"; Expression = {$_.Pools.PSObject.Properties.Value | ForEach-Object  {if ($_.PoolFee) {"$($_.PoolFee)%"} else {"unknown"}}}; Align='center'},
         @{Label = "Variance"; Expression = {$_.Pools.PSObject.Properties.Value | ForEach-Object  {if ($_.Variance) {"$($_.Variance)"} else {"No Variance"}}}; Align='center'}
     ) | Out-Host
 
@@ -714,6 +670,8 @@ while ($true) {
         Write-Log -Level Warn "Benchmarking in progress: $($BenchmarksNeeded) miners left to benchmark."
     }
     
+	$RunningMiners = $ActiveMiners | Where-Object Status -EQ "Running"
+	
     #Reduce Memory
     Get-Job -State Completed | Remove-Job
     [GC]::Collect()
@@ -727,7 +685,7 @@ while ($true) {
         $WatchdogReset = ($WatchdogReset / ($Strikes * $Strikes * $Strikes) * (($Strikes * $Strikes * $Strikes) - 1)) + $StatSpan.TotalSeconds
         Write-Log "Benchmarking watchdog sensitive algorithm or miner. Increasing interval time temporarily to 3x interval ($($Config.Interval * 3) seconds). "
     }
-	
+
     #Do nothing for a few seconds as to not overload the APIs and display miner download status
     Write-Log "Start waiting before next run. "
     for ($i = $Strikes; $i -gt 0 -or $Timer -lt $StatEnd; $i--) {
@@ -742,12 +700,11 @@ while ($true) {
     $ActiveMiners | ForEach-Object {
         $Miner = $_
         $Miner.Speed_Live = 0
-        $Miner_Data = [PSCustomObject]@{}
 
         if ($Miner.New) {$Miner.Benchmarked++}
 
 		$Miner_Data = [PSCustomObject]@{}
-        $Miner_Data = $Miner.GetMinerData($Miner.Algorithm, ($Miner.New -and $Miner.Benchmarked -lt $Strikes))
+        $Miner_Data = $Miner.GetMinerData(($Miner.New -and $Miner.Benchmarked -lt $Strikes))
         $Miner_Data.Lines | ForEach-Object {Write-Log -Level Verbose "$($Miner.Name): $_"}
 
         if ($Miner.Process -and -not $Miner.Process.HasExited) {
@@ -755,6 +712,7 @@ while ($true) {
 
             $Miner.Algorithm | Where-Object {$Miner_Data.HashRate.$_} | ForEach-Object {
                 $Stat = Set-Stat -Name "$($Miner.Name)_$($_)_HashRate" -Value $Miner_Data.HashRate.$_ -Duration $StatSpan -FaultDetection ($Config.ExtendIntervalAlgorithm -inotcontains $_ -and $Config.ExtendIntervalMinerName -inotcontains $Miner.Name)
+
 
                 #Update watchdog timer
                 $Miner_Name = $Miner.Name
@@ -771,7 +729,7 @@ while ($true) {
         #Benchmark timeout
         if ($Miner.Benchmarked -ge ($Strikes * $Strikes) -or ($Miner.Benchmarked -ge $Strikes -and $Miner.Activated -ge $Strikes)) {
             $Miner.Algorithm | Where-Object {-not $Miner_HashRate.$_} | ForEach-Object {
-                if ((Get-Stat "$($Miner.Name)_$($_)_HashRate") -eq $null) {
+                if ((Get-Stat -Name "$($Miner.Name)_$($_)_HashRate") -eq $null) {
                     $Stat = Set-Stat -Name "$($Miner.Name)_$($_)_HashRate" -Value 0 -Duration $StatSpan
                 }
             }

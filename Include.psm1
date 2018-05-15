@@ -1,11 +1,163 @@
-﻿Import-Module "$env:Windir\System32\WindowsPowerShell\v1.0\Modules\NetSecurity\NetSecurity.psd1" -ErrorAction Ignore
-Import-Module "$env:Windir\System32\WindowsPowerShell\v1.0\Modules\Defender\Defender.psd1" -ErrorAction Ignore
-
-Set-Location (Split-Path $MyInvocation.MyCommand.Path)
+﻿Set-Location (Split-Path $MyInvocation.MyCommand.Path)
 
 Add-Type -Path .\OpenCL\*.cs
 
-Function Write-Log {
+function Get-Devices {
+    [CmdletBinding()]
+
+    # returns a list of all OpenGL devices found.
+
+    $Devices = [PSCustomObject]@{}
+
+    [OpenCl.Platform]::GetPlatformIDs() | ForEach-Object { # Hardware platform
+        [OpenCl.Device]::GetDeviceIDs($_, [OpenCl.DeviceType]::All) | ForEach-Object { # Device
+
+            if ($_.Type -eq "Cpu") {
+                $Type = "CPU"
+            }
+            else {
+                Switch ($_.Vendor) {
+                    "Advanced Micro Devices, Inc." {$Type = "AMD"}
+                    "Intel(R) Corporation"         {$Type = "INTEL"}
+                    "NVIDIA Corporation"           {$Type = "NVIDIA"}
+                }
+            }
+
+            if (-not $Devices.$Type) {
+                $Devices | Add-Member $Type @()
+                $DeviceID = 0 # For each platform start counting DeviceIDs from 0
+            }
+
+            $Name_Norm = (Get-Culture).TextInfo.ToTitleCase(($_.Name)) -replace "[^A-Z0-9]"
+
+            if ($Devices.$Type.Name_Norm -inotcontains $Name_Norm) { # New card model
+                $Device = $_
+                $Device | Add-Member Name_Norm $Name_Norm
+                $Device | Add-Member DeviceIDs @()
+                $Devices.$Type += $Device
+            }
+            $Devices.$Type | Where-Object {$_.Name_Norm -eq $Name_Norm} | ForEach-Object {$_.DeviceIDs += $DeviceID++} # Add DeviceID
+        }
+    }
+    $Devices
+}
+
+function Get-DeviceIDs {
+    # Filters the DeviceIDs and returns only DeviceIDs for active miners
+    # $DeviceIdBase: Returened  DeviceID numbers are of base $DeviceIdBase, e.g. HEX (16)
+    # $DeviceIdOffset: Change default numbering start from 0 -> $DeviceIdOffset
+
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory = $true)]
+        [PSCustomObject]$Config,
+        [Parameter(Mandatory = $true)]
+        [PSCustomObject]$Devices,
+        [Parameter(Mandatory = $true)]
+        [String]$Type,
+        [Parameter(Mandatory = $true)]
+        [PSCustomObject]$DeviceTypeModel,
+        [Parameter(Mandatory = $true)]
+        [Int]$DeviceIdBase,
+        [Parameter(Mandatory = $true)]
+        [Int]$DeviceIdOffset
+    )
+
+    $DeviceIDs = [PSCustomObject]@{}
+    $DeviceIDs | Add-Member "All" @() # array of all devices, ids will be in hex format
+    $DeviceIDs | Add-Member "3gb" @() # array of all devices with more than 3MiB VRAM, ids will be in hex format
+    $DeviceIDs | Add-Member "4gb" @() # array of all devices with more than 4MiB VRAM, ids will be in hex format
+
+    # Get DeviceIDs, filter out all disabled hw models and IDs
+    if ($Config.MinerInstancePerCardModel) { # separate miner instance per hardware model
+        if ($Config.Devices.$Type.IgnoreHWModel -inotcontains $DeviceTypeModel.Name_Norm -and $Config.Miners.$Name.IgnoreHWModel -inotcontains $DeviceTypeModel.Name_Norm) {
+            $DeviceTypeModel.DeviceIDs | Where-Object {$Config.Devices.$Type.IgnoreDeviceID -notcontains $_ -and $Config.Miners.$Name.IgnoreDeviceID -notcontains $_} | ForEach-Object {
+                $DeviceIDs."All" += [Convert]::ToString(($_ + $DeviceIdOffset), $DeviceIdBase)
+                if ($DeviceTypeModel.GlobalMemsize -ge 3000000000) {$DeviceIDs."3gb" += [Convert]::ToString(($_ + $DeviceIdOffset), $DeviceIdBase)}
+                if ($DeviceTypeModel.GlobalMemsize -ge 4000000000) {$DeviceIDs."4gb" += [Convert]::ToString(($_ + $DeviceIdOffset), $DeviceIdBase)}
+            }
+        }
+    }
+    else { # one miner instance per hw type
+        $DeviceIDs."All" = @($Devices.$Type | Where-Object {$Config.Devices.$Type.IgnoreHWModel -inotcontains $_.Name_Norm -and $Config.Miners.$Name.IgnoreHWModel -inotcontains $_.Name_Norm}).DeviceIDs | Where-Object {$Config.Devices.$Type.IgnoreDeviceID -notcontains $_ -and $Config.Miners.$Name.IgnoreDeviceID -notcontains $_} | ForEach-Object {[Convert]::ToString(($_ + $DeviceIdOffset), $DeviceIdBase)}
+        $DeviceIDs."3gb" = @($Devices.$Type | Where-Object {$Config.Devices.$Type.IgnoreHWModel -inotcontains $_.Name_Norm -and $Config.Miners.$Name.IgnoreHWModel -inotcontains $_.Name_Norm} | Where-Object {$_.GlobalMemsize -gt 3000000000}).DeviceIDs | Where-Object {$Config.Devices.$Type.IgnoreDeviceID -notcontains $_ -and $Config.Miners.$Name.IgnoreDeviceID -notcontains $_} | Foreach-Object {[Convert]::ToString(($_ + $DeviceIdOffset), $DeviceIdBase)}
+        $DeviceIDs."4gb" = @($Devices.$Type | Where-Object {$Config.Devices.$Type.IgnoreHWModel -inotcontains $_.Name_Norm -and $Config.Miners.$Name.IgnoreHWModel -inotcontains $_.Name_Norm} | Where-Object {$_.GlobalMemsize -gt 4000000000}).DeviceIDs | Where-Object {$Config.Devices.$Type.IgnoreDeviceID -notcontains $_ -and $Config.Miners.$Name.IgnoreDeviceID -notcontains $_} | Foreach-Object {[Convert]::ToString(($_ + $DeviceIdOffset), $DeviceIdBase)}
+    }
+    $DeviceIDs
+}
+
+function ConvertTo-CommandPerDeviceSet {
+
+    # converts the command parameters
+    # if a parameter has multiple values, only the values for the valid devices are returned
+    # parameters without values are valid for all devices and are left untouched
+
+    # supported parameter syntax:
+    #$Command = ",c=BTC -9 1  -y  2 -a 00,11,22,33,44,55  -b=00,11,22,33,44,55 --c==00,11,22,33,44,55 --d --e=00,11,22,33,44,55 -f -g 00 11 22 33 44 55 ,c=LTC  -h 00 11 22 33 44 55 -i=,11,,33,,55 --j=00,11,,,44,55 --k==00,,,33,44,55 -l -zzz=0123,1234,2345,3456,4567,5678,6789 -u 0  --p all ,something=withcomma blah *blah *blah"
+    #$DeviceIDs = @(0;1;4)
+    # Result: ",c=BTC -9 1  -y  2 -a 00,11,44  -b=00,11,44 --c==00,11,44 --d --e=00,11,44 -f -g 00 11 44 ,c=LTC  -h 00 11 44 -i=,11 --j=00,11,44 --k==00,,44 -l -zzz=0123,1234,4567 -u 0  --p all ,something=withcomma blah *blah *blah"
+    #$DeviceIDs = @(1)
+    # Result: ",c=BTC -9 1  -y  2 -a 11  -b=11 --c==11 --d --e=11 -f -g 11 ,c=LTC  -h 11 -i=11 --j=11 --k== -l -zzz=1234 -u 0  --p all ,something=withcomma blah *blah *blah"
+    #$DeviceIDs = @(0;2;9)
+    # Result: ",c=BTC -9 1  -y  2 -a 00,22  -b=00,22 --c==00,22 --d --e=00,22 -f -g 00 22 ,c=LTC  -h 00 22 -i= --j=00 --k==00 -l -zzz=0123,2345 -u 0  --p all ,something=withcomma blah *blah *blah"
+    # $Command = ",c=BTC -a 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16"
+    # $DeviceIDs = @("0";"A";"B"); $DeviceIdBase = 16
+    # Result: ",c=BTC -a 0,10,11"
+    # $DeviceIDs = @("1";"A";"B"); $DeviceIdBase = 16; $DeviceIdOffset = 1
+    # Result: ",c=BTC -a 0,9,10"
+
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory = $true)]
+        [AllowEmptyString()]
+        [String]$Command,
+        [Parameter(Mandatory = $true)]
+        [Array]$DeviceIDs,
+        [Parameter(Mandatory = $true)]
+        [Int]$DeviceIdBase,
+        [Parameter(Mandatory = $false)]
+        [Int]$DeviceIdOffset
+    )
+
+    $CommandPerDeviceSet = ""
+
+    $Command -split "(?=\s{1,}--|\s{1,}-| ,|^,)" | ForEach-Object {
+        $Token = $_
+        $Prefix = $null
+        $ParameterValueSeparator = $null
+        $ValueSeparator = $null
+        $Values = $null
+
+        if ($Token.TrimStart() -match "(?:^[-=]{1,})") { # supported prefix characters are listed in brackets: [-=]{1,}
+
+            $Prefix = "$($Token -split $Matches[0] | Select-Object -Index 0)$($Matches[0])"
+            $Token = $Token -split $Matches[0] | Select-Object -Last 1
+
+            if ($Token -match "(?:[ =]{1,})") { # supported separators are listed in brackets: [ =]{1,}
+                $ParameterValueSeparator = $Matches[0]
+                $Parameter = $Token -split $ParameterValueSeparator | Select-Object -Index 0
+                $Values = $Token.Substring(("$($Parameter)$($ParameterValueSeparator)").length)
+
+                if ($Values -match "(?:[,; ]{1})") { # supported separators are listed in brackets: [,; ]{1}
+                    $ValueSeparator = $Matches[0]
+                    $RelevantValues = @()
+                    $DeviceIDs | ForEach-Object {
+                        $DeviceID = [Convert]::ToInt32($_, $DeviceIdBase) - $DeviceIdOffset
+                        if ($Values.Split($ValueSeparator) | Select-Object -Index $DeviceId) {$RelevantValues += ($Values.Split($ValueSeparator) | Select-Object -Index $DeviceId)}
+                        else {$RelevantValues += ""}
+                    }                    
+                    $CommandPerDeviceSet += "$($Prefix)$($Parameter)$($ParameterValueSeparator)$(($RelevantValues -join $ValueSeparator).TrimEnd($ValueSeparator))"
+                }
+                else {$CommandPerDeviceSet += "$($Prefix)$($Parameter)$($ParameterValueSeparator)$($Values)"}
+            }
+            else {$CommandPerDeviceSet += "$($Prefix)$($Token)"}
+        }
+        else {$CommandPerDeviceSet += $Token}
+    }
+    $CommandPerDeviceSet
+}
+
+function Write-Log {
     [CmdletBinding()]
     Param(
         [Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true)][ValidateNotNullOrEmpty()][Alias("LogContent")][string]$Message,
@@ -14,6 +166,15 @@ Function Write-Log {
 
     Begin { }
     Process {
+        # Inherit the same verbosity settings as the script importing this
+        if (-not $PSBoundParameters.ContainsKey('InformationPreference')) { $InformationPreference = $PSCmdlet.GetVariableValue('InformationPreference') }
+        if (-not $PSBoundParameters.ContainsKey('Verbose')) { $VerbosePreference = $PSCmdlet.GetVariableValue('VerbosePreference') }
+        if (-not $PSBoundParameters.ContainsKey('Debug')) { $DebugPreference = $PSCmdlet.GetVariableValue('DebugPreference') }
+
+        # Get mutex named MPMWriteLog. Mutexes are shared across all threads and processes.
+        # This lets us ensure only one thread is trying to write to the file at a time.
+        $mutex = New-Object System.Threading.Mutex($false, "MPMWriteLog")
+
         $filename = ".\Logs\SephMiner_$(Get-Date -Format "yyyy-MM-dd").txt"
         $date = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
 
@@ -41,7 +202,15 @@ Function Write-Log {
                 Write-Debug -Message $Message
             }
         }
-        "$date $LevelText $Message" | Out-File -FilePath $filename -Append
+
+        # Attempt to aquire mutex, waiting up to 1 second if necessary.  If aquired, write to the log file and release mutex.  Otherwise, display an error.
+        if ($mutex.WaitOne(1000)) {
+            "$date $LevelText $Message" | Out-File -FilePath $filename -Append -Encoding ascii
+            $mutex.ReleaseMutex()
+        }
+        else {
+            Write-Error -Message "Log file is locked, unable to write message to $FileName."
+        }
     }
     End {}
 }
@@ -182,12 +351,26 @@ function Set-Stat {
 function Get-Stat {
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $false)]
         [String]$Name
     )
 
     if (-not (Test-Path "Stats")) {New-Item "Stats" -ItemType "directory" | Out-Null}
-    Get-ChildItem "Stats" -File | Where-Object Extension -NE ".ps1" | Where-Object BaseName -EQ $Name | Get-Content | ConvertFrom-Json
+
+    if ($Name) {
+        # Return single requested stat
+        Get-ChildItem "Stats" -File | Where-Object BaseName -EQ $Name | Get-Content | ConvertFrom-Json
+    } else {
+        # Return all stats
+        $Stats = [PSCustomObject]@{}
+        Get-ChildItem "Stats" | ForEach-Object {
+            $BaseName = $_.BaseName
+            $_ | Get-Content | ConvertFrom-Json | ForEach-Object {
+                $Stats | Add-Member $BaseName $_
+            }
+        }
+        Return $Stats
+    }
 }
 
 function Get-ChildItemContent {
@@ -246,6 +429,103 @@ function Get-ChildItemContent {
     }
 }
 
+function Get-ChildItemContentParallel {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory = $true)]
+        [String]$Path,
+        [Parameter(Mandatory = $false)]
+        [Hashtable]$Parameters = @{}
+    )
+    $ScriptDir = (Get-Location).Path
+
+    # Determine how many threads to use based on how many cores the system has, but force it to be between 2 and 8.
+    $Threads = 2 # Default
+    $Threads = ((Get-CimInstance win32_processor).NumberOfLogicalProcessors | Measure-Object -Sum).Sum 
+    if ($Threads -lt 2) {$Threads = 2}
+    if ($Threads -gt 8) {$Threads = 8}
+
+    # Create a runspace pool with up to $Threads threads
+    $RunspaceCollection = @()
+    $RunspacePool = [runspacefactory]::CreateRunspacePool(1,$Threads)
+    $RunspacePool.Open()
+
+    # Setup code block to process each file - Include.psm1 has to be imported into each runspace
+    $ProcessItem = {
+        Param($ScriptDir, $File, $Parameters)
+        Set-Location $ScriptDir
+
+        function Invoke-ExpressionRecursive ($Expression) {
+            if ($Expression -is [String]) {
+                if ($Expression -match '(\$|")') {
+                    try {$Expression = Invoke-Expression $Expression}
+                    catch {$Expression = Invoke-Expression "`"$Expression`""}
+                }
+            }
+            elseif ($Expression -is [PSCustomObject]) {
+                $Expression | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty Name | ForEach-Object {
+                    $Expression.$_ = Invoke-ExpressionRecursive $Expression.$_
+                }
+            }
+            return $Expression
+        }
+
+        $Name = $File.BaseName
+        $Content = @()
+        if ($File.Extension -eq ".ps1") {
+            $Content = & {
+                $Parameters.Keys | ForEach-Object {Set-Variable $_ $Parameters.$_}
+                & $File.FullName @Parameters
+            }
+        }
+        else {
+            $Content = & {
+                $Parameters.Keys | ForEach-Object {Set-Variable $_ $Parameters.$_}
+                try {
+                    ($File | Get-Content | ConvertFrom-Json) | ForEach-Object {Invoke-ExpressionRecursive $_}
+                }
+                catch [ArgumentException] {
+                    $null
+                }
+            }
+            if ($Content -eq $null) {$Content = $File | Get-Content}
+        }
+        $Content | ForEach-Object {
+            if ($_.Name) {
+                [PSCustomObject]@{Name = $_.Name; Content = $_}
+            }
+            else {
+                [PSCustomObject]@{Name = $Name; Content = $_}
+            }
+        }
+    }
+
+    # Get each requested file and process it in a runspace
+    Get-ChildItem $Path -File -ErrorAction SilentlyContinue | ForEach-Object {
+        $Powershell = [powershell]::Create().AddScript($ProcessItem, $true).AddArgument($ScriptDir).AddArgument($_).AddArgument($Parameters)
+        $Powershell.RunspacePool = $RunSpacePool
+
+        # Add to the collection of runspaces
+        [Collections.ArrayList]$RunspaceCollection += New-Object -TypeName PSObject -Property @{
+            Runspace = $PowerShell.BeginInvoke()
+            Powershell = $Powershell
+        }
+    }
+
+    # Wait for all runspaces to finish running and get their data
+    While ($RunspaceCollection) {
+        ForEach($Runspace in $RunspaceCollection.ToArray()) {
+            if ($Runspace.Runspace.IsCompleted) {
+                # End the runspace and get the returned objects
+                $Runspace.PowerShell.EndInvoke($Runspace.Runspace)
+                # Cleanup the runspace
+                $Runspace.PowerShell.Dispose()
+                $RunspaceCollection.Remove($Runspace)
+            }
+        }
+    }
+}
+
 filter ConvertTo-Hash { 
     [CmdletBinding()]
     $Hash = $_
@@ -262,7 +542,7 @@ filter ConvertTo-Hash {
 
 function ConvertTo-LocalCurrency { 
     [CmdletBinding()]
-    # To get same numbering scheme reagardless of value BTC value (size) to dermine formatting
+    # To get same numbering scheme regardless of value BTC value (size) to determine formatting
     # Use $Offset to add/remove decimal places
 
     param(
@@ -391,12 +671,15 @@ function Expand-WebRequest {
         [String]$Path = ""
     )
 
+    # Set current path used by .net methods to the same as the script's path
+    [Environment]::CurrentDirectory = $ExecutionContext.SessionState.Path.CurrentFileSystemLocation
+
     if (-not $Path) {$Path = Join-Path ".\Downloads" ([IO.FileInfo](Split-Path $Uri -Leaf)).BaseName}
     if (-not (Test-Path ".\Downloads")) {New-Item "Downloads" -ItemType "directory" | Out-Null}
     $FileName = Join-Path ".\Downloads" (Split-Path $Uri -Leaf)
 
     if (Test-Path $FileName) {Remove-Item $FileName}
-	[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     Invoke-WebRequest $Uri -OutFile $FileName -UseBasicParsing
 
     if (".msi", ".exe" -contains ([IO.FileInfo](Split-Path $Uri -Leaf)).Extension) {
@@ -406,10 +689,10 @@ function Expand-WebRequest {
         $Path_Old = (Join-Path (Split-Path $Path) ([IO.FileInfo](Split-Path $Uri -Leaf)).BaseName)
         $Path_New = (Join-Path (Split-Path $Path) (Split-Path $Path -Leaf))
 
-		if (Test-Path $Path_Old) {Remove-Item $Path_Old -Recurse -Force}
+        if (Test-Path $Path_Old) {Remove-Item $Path_Old -Recurse -Force}
         Start-Process "7z" "x `"$([IO.Path]::GetFullPath($FileName))`" -o`"$([IO.Path]::GetFullPath($Path_Old))`" -y -spe" -Wait
 
-		if (Test-Path $Path_New) {Remove-Item $Path_New -Recurse -Force}
+        if (Test-Path $Path_New) {Remove-Item $Path_New -Recurse -Force}
         if (Get-ChildItem $Path_Old | Where-Object PSIsContainer -EQ $false) {
             Rename-Item $Path_Old (Split-Path $Path -Leaf)
         }
@@ -499,8 +782,6 @@ class Miner {
     $Algorithm
     $Type
     $Index
-    $Device
-    $Device_Auto
     $Profit
     $Profit_Comparison
     $Profit_MarginOfError
@@ -533,5 +814,20 @@ class Miner {
     StopMining() {
         $this.Process.CloseMainWindow() | Out-Null
         $this.Status = "Idle"
+	}
+
+    [PSCustomObject]GetMinerData ([Bool]$Safe = $false) {
+        $Lines = @()
+
+        if ($this.Process.HasMoreData) {
+            $this.Process | Receive-Job | ForEach-Object {
+                $Line = $_ -replace "`n|`r", ""
+                if ($Line -replace "\x1B\[[0-?]*[ -/]*[@-~]", "") {$Lines += $Line}
+            }
+        }
+
+        return [PSCustomObject]@{
+            Lines = $Lines
+        }
     }
 }

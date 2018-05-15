@@ -78,7 +78,7 @@ $MiningPoolHub_Request.return | Where-Object {$ExcludeAlgorithm -inotcontains (G
                     Region        = $MiningPoolHub_Region_Norm
                     SSL           = $false
                     Updated       = $Stat.Updated
-					Fees          = $MiningPoolHub_Fee
+					PoolFee       = $MiningPoolHub_Fee
 					Variance      = $Variance
                 }
                 [PSCustomObject]@{
@@ -95,7 +95,7 @@ $MiningPoolHub_Request.return | Where-Object {$ExcludeAlgorithm -inotcontains (G
                     Region        = $MiningPoolHub_Region_Norm
                     SSL           = $true
                     Updated       = $Stat.Updated
-					Fees          = $MiningPoolHub_Fee
+					PoolFee       = $MiningPoolHub_Fee
 					Variance      = $Variance
                 }
             }
@@ -114,7 +114,7 @@ $MiningPoolHub_Request.return | Where-Object {$ExcludeAlgorithm -inotcontains (G
                     Region        = $MiningPoolHub_Region_Norm
                     SSL           = $false
                     Updated       = $Stat.Updated
-					Fees          = $MiningPoolHub_Fee
+					PoolFee       = $MiningPoolHub_Fee
 					Variance      = $Variance
                 }
             
@@ -133,7 +133,7 @@ $MiningPoolHub_Request.return | Where-Object {$ExcludeAlgorithm -inotcontains (G
                         Region        = $MiningPoolHub_Region_Norm
                         SSL           = $true
                         Updated       = $Stat.Updated
-						Fees          = $MiningPoolHub_Fee
+						PoolFee       = $MiningPoolHub_Fee
 						Variance      = $Variance
                     }
                 }

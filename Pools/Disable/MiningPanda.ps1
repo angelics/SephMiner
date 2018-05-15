@@ -41,7 +41,6 @@ $MiningPanda_Currencies | Where-Object {$ExcludeAlgorithm -inotcontains (Get-Alg
     switch ($MiningPanda_Algorithm_Norm) {
         "equihash" {$Divisor /= 1000}
         "blake2s" {$Divisor *= 1000}
-        "blakecoin" {$Divisor *= 1000}
     }
 
     $MiningPanda_Fees = 1-($MiningPanda_Fee/100)
@@ -66,7 +65,7 @@ $MiningPanda_Currencies | Where-Object {$ExcludeAlgorithm -inotcontains (Get-Alg
             Region        = $MiningPanda_Region_Norm
             SSL           = $false
             Updated       = $Stat.Updated
-            Fees          = $MiningPanda_Fee
+            PoolFee       = $MiningPanda_Fee
         }
     }
 }

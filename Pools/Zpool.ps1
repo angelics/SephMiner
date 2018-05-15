@@ -100,7 +100,7 @@ $Zpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Selec
                 Region        = $Zpool_Region_Norm
                 SSL           = $false
                 Updated       = $Stat.Updated
-                Fees          = $Zpool_Fee
+                PoolFee       = $Zpool_Fee
 				Variance      = $Variance
             }
         }

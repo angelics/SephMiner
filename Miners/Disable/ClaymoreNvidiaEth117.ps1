@@ -15,28 +15,28 @@ $Port = 23333
 $MinerFeeInPercentSingleMode = 1.0
 $MinerFeeInPercentDualMode = 1.5
 $Commands = [PSCustomObject]@{
-    "ethash" = ""
-    "ethash2gb" = ""
-    "ethash;blake2s:40" = ""
-    "ethash;blake2s:60" = ""
-    "ethash;blake2s:80" = ""
-    "ethash;blake2s:100" = ""
-    "ethash;blake2s:120" = ""
-    "ethash;blake2s:140" = ""
-    "ethash;blake2s:160" = ""
-    "ethash;blake2s:180" = ""
-    "ethash;keccak:10" = ""
-    "ethash;keccak:30" = ""
-    "ethash;keccak:50" = ""
-    "ethash;keccak:70" = ""
-    "ethash;keccak:90" = ""
-    "ethash;keccak:110" = ""
-    "ethash2gb;blake2s:75" = ""
-    "ethash2gb;blake2s:100" = ""
-    "ethash2gb;blake2s:125" =  ""
-    "ethash2gb;keccak:70" = ""
-    "ethash2gb;keccak:90" = ""
-    "ethash2gb;keccak:110" = ""
+    "ethash" = @("")
+    "ethash2gb" = @("")
+    "ethash;blake2s:40" = @("", "")
+    "ethash;blake2s:60" = @("", "")
+    "ethash;blake2s:80" = @("", "")
+    "ethash;blake2s:100" = @("", "")
+    "ethash;blake2s:120" = @("", "")
+    "ethash;blake2s:140" = @("", "")
+    "ethash;blake2s:160" = @("", "")
+    "ethash;blake2s:180" = @("", "")
+    "ethash;keccak:10" = @("", "")
+    "ethash;keccak:30" = @("", "")
+    "ethash;keccak:50" = @("", "")
+    "ethash;keccak:70" = @("", "")
+    "ethash;keccak:90" = @("", "")
+    "ethash;keccak:110" = @("", "")
+    "ethash2gb;blake2s:75" = @("", "")
+    "ethash2gb;blake2s:100" = @("", "")
+    "ethash2gb;blake2s:125" =  @("", "")
+    "ethash2gb;keccak:70" = @("", "")
+    "ethash2gb;keccak:90" = @("", "")
+    "ethash2gb;keccak:110" = @("", "")
 }
 $CommonCommands = @(" -logsmaxsize 1", "") # array, first value for main algo, second value for secondary algo
 
@@ -88,7 +88,7 @@ $Commands | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Obj
                 Name      = $Miner_Name
                 Type      = $Type
                 Path      = $Path
-                Arguments = ("-mode 1 -mport -$Port -epool $($Pools.$MainAlgorithm_Norm.Host):$($Pools.$MainAlgorithm_Norm.Port) -ewal $($Pools.$MainAlgorithm_Norm.User) -epsw $($Pools.$MainAlgorithm_Norm.Pass)$MainAlgorithmCommand$($CommonCommands | Select -Index 0) -esm $EthereumStratumMode -allpools 1 -allcoins 1 -platform 2 -di $($DeviceIDs -join '')" -replace "\s+", " ").trim()
+                Arguments = ("-mode 1 -mport -$Port -epool $($Pools.$MainAlgorithm_Norm.Host):$($Pools.$MainAlgorithm_Norm.Port) -ewal $($Pools.$MainAlgorithm_Norm.User) -epsw $($Pools.$MainAlgorithm_Norm.Pass)$MainAlgorithmCommands$($CommonCommands | Select -Index 0) -esm $EthereumStratumMode -allpools 1 -allcoins 1 -platform 2 -di $($DeviceIDs -join '')" -replace "\s+", " ").trim()
                 HashRates = [PSCustomObject]@{"$MainAlgorithm_Norm" = $HashRateMainAlgorithm}
                 API       = $Api
                 Port      = $Port
@@ -116,7 +116,7 @@ $Commands | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Obj
                     Name      = $Miner_Name
                     Type      = $Type
                     Path      = $Path
-                    Arguments = ("-mode 0 -mport -$Port -epool $($Pools.$MainAlgorithm_Norm.Host):$($Pools.$MainAlgorithm.Port) -ewal $($Pools.$MainAlgorithm_Norm.User) -epsw $($Pools.$MainAlgorithm_Norm.Pass)$MainAlgorithmCommand$($CommonCommands | Select -Index 1) -esm $EthereumStratumMode -allpools 1 -allcoins exp -dcoin $SecondaryAlgorithm -dcri $SecondaryAlgorithmIntensity -dpool $($Pools.$SecondaryAlgorithm_Norm.Host):$($Pools.$SecondaryAlgorithm_Norm.Port) -dwal $($Pools.$SecondaryAlgorithm_Norm.User) -dpsw $($Pools.$SecondaryAlgorithm_Norm.Pass)$SecondaryAlgorithmCommand$($CommonCommands | Select -Index 1) -platform 2 -di $($DeviceIDs -join '')" -replace "\s+", " ").trim()
+                    Arguments = ("-mode 0 -mport -$Port -epool $($Pools.$MainAlgorithm_Norm.Host):$($Pools.$MainAlgorithm.Port) -ewal $($Pools.$MainAlgorithm_Norm.User) -epsw $($Pools.$MainAlgorithm_Norm.Pass)$MainAlgorithmCommand$($CommonCommands | Select -Index 1) -esm $EthereumStratumMode -allpools 1 -allcoins exp -dcoin $SecondaryAlgorithm -dcri $SecondaryAlgorithmIntensity -dpool $($Pools.$SecondaryAlgorithm_Norm.Host):$($Pools.$SecondaryAlgorithm_Norm.Port) -dwal $($Pools.$SecondaryAlgorithm_Norm.User) -dpsw $($Pools.$SecondaryAlgorithm_Norm.Pass)$SecondaryAlgorithmCommands$($CommonCommands | Select -Index 1) -platform 2 -di $($DeviceIDs -join '')" -replace "\s+", " ").trim()
                     HashRates = [PSCustomObject]@{"$MainAlgorithm_Norm" = $HashRateMainAlgorithm; "$SecondaryAlgorithm_Norm" = $HashRateSecondaryAlgorithm}
                     API       = $Api
                     Port      = $Port
@@ -129,7 +129,7 @@ $Commands | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Obj
                         Name      = $Miner_Name
                         Type      = $Type
                         Path      = $Path
-                        Arguments = ("-mode 0 -mport -$Port -epool $($Pools.$MainAlgorithm_Norm.Host):$($Pools.$MainAlgorithm.Port) -ewal $($Pools.$MainAlgorithm_Norm.User) -epsw $($Pools.$MainAlgorithm_Norm.Pass)$MainAlgorithmCommand$($CommonCommands | Select -Index 1) -esm $EthereumStratumMode -allpools 1 -allcoins exp -dcoin $SecondaryAlgorithm -dcri $SecondaryAlgorithmIntensity -dpool $($Pools.$SecondaryAlgorithm_Norm.Host):$($Pools.$SecondaryAlgorithm_Norm.Port) -dwal $($Pools.$SecondaryAlgorithm_Norm.User) -dpsw $($Pools.$SecondaryAlgorithm_Norm.Pass)$SecondaryAlgorithmCommand$($CommonCommands | Select -Index 1) -platform 2 -di $($DeviceIDs -join '')" -replace "\s+", " ").trim()
+                        Arguments = ("-mode 0 -mport -$Port -epool $($Pools.$MainAlgorithm_Norm.Host):$($Pools.$MainAlgorithm.Port) -ewal $($Pools.$MainAlgorithm_Norm.User) -epsw $($Pools.$MainAlgorithm_Norm.Pass)$MainAlgorithmCommands$($CommonCommands | Select -Index 1) -esm $EthereumStratumMode -allpools 1 -allcoins exp -dcoin $SecondaryAlgorithm -dcri $SecondaryAlgorithmIntensity -dpool $($Pools.$SecondaryAlgorithm_Norm.Host):$($Pools.$SecondaryAlgorithm_Norm.Port) -dwal $($Pools.$SecondaryAlgorithm_Norm.User) -dpsw $($Pools.$SecondaryAlgorithm_Norm.Pass)$SecondaryAlgorithmCommands$($CommonCommands | Select -Index 1) -platform 2 -di $($DeviceIDs -join '')" -replace "\s+", " ").trim()
                         HashRates = [PSCustomObject]@{"$MainAlgorithm_Norm" = $HashRateMainAlgorithm; "$SecondaryAlgorithm_Norm" = $HashRateSecondaryAlgorithm}
                         API       = $Api
                         Port      = $Port

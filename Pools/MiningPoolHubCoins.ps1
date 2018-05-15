@@ -81,7 +81,7 @@ $MiningPoolHubCoins_Request.return | Where-Object {$ExcludeCoin -inotcontains $_
                     Region        = $MiningPoolHubCoins_Region_Norm
                     SSL           = $false
                     Updated       = $Stat.Updated
-					Fees          = $MiningPoolHubCoins_Fee
+					PoolFee       = $MiningPoolHubCoins_Fee
 					Variance      = $Variance
                 }
                 [PSCustomObject]@{
@@ -98,7 +98,7 @@ $MiningPoolHubCoins_Request.return | Where-Object {$ExcludeCoin -inotcontains $_
                     Region        = $MiningPoolHubCoins_Region_Norm
                     SSL           = $true
                     Updated       = $Stat.Updated
-					Fees          = $MiningPoolHubCoins_Fee
+					PoolFee       = $MiningPoolHubCoins_Fee
 					Variance      = $Variance
                 }
             }
@@ -117,7 +117,7 @@ $MiningPoolHubCoins_Request.return | Where-Object {$ExcludeCoin -inotcontains $_
                     Region        = $MiningPoolHubCoins_Region_Norm
                     SSL           = $false
                     Updated       = $Stat.Updated
-					Fees          = $MiningPoolHubCoins_Fee
+					PoolFee       = $MiningPoolHubCoins_Fee
 					Variance      = $Variance
                 }
 
@@ -136,7 +136,7 @@ $MiningPoolHubCoins_Request.return | Where-Object {$ExcludeCoin -inotcontains $_
                         Region        = $MiningPoolHubCoins_Region_Norm
                         SSL           = $false
                         Updated       = $Stat.Updated
-						Fees          = $MiningPoolHubCoins_Fee
+						PoolFee       = $MiningPoolHubCoins_Fee
 						Variance      = $Variance
                     }
                 }
@@ -156,7 +156,7 @@ $MiningPoolHubCoins_Request.return | Where-Object {$ExcludeCoin -inotcontains $_
                         Region        = $MiningPoolHubCoins_Region_Norm
                         SSL           = $true
                         Updated       = $Stat.Updated
-						Fees          = $MiningPoolHubCoins_Fee
+						PoolFee       = $MiningPoolHubCoins_Fee
 						Variance      = $Variance
                     }
                 }

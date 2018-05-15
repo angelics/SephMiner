@@ -1,16 +1,24 @@
 using module ..\Include.psm1
 
-$Path = ".\Bin\NVIDIA-Alexis78-10\ccminer-alexis.exe"
-$Uri = "http://ccminer.org/preview/ccminer-hsr-alexis-x86-cuda8.7z"
+$Path = ".\Bin\NVIDIA-Alexis78-12\ccminer.exe"
+$Uri = "https://github.com/nemosminer/ccminerAlexis78/releases/download/Alexis78-v1.2/ccminerAlexis78v1.2x64.7z"
 
 $Commands = [PSCustomObject]@{
-    #"hsr" = "" #Hsr palginnvidia better
-    #"lyra2v2" = " -i 24" #Lyra2RE2 crash
-    #"c11" = " -i 21" #C11
-    #"x17" = " -i 21" #X17 CcminerEnemy-103 better
-    #"keccak" = "" #keccak excavatornvidia2 beter
-    "blake2s" = "" #blake2s
+    "blake2s" = "" #Blake2s
+    "c11" = " -i 21" #C11
+    "hsr" = "" #Hsr
+    "keccak" = " -m 2 -i 29" #Keccak
+    "keccakc" = " -i 29" #Keccakc
+    "lyra2" = "" #Lyra2
+    "lyra2v2" = " -N 1" #Lyra2RE2
+    #"neoscrypt" = "" #NeoScrypt
+    "poly" = "" #Poly
+    "skein2" = "" #skein2
+    "whirlcoin" = "" #WhirlCoin
+    "whirlpool" = "" #Whirlpool
+    "whirlpoolx" = "" #whirlpoolx
     "x11evo" = " -N 1 -i 21" #x11evo
+    "x17" = " -i 20" #X17
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
