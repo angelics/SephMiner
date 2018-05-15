@@ -20,7 +20,7 @@ REM uncomment below if mining with amd
 REM OC\OverdriveNTool.exe -r1 -r2 -r3 -r4 -r5 -r6
 
 REM for 1080 and 1080ti only
-REM OC\OhGodAnETHlargementPill-r2.exe --revA 0,1,2
+REM start "" OC\OhGodAnETHlargementPill-r2.exe --revA 0,1,2
 
 REM total number of nvidiagpu
 set nvidiagpu=0
@@ -72,7 +72,6 @@ set interval=240
 set command=%cur%\SephMiner.ps1 -wallet %wallet% -username %username% -workername %workername% -region %region% -currency %currency%,btc -type %type% -ExcludeMinerName %ExcludeMinerName% -donate 24 -switchingprevention %switchingprevention% -interval %interval% -watchdog
 title  %title%
 
-start pwsh -noexit -executionpolicy bypass -command "& .\reader.ps1 -log 'SephMiner_\d\d\d\d-\d\d-\d\d\.txt' -sort '^[^_]*_' -quickstart"
 pwsh -noexit -executionpolicy bypass -windowstyle maximized -command "%command%"
 powershell -version 5.0 -noexit -executionpolicy bypass -windowstyle maximized -command "%command%"
 msiexec -i https://github.com/PowerShell/PowerShell/releases/download/v6.0.2/PowerShell-6.0.2-win-x64.msi -qb!
