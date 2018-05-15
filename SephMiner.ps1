@@ -704,7 +704,7 @@ while ($true) {
         if ($Miner.New) {$Miner.Benchmarked++}
 
 		$Miner_Data = [PSCustomObject]@{}
-        $Miner_Data = $Miner.GetMinerData(($Miner.New -and $Miner.Benchmarked -lt $Strikes))
+        $Miner_Data = $Miner.GetMinerData($Miner.Algorithm, ($Miner.New -and $Miner.Benchmarked -lt $Strikes))
         $Miner_Data.Lines | ForEach-Object {Write-Log -Level Verbose "$($Miner.Name): $_"}
 
         if ($Miner.Process -and -not $Miner.Process.HasExited) {
@@ -712,7 +712,6 @@ while ($true) {
 
             $Miner.Algorithm | Where-Object {$Miner_Data.HashRate.$_} | ForEach-Object {
                 $Stat = Set-Stat -Name "$($Miner.Name)_$($_)_HashRate" -Value $Miner_Data.HashRate.$_ -Duration $StatSpan -FaultDetection ($Config.ExtendIntervalAlgorithm -inotcontains $_ -and $Config.ExtendIntervalMinerName -inotcontains $Miner.Name)
-
 
                 #Update watchdog timer
                 $Miner_Name = $Miner.Name
