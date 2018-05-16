@@ -45,11 +45,13 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
                 [PSCustomObject]@{time = 10; loop = 10; commands = @([PSCustomObject]@{id = 1; method = "algorithm.print.speeds"; params = @("0")})} | ConvertTo-Json -Depth 10 | Set-Content "$(Split-Path $Path)\$($Pools.$(Get-Algorithm $_).Name)_$(Get-Algorithm $_)_$($Pools.$(Get-Algorithm $_).User)_$($Threads)_Nvidia.json" -Force -ErrorAction Stop
             }
 
-            [PSCustomObject]@{
+                $Algorithm_Norm = Get-Algorithm $_
+
+                [PSCustomObject]@{
                 Type = "NVIDIA"
                 Path = $Path
-                Arguments = "-p $Port -c $($Pools.$(Get-Algorithm $_).Name)_$(Get-Algorithm $_)_$($Pools.$(Get-Algorithm $_).User)_$($Threads)_Nvidia.json -na"
-                HashRates = [PSCustomObject]@{$(Get-Algorithm $_) = $Stats."$($Name)_$(Get-Algorithm $_)_HashRate".Week}
+                Arguments = "-p $Port -c $($Pools.$($Algorithm_Norm).Name)_$($Algorithm_Norm)_$($Pools.$($Algorithm_Norm).User)_$($Threads)_Nvidia.json -na"
+                HashRates = [PSCustomObject]@{$($Algorithm_Norm) = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week}
                 API = "NiceHash"
                 Port = $Port
                 URI = $Uri
@@ -82,12 +84,13 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
                 [PSCustomObject]@{time = 3; commands = @([PSCustomObject]@{id = 1; method = "worker.add"; params = @("0", "19") + $Commands.$_}) * $Threads},
                 [PSCustomObject]@{time = 10; loop = 10; commands = @([PSCustomObject]@{id = 1; method = "algorithm.print.speeds"; params = @("0")})} | ConvertTo-Json -Depth 10 | Set-Content "$(Split-Path $Path)\$($Pools."$(Get-Algorithm $_)NiceHash".Name)_$(Get-Algorithm $_)_$($Pools."$(Get-Algorithm $_)NiceHash".User)_$($Threads)_Nvidia.json" -Force -ErrorAction Stop
             }
+                $Algorithm_Norm = Get-Algorithm $_
 
-            [PSCustomObject]@{
+                [PSCustomObject]@{
                 Type = "NVIDIA"
                 Path = $Path
-                Arguments = "-p $Port -c $($Pools."$(Get-Algorithm $_)NiceHash".Name)_$(Get-Algorithm $_)_$($Pools."$(Get-Algorithm $_)NiceHash".User)_$($Threads)_Nvidia.json -na"
-                HashRates = [PSCustomObject]@{"$(Get-Algorithm $_)NiceHash" = $Stats."$($Name)_$(Get-Algorithm $_)NiceHash_HashRate".Week}
+                Arguments = "-p $Port -c $($Pools."$($Algorithm_Norm)NiceHash".Name)_$($Algorithm_Norm)_$($Pools."$($Algorithm_Norm)NiceHash".User)_$($Threads)_Nvidia.json -na"
+                HashRates = [PSCustomObject]@{"$($Algorithm_Norm)NiceHash" = $Stats."$($Name)_$($Algorithm_Norm)NiceHash_HashRate".Week}
                 API = "NiceHash"
                 Port = $Port
                 URI = $Uri
