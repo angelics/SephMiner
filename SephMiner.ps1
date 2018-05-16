@@ -115,29 +115,29 @@ while ($true) {
     $ConfigBackup = $Config
     if (Test-Path "Config.txt") {
         $Config = Get-ChildItemContent "Config.txt" -Parameters @{
-            Wallet              = $Wallet
-            UserName            = $UserName
-            WorkerName          = $WorkerName
-            API_ID              = $API_ID
-            API_Key             = $API_Key
-            Interval            = $Interval
-            ExtendIntervalAlgorithm  = $ExtendIntervalAlgorithm
-            ExtendIntervalMinerName  = $ExtendIntervalMinerName
-            Region              = $Region
-            SSL                 = $SSL
-            Type                = $Type
-            Algorithm           = $Algorithm
-            MinerName           = $MinerName
-            PoolName            = $PoolName
-            ExcludeAlgorithm    = $ExcludeAlgorithm
-            ExcludeMinerName    = $ExcludeMinerName
-            ExcludePoolName     = $ExcludePoolName
-            Currency            = $Currency
-            Donate              = $Donate
-            Proxy               = $Proxy
-            Delay               = $Delay
-            Watchdog            = $Watchdog
-            SwitchingPrevention = $SwitchingPrevention
+            Wallet                  = $Wallet
+            UserName                = $UserName
+            WorkerName              = $WorkerName
+            API_ID                  = $API_ID
+            API_Key                 = $API_Key
+            Interval                = $Interval
+            ExtendIntervalAlgorithm = $ExtendIntervalAlgorithm
+            ExtendIntervalMinerName = $ExtendIntervalMinerName
+            Region                  = $Region
+            SSL                     = $SSL
+            Type                    = $Type
+            Algorithm               = $Algorithm
+            MinerName               = $MinerName
+            PoolName                = $PoolName
+            ExcludeAlgorithm        = $ExcludeAlgorithm
+            ExcludeMinerName        = $ExcludeMinerName
+            ExcludePoolName         = $ExcludePoolName
+            Currency                = $Currency
+            Donate                  = $Donate
+            Proxy                   = $Proxy
+            Delay                   = $Delay
+            Watchdog                = $Watchdog
+            SwitchingPrevention     = $SwitchingPrevention
         } | Select-Object -ExpandProperty Content
     }
 
@@ -168,8 +168,9 @@ while ($true) {
 
     #Activate or deactivate donation
     if ($Config.Donate -lt 10) {$Config.Donate = 10}
-    if ($Timer.AddDays(-1) -ge $LastDonated) {$LastDonated = $Timer}
+    if ($Timer.AddDays(-1) -ge $LastDonated.AddSeconds(59)) {$LastDonated = $Timer}
     if ($Timer.AddDays(-1).AddMinutes($Config.Donate) -ge $LastDonated) {
+        Write-Log "Donation run, mining to donation address for the next $(($LastDonated - ($Timer.AddDays(-1))).Minutes +1) minutes. Note: SephMiner will use ALL available pools. "
         Get-ChildItem "Pools" -File | ForEach-Object {
             $Config.Pools | Add-Member $_.BaseName (
                 [PSCustomObject]@{
@@ -181,7 +182,10 @@ while ($true) {
         }
         $Config | Add-Member ExcludePoolName @() -Force
     }
-
+    else {
+        Write-Log ("Mining for you. Donation run will start in {0:hh} hour(s) {0:mm} minute(s). " -f $($LastDonated.AddDays(1) - ($Timer.AddMinutes($Config.Donate))))
+    }
+	
     #Clear pool cache if the configuration has changed
     if (($ConfigBackup | ConvertTo-Json -Compress) -ne ($Config | ConvertTo-Json -Compress)) {$AllPools = $null}
 

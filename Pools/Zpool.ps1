@@ -66,13 +66,14 @@ $Zpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Selec
     if($CREA -and $Zpool_Algorithm_Norm -eq "Keccakc"){$Variance = 1}
     if($OC -and $Zpool_Algorithm_Norm -eq "sha256t"){$Variance = 1}
     if($MAX -and $Zpool_Algorithm_Norm -eq "Keccak"){$Variance = 1}
-    if($XZC -and $Zpool_Algorithm_Norm -eq "lyra2z"){$Variance = 1}
-    if($BSD -and $Zpool_Algorithm_Norm -eq "xevan"){$Variance = 1}
     if($HSR -and $Zpool_Algorithm_Norm -eq "hsr"){$Variance = 1}
     if($XRE -and $Zpool_Algorithm_Norm -eq "x11evo"){$Variance = 1}
     if($BTX -and $Zpool_Algorithm_Norm -eq "bitcore"){$Variance = 1}
     if($MAC -and $Zpool_Algorithm_Norm -eq "timetravel"){$Variance = 1}
     if($YTN -and $Zpool_Algorithm_Norm -eq "yescryptR16"){$Variance = 1}
+    if($RVN -and $Zpool_Algorithm_Norm -eq "x16r"){$Variance = 1}
+    if($MUN -and $Zpool_Algorithm_Norm -eq "skunk"){$Variance = 1}
+    if($GRLC -and $Zpool_Algorithm_Norm -eq "allium"){$Variance = 1}
 
     if ((Get-Stat -Name "$($Name)_$($Zpool_Algorithm_Norm)_Profit") -eq $null) {$Stat = Set-Stat -Name "$($Name)_$($Zpool_Algorithm_Norm)_Profit" -Value ([Double]$Zpool_Request.$_.estimate_last24h / $Divisor) -Duration (New-TimeSpan -Days 1)}
     else {$Stat = Set-Stat -Name "$($Name)_$($Zpool_Algorithm_Norm)_Profit" -Value ([Double]$Zpool_Request.$_.estimate_current / $Divisor) -Duration $StatSpan -ChangeDetection $true}

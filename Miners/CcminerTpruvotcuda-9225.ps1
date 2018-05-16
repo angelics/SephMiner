@@ -17,10 +17,10 @@ $Commands = [PSCustomObject]@{
 	"sha256t" = "" #sha256t
 	"skunk" = "" #skunk
 	"timetravel" = "" #Timetravel
-    "tribus" = " -i 19.5" #Tribus
+    #"tribus" = " -i 19.5" #Tribus
 	#"x11evo" = "" #X11evo ccmineralexis78 better
-	#"x17" = " -N 1" #X17 CcminerEnemy-103 better
 	"x12" = "" #X12
+	#"x17" = " -N 1" #X17 CcminerEnemy-103 better
 	#"x16r" = " -N 3" #X16r
 	#"x16s" = " -N 3" #X16s
 }
