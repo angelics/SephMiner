@@ -2,6 +2,7 @@ using module ..\Include.psm1
 
 $Path = ".\Bin\\NeoScrypt-Palginfork-45ee8fa\\hsrminer_neoscrypt_fork_hp.exe"
 $Uri = "https://github.com/justaminer/hsrm-fork/raw/master/hsrminer_neoscrypt_fork_hp.zip"
+$Fee = 1
 
 $Commands = [PSCustomObject]@{
     "neoscrypt" = "" #NeoScrypt

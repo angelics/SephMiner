@@ -5,6 +5,7 @@ $Uri = "https://github.com/fireice-uk/xmr-stak/releases/download/2.4.2/xmr-stak-
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
 $Port = 3336
+$Fee = 2
 
 $Commands = [PSCustomObject]@{
     "monero7" = "" #CryptoNightV7
@@ -13,6 +14,8 @@ $Commands = [PSCustomObject]@{
 $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty Name | ForEach-Object {
 
 $Algorithm_Norm = Get-Algorithm $_
+
+$HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100)
 
 ([PSCustomObject]@{
         pool_list       = @([PSCustomObject]@{
@@ -50,9 +53,10 @@ $Algorithm_Norm = Get-Algorithm $_
     Type      = "AMD"
     Path      = $Path
     Arguments = "-C $($Pools.$Algorithm_Norm.Name)_$($Algorithm_Norm)_$($Pools.$Algorithm_Norm.User)_Amd.txt -c $($Pools.$Algorithm_Norm.Name)_$($Algorithm_Norm)_$($Pools.$Algorithm_Norm.User)_Amd.txt --noUAC --noCPU --noNVIDIA"
-    HashRates = [PSCustomObject]@{$Algorithm_Norm = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * 0.98}
+    HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
     API       = "XMRig"
     Port      = $Port
     URI       = $Uri
+    MinerFee  = $Fee
 	}
 }
