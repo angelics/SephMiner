@@ -2,7 +2,7 @@
 
 $Path = ".\Bin\AMD-NiceHash-561\sgminer.exe"
 $Uri = "https://github.com/nicehash/sgminer/releases/download/5.6.1/sgminer-5.6.1-nicehash-51-windows-amd64.zip"
-
+$Fee = 0
 $Commands = [PSCustomObject]@{
     #"bitcore" = "" #Bitcore
     #"blake2s" = "" #Blake2s
@@ -38,5 +38,6 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
         API = "Xgminer"
         Port = 4028
         URI = $Uri
+        MinerFee  = @($Fee)
     }
 }

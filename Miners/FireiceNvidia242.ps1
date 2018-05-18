@@ -57,6 +57,6 @@ $HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100
     API       = "XMRig"
     Port      = $Port
     URI       = $Uri
-    MinerFee  = $Fee
+    MinerFee  = @($Fee)
 	}
 }

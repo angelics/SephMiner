@@ -2,6 +2,7 @@ using module ..\Include.psm1
 
 $Path = ".\Bin\\NeoScrypt-Palginfork-NF\\hsrminer_neoscrypt_fork_hp.exe"
 $Uri = "https://mega.nz/#!6GZ2xRYY!Xw9drYz3q7YTr0G1_DsWhWml96YwqdxyL_Ynm9_jMGg"
+$Fee = 0
 
 $Commands = [PSCustomObject]@{
     "neoscrypt" = "" #NeoScrypt
@@ -21,5 +22,6 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
         API = "Ccminer"
         Port = 4068
         URI = $Uri
+        MinerFee  = @($Fee)
     }
 }

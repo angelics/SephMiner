@@ -2,6 +2,7 @@ using module ..\Include.psm1
 
 $Path = ".\Bin\NVIDIA-TPruvotcuda9-225\ccminer.exe"
 $Uri = "https://github.com/tpruvot/ccminer/releases/download/2.2.5-tpruvot/ccminer-x86-2.2.5-cuda9.7z"
+$Fee = 0
 
 $Commands = [PSCustomObject]@{
     #"bitcore" = "" #Bitcore CcminerTpruvot-224 better
@@ -10,7 +11,7 @@ $Commands = [PSCustomObject]@{
 	#"hmq1725" = "" #hmq1725 ccminertpruvot better
 	#"hsr" = "" #Hsr PalginNvidia2e3913c better
     "jha" = "" #Jha
-	"keccakc" = "" #Keccakc
+	#"keccakc" = "" #Keccakc
 	#"lyra2v2" = " -N 1" #Lyra2RE2 CcminerNanashi-22r2 better
 	#"phi" = " -i 23 -N 1" #Phi ccmineralexis78phi better
 	"polytimos" = "" #polytimos
@@ -31,13 +32,16 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
 
     $Algorithm_Norm = Get-Algorithm $_
 
+    $HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100)
+
     [PSCustomObject]@{
         Type = "NVIDIA"
         Path = $Path
         Arguments = "-a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)"
-        HashRates = [PSCustomObject]@{$Algorithm_Norm = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week}
-        API = "Ccminer"
-        Port = 4068
-        URI = $Uri
+        HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
+        API       = "Ccminer"
+        Port      = 4068
+        URI       = $Uri
+        MinerFee  = @($Fee)
     }
 }

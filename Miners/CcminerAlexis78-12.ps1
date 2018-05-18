@@ -2,6 +2,7 @@ using module ..\Include.psm1
 
 $Path = ".\Bin\NVIDIA-Alexis78-12\ccminer.exe"
 $Uri = "https://github.com/nemosminer/ccminerAlexis78/releases/download/Alexis78-v1.2/ccminerAlexis78v1.2x64.7z"
+$Fee = 0
 
 $Commands = [PSCustomObject]@{
     "blake2s" = "" #Blake2s
@@ -16,7 +17,6 @@ $Commands = [PSCustomObject]@{
     "skein2" = "" #skein2
     "whirlcoin" = "" #WhirlCoin
     "whirlpool" = "" #Whirlpool
-    "whirlpoolx" = "" #whirlpoolx
     "x11evo" = " -N 1 -i 21" #x11evo
     #"x17" = " -i 20" #X17
 }
@@ -27,13 +27,16 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
 
     $Algorithm_Norm = Get-Algorithm $_
 
+    $HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100)
+
     [PSCustomObject]@{
-        Type = "NVIDIA"
-        Path = $Path
+        Type      = "NVIDIA"
+        Path      = $Path
         Arguments = "-a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)"
-        HashRates = [PSCustomObject]@{$Algorithm_Norm = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week}
-        API = "Ccminer"
-        Port = 4068
-        URI = $Uri
+        HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
+        API       = "Ccminer"
+        Port      = 4068
+        URI       = $Uri
+        MinerFee  = @($Fee)
     }
 }

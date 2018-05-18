@@ -2,6 +2,7 @@
 
 $Path = ".\Bin\AMD-Tribus-538\sgminer.exe"
 $Uri = "http://ccminer.org/preview/sgminer-x64-5.3.8.zip"
+$Fee = 0
 
 $Commands = [PSCustomObject]@{
     "tribus" = " --shaders 1792 --lookup-gap 4 --intensity 19" #tribus
@@ -21,5 +22,6 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
         API = "Xgminer"
         Port = 4028
         URI = $Uri
+        MinerFee  = @($Fee)
     }
 }

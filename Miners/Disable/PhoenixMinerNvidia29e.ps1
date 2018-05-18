@@ -44,7 +44,7 @@ $Commands | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Obj
             Name      = $Name
             Type      = $Type
             Path      = $Path
-            Arguments = ("-rmode 0 -cdmport 23334 -cdm 1 -pool $($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -wal $($Pools.$Algorithm_Norm.User) -pass $($Pools.$Algorithm_Norm.Pass) -proto 4 -coin auto -nvidia -gpus $($DeviceIDs -join ',')")
+            Arguments = ("-rmode 0 -cdmport $Port -cdm 1 -pool $($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -wal $($Pools.$Algorithm_Norm.User) -pass $($Pools.$Algorithm_Norm.Pass) -proto 4 -coin auto -nvidia -gpus $($DeviceIDs -join ',')")
             HashRates = [PSCustomObject]@{"$Algorithm_Norm" = $HashRate}
             API       = $Api
             Port      = $Port

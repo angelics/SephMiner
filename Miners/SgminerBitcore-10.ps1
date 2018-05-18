@@ -2,6 +2,7 @@
 
 $Path = ".\Bin\AMD-Bitcore-10\sgminer-x64.exe"
 $Uri = "https://github.com/Quake4/MindMinerPrerequisites/raw/master/AMD/sgminer-bitcore/sgminer-bitcore-5.6.1.9.zip"
+$Fee = 0
 
 $Commands = [PSCustomObject]@{
     "timetravel10" = " --intensity 19" #Bitcore
@@ -21,5 +22,6 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
         API = "Xgminer"
         Port = 4028
         URI = $Uri
+        MinerFee  = @($Fee)
     }
 }

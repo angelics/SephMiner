@@ -2,6 +2,7 @@
 
 $Path = ".\Bin\AMD-Phi-5613\sgminer.exe"
 $Uri = "https://github.com/Quake4/MindMinerPrerequisites/raw/master/AMD/sgminer-phi/sgminer-phi-5.6.1-bitbandi-3.zip"
+$Fee - 0
 
 $Commands = [PSCustomObject]@{
     "phi" = " --intensity 17" #phi
@@ -21,5 +22,6 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
         API = "Xgminer"
         Port = 4028
         URI = $Uri
+        MinerFee  = @($Fee)
     }
 }

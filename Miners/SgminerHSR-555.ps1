@@ -2,6 +2,7 @@
 
 $Path = ".\Bin\AMD-HSR-555\sgminer.exe"
 $Uri = "https://github.com/Partiolainen/sgminer-gm/releases/download/5.5.5-part/sgminer-5.5.5-part-hsr.win.x64.zip"
+$Fee = 0
 
 $Commands = [PSCustomObject]@{
     "hsr" = "" #hsr
@@ -21,5 +22,6 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
         API = "Xgminer"
         Port = 4028
         URI = $Uri
+        MinerFee  = @($Fee)
     }
 }

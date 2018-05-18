@@ -4,6 +4,7 @@ $Threads = 2
 
 $Path = ".\Bin\Excavator-144a\excavator.exe"
 $Uri = "https://github.com/nicehash/excavator/releases/"
+$Fee = 0
 
 $Commands = [PSCustomObject]@{
     #"blake2s" = @() #Blake2s alexis78 better
@@ -44,16 +45,20 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
                 [PSCustomObject]@{time = 3; commands = @([PSCustomObject]@{id = 1; method = "worker.add"; params = @("0", "19") + $Commands.$_}) * $Threads},
                 [PSCustomObject]@{time = 10; loop = 10; commands = @([PSCustomObject]@{id = 1; method = "algorithm.print.speeds"; params = @("0")})} | ConvertTo-Json -Depth 10 | Set-Content "$(Split-Path $Path)\$($Pools.$(Get-Algorithm $_).Name)_$(Get-Algorithm $_)_$($Pools.$(Get-Algorithm $_).User)_$($Threads)_Nvidia.json" -Force -ErrorAction Stop
             }
+
                 $Algorithm_Norm = Get-Algorithm $_
+
+                $HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100)
 
                 [PSCustomObject]@{
                 Type = "NVIDIA"
                 Path = $Path
                 Arguments = "-p $Port -c $($Pools.$($Algorithm_Norm).Name)_$($Algorithm_Norm)_$($Pools.$($Algorithm_Norm).User)_$($Threads)_Nvidia.json -na"
-                HashRates = [PSCustomObject]@{$($Algorithm_Norm) = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week}
+                HashRates = [PSCustomObject]@{$($Algorithm_Norm) = $HashRate}
                 API = "NiceHash"
                 Port = $Port
                 URI = $Uri
+                MinerFee  = @($Fee)
                 PrerequisitePath = "$env:SystemRoot\System32\msvcr120.dll"
                 PrerequisiteURI = "http://download.microsoft.com/download/2/E/6/2E61CFA4-993B-4DD4-91DA-3737CD5CD6E3/vcredist_x64.exe"
             }
@@ -83,16 +88,20 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
                 [PSCustomObject]@{time = 3; commands = @([PSCustomObject]@{id = 1; method = "worker.add"; params = @("0", "19") + $Commands.$_}) * $Threads},
                 [PSCustomObject]@{time = 10; loop = 10; commands = @([PSCustomObject]@{id = 1; method = "algorithm.print.speeds"; params = @("0")})} | ConvertTo-Json -Depth 10 | Set-Content "$(Split-Path $Path)\$($Pools."$(Get-Algorithm $_)NiceHash".Name)_$(Get-Algorithm $_)_$($Pools."$(Get-Algorithm $_)NiceHash".User)_$($Threads)_Nvidia.json" -Force -ErrorAction Stop
             }
+
                 $Algorithm_Norm = Get-Algorithm $_
+
+                $HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100)
 
                 [PSCustomObject]@{
                 Type = "NVIDIA"
                 Path = $Path
                 Arguments = "-p $Port -c $($Pools."$($Algorithm_Norm)NiceHash".Name)_$($Algorithm_Norm)_$($Pools."$($Algorithm_Norm)NiceHash".User)_$($Threads)_Nvidia.json -na"
-                HashRates = [PSCustomObject]@{"$($Algorithm_Norm)NiceHash" = $Stats."$($Name)_$($Algorithm_Norm)NiceHash_HashRate".Week}
+                HashRates = [PSCustomObject]@{"$($Algorithm_Norm)NiceHash" = $HashRate}
                 API = "NiceHash"
                 Port = $Port
                 URI = $Uri
+				MinerFee  = @($Fees)
                 PrerequisitePath = "$env:SystemRoot\System32\msvcr120.dll"
                 PrerequisiteURI = "http://download.microsoft.com/download/2/E/6/2E61CFA4-993B-4DD4-91DA-3737CD5CD6E3/vcredist_x64.exe"
             }

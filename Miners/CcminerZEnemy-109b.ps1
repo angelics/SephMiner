@@ -31,6 +31,6 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
         API       = "Ccminer"
         Port      = 4068
         URI       = $Uri
-        MinerFee  = $Fee
+        MinerFee  = @($Fee)
     }
 }

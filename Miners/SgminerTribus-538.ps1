@@ -2,6 +2,7 @@
 
 $Path = ".\Bin\AMD-Xevan-1\sgminer.exe"
 $Uri = "https://github.com/LIMXTEC/Xevan-GPU-Miner/releases/download/1/sgminer-xevan-5.5.0-nicehash-1-windows-amd64.zip"
+$Fee = 0
 
 $Commands = [PSCustomObject]@{
     "xevan" = " -I 15 -g 2" #Xevan up to 23
@@ -21,5 +22,6 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
         API = "Xgminer"
         Port = 4028
         URI = $Uri
+        MinerFee  = @($Fee)
     }
 }

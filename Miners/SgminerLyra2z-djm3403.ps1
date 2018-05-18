@@ -2,6 +2,7 @@
 
 $Path = ".\Bin\AMD-Lyra2z-djm3403\sgminer.exe"
 $Uri = "https://github.com/djm34/sgminer-msvc2015/releases/download/v0.3/kernel.rar"
+$Fee = 0
 
 $Commands = [PSCustomObject]@{
     "lyra2z" = " --worksize 32 --intensity 18" #Lyra2z
@@ -21,5 +22,6 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
         API = "Xgminer"
         Port = 4028
         URI = $Uri
+        MinerFee  = @($Fee)
     }
 }

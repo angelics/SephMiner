@@ -2,6 +2,7 @@
 
 $Path = ".\Bin\NVIDIA-KlausT-821\ccminer.exe"
 $Uri = "https://github.com/KlausT/ccminer/releases/download/8.21/ccminer-821-cuda91-x64.zip"
+$Fee = 0
 
 $Commands = [PSCustomObject]@{
     #"blake" = "" #Blake
@@ -32,13 +33,16 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
 
     $Algorithm_Norm = Get-Algorithm $_
 
+    $HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100)
+
     [PSCustomObject]@{
         Type = "NVIDIA"
         Path = $Path
         Arguments = "-a $_ -b 4068 -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)"
-        HashRates = [PSCustomObject]@{$Algorithm_Norm = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week}
-        API = "Ccminer"
-        Port = 4068
-        URI = $Uri
+        HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
+        API       = "Ccminer"
+        Port      = 4068
+        URI       = $Uri
+        MinerFee  = @($Fee)
     }
 }
