@@ -1,7 +1,7 @@
 ﻿using module ..\Include.psm1
 
-$Path = ".\Bin\CPU-JayDDee-388\cpuminer-aes-sse42.exe"
-$Uri = "https://github.com/JayDDee/cpuminer-opt/files/1939225/cpuminer-opt-3.8.8-windows.zip"
+$Path = ".\Bin\CPU-JayDDee-3881\cpuminer-aes-sse42.exe"
+$Uri = "https://github.com/JayDDee/cpuminer-opt/files/1996977/cpuminer-opt-3.8.8.1-windows.zip"
 $Fee = 0
 
 $Commands = [PSCustomObject]@{

@@ -1,24 +1,18 @@
-using module ..\Include.psm1
+﻿using module ..\Include.psm1
 
-$Path = ".\Bin\NVIDIA-Alexis78-12\ccminer.exe"
-$Uri = "https://github.com/nemosminer/ccminerAlexis78/releases/download/Alexis78-v1.2/ccminerAlexis78v1.2x64.7z"
-$Fee = 0
+$Path = ".\Bin\ZEnemy-NVIDIA-110\z-enemy.exe"
+$Uri = "https://mega.nz/#!mDwSVJbC!o6a6CdiqBnQ4jbEQae0yuW4F3JDf24Ny7ieWjKjTXJw"
+$Fee = 1
 
 $Commands = [PSCustomObject]@{
-    "blake2s" = "" #Blake2s
-    "c11" = " -i 21" #C11
-    #"hsr" = "" #Hsr
-    "keccak" = " -m 2 -i 29" #Keccak
-    "keccakc" = " -i 29" #Keccakc
-    "lyra2" = "" #Lyra2
-    #"lyra2v2" = " -N 1" #Lyra2RE2
-    #"neoscrypt" = "" #NeoScrypt
-    "poly" = "" #Poly
-    "skein2" = "" #skein2
-    "whirlcoin" = "" #WhirlCoin
-    "whirlpool" = "" #Whirlpool
-    "x11evo" = " -N 1 -i 21" #x11evo
-    #"x17" = " -i 20" #X17
+    "bitcore" = " -N 3" #Bitcore
+    "phi" = " -N 1" #Phi
+    "vit" = "" #Vitalium
+    "tribus" = "" #Tribus
+    "x16s" = " -N 3" #Pigeon
+    "x16r" = " -N 3" #Raven
+    "x17" = " -N 1" #X17
+    "xevan" = "" #Xevan
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
@@ -30,8 +24,8 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
     $HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100)
 
     [PSCustomObject]@{
-        Type      = "NVIDIA"
-        Path      = $Path
+        Type = "NVIDIA"
+        Path = $Path
         Arguments = "-a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)"
         HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
         API       = "Ccminer"

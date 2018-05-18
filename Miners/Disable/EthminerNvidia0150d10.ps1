@@ -11,13 +11,13 @@ $Type = "NVIDIA"
 if (-not $Devices.$Type) {return} # No NVIDIA mining device present in system
 
 $Name = "$(Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName)"
-$Path = ".\Bin\Ethash-Ethminer0150d10\ethminer.exe"
+$Path = ".\Bin\Ethash-Ethminer-0150d10\ethminer.exe"
 $API = "Claymore"
 $Uri = "https://github.com/ethereum-mining/ethminer/releases/download/v0.15.0.dev10/ethminer-0.15.0.dev10-Windows.zip"
 $Port = 23333
-$Fees = 0
+$Fee = 0
 $Commands = [PSCustomObject]@{
-    "ethash" = ""
+    "ethash"    = ""
     "ethash2gb" = ""
 }
 
@@ -42,12 +42,12 @@ $Commands | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Obj
             Name      = $Name
             Type      = $Type
             Path      = $Path
-            Arguments = ("--api-port $Port -S $($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -O $($Pools.$Algorithm_Norm.User):$($Pools.$Algorithm_Norm.Pass) -SP 2 --cuda --cuda-devices $($DeviceIDs)")
+            Arguments = ("--api-port $Port -P $($Pools.$Algorithm_Norm.Protocol)://$([System.Web.HttpUtility]::UrlEncode($Pools.$Algorithm_Norm.User)):$([System.Web.HttpUtility]::UrlEncode($Pools.$Algorithm_Norm.Pass))@$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port)$($Commands.$_) --cuda --cuda-devices $($DeviceIDs)")
             HashRates = [PSCustomObject]@{"$Algorithm_Norm" = $HashRate}
             API       = $Api
             Port      = $Port
             URI       = $Uri
-            MinerFee  = $Fees
+            MinerFee  = @($Fee)
         }
     }
 }
