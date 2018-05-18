@@ -35,7 +35,7 @@ catch {
 $MiningPoolHubCoins_Regions = "europe", "us-east", "asia"
 
 $MiningPoolHubCoins_Request.return | Where-Object {$ExcludeCoin -inotcontains $_.coin_name -and ($Coin.count -eq 0 -or $Coin -icontains $_.coin_name) -and $_.pool_hash -gt 0} | Where-Object {$ExcludeAlgorithm -inotcontains (Get-Algorithm $_.algo)} |ForEach-Object {
-    $MiningPoolHubCoins_Host = $_.host
+    $MiningPoolHubCoins_Host = "hub.miningpoolhub.com"
     $MiningPoolHubCoins_Hosts = $_.host_list.split(";")
     $MiningPoolHubCoins_Port = $_.port
     $MiningPoolHubCoins_Algorithm = $_.algo
