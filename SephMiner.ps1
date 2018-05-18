@@ -620,7 +620,7 @@ while ($true) {
 	Write-Host "1BTC = " $NewRates.$($Config.Currency | Select -Index 0) "$($Config.Currency | Select -Index 0)"
     $Miners | Where-Object {$_.Profit -ge 1E-5 -or $_.Profit -eq $null} | Sort-Object -Descending Type, Profit_Bias | Format-Table -GroupBy Type (
         @{Label = "Miner"; Expression = {$_.Name}},
-		#@{Label = "MinerFee"; Expression = {$_.Pools.PSObject.Properties.Value | ForEach-Object  {if ($_.MinerFee) {"$(($_.MinerFee).ToString("N2"))%"} else {"unknown"}}}; Align='center'},
+		@{Label = "MinerFee"; Expression = {"$(($_.MinerFee | Foreach-Object {$_.ToString("N2")}) -join '%/')%"}}, 
         @{Label = "Algorithm"; Expression = {$_.HashRates.PSObject.Properties.Name}}, 
         @{Label = "Speed"; Expression = {$_.HashRates.PSObject.Properties.Value | ForEach-Object {if ($_ -ne $null) {"$($_ | ConvertTo-Hash)/s"}else {"Benchmarking"}}}; Align = 'right'}, 
         @{Label = "$($Config.Currency | Select-Object -Index 0)/Day"; Expression = {if ($_.Profit) {ConvertTo-LocalCurrency $($_.Profit) $($Rates.$($Config.Currency | Select-Object -Index 0)) -Offset 2} else {"Unknown"}}; Align = "right"},

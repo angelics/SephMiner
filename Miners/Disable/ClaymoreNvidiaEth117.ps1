@@ -95,7 +95,7 @@ $Commands | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Obj
                 API       = $Api
                 Port      = $Port
                 URI       = $Uri
-                Fees      = $Fees
+                MinerFee  = $Fees
             }
         }
         elseif ($_ -match "^.+;.+:\d+$") { # valid dual mining parameter set
@@ -123,7 +123,7 @@ $Commands | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Obj
                     API       = $Api
                     Port      = $Port
                     URI       = $Uri
-                    Fees      = $Fees
+                    MinerFee  = $Fees
                 }
                 if ($SecondaryAlgorithm_Norm -eq "Sia" -or $SecondaryAlgorithm_Norm -eq "Decred") {
                     $SecondaryAlgorithm_Norm = "$($SecondaryAlgorithm_Norm)NiceHash"
@@ -136,7 +136,7 @@ $Commands | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Obj
                         API       = $Api
                         Port      = $Port
                         URI       = $Uri
-                        Fees      = $Fees
+                        MinerFee  = $Fees
                     }
                 }
             }
