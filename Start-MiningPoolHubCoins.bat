@@ -18,9 +18,6 @@ REM timeout /t 5
 REM uncomment below if mining with amd
 REM OC\OverdriveNTool.exe -r1 -r2 -r3 -r4 -r5 -r6
 
-REM for 1080 and 1080ti only
-REM start /min OC\OhGodAnETHlargementPill-r2.exe --revA 0,1,2
-
 REM total number of nvidiagpu
 set nvidiagpu=0
 set /a timer = 3+%nvidiagpu%
@@ -70,8 +67,9 @@ set ExcludeAlgorithm=ethash2gb,keccak
 set ExcludeMinerName=ccminerlyra2re2,prospector
 set switchingprevention=2
 set interval=240
+set delay=0
 
-set command=%cur%\SephMiner.ps1 -wallet %wallet% -username %username% -workername %workername% -region %region% -currency %currency%,btc -type %type% -poolname %poolname% -algorithm %algorithm% -ExcludeAlgorithm %ExcludeAlgorithm% -ExcludeMinerName %ExcludeMinerName% -donate 24 -watchdog -switchingprevention %switchingprevention% -interval %interval% -ExcludePoolName %ExcludePoolName%
+set command=%cur%\SephMiner.ps1 -wallet %wallet% -username %username% -workername %workername% -region %region% -currency %currency%,btc -type %type% -poolname %poolname% -algorithm %algorithm% -ExcludeAlgorithm %ExcludeAlgorithm% -ExcludeMinerName %ExcludeMinerName% -donate 24 -watchdog -switchingprevention %switchingprevention% -interval %interval% -ExcludePoolName %ExcludePoolName% -delay %delay%
 title  %title%
 
 pwsh -noexit -executionpolicy bypass -windowstyle maximized -command "%command%"

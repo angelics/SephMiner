@@ -56,5 +56,5 @@
   "Watchdog": "$Watchdog",
   "SwitchingPrevention": "$SwitchingPrevention",
   "ExtendIntervalAlgorithm": ["X16R", "X16S"],
-  "ExtendIntervalMinerName": ["PalginNvidia2e3913c", "CcminerZEnemy-109b", "CcminerAlexis78-12", "PalginNvidiaFork-45ee8fa"]
+  "ExtendIntervalMinerName": ["PalginNvidia2e3913c", "CcminerZEnemy-109b", "CcminerAlexis78-12", "PalginNvidiaFork-45ee8fa", CpuminerJayddeeAessse42-388", "CpuminerJayddeeAvx2-388", "CpuminerJayddeeAvx2sha-388", "CpuminerJayddeeSse2-388", "CpuminerTpruvotAvx2-131", "CpuminerTpruvotCore2-131", "CpuminerTpruvotCorei7-131"]
 }

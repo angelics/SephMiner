@@ -1,1 +1,0 @@
-setx GPU_FORCE_64BIT_PTR 1

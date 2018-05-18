@@ -80,8 +80,8 @@ function Get-DeviceIDs {
     }
     else { # one miner instance per hw type
         $DeviceIDs."All" = @($Devices.$Type | Where-Object {$Config.Devices.$Type.IgnoreHWModel -inotcontains $_.Name_Norm -and $Config.Miners.$Name.IgnoreHWModel -inotcontains $_.Name_Norm}).DeviceIDs | Where-Object {$Config.Devices.$Type.IgnoreDeviceID -notcontains $_ -and $Config.Miners.$Name.IgnoreDeviceID -notcontains $_} | ForEach-Object {[Convert]::ToString(($_ + $DeviceIdOffset), $DeviceIdBase)}
-        $DeviceIDs."3gb" = @($Devices.$Type | Where-Object {$Config.Devices.$Type.IgnoreHWModel -inotcontains $_.Name_Norm -and $Config.Miners.$Name.IgnoreHWModel -inotcontains $_.Name_Norm} | Where-Object {$_.GlobalMemsize -gt 3000000000}).DeviceIDs | Where-Object {$Config.Devices.$Type.IgnoreDeviceID -notcontains $_ -and $Config.Miners.$Name.IgnoreDeviceID -notcontains $_} | Foreach-Object {[Convert]::ToString(($_ + $DeviceIdOffset), $DeviceIdBase)}
-        $DeviceIDs."4gb" = @($Devices.$Type | Where-Object {$Config.Devices.$Type.IgnoreHWModel -inotcontains $_.Name_Norm -and $Config.Miners.$Name.IgnoreHWModel -inotcontains $_.Name_Norm} | Where-Object {$_.GlobalMemsize -gt 4000000000}).DeviceIDs | Where-Object {$Config.Devices.$Type.IgnoreDeviceID -notcontains $_ -and $Config.Miners.$Name.IgnoreDeviceID -notcontains $_} | Foreach-Object {[Convert]::ToString(($_ + $DeviceIdOffset), $DeviceIdBase)}
+        $DeviceIDs."3gb" = @($Devices.$Type | Where-Object {$Config.Devices.$Type.IgnoreHWModel -inotcontains $_.Name_Norm -and $Config.Miners.$Name.IgnoreHWModel -inotcontains $_.Name_Norm} | Where-Object {$_.GlobalMemsize -gt 3000000000}).DeviceIDs | Where-Object {$Config.Devices.$Type.IgnoreDeviceID -notcontains $_ -and $Config.Miners.$Name.IgnoreDeviceID -notcontains $_} | ForEach-Object {[Convert]::ToString(($_ + $DeviceIdOffset), $DeviceIdBase)}
+        $DeviceIDs."4gb" = @($Devices.$Type | Where-Object {$Config.Devices.$Type.IgnoreHWModel -inotcontains $_.Name_Norm -and $Config.Miners.$Name.IgnoreHWModel -inotcontains $_.Name_Norm} | Where-Object {$_.GlobalMemsize -gt 4000000000}).DeviceIDs | Where-Object {$Config.Devices.$Type.IgnoreDeviceID -notcontains $_ -and $Config.Miners.$Name.IgnoreDeviceID -notcontains $_} | ForEach-Object {[Convert]::ToString(($_ + $DeviceIdOffset), $DeviceIdBase)}
     }
     $DeviceIDs
 }
@@ -524,7 +524,7 @@ function Get-ChildItemContentParallel {
             }
         }
     }
-	# Cleanup runspaces
+    # Cleanup runspaces
     $RunspacePool.Close()
     $RunspacePool.Dispose()
     Remove-Variable RunspacePool
@@ -770,7 +770,7 @@ function Get-Region {
     if(-not (Test-Path Variable:Script:Regions)) {
         $Script:Regions = Get-Content "Regions.txt" | ConvertFrom-Json
     }
-
+    
     $Region = (Get-Culture).TextInfo.ToTitleCase(($Region -replace "-", " " -replace "_", " ")) -replace " "
 
     if ($Script:Regions.$Region) {$Script:Regions.$Region}
@@ -805,6 +805,10 @@ class Miner {
     $CName
     $Pool
 
+    [String[]]GetProcessNames() {
+        return @(([IO.FileInfo]($this.Path | Split-Path -Leaf -ErrorAction Ignore)).BaseName)
+    }
+	
     StartMining() {
         $this.New = $true
         $this.Activated++
@@ -819,7 +823,19 @@ class Miner {
     StopMining() {
         $this.Process.CloseMainWindow() | Out-Null
         $this.Status = "Idle"
-	}
+    }
+
+    [DateTime]GetActiveLast() {
+        if ($this.Process.PSBeginTime -and $this.Process.PSEndTime) {
+            return $this.Process.PSEndTime
+        }
+        elseif ($this.Process.PSBeginTime) {
+            return Get-Date
+        }
+        else {
+            return [DateTime]::MinValue
+        }
+    }
 
     [PSCustomObject]GetMinerData ([Bool]$Safe = $false) {
         $Lines = @()
