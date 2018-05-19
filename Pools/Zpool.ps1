@@ -56,8 +56,6 @@ $Zpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Selec
     }	
 	
     $Zpool_Fees = 1-($Zpool_Fee/100)
-	
-    $Variance = 1
 
     $Variance = 1 - $Zpool_Variance."$Zpool_Algorithm_Norm"
 	
@@ -72,6 +70,7 @@ $Zpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Selec
     if($MAC -and $Zpool_Algorithm_Norm -eq "timetravel"){$Variance = 1}
     if($YTN -and $Zpool_Algorithm_Norm -eq "yescryptR16"){$Variance = 1}
     if($RVN -and $Zpool_Algorithm_Norm -eq "x16r"){$Variance = 1}
+    if($PGN -and $Zpool_Algorithm_Norm -eq "x16s"){$Variance = 1}
     if($MUN -and $Zpool_Algorithm_Norm -eq "skunk"){$Variance = 1}
     if($GRLC -and $Zpool_Algorithm_Norm -eq "allium"){$Variance = 1}
 

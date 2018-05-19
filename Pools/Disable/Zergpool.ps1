@@ -59,8 +59,6 @@ $Zergpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Se
 	
     $Zergpool_Fees = 1-($Zergpool_Fee/100)
 	
-    $Variance = 1
-	
     $Variance = 1 - $Zergpool_Variance."$Zergpool_Algorithm_Norm"
 	
     if ($Variance -ne 0){$Variance -= 0.01}

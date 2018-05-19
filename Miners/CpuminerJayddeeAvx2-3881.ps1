@@ -1,5 +1,12 @@
 ﻿using module ..\Include.psm1
 
+param(
+    [PSCustomObject]$Pools,
+    [PSCustomObject]$Stats,
+    [PSCustomObject]$Config,
+    [PSCustomObject]$Devices
+)
+
 $Path = ".\Bin\CPU-JayDDee-3881\cpuminer-avx2.exe"
 $Uri = "https://github.com/JayDDee/cpuminer-opt/files/1996977/cpuminer-opt-3.8.8.1-windows.zip"
 $Fee = 0
@@ -66,6 +73,8 @@ $Commands = [PSCustomObject]@{
     #"zr5" = "" #Ziftr
 }
 
+$CommonCommands = "" #eg. " --threads=6"
+
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
 
 $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty Name | Where-Object {$Pools.(Get-Algorithm $_).Protocol -eq "stratum+tcp" <#temp fix#>} | ForEach-Object {
@@ -75,9 +84,9 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
     $HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100)
 
     [PSCustomObject]@{
-        Type = "CPU"
-        Path = $Path
-        Arguments = "-a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)"
+        Type      = "CPU"
+        Path      = $Path
+        Arguments = "-a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)$($CommonCommands)"
         HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
         API       = "Ccminer"
         Port      = 4068

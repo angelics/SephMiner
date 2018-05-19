@@ -1,5 +1,15 @@
 ﻿using module ..\Include.psm1
 
+param(
+    [PSCustomObject]$Pools,
+    [PSCustomObject]$Stats,
+    [PSCustomObject]$Config,
+    [PSCustomObject]$Devices
+)
+
+$Type = "NVIDIA"
+if (-not $Devices.$Type) {return} # No NVIDIA mining device present in system
+
 $Threads = 1
 
 $Path = ".\Bin\Excavator-144a\excavator.exe"
@@ -7,12 +17,12 @@ $Uri = "https://github.com/nicehash/excavator/releases/"
 $Fee = 0
 
 $Commands = [PSCustomObject]@{
-    #"blake2s" = @() #Blake2s alexis78 better
+    #"blake2s"         = @() #Blake2s alexis78 better
     #"daggerhashimoto" = @() #Ethash
-    #"equihash" = @() #Equihash dstm better
-    "keccak" = @() #keccak
-    "lyra2rev2" = @() #Lyra2RE2 ccmineralexis78 better
-    #"neoscrypt" = @() #NeoScrypt palginnvidia better
+    #"equihash"        = @() #Equihash dstm better
+    "keccak"          = @() #keccak
+    "lyra2rev2"       = @() #Lyra2RE2 ccmineralexis78 better
+    #"neoscrypt"       = @() #NeoScrypt palginnvidia better
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
@@ -51,16 +61,16 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
                 $HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100)
 
                 [PSCustomObject]@{
-                Type = "NVIDIA"
-                Path = $Path
-                Arguments = "-p $Port -c $($Pools.$($Algorithm_Norm).Name)_$($Algorithm_Norm)_$($Pools.$($Algorithm_Norm).User)_$($Threads)_Nvidia.json -na"
-                HashRates = [PSCustomObject]@{$($Algorithm_Norm) = $HashRate}
-                API = "NiceHash"
-                Port = $Port
-                URI = $Uri
-                MinerFee  = @($Fee)
+                Type             = $Type
+                Path             = $Path
+                Arguments        = "-p $Port -c $($Pools.$($Algorithm_Norm).Name)_$($Algorithm_Norm)_$($Pools.$($Algorithm_Norm).User)_$($Threads)_Nvidia.json -na"
+                HashRates        = [PSCustomObject]@{$($Algorithm_Norm) = $HashRate}
+                API              = "NiceHash"
+                Port             = $Port
+                URI              = $Uri
+                MinerFee         = @($Fee)
                 PrerequisitePath = "$env:SystemRoot\System32\msvcr120.dll"
-                PrerequisiteURI = "http://download.microsoft.com/download/2/E/6/2E61CFA4-993B-4DD4-91DA-3737CD5CD6E3/vcredist_x64.exe"
+                PrerequisiteURI  = "http://download.microsoft.com/download/2/E/6/2E61CFA4-993B-4DD4-91DA-3737CD5CD6E3/vcredist_x64.exe"
             }
         }
         else {
@@ -94,16 +104,16 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
                 $HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100)
 
                 [PSCustomObject]@{
-                Type = "NVIDIA"
-                Path = $Path
-                Arguments = "-p $Port -c $($Pools."$($Algorithm_Norm)NiceHash".Name)_$($Algorithm_Norm)_$($Pools."$($Algorithm_Norm)NiceHash".User)_$($Threads)_Nvidia.json -na"
-                HashRates = [PSCustomObject]@{"$($Algorithm_Norm)NiceHash" = $HashRate}
-                API = "NiceHash"
-                Port = $Port
-                URI = $Uri
-				MinerFee  = @($Fee)
+                Type             = $Type
+                Path             = $Path
+                Arguments        = "-p $Port -c $($Pools."$($Algorithm_Norm)NiceHash".Name)_$($Algorithm_Norm)_$($Pools."$($Algorithm_Norm)NiceHash".User)_$($Threads)_Nvidia.json -na"
+                HashRates        = [PSCustomObject]@{"$($Algorithm_Norm)NiceHash" = $HashRate}
+                API              = "NiceHash"
+                Port             = $Port
+                URI              = $Uri
+				MinerFee         = @($Fees)
                 PrerequisitePath = "$env:SystemRoot\System32\msvcr120.dll"
-                PrerequisiteURI = "http://download.microsoft.com/download/2/E/6/2E61CFA4-993B-4DD4-91DA-3737CD5CD6E3/vcredist_x64.exe"
+                PrerequisiteURI  = "http://download.microsoft.com/download/2/E/6/2E61CFA4-993B-4DD4-91DA-3737CD5CD6E3/vcredist_x64.exe"
             }
         }
     }

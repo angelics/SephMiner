@@ -45,8 +45,6 @@ $MiningPoolHub_Request.return | Where-Object {$ExcludeAlgorithm -inotcontains (G
     $Divisor = 1000000000
 	
     $MiningPoolHub_Fees = 1-($MiningPoolHub_Fee/100)
-
-    $Variance = 1
 	
     $Variance = 1 - $MiningPoolHub_Variance."$MiningPoolHub_Algorithm_Norm"
 	

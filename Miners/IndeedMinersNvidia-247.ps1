@@ -10,12 +10,12 @@ param(
 $Type = "NVIDIA"
 if (-not $Devices.$Type) {return} # No NVIDIA mining device present in system
 
-$Path = ".\Bin\CryptoNight-FireIce-242\xmr-stak.exe"
-$Uri = "https://github.com/fireice-uk/xmr-stak/releases/download/2.4.2/xmr-stak-win64.zip"
+$Path = ".\Bin\CryptoNight-IndeedMiners-247\xmr-stak.exe"
+$Uri = "https://github.com/IndeedMiners/xmr-aeon-stak/releases/download/2.4.7/XMR-AEON-STAK-2.4.7-20180504-win64-1.fee.zip"
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
 $Port = 3335
-$Fee = 2
+$Fee = 1
 
 $Commands = [PSCustomObject]@{
     "monero7" = "" #CryptoNightV7

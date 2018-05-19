@@ -11,14 +11,18 @@ $Type = "AMD"
 if (-not $Devices.$Type) {return} # No AMD mining device present in system
 
 $Name = "$(Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName)"
-$Path = ".\Bin\CryptoNight-AMD-261\xmrig-amd.exe"
+$Path = ".\Bin\CryptoNight-Cast-100\cast_xmr-vega.exe"
 $API = "XMRig"
-$Uri = "https://github.com/xmrig/xmrig-amd/releases/download/v2.6.1/xmrig-amd-2.6.1-win64.zip"
-$Port = 3335
-$Fee = 1
+$Uri = "http://www.gandalph3000.com/download/cast_xmr-vega-win64_100.zip"
+$Port = 7777
+$Fee = 1.5
 $Commands = [PSCustomObject]@{
-    "cn"       = "" #CryptoNightV7
-    "cn-heavy" = "" #CryptoNight-Heavy
+    "CryptoNight"          = "" #CryptoNight
+    "CryptoNightV7"        = "" #CryptoNightV7
+    "CryptoNight-Heavy"    = "" #CryptoNight-Heavy
+    "CryptoNightLite"      = "" #CryptoNightLite
+    "cryptonight-litev7"   = "" #CryptoNightLitetV7
+    "CryptoNightIPBC-Lite" = "" #CryptoNightIPBC-Lite
 }
 
 $Commands | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name | ForEach-Object {
@@ -31,11 +35,21 @@ $Commands | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Obj
 		
         $HashRate = $HashRate * (1 - $Fee / 100)
 
+		#temp fix
+		switch ($Algorithm_Norm) {
+            "CryptoNight"          {$algo=0}
+            "CryptoNightV7"        {$algo=1}
+            "CryptoNight-Heavy"    {$algo=2}
+            "CryptoNightLite"      {$algo=3}
+            "CryptoNightLitetV7"   {$algo=4}
+            "CryptoNightIPBC-Lite" {$algo=5}
+		}
+		
         [PSCustomObject]@{
             Name      = $Name
             Type      = $Type
             Path      = $Path
-            Arguments = ("--api-port $Port -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass) --keepalive --nicehash --donate-level 1")
+            Arguments = ("--remoteaccess --algo=$algo -S $($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass) --forcecompute --fastjobswitch  -G $($DeviceIDs -join ',')")
             HashRates = [PSCustomObject]@{"$Algorithm_Norm" = $HashRate}
             API       = $Api
             Port      = $Port

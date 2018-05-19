@@ -17,7 +17,7 @@ $Uri = "https://github.com/xmrig/xmrig-nvidia/releases/download/v2.6.1/xmrig-nvi
 $Port = 3335
 $Fee = 1
 $Commands = [PSCustomObject]@{
-    "cn" = "" #CryptoNightV7
+    "cn"       = "" #CryptoNightV7
     "cn-heavy" = "" #CryptoNight-Heavy
 }
 

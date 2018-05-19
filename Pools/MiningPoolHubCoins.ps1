@@ -44,9 +44,7 @@ $MiningPoolHubCoins_Request.return | Where-Object {$ExcludeCoin -inotcontains $_
     $MiningPoolHubCoins_Fee = 0.9
 
     $Divisor = 1000000000
-	
-    $Variance = 1
-	
+
     $Variance = 1 - $MiningPoolHubCoins_Variance."$MiningPoolHubCoins_Coin"
 	
     if ($Variance -ne 0){$Variance -= 0.01}

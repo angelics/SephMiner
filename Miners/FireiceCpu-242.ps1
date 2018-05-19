@@ -1,5 +1,12 @@
 using module ..\Include.psm1
 
+param(
+    [PSCustomObject]$Pools,
+    [PSCustomObject]$Stats,
+    [PSCustomObject]$Config,
+    [PSCustomObject]$Devices
+)
+
 $Path = ".\Bin\CryptoNight-FireIce-242\xmr-stak.exe"
 $Uri = "https://github.com/fireice-uk/xmr-stak/releases/download/2.4.2/xmr-stak-win64.zip"
 

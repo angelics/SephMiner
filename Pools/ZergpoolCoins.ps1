@@ -59,8 +59,6 @@ $ZergPoolCoins_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore
     
     $ZergpoolCoins_Fees = 1-($ZergpoolCoins_Fee/100)
     
-    $Variance = 1
-	
     $Variance = 1 - $ZergpoolCoins_Variance."$ZergPoolCoins_Currency".variance
 	
     if ($Variance -ne 0){$Variance -= 0.01}

@@ -1,5 +1,14 @@
 using module ..\Include.psm1
 
+param(
+    [PSCustomObject]$Pools,
+    [PSCustomObject]$Stats,
+    [PSCustomObject]$Config,
+    [PSCustomObject]$Devices
+)
+$Type = "AMD"
+if (-not $Devices.$Type) {return} # No AMD mining device present in system
+
 $Path = ".\Bin\CryptoNight-FireIce-242\xmr-stak.exe"
 $Uri = "https://github.com/fireice-uk/xmr-stak/releases/download/2.4.2/xmr-stak-win64.zip"
 
@@ -50,7 +59,7 @@ $HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100
 ) -replace "^{" -replace "}$" | Set-Content "$(Split-Path $Path)\$($Pools.$Algorithm_Norm.Name)_$($Algorithm_Norm)_$($Pools.$Algorithm_Norm.User)_Amd.txt" -Force -ErrorAction SilentlyContinue
 
 	[PSCustomObject]@{
-    Type      = "AMD"
+    Type      = $Type
     Path      = $Path
     Arguments = "-C $($Pools.$Algorithm_Norm.Name)_$($Algorithm_Norm)_$($Pools.$Algorithm_Norm.User)_Amd.txt -c $($Pools.$Algorithm_Norm.Name)_$($Algorithm_Norm)_$($Pools.$Algorithm_Norm.User)_Amd.txt --noUAC --noCPU --noNVIDIA"
     HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}

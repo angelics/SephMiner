@@ -12,7 +12,7 @@ if (-not $Devices.$Type) {return} # No NVIDIA mining device present in system
 
 $Name = "$(Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName)"
 $Path = ".\Bin\HSR-Palgin-2e3913c\hsrminer_hsr.exe"
-$API = "Wrapper"
+$API = "Ccminer"
 $Uri = "https://github.com/palginpav/hsrminer/raw/master/HSR%20algo/Windows/hsrminer_hsr.exe"
 $Port = 4001
 $Fee = 1

@@ -1,16 +1,26 @@
 ﻿using module ..\Include.psm1
 
+param(
+    [PSCustomObject]$Pools,
+    [PSCustomObject]$Stats,
+    [PSCustomObject]$Config,
+    [PSCustomObject]$Devices
+)
+
+$Type = "NVIDIA"
+if (-not $Devices.$Type) {return} # No NVIDIA mining device present in system
+
 $Path = ".\Bin\NVIDIA-KlausT-Yescrypt\ccminer.exe"
 $Uri = "https://1drv.ms/f/s!AoT9lvLcOWd_hX-jrYCKzFFhNNfU"
 $Fee = 0
 
 $Commands = [PSCustomObject]@{
-    "yescrypt" = "" #yescrypt
-    "yescryptR8" = "" #yescryptR8
-    "yescryptR16" = "" #Yenten
+    "yescrypt"      = "" #yescrypt
+    "yescryptR8"    = "" #yescryptR8
+    "yescryptR16"   = "" #Yenten
     "yescryptR16v2" = "" #PPNP
-    "yescryptR24" = "" #yescryptR24
-    "yescryptR32" = "" #WAVI
+    "yescryptR24"   = "" #yescryptR24
+    "yescryptR32"   = "" #WAVI
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
@@ -22,8 +32,8 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
     $HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100)
 
     [PSCustomObject]@{
-        Type = "NVIDIA"
-        Path = $Path
+        Type      = $Type
+        Path      = $Path
         Arguments = "-a $_ -b 4068 -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)"
         HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
         API       = "Ccminer"

@@ -7,15 +7,12 @@ param(
     [PSCustomObject]$Devices
 )
 
-$Type = "NVIDIA"
-if (-not $Devices.$Type) {return} # No NVIDIA mining device present in system
-
-$Path = ".\Bin\CryptoNight-FireIce-242\xmr-stak.exe"
-$Uri = "https://github.com/fireice-uk/xmr-stak/releases/download/2.4.2/xmr-stak-win64.zip"
+$Path = ".\Bin\CryptoNight-IndeedMiners-247\xmr-stak.exe"
+$Uri = "https://github.com/IndeedMiners/xmr-aeon-stak/releases/download/2.4.7/XMR-AEON-STAK-2.4.7-20180504-win64-1.fee.zip"
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
 $Port = 3335
-$Fee = 2
+$Fee = 1
 
 $Commands = [PSCustomObject]@{
     "monero7" = "" #CryptoNightV7
@@ -60,9 +57,9 @@ $HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100
 ) -replace "^{" -replace "}$" | Set-Content "$(Split-Path $Path)\$($Pools.$Algorithm_Norm.Name)_$($Algorithm_Norm)_$($Pools.$Algorithm_Norm.User)_Nvidia.txt" -Force -ErrorAction SilentlyContinue
 
 	[PSCustomObject]@{
-    Type      = $Type
+    Type      = "CPU"
     Path      = $Path
-    Arguments = "-C $($Pools.$Algorithm_Norm.Name)_$($Algorithm_Norm)_$($Pools.$Algorithm_Norm.User)_Nvidia.txt -c $($Pools.$Algorithm_Norm.Name)_$($Algorithm_Norm)_$($Pools.$Algorithm_Norm.User)_Nvidia.txt --noUAC --noAMD --noCPU"
+    Arguments = "-C $($Pools.$Algorithm_Norm.Name)_$($Algorithm_Norm)_$($Pools.$Algorithm_Norm.User)_CPU.txt -c $($Pools.$Algorithm_Norm.Name)_$($Algorithm_Norm)_$($Pools.$Algorithm_Norm.User)_CPU.txt --noUAC --noAMD --noNVIDIA"
     HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
     API       = "XMRig"
     Port      = $Port
