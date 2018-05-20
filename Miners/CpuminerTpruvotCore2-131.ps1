@@ -7,26 +7,23 @@ param(
     [PSCustomObject]$Devices
 )
 
-$Path = ".\Bin\CPU-TPruvot-133\cpuminer-gw64-core2.exe"
-$Uri = "https://github.com/tpruvot/cpuminer-multi/archive/v1.3.3-multi.zip"
+$Path = ".\Bin\CPU-TPruvot-131\cpuminer-gw64-core2.exe"
+$Uri = "https://github.com/tpruvot/cpuminer-multi/releases/download/v1.3.1-multi/cpuminer-multi-rel1.3.1-x64.zip"
 $Fee = 0
 
 $Commands = [PSCustomObject]@{
     "blake2s"    = "" #Blake2s
-    "bitcore"    = "" #bitcore
     "c11"        = "" #C11
-    "jha"        = "" #jha
     "keccak"     = "" #Keccak
-    "keccakc"    = "" #Keccakc
     "lyra2rev2"  = "" #Lyra2RE2
     "neoscrypt"  = "" #NeoScrypt
     "timetravel" = "" #Timetravel
     "x11evo"     = "" #X11evo
-    "x16r"       = "" #x16r
     "x17"        = "" #X17
     "xevan"      = "" #Xevan
     "yescrypt"   = "" #Yescrypt
 }
+
 
 $CommonCommands = "" #eg. " --threads=6"
 
