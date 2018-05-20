@@ -9,8 +9,8 @@ param(
 $Type = "AMD"
 if (-not $Devices.$Type) {return} # No AMD mining device present in system
 
-$Path = ".\Bin\AMD-KL-103\sgminer.exe"
-$Uri = "https://github.com/KL0nLutiy/sgminer-kl/releases/download/kl-1.0.3/sgminer-kl-1.0.3-windows.zip"
+$Path = ".\Bin\AMD-KL-104\sgminer.exe"
+$Uri = "https://github.com/brian112358/avermore-miner/releases/download/v1.4/avermore-v1.4-windows.zip"
 $Fee = 1
 
 $Commands = [PSCustomObject]@{

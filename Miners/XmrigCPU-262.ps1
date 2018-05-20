@@ -7,9 +7,6 @@ param(
     [PSCustomObject]$Devices
 )
 
-$Type = "CPU"
-if (-not ($Devices.$Type -or $Config.InfoOnly)) {return} # No CPU mining device present in system, InfoOnly is for Get-Binaries
-
 $Name = "$(Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName)"
 $Path = ".\Bin\CryptoNight-CPU-262\xmrig.exe"
 $API = "XMRig"
@@ -32,7 +29,7 @@ $Commands | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Obj
         $HashRate = $HashRate * (1 - $Fee / 100)
 
         [PSCustomObject]@{
-            Name      = $Name
+            Name      = "CPU"
             Type      = $Type
             Path      = $Path
             Arguments = ("--api-port $Port -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass) --keepalive --nicehash --donate-level 1")

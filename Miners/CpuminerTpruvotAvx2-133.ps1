@@ -7,9 +7,6 @@ param(
     [PSCustomObject]$Devices
 )
 
-$Type = "CPU"
-if (-not $Devices.$Type) {return} # No CPU mining device present in system
-
 $Path = ".\Bin\CPU-TPruvot-133\cpuminer-gw64-avx2.exe"
 $Uri = "https://github.com/tpruvot/cpuminer-multi/archive/v1.3.3-multi.zip"
 $Fee = 0
@@ -42,7 +39,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
     $HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100)
 
     [PSCustomObject]@{
-        Type      = $Type
+        Type      = "CPU"
         Path      = $Path
         Arguments = "-a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)$($CommonCommands)"
         HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
