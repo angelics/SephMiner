@@ -7,6 +7,9 @@ param(
     [PSCustomObject]$Devices
 )
 
+$Type = "CPU"
+if (-not $Devices.$Type) {return} # No CPU mining device present in system
+
 $Path = ".\Bin\CPU-JayDDee-3881\cpuminer-avx2-sha.exe"
 $Uri = "https://github.com/JayDDee/cpuminer-opt/files/1996977/cpuminer-opt-3.8.8.1-windows.zip"
 $Fee = 0
@@ -84,7 +87,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
     $HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100)
 
     [PSCustomObject]@{
-        Type      = "CPU"
+        Type      = $Type
         Path      = $Path
         Arguments = "-a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)$($CommonCommands)"
         HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}

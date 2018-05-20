@@ -7,6 +7,9 @@ param(
     [PSCustomObject]$Devices
 )
 
+$Type = "CPU"
+if (-not $Devices.$Type) {return} # No CPU mining device present in system
+
 $Path = ".\Bin\CryptoNight-IndeedMiners-247\xmr-stak.exe"
 $Uri = "https://github.com/IndeedMiners/xmr-aeon-stak/releases/download/2.4.7/XMR-AEON-STAK-2.4.7-20180504-win64-1.fee.zip"
 
@@ -57,7 +60,7 @@ $HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100
 ) -replace "^{" -replace "}$" | Set-Content "$(Split-Path $Path)\$($Pools.$Algorithm_Norm.Name)_$($Algorithm_Norm)_$($Pools.$Algorithm_Norm.User)_Nvidia.txt" -Force -ErrorAction SilentlyContinue
 
 	[PSCustomObject]@{
-    Type      = "CPU"
+    Type      = $Type
     Path      = $Path
     Arguments = "-C $($Pools.$Algorithm_Norm.Name)_$($Algorithm_Norm)_$($Pools.$Algorithm_Norm.User)_CPU.txt -c $($Pools.$Algorithm_Norm.Name)_$($Algorithm_Norm)_$($Pools.$Algorithm_Norm.User)_CPU.txt --noUAC --noAMD --noNVIDIA"
     HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}

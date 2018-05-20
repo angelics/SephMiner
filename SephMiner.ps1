@@ -626,8 +626,8 @@ while ($true) {
         @{Label = "$($Config.Currency | Select-Object -Index 0)/Day"; Expression = {if ($_.Profit) {ConvertTo-LocalCurrency $($_.Profit) $($Rates.$($Config.Currency | Select-Object -Index 0)) -Offset 2} else {"Unknown"}}; Align = "right"},
         @{Label = "Accuracy"; Expression = {$_.Pools.PSObject.Properties.Value.MarginOfError | ForEach-Object {(1 - $_).ToString("P0")}}; Align = 'right'}, 
         @{Label = "Pool"; Expression = {$_.Pools.PSObject.Properties.Value | ForEach-Object {if ($_.Info) {"$($_.Name)-$($_.Info)"}else {"$($_.Name)"}}}},
-        @{Label = "PoolFee"; Expression = {$_.Pools.PSObject.Properties.Value | ForEach-Object  {if ($_.PoolFee) {"$($_.PoolFee)%"} else {"unknown"}}}; Align='center'},
-        @{Label = "Variance"; Expression = {$_.Pools.PSObject.Properties.Value | ForEach-Object  {if ($_.Variance) {"$($_.Variance)"} else {"No Variance"}}}; Align='center'}
+        @{Label = "PoolFee"; Expression = {$_.Pools.PSObject.Properties.Value | ForEach-Object  {if ($_.PoolFee) {"$($_.PoolFee.ToString("N2"))%"} else {"unknown"}}}; Align='center'},
+        @{Label = "Variance"; Expression = {$_.Pools.PSObject.Properties.Value | ForEach-Object  {if ($_.Variance) {"$($_.Variance.ToString("N2"))"} else {"No Variance"}}}; Align='center'}
     ) | Out-Host
 
     Write-Host "--------------------------------------------------------------------------------"

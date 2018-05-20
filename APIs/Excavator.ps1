@@ -1,6 +1,6 @@
 ﻿using module ..\Include.psm1
 
-class Nicehash : Miner {
+class Excavator : Miner {
     [PSCustomObject]GetMinerData ([String[]]$Algorithm, [Bool]$Safe = $false) {
         $Server = "localhost"
         $Timeout = 10 #seconds

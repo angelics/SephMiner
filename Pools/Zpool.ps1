@@ -49,7 +49,6 @@ $Zpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Selec
     switch ($Zpool_Algorithm_Norm) {
         "equihash" {$Divisor /= 1000}
         "blake2s" {$Divisor *= 1000}
-        "blakecoin" {$Divisor *= 1000}
         "keccak" {$Divisor *= 1000}
         "keccakc" {$Divisor *= 1000}
         "sha256t" {$Divisor *= 1000}

@@ -23,6 +23,7 @@ $Commands = [PSCustomObject]@{
     "jha"        = "" #Jha
 	#"keccakc"    = "" #Keccakc
 	#"lyra2v2"    = " -N 1" #Lyra2RE2 CcminerNanashi-22r2 better
+	#"lyra2z"      = "" #Lyra2z
 	#"phi"        = " -i 23 -N 1" #Phi ccmineralexis78phi better
 	"polytimos"  = "" #polytimos
 	"sha256t"    = "" #sha256t

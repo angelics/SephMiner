@@ -16,6 +16,7 @@ $API = "XMRig"
 $Uri = "http://www.gandalph3000.com/download/cast_xmr-vega-win64_100.zip"
 $Port = 7777
 $Fee = 1.5
+
 $Commands = [PSCustomObject]@{
     "CryptoNight"          = "" #CryptoNight
     "CryptoNightV7"        = "" #CryptoNightV7
@@ -50,7 +51,7 @@ $Commands | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Obj
             Type      = $Type
             Path      = $Path
             Arguments = ("--remoteaccess --algo=$algo -S $($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass) --forcecompute --fastjobswitch  -G $($DeviceIDs -join ',')")
-            HashRates = [PSCustomObject]@{"$Algorithm_Norm" = $HashRate}
+            HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
             API       = $Api
             Port      = $Port
             URI       = $Uri

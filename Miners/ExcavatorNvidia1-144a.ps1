@@ -65,7 +65,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
                 Path             = $Path
                 Arguments        = "-p $Port -c $($Pools.$($Algorithm_Norm).Name)_$($Algorithm_Norm)_$($Pools.$($Algorithm_Norm).User)_$($Threads)_Nvidia.json -na"
                 HashRates        = [PSCustomObject]@{$($Algorithm_Norm) = $HashRate}
-                API              = "NiceHash"
+                API              = "Excavator"
                 Port             = $Port
                 URI              = $Uri
                 MinerFee         = @($Fee)
@@ -108,7 +108,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
                 Path             = $Path
                 Arguments        = "-p $Port -c $($Pools."$($Algorithm_Norm)NiceHash".Name)_$($Algorithm_Norm)_$($Pools."$($Algorithm_Norm)NiceHash".User)_$($Threads)_Nvidia.json -na"
                 HashRates        = [PSCustomObject]@{"$($Algorithm_Norm)NiceHash" = $HashRate}
-                API              = "NiceHash"
+                API              = "Excavator"
                 Port             = $Port
                 URI              = $Uri
 				MinerFee         = @($Fees)
