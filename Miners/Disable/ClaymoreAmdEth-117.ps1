@@ -10,13 +10,13 @@ param(
 $Type = "AMD"
 if (-not $Devices.$Type) {return} # No AMD mining device present in system
 
-$Name = "$(Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName)"
 $Path = ".\Bin\Ethash-Claymore-117\EthDcrMiner64.exe"
 $API = "Claymore"
 $Uri = "https://mega.nz/#F!O4YA2JgD!n2b4iSHQDruEsYUvTQP5_w"
 $Port = 13333
 $MinerFeeInPercentSingleMode = 1.0
 $MinerFeeInPercentDualMode = 1.5
+
 $Commands = [PSCustomObject]@{
     "ethash"               = @("")
     "ethash2gb"            = @("","")
@@ -34,6 +34,8 @@ $Commands = [PSCustomObject]@{
     "ethash2gb;keccak:45"  = @("","")
 }
 $CommonCommands = @("", "") # array, first value for main algo, second value for secondary algo
+
+$Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
 
 # Get array of IDs of all devices in device set, returned DeviceIDs are of base $DeviceIdBase representation starting from $DeviceIdOffset
 $DeviceIDsSet = Get-DeviceIDs -Config $Config -Devices $Devices -Type $Type -DeviceTypeModel $($Devices.$Type) -DeviceIdBase 16 -DeviceIdOffset 0

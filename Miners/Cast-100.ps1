@@ -10,7 +10,6 @@ param(
 $Type = "AMD"
 if (-not $Devices.$Type) {return} # No AMD mining device present in system
 
-$Name = "$(Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName)"
 $Path = ".\Bin\CryptoNight-Cast-100\cast_xmr-vega.exe"
 $API = "XMRig"
 $Uri = "http://www.gandalph3000.com/download/cast_xmr-vega-win64_100.zip"
@@ -25,6 +24,8 @@ $Commands = [PSCustomObject]@{
     "cryptonight-litev7"   = "" #CryptoNightLitetV7
     "CryptoNightIPBC-Lite" = "" #CryptoNightIPBC-Lite
 }
+
+$Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
 
 $Commands | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name | ForEach-Object {
 
@@ -50,7 +51,7 @@ $Commands | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Obj
             Name      = $Name
             Type      = $Type
             Path      = $Path
-            Arguments = ("--remoteaccess --algo=$algo -S $($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass) --forcecompute --fastjobswitch  -G $($DeviceIDs -join ',')")
+            Arguments = ("--remoteaccess --algo=$algo -S $($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_) --forcecompute --fastjobswitch  -G $($DeviceIDs -join ',')")
             HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
             API       = $Api
             Port      = $Port

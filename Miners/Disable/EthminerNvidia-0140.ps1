@@ -10,7 +10,6 @@ param(
 $Type = "NVIDIA"
 if (-not $Devices.$Type) {return} # No NVIDIA mining device present in system
 
-$Name = "$(Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName)"
 $Path = ".\Bin\Ethash-Ethminer-0140\ethminer.exe"
 $API = "Claymore"
 $Uri = "https://github.com/ethereum-mining/ethminer/releases/download/v0.14.0/ethminer-0.14.0-Windows.zip"
@@ -20,6 +19,8 @@ $Commands = [PSCustomObject]@{
     "ethash"    = ""
     "ethash2gb" = ""
 }
+
+$Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
 
 # Get array of IDs of all devices in device set, returned DeviceIDs are of base $DeviceIdBase representation starting from $DeviceIdOffset
 $DeviceIDsSet = Get-DeviceIDs -Config $Config -Devices $Devices -Type $Type -DeviceTypeModel $($Devices.$Type) -DeviceIdBase 10 -DeviceIdOffset 0

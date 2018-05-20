@@ -12,6 +12,7 @@ if (-not $Devices.$Type) {return} # No AMD mining device present in system
 $Path = ".\Bin\AMD-NiceHash-561\sgminer.exe"
 $Uri = "https://github.com/nicehash/sgminer/releases/download/5.6.1/sgminer-5.6.1-nicehash-51-windows-amd64.zip"
 $Fee = 0
+
 $Commands = [PSCustomObject]@{
     #"bitcore"    = "" #Bitcore
     #"blake2s"    = "" #Blake2s
