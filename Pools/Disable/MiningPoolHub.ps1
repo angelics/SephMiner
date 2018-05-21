@@ -61,60 +61,23 @@ $MiningPoolHub_Request.return | Where-Object {$ExcludeAlgorithm -inotcontains (G
         $MiningPoolHub_Region_Norm = Get-Region ($MiningPoolHub_Region -replace "^us-east$", "us")
 
         if ($User) {
-            if ($MiningPoolHub_Algorithm_Norm -eq "CryptonightV7") {
-                [PSCustomObject]@{
-                    Algorithm     = $MiningPoolHub_Algorithm_Norm
-                    Info          = $MiningPoolHub_Coin
-                    Price         = $Stat.Live
-                    StablePrice   = $Stat.Week
-                    MarginOfError = $Stat.Week_Fluctuation
-                    Protocol      = "stratum+tcp"
-                    Host          = "$($MiningPoolHub_Region).cryptonight-$($MiningPoolHub_Hosts | Sort-Object -Descending {$_ -ilike "$MiningPoolHub_Region*"} | Select-Object -First 1)"
-                    Port          = $MiningPoolHub_Port
-                    User          = "$User.$Worker"
-                    Pass          = "x"
-                    Region        = $MiningPoolHub_Region_Norm
-                    SSL           = $false
-                    Updated       = $Stat.Updated
-					PoolFee       = $MiningPoolHub_Fee
-					Variance      = $Variance
-                }
-                [PSCustomObject]@{
-                    Algorithm     = $MiningPoolHub_Algorithm_Norm
-                    Info          = $MiningPoolHub_Coin
-                    Price         = $Stat.Live
-                    StablePrice   = $Stat.Week
-                    MarginOfError = $Stat.Week_Fluctuation
-                    Protocol      = "stratum+ssl"
-                    Host          = "$($MiningPoolHub_Region).cryptonight-$($MiningPoolHub_Hosts | Sort-Object -Descending {$_ -ilike "$MiningPoolHub_Region*"} | Select-Object -First 1)"
-                    Port          = $MiningPoolHub_Port
-                    User          = "$User.$Worker"
-                    Pass          = "x"
-                    Region        = $MiningPoolHub_Region_Norm
-                    SSL           = $true
-                    Updated       = $Stat.Updated
-					PoolFee       = $MiningPoolHub_Fee
-					Variance      = $Variance
-                }
+            [PSCustomObject]@{
+                Algorithm     = $MiningPoolHub_Algorithm_Norm
+                Info          = $MiningPoolHub_Coin
+                Price         = $Stat.Live
+                StablePrice   = $Stat.Week
+                MarginOfError = $Stat.Week_Fluctuation
+                Protocol      = "stratum+tcp"
+                Host          = $MiningPoolHub_Hosts | Sort-Object -Descending {$_ -ilike "$MiningPoolHub_Region*"} | Select-Object -First 1
+                Port          = $MiningPoolHub_Port
+                User          = "$User.$Worker"
+                Pass          = "x"
+                Region        = $MiningPoolHub_Region_Norm
+                SSL           = $false
+                Updated       = $Stat.Updated
+                PoolFee       = $MiningPoolHub_Fee
+                Variance      = $Variance
             }
-            else {
-                [PSCustomObject]@{
-                    Algorithm     = $MiningPoolHub_Algorithm_Norm
-                    Info          = $MiningPoolHub_Coin
-                    Price         = $Stat.Live
-                    StablePrice   = $Stat.Week
-                    MarginOfError = $Stat.Week_Fluctuation
-                    Protocol      = "stratum+tcp"
-                    Host          = $MiningPoolHub_Hosts | Sort-Object -Descending {$_ -ilike "$MiningPoolHub_Region*"} | Select-Object -First 1
-                    Port          = $MiningPoolHub_Port
-                    User          = "$User.$Worker"
-                    Pass          = "x"
-                    Region        = $MiningPoolHub_Region_Norm
-                    SSL           = $false
-                    Updated       = $Stat.Updated
-					PoolFee       = $MiningPoolHub_Fee
-					Variance      = $Variance
-                }
             
                 if ($MiningPoolHub_Algorithm_Norm -eq "Equihash") {
                     [PSCustomObject]@{
@@ -135,7 +98,6 @@ $MiningPoolHub_Request.return | Where-Object {$ExcludeAlgorithm -inotcontains (G
 						Variance      = $Variance
                     }
                 }
-            }
         }
     }
 }
