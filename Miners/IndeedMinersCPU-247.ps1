@@ -11,7 +11,7 @@ $Path = ".\Bin\CryptoNight-IndeedMiners-247\xmr-stak.exe"
 $Uri = "https://github.com/IndeedMiners/xmr-aeon-stak/releases/download/2.4.7/XMR-AEON-STAK-2.4.7-20180504-win64-1.fee.zip"
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
-$Port = 3335
+$Port = 3334
 $Fee = 1
 
 $Commands = [PSCustomObject]@{
@@ -54,7 +54,7 @@ $HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100
         http_pass       = ""
         prefer_ipv4     = $true
     } | ConvertTo-Json -Depth 10
-) -replace "^{" -replace "}$" | Set-Content "$(Split-Path $Path)\$($Pools.$Algorithm_Norm.Name)_$($Algorithm_Norm)_$($Pools.$Algorithm_Norm.User)_Nvidia.txt" -Force -ErrorAction SilentlyContinue
+) -replace "^{" -replace "}$" | Set-Content "$(Split-Path $Path)\$($Pools.$Algorithm_Norm.Name)_$($Algorithm_Norm)_$($Pools.$Algorithm_Norm.User)_CPU.txt" -Force -ErrorAction SilentlyContinue
 
 	[PSCustomObject]@{
     Type      = "CPU"

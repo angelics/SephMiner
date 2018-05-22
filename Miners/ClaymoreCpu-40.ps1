@@ -31,8 +31,8 @@ $Commands | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Obj
         $HashRate = $HashRate * (1 - $Fee / 100)
 
         [PSCustomObject]@{
-            Name      = "CPU"
-            Type      = $Type
+            Name      = $Name
+            Type      = "CPU"
             Path      = $Path
             Arguments = ("-r -1 -mport -$Port -pow7 $($Commands.$_ | Select-Object -Index 0) -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_ | Select-Object -Index 1)\")
             HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}

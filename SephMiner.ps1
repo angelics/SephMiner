@@ -20,7 +20,7 @@ param(
     [Parameter(Mandatory = $false)]
     [Array]$ExtendIntervalAlgorithm = @("X16R", "X16S"), #Extend interval duration by a factor of 10x $Interval for these algorithms
     [Parameter(Mandatory = $false)]
-    [Array]$ExtendIntervalMinerName = @("PalginNvidia2e3913c"), #Extend interval duration by a factor of 10x $Interval for these miners
+    [Array]$ExtendIntervalMinerName = @("PalginNvidia-2e3913c"), #Extend interval duration by a factor of 10x $Interval for these miners
     [Parameter(Mandatory = $false)]
     [Alias("Location")]
     [String]$Region = "europe", #europe/us/asia
@@ -58,6 +58,7 @@ param(
     [Double]$SwitchingPrevention = 1 #zero does not prevent miners switching
 )
 
+Clear-Host
 $Strikes = 3
 $SyncWindow = 5 #minutes
 
@@ -104,9 +105,10 @@ $WorkerNameDonate = "SephMiner"
 $WalletType = "BTC"
 # Create config.txt if it is missing
 if (!(Test-Path "Config.txt")) {
-    if(Test-Path "Config.default.txt") {
+    if (Test-Path "Config.default.txt") {
         Copy-Item -Path "Config.default.txt" -Destination "Config.txt"
-    } else {
+    }
+    else {
         Write-Log -Level Error "Config.txt and Config.default.txt are missing. Cannot continue. "
         Start-Sleep 10
         Exit
