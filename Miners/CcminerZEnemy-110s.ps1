@@ -10,8 +10,8 @@ param(
 $Type = "NVIDIA"
 if (-not $Devices.$Type) {return} # No NVIDIA mining device present in system
 
-$Path = ".\Bin\ZEnemy-NVIDIA-110\z-enemy.exe"
-$Uri = "https://mega.nz/#!mDwSVJbC!o6a6CdiqBnQ4jbEQae0yuW4F3JDf24Ny7ieWjKjTXJw"
+$Path = ".\Bin\ZEnemy-NVIDIA-110s\z-enemy.exe"
+$Uri = "https://mega.nz/#!qKgg1CqY!tmhWZCVFZOkfMiXNytMgldUoytNSVyZ0RTBsNGSxhmQ"
 $Fee = 1
 
 $Commands = [PSCustomObject]@{

@@ -14,8 +14,7 @@ $Port = 3333
 $Fee = 0
 
 $Commands = [PSCustomObject]@{
-    "CryptoNight"          = @("0","") #CryptoNight, first item is algo number, second for additional miner commands
-    "CryptoNightV7"        = @("1","") #CryptoNightV7
+    "CryptoNightV7" = "" #CryptoNightV7
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
@@ -34,7 +33,7 @@ $Commands | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Obj
             Name      = $Name
             Type      = "CPU"
             Path      = $Path
-            Arguments = ("-r -1 -mport -$Port -pow7 $($Commands.$_ | Select-Object -Index 0) -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_ | Select-Object -Index 1)\")
+            Arguments = ("-r -1 -mport -$Port -pow7 1 -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)")
             HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
             API       = $Api
             Port      = $Port
