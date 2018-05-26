@@ -17,13 +17,15 @@ $Port = 7777
 $Fee = 1.5
 
 $Commands = [PSCustomObject]@{
-    "CryptoNight"          = "" #CryptoNight
-    "CryptoNightV7"        = "" #CryptoNightV7
-    "CryptoNight-Heavy"    = "" #CryptoNight-Heavy
-    "CryptoNightLite"      = "" #CryptoNightLite
-    "cryptonight-litev7"   = "" #CryptoNightLitetV7
-    "CryptoNightIPBC-Lite" = "" #CryptoNightIPBC-Lite
+    "CryptoNightV7"        = @("1","") #CryptoNightV7
+    "CryptoNight-Heavy"    = @("2","") #CryptoNight-Heavy
+    "CryptoNightLite"      = @("3","") #CryptoNightLite
+    "cryptonight-litev7"   = @("4","") #CryptoNightLitetV7
+    "CryptoNightIPBC-Lite" = @("5","") #CryptoNightIPBC-Lite
 }
+
+# Get array of IDs of all devices in device set, returned DeviceIDs are of base $DeviceIdBase representation starting from $DeviceIdOffset
+$DeviceIDs = (Get-DeviceIDs -Config $Config -Devices $Devices -Type $Type -DeviceTypeModel $($Devices.$Type) -DeviceIdBase 16 -DeviceIdOffset 0)."All"
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
 
@@ -36,22 +38,12 @@ $Commands | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Obj
         $HashRate = ($Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week)
 		
         $HashRate = $HashRate * (1 - $Fee / 100)
-
-		#temp fix
-		switch ($Algorithm_Norm) {
-            "CryptoNight"          {$algo=0}
-            "CryptoNightV7"        {$algo=1}
-            "CryptoNight-Heavy"    {$algo=2}
-            "CryptoNightLite"      {$algo=3}
-            "CryptoNightLitetV7"   {$algo=4}
-            "CryptoNightIPBC-Lite" {$algo=5}
-		}
 		
         [PSCustomObject]@{
             Name      = $Name
             Type      = $Type
             Path      = $Path
-            Arguments = ("--remoteaccess --algo=$algo -S $($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_) --forcecompute --fastjobswitch  -G $($DeviceIDs -join ',')")
+            Arguments = ("--remoteaccess --algo=$($Commands.$_ | Select-Object -Index 0) -S $($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_ | Select-Object -Index 1) --forcecompute --fastjobswitch  -G $($DeviceIDs -join ',')")
             HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
             API       = $Api
             Port      = $Port
