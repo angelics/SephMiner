@@ -6,6 +6,7 @@ param(
     [PSCustomObject]$Config,
     [PSCustomObject]$Devices
 )
+
 $Type = "AMD"
 if (-not $Devices.$Type) {return} # No AMD mining device present in system
 
@@ -19,6 +20,7 @@ $Commands = [PSCustomObject]@{
     "Hamsi"     = "" #Hamsi
     "Keccak"    = "" #Keccak
     "whirlpool" = "" #whirlpool
+    "x16r"      = "" #x16r
     "x16s"      = "" #x16s
 }
 

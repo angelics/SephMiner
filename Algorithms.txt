@@ -13,6 +13,7 @@
     "cryptonightmonero":  "CryptoNightV7",
     "cryptonightv7": "CryptoNightV7",
     "monero7": "CryptoNightV7",
+    "cryptonight_v7": "CryptoNightV7",
     "daggerhashimoto":  "Ethash",
     "equihash":  "Equihash",
     "eth":  "Ethash",

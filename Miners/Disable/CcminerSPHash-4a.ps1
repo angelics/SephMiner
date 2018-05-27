@@ -10,13 +10,13 @@ param(
 $Type = "NVIDIA"
 if (-not $Devices.$Type) {return} # No NVIDIA mining device present in system
 
-$Path = ".\Bin\NVIDIA-suprminer-16\ccminer.exe"
-$Uri = "https://github.com/ocminer/suprminer/releases/download/1.6/suprminer-1.6.7z"
+$Path = ".\Bin\NVIDIA-SPHash-4a\ccminer.exe"
+$Uri = "https://github.com/sp-hash/suprminer/releases/download/spmod-git4a/raven_spmodgit4_fix.7z"
 $Fee = 0
 
 $Commands = [PSCustomObject]@{
-    "x16s" = " -N 3" #X16s
-    "x16r" = " -i 21 -N 3" #X16r
+    "x16s" = "" #X16s
+    "x16r" = "" #X16r
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
