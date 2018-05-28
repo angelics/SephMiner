@@ -671,15 +671,6 @@ while ($true) {
         @{Label = "Command"; Expression = {"$($_.Path.TrimStart((Convert-Path ".\"))) $($_.Arguments)"}}
     ) | Out-Host
 	
-    #Display active miners list
-	Write-Host " Status : Running " -foregroundcolor "Yellow"
-    $ActiveMiners | Where-Object {$_.Activated -GT 0 -and $_.Status -EQ "Running"} | Sort-Object -Descending Status, {if ($_.Process -eq $null) {[DateTime]0}else {$_.Process.StartTime}} | Format-Table -Wrap (
-        @{Label = "Active"; Expression = {"{0:dd} Days {0:hh} Hours {0:mm} Minutes" -f $(if ($_.Process -eq $null) {$_.Active}else {if ($_.Process.ExitTime -gt $_.Process.StartTime) {($_.Active + ($_.Process.ExitTime - $_.Process.StartTime))}else {($_.Active + ((Get-Date) - $_.Process.StartTime))}})}}, 
-        @{Label = "Launched"; Expression = {Switch ($_.Activated) {0 {"Never"} 1 {"Once"} Default {"$_ Times"}}}}, 
-        @{Label = "Type"; Expression = {$_.Type}}, 
-        @{Label = "Command"; Expression = {"$($_.Path.TrimStart((Convert-Path ".\"))) $($_.Arguments)"}}
-    ) | Out-Host
-
     #Display watchdog timers
     $WatchdogTimers | Where-Object Kicked -GT $Timer.AddSeconds( - $WatchdogReset) | Format-Table -Wrap (
         @{Label = "Miner"; Expression = {$_.MinerName}}, 
@@ -719,6 +710,15 @@ while ($true) {
         Write-Host "Pool Balances: "
         $balances | Format-Table Name, Total_*
     }
+	
+    #Display active miners list
+	Write-Host " Status : Running " -foregroundcolor "Yellow"
+    $ActiveMiners | Where-Object {$_.Activated -GT 0 -and $_.Status -EQ "Running"} | Sort-Object -Descending Status, {if ($_.Process -eq $null) {[DateTime]0}else {$_.Process.StartTime}} | Format-Table -Wrap (
+        @{Label = "Active"; Expression = {"{0:dd} Days {0:hh} Hours {0:mm} Minutes" -f $(if ($_.Process -eq $null) {$_.Active}else {if ($_.Process.ExitTime -gt $_.Process.StartTime) {($_.Active + ($_.Process.ExitTime - $_.Process.StartTime))}else {($_.Active + ((Get-Date) - $_.Process.StartTime))}})}}, 
+        @{Label = "Launched"; Expression = {Switch ($_.Activated) {0 {"Never"} 1 {"Once"} Default {"$_ Times"}}}}, 
+        @{Label = "Type"; Expression = {$_.Type}}, 
+        @{Label = "Command"; Expression = {"$($_.Path.TrimStart((Convert-Path ".\"))) $($_.Arguments)"}}
+    ) | Out-Host
 	
     #Display benchmarking progress
     $BenchmarksNeeded = ($Miners | Where-Object {$_.HashRates.PSObject.Properties.Value -eq $null}).Count

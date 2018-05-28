@@ -56,6 +56,6 @@
   "Watchdog": "$Watchdog",
   "SwitchingPrevention": "$SwitchingPrevention",
   "ExtendIntervalAlgorithm": ["X16R", "X16S"],
-  "ExtendIntervalMinerName": ["PalginNvidia-2e3913c", "CcminerZEnemy-110s", "CcminerAlexis78-12", "PalginNvidiaFork-45ee8fa", CpuminerJayddeeAessse42-3881", "CpuminerJayddeeAvx2-3881", "CpuminerJayddeeAvx2sha-3881", "CpuminerJayddeeSse2-3881", "CpuminerTpruvotAvx2-133", "CpuminerTpruvotCore2-133", "CpuminerTpruvotCorei7-133"],
+  "ExtendIntervalMinerName": ["PalginNvidia-2e3913c", "CcminerZEnemy-110s", "CcminerAlexis78-12", "PalginNvidiaFork-45ee8fa", CpuminerJayddeeAessse42-3881", "CpuminerJayddeeAvx2-3881", "CpuminerJayddeeAvx2sha-3881", "CpuminerJayddeeSse2-3881", "CpuminerTpruvotAvx2-131", "CpuminerTpruvotCore2-131", "CpuminerTpruvotCorei7-131"],
   "ShowPoolBalances": "$ShowPoolBalances"
 }
