@@ -56,6 +56,8 @@ param(
     [Switch]$Watchdog = $false,
     [Parameter(Mandatory = $false)]
     [Double]$SwitchingPrevention = 1 #zero does not prevent miners switching
+    [Parameter(Mandatory = $false)]
+    [Switch]$ShowPoolBalances = $false
 )
 
 Clear-Host
@@ -143,6 +145,7 @@ while ($true) {
             Delay                   = $Delay
             Watchdog                = $Watchdog
             SwitchingPrevention     = $SwitchingPrevention
+            ShowPoolBalances         = $ShowPoolBalances
         } | Select-Object -ExpandProperty Content
     }
 
@@ -171,6 +174,10 @@ while ($true) {
         )
     }
 
+    # Copy the user's config before changing anything for donation runs
+    # This is used when getting pool balances so it doesn't get pool balances of the donation address instead
+    $UserConfig = $Config
+	
     #Activate or deactivate donation
     if ($Config.Donate -lt 10) {$Config.Donate = 10}
     if ($Timer.AddDays(-1) -ge $LastDonated.AddSeconds(59)) {$LastDonated = $Timer}
@@ -220,6 +227,9 @@ while ($true) {
         Write-Log -Level Warn "Coinbase is down. "
     }
 
+    #Update the pool balances
+    $Balances = Get-Balance -Config $UserConfig -Rates $Rates
+	
     #Load the stats
     Write-Log "Loading saved statistics. "
     $Stats = Get-Stat
@@ -548,7 +558,7 @@ while ($true) {
             }
         }
     }
-    Get-Process -Name @($ActiveMiners | ForEach-Object {$_.GetProcessNames()}) -ErrorAction Ignore | Select-Object -ExpandProperty ProcessName | Compare-Object @($ActiveMiners | Where-Object Best -EQ $true | Where-Object Status -EQ "Running" | ForEach-Object {$_.GetProcessNames()}) | Where-Object SideIndicator -EQ "=>" | Select-Object -ExpandProperty InputObject | Select-Object -Unique | ForEach-Object {Stop-Process -Name $_ -Force -ErrorAction Ignore}
+    if ($ActiveMiners | ForEach-Object {$_.GetProcessNames()}) {Get-Process -Name @($ActiveMiners | ForEach-Object {$_.GetProcessNames()}) -ErrorAction Ignore | Select-Object -ExpandProperty ProcessName | Compare-Object @($ActiveMiners | Where-Object Best -EQ $true | Where-Object {$_.Status -EQ "Running"} | ForEach-Object {$_.GetProcessNames()}) | Where-Object SideIndicator -EQ "=>" | Select-Object -ExpandProperty InputObject | Select-Object -Unique | ForEach-Object {Stop-Process -Name $_ -Force -ErrorAction Ignore}}
     if ($Downloader) {$Downloader | Receive-Job}
     Start-Sleep $Config.Delay #Wait to prevent BSOD
     $ActiveMiners | Where-Object Best -EQ $true | ForEach-Object {
@@ -704,6 +714,12 @@ while ($true) {
         $MinerComparisons | Out-Host
     }
     
+    #Display pool balances, formatting it to show all the user specified currencies
+    if ($Config.ShowPoolBalances) {
+        Write-Host "Pool Balances: "
+        $balances | Format-Table Name, Total_*
+    }
+	
     #Display benchmarking progress
     $BenchmarksNeeded = ($Miners | Where-Object {$_.HashRates.PSObject.Properties.Value -eq $null}).Count
     if($BenchmarksNeeded -gt 0) {
