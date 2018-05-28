@@ -55,7 +55,7 @@ param(
     [Parameter(Mandatory = $false)]
     [Switch]$Watchdog = $false,
     [Parameter(Mandatory = $false)]
-    [Double]$SwitchingPrevention = 1 #zero does not prevent miners switching
+    [Double]$SwitchingPrevention = 1, #zero does not prevent miners switching
     [Parameter(Mandatory = $false)]
     [Switch]$ShowPoolBalances = $false
 )
@@ -145,7 +145,7 @@ while ($true) {
             Delay                   = $Delay
             Watchdog                = $Watchdog
             SwitchingPrevention     = $SwitchingPrevention
-            ShowPoolBalances         = $ShowPoolBalances
+            ShowPoolBalances        = $ShowPoolBalances
         } | Select-Object -ExpandProperty Content
     }
 
@@ -653,7 +653,7 @@ while ($true) {
     
     #Display idle miners list
 	$idleminers = $ActiveMiners | Where-Object {$_.Activated -GT 0 -and $_.Status -EQ "Idle"}
-	Write-Host " Status : Idle "
+	if ($idleminers.count){Write-Host " Status : Idle "}
     $idleminers | Sort-Object -Descending Status, {if ($_.Process -eq $null) {[DateTime]0}else {$_.Process.StartTime}} | Select-Object -First (6) | Format-Table -Wrap (
         @{Label = "Active"; Expression = {"{0:dd} Days {0:hh} Hours {0:mm} Minutes" -f $(if ($_.Process -eq $null) {$_.Active}else {if ($_.Process.ExitTime -gt $_.Process.StartTime) {($_.Active + ($_.Process.ExitTime - $_.Process.StartTime))}else {($_.Active + ((Get-Date) - $_.Process.StartTime))}})}}, 
         @{Label = "Launched"; Expression = {Switch ($_.Activated) {0 {"Never"} 1 {"Once"} Default {"$_ Times"}}}}, 
@@ -663,7 +663,7 @@ while ($true) {
 	
     #Display failed miners list
 	$failedminers = $ActiveMiners | Where-Object {$_.Activated -GT 0 -and $_.Status -EQ "Failed"}
-	Write-Host " Status : Failed $($failedminers.Count)" -foregroundcolor "Red"
+	if ($failedminers.count){Write-Host " Status : Failed $($failedminers.Count)" -foregroundcolor "Red"}
     $failedminers | Sort-Object -Descending Status, {if ($_.Process -eq $null) {[DateTime]0}else {$_.Process.StartTime}} | Format-Table -Wrap ( 
         @{Label = "Active"; Expression = {"{0:dd} Days {0:hh} Hours {0:mm} Minutes" -f $(if ($_.Process -eq $null) {$_.Active}else {if ($_.Process.ExitTime -gt $_.Process.StartTime) {($_.Active + ($_.Process.ExitTime - $_.Process.StartTime))}else {($_.Active + ((Get-Date) - $_.Process.StartTime))}})}}, 
         @{Label = "Launched"; Expression = {Switch ($_.Activated) {0 {"Never"} 1 {"Once"} Default {"$_ Times"}}}}, 
