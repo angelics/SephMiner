@@ -9,24 +9,33 @@ function Get-Balance {
     Write-Log "Getting pool balances"
 
     # If rates weren't specified, just use 1 BTC = 1 BTC
-    if($Rates -eq $Null) {
+    if ($Rates -eq $Null) {
         $Rates = [PSCustomObject]@{BTC = [Double]1}
     }
+    
+    $Balances = Get-ChildItem "Balances" -File | Where-Object {$Config.Pools.$($_.BaseName) -and ($Config.ExcludePoolName -inotcontains $_.BaseName) -or $Config.ShowPoolBalancesExcludedPools} | ForEach-Object {
+        Get-ChildItemContent "Balances\$($_.Name)" -Parameters @{Config = $Config}
+    } | Foreach-Object {$_.Content | Add-Member Name $_.Name -PassThru}
 
-    $balances = Get-ChildItemContent Balances -Parameters @{Config = $Config} | Foreach-Object {$_.Content | Add-Member Name $_.Name -PassThru}
+    # Add total of totals
+    $Balances += [PSCustomObject]@{
+        total = ($Balances.total | Measure-Object -Sum).sum
+        Name  = "*Total*"
+    }
 
     # Add local currency values
-    $balances | Foreach-Object {
+    $Balances | Foreach-Object {
         Foreach($Rate in ($Rates.PSObject.Properties)) {
-            # Round BTC to 8 decimals, everything else to 2
-            if($Rate.Name -eq "BTC") {
+            # Round BTC to 8 decimals, everything else is based on BTC value
+            if ($Rate.Name -eq "BTC") {
                 $_ | Add-Member "Total_BTC" ("{0:N8}" -f ([Double]$Rate.Value * $_.total))
-            } else {
-                $_ | Add-Member "Total_$($Rate.Name)" ("{0:N2}" -f ([Double]$Rate.Value * $_.total))
+            }
+            else {
+                $_ | Add-Member "Total_$($Rate.Name)" (ConvertTo-LocalCurrency $($_.total) $Rate.Value -Offset 4)
             }
         }
     }
-    Return $balances
+    Return $Balances
 }
 
 function Get-Devices {

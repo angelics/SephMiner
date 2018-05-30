@@ -71,7 +71,7 @@ REM min 240, api interval confirmed by PINPIN 180424
 set interval=240
 set delay=0
 
-set command=%cur%\SephMiner.ps1 -wallet %wallet% -username %username% -workername %workername% -region %region% -currency %currency%,btc -type %type% -poolname %poolname% -algorithm %algorithm% -ExcludeAlgorithm %ExcludeAlgorithm% -ExcludeMinerName %ExcludeMinerName% -donate 24 -switchingprevention %switchingprevention% -interval %interval% -ExcludePoolName %ExcludePoolName% -watchdog -delay %delay% -ShowPoolBalances
+set command=%cur%\SephMiner.ps1 -wallet %wallet% -username %username% -workername %workername% -region %region% -currency %currency%,btc -type %type% -poolname %poolname% -algorithm %algorithm% -ExcludeAlgorithm %ExcludeAlgorithm% -ExcludeMinerName %ExcludeMinerName% -donate 24 -switchingprevention %switchingprevention% -interval %interval% -ExcludePoolName %ExcludePoolName% -watchdog -delay %delay% -ShowPoolBalances -ShowPoolBalancesExcludedPools
 title  %title%
 
 pwsh -noexit -executionpolicy bypass -windowstyle maximized -command "%command%"

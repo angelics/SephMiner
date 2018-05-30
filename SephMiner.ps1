@@ -57,7 +57,9 @@ param(
     [Parameter(Mandatory = $false)]
     [Double]$SwitchingPrevention = 1, #zero does not prevent miners switching
     [Parameter(Mandatory = $false)]
-    [Switch]$ShowPoolBalances = $false
+    [Switch]$ShowPoolBalances = $false,
+    [Parameter(Mandatory = $false)]
+    [Switch]$ShowPoolBalancesForExcludedPools = $false   
 )
 
 Clear-Host
@@ -122,30 +124,31 @@ while ($true) {
     $ConfigBackup = $Config
     if (Test-Path "Config.txt") {
         $Config = Get-ChildItemContent "Config.txt" -Parameters @{
-            Wallet                  = $Wallet
-            UserName                = $UserName
-            WorkerName              = $WorkerName
-            API_ID                  = $API_ID
-            API_Key                 = $API_Key
-            Interval                = $Interval
-            ExtendIntervalAlgorithm = $ExtendIntervalAlgorithm
-            ExtendIntervalMinerName = $ExtendIntervalMinerName
-            Region                  = $Region
-            SSL                     = $SSL
-            Type                    = $Type
-            Algorithm               = $Algorithm
-            MinerName               = $MinerName
-            PoolName                = $PoolName
-            ExcludeAlgorithm        = $ExcludeAlgorithm
-            ExcludeMinerName        = $ExcludeMinerName
-            ExcludePoolName         = $ExcludePoolName
-            Currency                = $Currency
-            Donate                  = $Donate
-            Proxy                   = $Proxy
-            Delay                   = $Delay
-            Watchdog                = $Watchdog
-            SwitchingPrevention     = $SwitchingPrevention
-            ShowPoolBalances        = $ShowPoolBalances
+            Wallet                        = $Wallet
+            UserName                      = $UserName
+            WorkerName                    = $WorkerName
+            API_ID                        = $API_ID
+            API_Key                       = $API_Key
+            Interval                      = $Interval
+            ExtendIntervalAlgorithm       = $ExtendIntervalAlgorithm
+            ExtendIntervalMinerName       = $ExtendIntervalMinerName
+            Region                        = $Region
+            SSL                           = $SSL
+            Type                          = $Type
+            Algorithm                     = $Algorithm
+            MinerName                     = $MinerName
+            PoolName                      = $PoolName
+            ExcludeAlgorithm              = $ExcludeAlgorithm
+            ExcludeMinerName              = $ExcludeMinerName
+            ExcludePoolName               = $ExcludePoolName
+            Currency                      = $Currency
+            Donate                        = $Donate
+            Proxy                         = $Proxy
+            Delay                         = $Delay
+            Watchdog                      = $Watchdog
+            SwitchingPrevention           = $SwitchingPrevention
+            ShowPoolBalances              = $ShowPoolBalances
+			ShowPoolBalancesExcludedPools = $ShowPoolBalancesForExcludedPools
         } | Select-Object -ExpandProperty Content
     }
 
@@ -228,7 +231,9 @@ while ($true) {
     }
 
     #Update the pool balances
-    $Balances = Get-Balance -Config $UserConfig -Rates $Rates
+    if ($Config.ShowPoolBalances -or $Config.ShowPoolBalancesExcludedPools) {
+        $Balances = Get-Balance -Config $UserConfig -Rates $Rates
+    }
 	
     #Load the stats
     Write-Log "Loading saved statistics. "
@@ -706,7 +711,7 @@ while ($true) {
     }
     
     #Display pool balances, formatting it to show all the user specified currencies
-    if ($Config.ShowPoolBalances) {
+    if ($Config.ShowPoolBalances -or $Config.ShowPoolBalancesExcludedPools) {
         Write-Host "Pool Balances: "
         $balances | Format-Table Name, Total_*
     }
