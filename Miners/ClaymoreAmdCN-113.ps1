@@ -15,8 +15,7 @@ $Port = 13333
 $Fee = 0
 
 $Commands = [PSCustomObject]@{
-    "cryptonightV7"   = " -pow7 1" #CryptoNightV7
-    "cryptonightLite" = " -lite 1" #CryptoNightLite
+    "cryptonightV7"   = "" #CryptoNightV7
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
@@ -32,7 +31,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
     [PSCustomObject]@{
         Type      = $Type
         Path      = $Path
-        Arguments = ("-r -1 -mport -$Port -xpool $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -xwal $($Pools.$Algorithm_Norm.User) -xpsw $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)")
+        Arguments = ("-r -1 -pow7 1 -mport -$Port -xpool $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -xwal $($Pools.$Algorithm_Norm.User) -xpsw $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)")
         HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
         API       = "Claymore"
         Port      = $Port
