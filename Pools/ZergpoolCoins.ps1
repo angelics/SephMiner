@@ -41,7 +41,7 @@ $ZergPoolCoins_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore
     $ZergPoolCoins_Algorithm = $ZergPoolCoins_Request.$_.algo
     $ZergPoolCoins_Algorithm_Norm = Get-Algorithm $ZergPoolCoins_Algorithm
     $ZergPoolCoins_Coin = $ZergPoolCoins_Request.$_.name
-	$ZergpoolCoins_Fee = $ZergpoolCoins_Variance.$_.fees
+    $ZergpoolCoins_Fee = $ZergpoolCoins_Variance.$_.fees
     $ZergPoolCoins_Currency = $_
 
     $Divisor = 1000000000
@@ -81,7 +81,7 @@ $ZergPoolCoins_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore
         $ZergPoolCoins_Region = $_
         $ZergPoolCoins_Region_Norm = Get-Region $ZergPoolCoins_Region
 
-		$ZergPoolCoins_Currencies | ForEach-Object {
+        $ZergPoolCoins_Currencies | ForEach-Object {
         [PSCustomObject]@{
                 Algorithm     = $ZergPoolCoins_Algorithm_Norm
                 Info          = $ZergPoolCoins_Coin
@@ -96,8 +96,8 @@ $ZergPoolCoins_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore
                 Region        = $ZergPoolCoins_Region_Norm
                 SSL           = $false
                 Updated       = $Stat.Updated
-				PoolFee       = $ZergpoolCoins_Fee
-				Variance      = $Variance
+                PoolFee       = $ZergpoolCoins_Fee
+                Variance      = $Variance
             }
         }
     }

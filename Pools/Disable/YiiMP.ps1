@@ -65,7 +65,7 @@ $YiiMP_Currencies | Where-Object {$ExcludeAlgorithm -inotcontains (Get-Algorithm
             Region        = $YiiMP_Region_Norm
             SSL           = $false
             Updated       = $Stat.Updated
-			Fees          = $YiiMP_Fee
+            PoolFee       = $YiiMP_Fee
         }
     }
 }

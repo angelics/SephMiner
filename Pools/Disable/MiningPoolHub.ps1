@@ -94,8 +94,8 @@ $MiningPoolHub_Request.return | Where-Object {$ExcludeAlgorithm -inotcontains (G
                         Region        = $MiningPoolHub_Region_Norm
                         SSL           = $true
                         Updated       = $Stat.Updated
-						PoolFee       = $MiningPoolHub_Fee
-						Variance      = $Variance
+                        PoolFee       = $MiningPoolHub_Fee
+                        Variance      = $Variance
                     }
                 }
         }

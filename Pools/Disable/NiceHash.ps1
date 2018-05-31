@@ -60,7 +60,7 @@ $NiceHash_Request.result.simplemultialgo | Where-Object {$ExcludeAlgorithm -inot
                 Region        = $NiceHash_Region_Norm
                 SSL           = $false
                 Updated       = $Stat.Updated
-				PoolFee       = $NiceHash_Fee
+                PoolFee       = $NiceHash_Fee
             }
 
             if ($NiceHash_Algorithm_Norm -eq "CryptonightV7" -or $NiceHash_Algorithm_Norm -eq "Equihash") {
@@ -78,7 +78,7 @@ $NiceHash_Request.result.simplemultialgo | Where-Object {$ExcludeAlgorithm -inot
                     Region        = $NiceHash_Region_Norm
                     SSL           = $true
                     Updated       = $Stat.Updated
-					PoolFee       = $NiceHash_Fee
+                    PoolFee       = $NiceHash_Fee
                 }
             }
         }

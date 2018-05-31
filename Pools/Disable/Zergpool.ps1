@@ -96,8 +96,8 @@ $Zergpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Se
                 Region        = $Zergpool_Region_Norm
                 SSL           = $false
                 Updated       = $Stat.Updated
-				PoolFee       = $Zergpool_Fee
-				Variance      = $Variance
+                PoolFee       = $Zergpool_Fee
+                Variance      = $Variance
             }
         }
     }
