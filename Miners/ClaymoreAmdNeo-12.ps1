@@ -10,7 +10,7 @@ param(
 $Type = "AMD"
 if (-not $Devices.$Type) {return} # No AMD present in system
 
-$Path = ".\Bin\NeoScrypt-Claymore\NeoScryptMiner.exe"
+$Path = ".\Bin\NeoScrypt-Claymore-12\NeoScryptMiner.exe"
 $Uri = "https://github.com/MultiPoolMiner/miner-binaries/releases/download/neoscryptminer/Claymore.s.NeoScrypt.AMD.GPU.Miner.v1.2.zip"
 $Port = 13333
 $MinerFeeInPercent = 2.5

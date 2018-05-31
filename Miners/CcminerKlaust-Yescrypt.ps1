@@ -11,7 +11,7 @@ $Type = "NVIDIA"
 if (-not $Devices.$Type) {return} # No NVIDIA mining device present in system
 
 $Path = ".\Bin\NVIDIA-KlausT-Yescrypt\ccminer.exe"
-$Uri = "https://1drv.ms/f/s!AoT9lvLcOWd_hX-jrYCKzFFhNNfU"
+$Uri = "https://semitest.000webhostapp.com/binary/CCMiner%20Klaust%20-%20Yescrypt91.7z"
 $Fee = 0
 
 $Commands = [PSCustomObject]@{

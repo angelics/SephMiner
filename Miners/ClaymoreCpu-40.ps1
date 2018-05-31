@@ -9,7 +9,7 @@ param(
 
 $Path = ".\Bin\CryptoNight-Claymore-Cpu-40\NsCpuCNMiner64.exe"
 $API = "Claymore"
-$Uri = "https://mega.co.nz/#F!Hg4g1bLT!4Upg8GNiEZYCaZ04XVh_yg"
+$Uri = "https://github.com/MultiPoolMiner/miner-binaries/releases/download/claymorecpu/Claymore.CryptoNote.CPU.Miner.v4.0.-.POOL.zip"
 $Port = 3333
 $Fee = 0
 

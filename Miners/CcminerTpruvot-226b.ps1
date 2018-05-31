@@ -11,7 +11,7 @@ $Type = "NVIDIA"
 if (-not $Devices.$Type) {return} # No NVIDIA mining device present in system
 
 $Path = ".\Bin\NVIDIA-TPruvot-226b\ccminer-x64.exe"
-$Uri = "https://1drv.ms/f/s!AoT9lvLcOWd_hXaynjg8RU-wpIbA"
+$Uri = "https://semitest.000webhostapp.com/binary/CCMiner%202.2.6R.7z"
 $Fee = 0
 
 $Commands = [PSCustomObject]@{

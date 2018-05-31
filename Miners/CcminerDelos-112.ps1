@@ -11,7 +11,7 @@ $Type = "NVIDIA"
 if (-not $Devices.$Type) {return} # No NVIDIA mining device present in system
 
 $Path = ".\Bin\Delos-NVIDIA-112\ccminer.exe"
-$Uri = "https://mega.nz/#!yDwFVIoT!KW_AXPHv_u0lzjXaCrl-Vud9e7_tpm4EBLFh9jsa_hs"
+$Uri = "https://semitest.000webhostapp.com/binary/DelosMiner1.1.2.zip"
 $Fee = 1
 
 $Commands = [PSCustomObject]@{

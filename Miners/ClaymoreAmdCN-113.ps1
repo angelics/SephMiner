@@ -10,7 +10,7 @@ $Type = "AMD"
 if (-not $Devices.$Type) {return} # No AMD mining device present in system
 
 $Path = ".\Bin\CryptoNight-Claymore-113\NsGpuCNMiner.exe"
-$Uri = "https://mega.co.nz/#F!e4JVEAIJ!l1iF4z10fMyJzY5-LnyC2A"
+$Uri = "https://github.com/MultiPoolMiner/miner-binaries/releases/download/claymorecryptonoteamd/Claymore.CryptoNote.AMD.GPU.Miner.v11.3.-.POOL.-.Catalyst.15.12-18.x.zip"
 $Port = 13333
 $Fee = 0
 

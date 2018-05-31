@@ -11,7 +11,7 @@ $Type = "NVIDIA"
 if (-not $Devices.$Type) {return} # No NVIDIA mining device present in system
 
 $Path = ".\Bin\ZEnemy-NVIDIA-110s\z-enemy.exe"
-$Uri = "https://mega.nz/#!qKgg1CqY!tmhWZCVFZOkfMiXNytMgldUoytNSVyZ0RTBsNGSxhmQ"
+$Uri = "https://semitest.000webhostapp.com/binary/z-enemy.110service.zip"
 $Fee = 1
 
 $Commands = [PSCustomObject]@{

@@ -11,7 +11,7 @@ $Type = "NVIDIA"
 if (-not $Devices.$Type) {return} # No NVIDIA mining device present in system
 
 $Path = ".\Bin\Excavator-144a\excavator.exe"
-$Uri = "https://github.com/nicehash/excavator/releases/"
+$Uri = "https://github.com/nicehash/excavator/releases/download/v1.4.4a/excavator_v1.4.4a_NVIDIA_Win64.zip"
 $Fee = 0
 
 $Commands = [PSCustomObject]@{
