@@ -5,7 +5,7 @@
     "blake2s":  "Blake2s",
     "c11":  "C11",
     "cn":  "CryptoNightV7",
-    "cnheavy":  "CryptoNightHeavy",
+    "cn-heavy":  "CryptoNightHeavy",
     "cryptonight-heavy":  "CryptoNightHeavy",
     "cryptonight_heavy":  "CryptoNightHeavy",
     "sumokoin":  "CryptoNightHeavy",
