@@ -19,7 +19,7 @@ $Fee = 1
 
 $Commands = [PSCustomObject]@{
     "cn"       = "" #CryptoNightV7
-    "cn-heavy" = "" #CryptoNight-Heavy
+    "cn-heavy" = "" #CryptoNightHeavy
 }
 
 $Commands | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name | ForEach-Object {

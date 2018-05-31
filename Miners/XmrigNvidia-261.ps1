@@ -18,7 +18,7 @@ $Fee = 1
 
 $Commands = [PSCustomObject]@{
     "cn"       = "" #CryptoNightV7
-    "cn-heavy" = "" #CryptoNight-Heavy
+    "cn-heavy" = "" #CryptoNightHeavy
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName

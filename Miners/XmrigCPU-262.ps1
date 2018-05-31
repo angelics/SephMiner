@@ -14,8 +14,8 @@ $Port = 3335
 $Fee = 1
 
 $Commands = [PSCustomObject]@{
-    "cn" = "" #CryptoNightV7
-    "cn-heavy" = "" #CryptoNight-Heavy
+    "cn"       = "" #CryptoNightV7
+    "cn-heavy" = "" #CryptoNightHeavy
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName

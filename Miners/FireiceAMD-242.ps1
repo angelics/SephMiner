@@ -17,8 +17,8 @@ $Port = 3336
 $Fee = 2
 
 $Commands = [PSCustomObject]@{
-    "cryptonight_heavy" = "" # CryptoNight-Heavy
-    "cryptonight_v7"    = "" # CryptoNightV7
+    "cryptonight_heavy" = "" #CryptoNightHeavy
+    "cryptonight_v7"    = "" #CryptoNightV7
 }
 
 $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty Name | ForEach-Object {
@@ -62,7 +62,7 @@ $HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100
 	[PSCustomObject]@{
     Type      = $Type
     Path      = $Path
-    Arguments = "-C $($Pools.$Algorithm_Norm.Name)_$($Algorithm_Norm)_$($Pools.$Algorithm_Norm.User)_Amd.txt -c $($Pools.$Algorithm_Norm.Name)_$($Algorithm_Norm)_$($Pools.$Algorithm_Norm.User)_Amd.txt --noUAC --noCPU --noNVIDIA"
+    Arguments = "-C $($Pools.$Algorithm_Norm.Name)_$($Algorithm_Norm)_$($Pools.$Algorithm_Norm.User)_Amd.txt -c $($Pools.$Algorithm_Norm.Name)_$($Algorithm_Norm)_$($Pools.$Algorithm_Norm.User)_Amd.txt --noUAC --noCPU --noNVIDIA $($Commands.$_)"
     HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
     API       = "XMRig"
     Port      = $Port

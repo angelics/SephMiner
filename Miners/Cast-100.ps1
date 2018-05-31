@@ -18,8 +18,7 @@ $Fee = 1.5
 
 $Commands = [PSCustomObject]@{
     "CryptoNightV7"        = @("1","") #CryptoNightV7
-    "CryptoNight-Heavy"    = @("2","") #CryptoNight-Heavy
-    "CryptoNightLite"      = @("3","") #CryptoNightLite
+    "CryptoNight-Heavy"    = @("2","") #CryptoNightHeavy
     "cryptonight-litev7"   = @("4","") #CryptoNightLitetV7
     "CryptoNightIPBC-Lite" = @("5","") #CryptoNightIPBC-Lite
 }
