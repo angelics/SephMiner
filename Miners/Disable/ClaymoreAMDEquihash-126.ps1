@@ -11,7 +11,7 @@ $Type = "AMD"
 if (-not $Devices.$Type) {return} # No AMD present in system
 
 $Path = ".\Bin\Equihash-Claymore-126\ZecMiner64.exe"
-$Uri = "hhttps://mega.nz/#F!P0ZjFDjC!Cmb-ZRqlbAnNrajRtp4zvA"
+$Uri = "https://github.com/MultiPoolMiner/miner-binaries/releases/download/zecminer64/Claymore.s.ZCash.AMD.GPU.Miner.v12.6.-.Catalyst.15.12-17.x.zip"
 $MinerFeeInPercent = 2.5
 $MinerFeeInPercentSSL = 2
 $Port = 13333

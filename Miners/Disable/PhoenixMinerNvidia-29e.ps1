@@ -12,7 +12,7 @@ if (-not $Devices.$Type) {return} # No NVIDIA mining device present in system
 
 $Path = ".\Bin\PhoenixMiner-29e\PhoenixMiner.exe"
 $API = "Claymore"
-$Uri = "https://mega.nz/#F!2VskDJrI!lsQsz1CdDe8x5cH3L8QaBw"
+$Uri = "https://github.com/MultiPoolMiner/miner-binaries/releases/download/phoenixminer/PhoenixMiner_2.9e.zip"
 $Port = 23334
 $Fee = 0.65
 $Commands = [PSCustomObject]@{

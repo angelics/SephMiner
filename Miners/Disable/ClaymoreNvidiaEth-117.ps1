@@ -12,7 +12,7 @@ if (-not $Devices.$Type) {return} # No NVIDIA mining device present in system
 
 $Path = ".\Bin\Ethash-Claymore-117\EthDcrMiner64.exe"
 $API = "Claymore"
-$Uri = "https://mega.nz/#F!O4YA2JgD!n2b4iSHQDruEsYUvTQP5_w"
+$Uri = "https://github.com/MultiPoolMiner/miner-binaries/releases/download/ethdcrminer64/ClaymoreDual_v11.7.zip"
 $Port = 23333
 $MinerFeeInPercentSingleMode = 1.0
 $MinerFeeInPercentDualMode = 1.5
