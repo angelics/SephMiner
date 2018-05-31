@@ -10,14 +10,14 @@ param(
 $Type = "NVIDIA"
 if (-not $Devices.$Type) {return} # No NVIDIA mining device present in system
 
-$Path = ".\Bin\NVIDIA-KlausT-Yescrypt\ccminer.exe"
+$Path = ".\Bin\NVIDIA-KlausT-Yescrypt92\ccminer-x64-cuda9.2.exe"
 $Uri = "https://1drv.ms/f/s!AoT9lvLcOWd_hX-jrYCKzFFhNNfU"
 $Fee = 0
 
 $Commands = [PSCustomObject]@{
-    #"yescrypt"      = "" #yescrypt CcminerKlaust-Yescrypt92
+    "yescrypt"      = "" #yescrypt
     "yescryptR8"    = "" #yescryptR8
-    "yescryptR16"   = "" #Yenten
+    #"yescryptR16"   = "" #Yenten CcminerKlaust-Yescrypt
     "yescryptR16v2" = "" #PPNP
     "yescryptR24"   = "" #yescryptR24
     "yescryptR32"   = "" #WAVI

@@ -9,12 +9,12 @@ param(
 $Type = "AMD"
 if (-not $Devices.$Type) {return} # No AMD mining device present in system
 
-$Path = ".\Bin\AMD-Tribus-538\sgminer.exe"
-$Uri = "http://ccminer.org/preview/sgminer-x64-5.3.8.zip"
+$Path = ".\Bin\AMD-Xevan-1\sgminer.exe"
+$Uri = "https://github.com/LIMXTEC/Xevan-GPU-Miner/releases/download/1/sgminer-xevan-5.5.0-nicehash-1-windows-amd64.zip"
 $Fee = 0
 
 $Commands = [PSCustomObject]@{
-    "tribus" = " --shaders 1792 --lookup-gap 4 --intensity 19" #tribus
+    "xevan" = " -I 15 -g 2" #Xevan up to 23
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName

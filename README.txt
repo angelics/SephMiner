@@ -40,7 +40,9 @@ default config.txt for miningpoolhubcoins have Ethereum with disabledexchange.
 * always move to disable folder for un-used miners
 
 # NVIDIA
+NVIDIA users please upgrade to 397.93 for cuda 9.2
 NVIDIA users need to download nvidiainspecter to use OC feature
+
 ```
 http://www.guru3d.com/files-details/nvidia-inspector-download.html
 ```
@@ -86,11 +88,11 @@ https://github.com/OhGodACompany/OhGodAnETHlargementPill
 * sia
 * groestl
 * cryptonight
+* cryptonightlite
 * sib
 * veltor
 * blakecoin
 * vanilla
-
 
 # Lists of algos to be removed:
 * ethash

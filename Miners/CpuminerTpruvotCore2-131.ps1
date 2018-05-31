@@ -24,7 +24,6 @@ $Commands = [PSCustomObject]@{
     "yescrypt"   = "" #Yescrypt
 }
 
-
 $CommonCommands = "" #eg. " --threads=6"
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName

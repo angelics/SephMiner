@@ -15,13 +15,13 @@ $Uri = "https://github.com/KlausT/ccminer/releases/download/8.21/ccminer-821-cud
 $Fee = 0
 
 $Commands = [PSCustomObject]@{
-    #"c11"        = "" #c11 CcminerPolytimos-2 better
+    #"c11"        = "" #c11 CcminerPolytimos-2
     #"deep"       = "" #Deepcoin
     #"dmd-gr"     = "" #Diamond-Groestl
     #"fresh"      = "" #Freshcoin
     #"fugue256"   = "" #Fuguecoin
     #"jackpot"    = "" #Jackpot
-    #"keccak"     = "" #Keccak ExcavatorNvidia2-144a better
+    #"keccak"     = "" #Keccak ExcavatorNvidia-144a
     #"luffa"      = "" #Doomcoin
     #"lyra2v2"    = "" #VertCoin
     "neoscrypt"  = " --cpu-priority 5" #NeoScrypt

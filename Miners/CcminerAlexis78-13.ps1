@@ -1,4 +1,4 @@
-﻿using module ..\Include.psm1
+using module ..\Include.psm1
 
 param(
     [PSCustomObject]$Pools,
@@ -10,13 +10,25 @@ param(
 $Type = "NVIDIA"
 if (-not $Devices.$Type) {return} # No NVIDIA mining device present in system
 
-$Path = ".\Bin\NVIDIA-Lyra2z-030\ccminer.exe"
-$Uri = "https://github.com/djm34/ccminer-msvc2015/releases/download/v0.3.0/ccminer.rar"
+$Path = ".\Bin\NVIDIA-Alexis78-13\ccminer.exe"
+$Uri = "https://github.com/nemosminer/ccminerAlexis78/releases/download/Alexis78-v1.3/ccminerAlexis78v1.3x64.7z"
 $Fee = 0
 
 $Commands = [PSCustomObject]@{
-    "lyra2h" = "" #Lyra2h
-    #"lyra2z" = "" #Lyra2z CcminerNanashi-22r2
+    #"blake2s"   = "" #Blake2s not profit
+    "c11"       = " -i 21" #C11
+    #"hsr"       = "" #Hsr CcminerDelos-112
+    #"keccak"    = " -m 2 -i 29" #Keccak ExcavatorNvidia-144a
+    "keccakc"   = " -i 29" #Keccakc
+    "lyra2"     = "" #Lyra2
+    #"lyra2v2"   = " -N 1" #Lyra2RE2 ExcavatorNvidia-144a
+    #"neoscrypt" = "" #NeoScrypt
+    "poly"      = "" #Poly
+    "skein2"    = "" #skein2
+    "whirlcoin" = "" #WhirlCoin
+    "whirlpool" = "" #Whirlpool
+    #"x11evo"    = " -N 1 -i 21" #x11evo crash
+    #"x17"       = " -i 20" #X17 crash
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName

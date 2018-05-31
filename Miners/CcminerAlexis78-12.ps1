@@ -15,20 +15,20 @@ $Uri = "https://github.com/nemosminer/ccminerAlexis78/releases/download/Alexis78
 $Fee = 0
 
 $Commands = [PSCustomObject]@{
-    #"blake2s"   = "" #Blake2s
-    "c11"       = " -i 21" #C11
-    #"hsr"       = "" #Hsr
-    #"keccak"    = " -m 2 -i 29" #Keccak
-    "keccakc"   = " -i 29" #Keccakc
+    #"blake2s"   = "" #Blake2s not profit
+    #"c11"       = " -i 21" #C11 CcminerAlexis78-13
+    #"hsr"       = "" #Hsr CcminerDelos-112
+    #"keccak"    = " -m 2 -i 29" #Keccak CcminerAlexis78-13
+    #"keccakc"   = " -i 29" #Keccakc CcminerAlexis78-13
     "lyra2"     = "" #Lyra2
-    #"lyra2v2"   = " -N 1" #Lyra2RE2
-    #"neoscrypt" = "" #NeoScrypt
+    #"lyra2v2"   = " -N 1" #Lyra2RE2 ExcavatorNvidia-144a
+    #"neoscrypt" = "" #NeoScrypt PalginNvidiaFork-45ee8fa
     "poly"      = "" #Poly
     "skein2"    = "" #skein2
     "whirlcoin" = "" #WhirlCoin
     "whirlpool" = "" #Whirlpool
     "x11evo"    = " -N 1 -i 21" #x11evo
-    #"x17"       = " -i 20" #X17
+    #"x17"       = " -i 20" #X17 crash
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
