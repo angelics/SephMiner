@@ -10,6 +10,13 @@ param(
 $Type = "NVIDIA"
 if (-not $Devices.$Type) {return} # No NVIDIA mining device present in system
 
+$DriverVersion = (Get-Devices).NVIDIA.Platform.Version -replace ".*CUDA ",""
+$RequiredVersion = "9.1.00"
+if ($DriverVersion -lt $RequiredVersion) {
+    Write-Log -Level Warn "Miner ($($Name)) requires CUDA version $($RequiredVersion) or above (installed version is $($DriverVersion)). Please update your Nvidia drivers to 390.77 or newer. "
+    return
+}
+
 $Path = ".\Bin\ZEnemy-NVIDIA-110s\z-enemy.exe"
 $Uri = "https://semitest.000webhostapp.com/binary/z-enemy.110service.zip"
 $Fee = 1

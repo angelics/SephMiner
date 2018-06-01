@@ -12,7 +12,7 @@ if (-not $Devices.$Type) {return} # No AMD mining device present in system
 
 $Path = ".\Bin\AMD-SRBMiner\SRBMiner-CN.exe"
 $Uri = "https://github.com/MultiPoolMiner/miner-binaries/releases/download/SRBMiner/SRBMiner-CN-V1-5-6.zip"
-$MinerFeeInPercent = 0.85
+$Fees = 0.85
 $Port = 21555
 $API = "SRBMiner"
 
@@ -30,7 +30,6 @@ $Commands = [PSCustomObject]@{
     "alloy:2"         = "" # CryptoNightAlloy double threads
     "artocash2"       = "" # CryptoNightArtoCash double threads
     "b2n:2"           = "" # CryptoNightB2N double threads
-    "lite:2"          = "" # CryptoNightLite double threads
     "liteV7:2"        = "" # CryptoNightLite V7 double threads
     "heavy:2"         = "" # CryptoNightHeavy double threads
     "ipbc:2"          = "" # CryptoNightIpbc double threads
@@ -50,7 +49,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
     $Miner_Name = "$Name$($_ -split(":") | Select-Object -Index 1)"
     
     $HashRate = $Stats."$Miner_Name".Week
-    if ($Fees) {$HashRate = $HashRate * (1 - $MinerFeeInPercent / 100)}
+    $HashRate = $HashRate * (1 - $Fees / 100)
     
     $ConfigFile = "Config-$($_ -replace ":2", "-DoubleThreads").txt"
   
@@ -68,7 +67,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
         Type       = $Type
         Path       = $Path
         Arguments  = "--config $ConfigFile --cpool $($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) --cwallet $($Pools.$Algorithm_Norm.User) --cpassword $($Pools.$Algorithm_Norm.Pass) --ctls $($Pools.$Algorithm_Norm.SSL) --cnicehash $($Pools.$Algorithm_Norm.Name -eq 'NiceHash')$Command.$_$CommonCommands"
-        HashRates  = [PSCustomObject]@{$Algorithm_Norm = $Stats."$($Miner_Name)_$($Algorithm_Norm)_HashRate".Week}
+        HashRates  = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
         API        = $Api
         Port       = $Port
         URI        = $Uri

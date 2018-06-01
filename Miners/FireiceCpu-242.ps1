@@ -15,8 +15,8 @@ $Port = 3334
 $Fee = 2
 
 $Commands = [PSCustomObject]@{
-    "cryptonight_heavy" = "" #CryptoNightHeavy
-    "cryptonight_v7"    = "" #CryptoNightV7
+    "sumokoin" = "" #CryptoNightHeavy
+    "monero7"  = "" #CryptoNightV7
 }
 
 $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty Name | ForEach-Object {

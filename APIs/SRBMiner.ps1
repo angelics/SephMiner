@@ -9,13 +9,13 @@ class SRBMiner : Miner {
         $Interval = 5
         $HashRates = @()
 
-        $Request = @{id = 1; method = "getstat"} | ConvertTo-Json -Compress
+        $Request = ""
 
         do {
             $HashRates += $HashRate = [PSCustomObject]@{}
 
             try {
-                $Response = Invoke-TcpRequest $Server $this.Port $Request $Timeout -ErrorAction Stop
+                $Response = Invoke-WebRequest "http://$($Server):$($this.Port)/" -UseBasicParsing -TimeoutSec $Timeout -ErrorAction Stop
                 $Data = $Response | ConvertFrom-Json -ErrorAction Stop
             }
             catch {
@@ -24,8 +24,7 @@ class SRBMiner : Miner {
             }
 
             $HashRate_Name = [String]$Algorithm[0]
-            $HashRate_Value = [Double]($Data.result.sol_ps | Measure-Object -Sum).Sum
-            if (-not $HashRate_Value) {$HashRate_Value = [Double]($Data.result.speed_sps | Measure-Object -Sum).Sum} #ewbf fix
+            $HashRate_Value = [Double]($Data.devices.hashrate_total_now | Measure-Object -Sum).Sum / 1000
 
             $HashRate | Where-Object {$HashRate_Name} | Add-Member @{$HashRate_Name = [Int64]$HashRate_Value}
 
@@ -33,7 +32,7 @@ class SRBMiner : Miner {
 
             if (-not $Safe) {break}
 
-            $HashRate_Value = [Double]($Data.result.avg_sol_ps | Measure-Object -Sum).Sum
+            $HashRate_Value = [Double]($Data.devices.hash_rate_avg | Measure-Object -Sum).Sum / 1000
 
             if ($HashRate_Value) {
                 $HashRates += $HashRate = [PSCustomObject]@{}
