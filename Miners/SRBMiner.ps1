@@ -19,22 +19,22 @@ $API = "SRBMiner"
 # Commands are case sensitive!
 $Commands = [PSCustomObject]@{
     # Note: For fine tuning directly edit [AlgorithmName]_config.txt in the miner binary 
-    "alloy"           = "" # CryptoNight-Alloy
-    "artocash"        = "" # CryptoNight-ArtoCash
-    "b2n"             = "" # CryptoNight-B2N
-    "liteV7"          = "" # CryptoNight-Lite V7
-    "heavy"           = "" # CryptoNight-Heavy
-    "ipbc"            = "" # CryptoNight-Ipbc
-    "marketcash"      = "" # CryptoNight-MarketCash
+    "alloy"           = "" # CryptoNightAlloy
+    "artocash"        = "" # CryptoNightArtoCash
+    "b2n"             = "" # CryptoNightB2N
+    "liteV7"          = "" # CryptoNightLite V7
+    "heavy"           = "" # CryptoNightHeavy
+    "ipbc"            = "" # CryptoNightIpbc
+    "marketcash"      = "" # CryptoNightMarketCash
     "normalv7"        = "" # CryptoNightV7
-    "alloy:2"         = "" # CryptoNight-Alloy double threads
-    "artocash2"       = "" # CryptoNight-ArtoCash double threads
-    "b2n:2"           = "" # CryptoNight-B2N double threads
-    "lite:2"          = "" # CryptoNight-Lite double threads
-    "liteV7:2"        = "" # CryptoNight-Lite V7 double threads
-    "heavy:2"         = "" # CryptoNight-Heavy double threads
-    "ipbc:2"          = "" # CryptoNight-Ipbc double threads
-    "marketcash:2"    = "" # CryptoNight-MarketCash double threads
+    "alloy:2"         = "" # CryptoNightAlloy double threads
+    "artocash2"       = "" # CryptoNightArtoCash double threads
+    "b2n:2"           = "" # CryptoNightB2N double threads
+    "lite:2"          = "" # CryptoNightLite double threads
+    "liteV7:2"        = "" # CryptoNightLite V7 double threads
+    "heavy:2"         = "" # CryptoNightHeavy double threads
+    "ipbc:2"          = "" # CryptoNightIpbc double threads
+    "marketcash:2"    = "" # CryptoNightMarketCash double threads
     "normalv7:2"      = "" # CryptoNightV7
 }
 $CommonCommands = ""
@@ -67,7 +67,6 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
         Name       = $Miner_Name
         Type       = $Type
         Path       = $Path
-        HashSHA256 = $HashSHA256
         Arguments  = "--config $ConfigFile --cpool $($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) --cwallet $($Pools.$Algorithm_Norm.User) --cpassword $($Pools.$Algorithm_Norm.Pass) --ctls $($Pools.$Algorithm_Norm.SSL) --cnicehash $($Pools.$Algorithm_Norm.Name -eq 'NiceHash')$Command.$_$CommonCommands"
         HashRates  = [PSCustomObject]@{$Algorithm_Norm = $Stats."$($Miner_Name)_$($Algorithm_Norm)_HashRate".Week}
         API        = $Api
