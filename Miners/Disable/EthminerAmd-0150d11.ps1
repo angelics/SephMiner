@@ -10,11 +10,12 @@ param(
 $Type = "AMD"
 if (-not $Devices.$Type) {return} # No AMD mining device present in system
 
-$Path = ".\Bin\Ethash-Ethminer-0150d10\ethminer.exe"
+$Path = ".\Bin\Ethash-Ethminer-0150d11\ethminer.exe"
 $API = "Claymore"
-$Uri = "https://github.com/ethereum-mining/ethminer/releases/download/v0.15.0.dev10/ethminer-0.15.0.dev10-Windows.zip"
+$Uri = "https://github.com/ethereum-mining/ethminer/releases/download/v0.15.0.dev11/ethminer-0.15.0.dev11-Windows.zip"
 $Port = 23333
 $Fee = 0
+
 $Commands = [PSCustomObject]@{
     "ethash"    = ""
     "ethash2gb" = ""

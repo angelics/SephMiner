@@ -15,6 +15,7 @@ $API = "Claymore"
 $Uri = "https://github.com/ethereum-mining/ethminer/releases/download/v0.14.0/ethminer-0.14.0-Windows.zip"
 $Port = 23333
 $Fee = 0
+
 $Commands = [PSCustomObject]@{
     "ethash"    = ""
     "ethash2gb" = ""
