@@ -29,7 +29,7 @@ try {
     $MiningPoolHub_Variance = Invoke-RestMethod "https://semitest.000webhostapp.com/variance/mph.variance.txt" -UseBasicParsing -TimeoutSec 10 -ErrorAction SilentlyContinue
 }
 catch {
-    Write-Log -Level Warn "Pool Variance ($Name) has failed. Mining Without variance / fees in calcualtion."
+    Write-Log -Level Warn "Pool Variance ($Name) has failed. Mining Without variance in calcualtion."
 }
 
 $MiningPoolHub_Regions = "europe", "us-east", "asia"
@@ -46,7 +46,7 @@ $MiningPoolHub_Request.return | Where-Object {$ExcludeAlgorithm -inotcontains (G
 	
     $MiningPoolHub_Fees = 1-($MiningPoolHub_Fee/100)
 	
-    $Variance = 1 - $MiningPoolHub_Variance."$MiningPoolHub_Algorithm_Norm"
+    $Variance = 1 - $MiningPoolHub_Variance.$MiningPoolHub_Algorithm_Norm
 	
     if ($Variance -ne 0){$Variance -= 0.01}
 	

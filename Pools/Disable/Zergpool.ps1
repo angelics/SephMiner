@@ -30,7 +30,7 @@ try {
     $Zergpool_Variance = Invoke-RestMethod "https://semitest.000webhostapp.com/variance/zergpool.variance.txt" -UseBasicParsing -TimeoutSec 10 -ErrorAction SilentlyContinue
 }
 catch {
-    Write-Log -Level Warn "Pool Variance ($Name) has failed. Mining Without variance / fees in calcualtion."
+    Write-Log -Level Warn "Pool Variance ($Name) has failed. Mining Without variance in calcualtion."
 }
 
 $Zergpool_Regions = "us"
@@ -48,7 +48,7 @@ $Zergpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Se
 	
     $Zergpool_Fees = 1-($Zergpool_Fee/100)
 	
-    $Variance = 1 - $Zergpool_Variance."$Zergpool_Algorithm_Norm"
+    $Variance = 1 - $Zergpool_Variance.$Zergpool_Algorithm_Norm
 	
     if ($Variance -ne 0){$Variance -= 0.01}
 	
