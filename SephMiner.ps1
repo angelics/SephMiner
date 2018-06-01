@@ -633,9 +633,12 @@ while ($true) {
         }
     }
 
+    #Get miners needing benchmarking
+    $MinersNeedingBenchmark = @($Miners | Where-Object {$_.HashRates.PSObject.Properties.Value -eq $null})
+	
     #Display mining information
 	Write-Host "1BTC = " $NewRates.$($Config.Currency | Select -Index 0) "$($Config.Currency | Select -Index 0)"
-    $Miners | Where-Object {$_.Profit -ge 1E-5 -or $_.Profit -eq $null} | Sort-Object -Descending Type, Profit_Bias | Format-Table -GroupBy Type (
+    $Miners | Where-Object {$_.Profit -ge 1E-5 -or $_.Profit -eq $null} | Sort-Object -Property Type, @{Expression = {if ($MinersNeedingBenchmark.count -gt 0) {$_.HashRates.PSObject.Properties.Name}}}, @{Expression = {if ($MinersNeedingBenchmark.count -gt 0) {$_.Profit}}; Descending = $true}, @{Expression = {if ($MinersNeedingBenchmark.count -lt 1) {[double]$_.Profit_Bias}}; Descending = $true} | Format-Table -GroupBy Type (
         @{Label = "Miner"; Expression = {$_.Name}},
 		@{Label = "MinerFee"; Expression = {"$(($_.MinerFee | Foreach-Object {$_.ToString("N2")}) -join '%/')%"}}, 
         @{Label = "Algorithm"; Expression = {$_.HashRates.PSObject.Properties.Name}}, 
@@ -656,13 +659,19 @@ while ($true) {
     Write-Host " Thank you for choosing SephMiner"
     Write-Host "--------------------------------------------------------------------------------"
     
+    #Display benchmarking progres
+    if ($MinersNeedingBenchmark.count -gt 0) {
+        Write-Log -Level Warn "Benchmarking in progress: $($MinersNeedingBenchmark.count) miner$(if ($MinersNeedingBenchmark.count -gt 1){'s'}) left to benchmark."
+    }
+	
     #Display idle miners list
 	$idleminers = $ActiveMiners | Where-Object {$_.Activated -GT 0 -and $_.Status -EQ "Idle"}
 	if ($idleminers.count){Write-Host " Status : Idle "}
     $idleminers | Sort-Object -Descending Status, {if ($_.Process -eq $null) {[DateTime]0}else {$_.Process.StartTime}} | Select-Object -First (6) | Format-Table -Wrap (
         @{Label = "Active"; Expression = {"{0:dd} Days {0:hh} Hours {0:mm} Minutes" -f $(if ($_.Process -eq $null) {$_.Active}else {if ($_.Process.ExitTime -gt $_.Process.StartTime) {($_.Active + ($_.Process.ExitTime - $_.Process.StartTime))}else {($_.Active + ((Get-Date) - $_.Process.StartTime))}})}}, 
         @{Label = "Launched"; Expression = {Switch ($_.Activated) {0 {"Never"} 1 {"Once"} Default {"$_ Times"}}}}, 
-        @{Label = "Type"; Expression = {$_.Type}}, 
+        @{Label = "Type"; Expression = {$_.Type}},
+        @{Label = "Miner"; Expression = {$_.Name}},
         @{Label = "Command"; Expression = {"$($_.Path.TrimStart((Convert-Path ".\"))) $($_.Arguments)"}}
     ) | Out-Host
 	
@@ -672,7 +681,8 @@ while ($true) {
     $failedminers | Sort-Object -Descending Status, {if ($_.Process -eq $null) {[DateTime]0}else {$_.Process.StartTime}} | Format-Table -Wrap ( 
         @{Label = "Active"; Expression = {"{0:dd} Days {0:hh} Hours {0:mm} Minutes" -f $(if ($_.Process -eq $null) {$_.Active}else {if ($_.Process.ExitTime -gt $_.Process.StartTime) {($_.Active + ($_.Process.ExitTime - $_.Process.StartTime))}else {($_.Active + ((Get-Date) - $_.Process.StartTime))}})}}, 
         @{Label = "Launched"; Expression = {Switch ($_.Activated) {0 {"Never"} 1 {"Once"} Default {"$_ Times"}}}}, 
-        @{Label = "Type"; Expression = {$_.Type}}, 
+        @{Label = "Type"; Expression = {$_.Type}},
+        @{Label = "Miner"; Expression = {$_.Name}},
         @{Label = "Command"; Expression = {"$($_.Path.TrimStart((Convert-Path ".\"))) $($_.Arguments)"}}
     ) | Out-Host
 	
@@ -721,16 +731,11 @@ while ($true) {
     $ActiveMiners | Where-Object {$_.Activated -GT 0 -and $_.Status -EQ "Running"} | Sort-Object -Descending Status, {if ($_.Process -eq $null) {[DateTime]0}else {$_.Process.StartTime}} | Format-Table -Wrap (
         @{Label = "Active"; Expression = {"{0:dd} Days {0:hh} Hours {0:mm} Minutes" -f $(if ($_.Process -eq $null) {$_.Active}else {if ($_.Process.ExitTime -gt $_.Process.StartTime) {($_.Active + ($_.Process.ExitTime - $_.Process.StartTime))}else {($_.Active + ((Get-Date) - $_.Process.StartTime))}})}}, 
         @{Label = "Launched"; Expression = {Switch ($_.Activated) {0 {"Never"} 1 {"Once"} Default {"$_ Times"}}}}, 
-        @{Label = "Type"; Expression = {$_.Type}}, 
+        @{Label = "Type"; Expression = {$_.Type}},
+        @{Label = "Miner"; Expression = {$_.Name}},
         @{Label = "Command"; Expression = {"$($_.Path.TrimStart((Convert-Path ".\"))) $($_.Arguments)"}}
     ) | Out-Host
 	
-    #Display benchmarking progress
-    $BenchmarksNeeded = ($Miners | Where-Object {$_.HashRates.PSObject.Properties.Value -eq $null}).Count
-    if($BenchmarksNeeded -gt 0) {
-        Write-Log -Level Warn "Benchmarking in progress: $($BenchmarksNeeded) miners left to benchmark."
-    }
-    
 	$RunningMiners = $ActiveMiners | Where-Object Status -EQ "Running"
 	
     #Reduce Memory

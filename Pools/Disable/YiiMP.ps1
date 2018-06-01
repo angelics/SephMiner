@@ -11,6 +11,7 @@ $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty Ba
 $YiiMPCoins_Request = [PSCustomObject]@{}
 
 try {
+    $YiiMP_Request = Invoke-RestMethod "http://api.yiimp.eu/api/status" -UseBasicParsing -TimeoutSec 10 -ErrorAction Stop
     $YiiMPCoins_Request = Invoke-RestMethod "http://api.yiimp.eu/api/currencies" -UseBasicParsing -TimeoutSec 10 -ErrorAction Stop
 }
 catch {
@@ -34,14 +35,8 @@ $YiiMP_Currencies | Where-Object {$ExcludeAlgorithm -inotcontains (Get-Algorithm
     $YiiMP_Coin = $YiiMPCoins_Request.$_.name
     $YiiMP_Currency = $_
     $YiiMP_Fee = $YiiMPCoins_Request.$_.fees
-
-    $Divisor = 1000000000
-
-    switch ($YiiMP_Algorithm_Norm) {
-        "equihash" {$Divisor /= 1000}
-        "blake2s" {$Divisor *= 1000}
-        "blakecoin" {$Divisor *= 1000}
-    }
+	
+    $Divisor = 1000000000 * [Double]$YiiMP_Request.$YiiMP_Algorithm.mbtc_mh_factor
 
     $YiiMP_Fees = 1-($YiiMP_Fee/100)
 	

@@ -15,9 +15,9 @@ $Uri = "https://semitest.000webhostapp.com/binary/DelosMiner1.1.2.zip"
 $Fee = 1
 
 $Commands = [PSCustomObject]@{
-    "hmq1725" = "" #hmq1725
-    "hsr"     = "" #hsr
-    "skunk"   = "" #skunk
+    "hmq1725" = " -N 3" #hmq1725
+    "hsr"     = " -N 3" #hsr
+    "skunk"   = " -N 5" #skunk
     "bitcore" = " -N 3" #Bitcore
     "phi"     = " -N 1" #Phi
     "x16s"    = " -N 3" #Pigeon

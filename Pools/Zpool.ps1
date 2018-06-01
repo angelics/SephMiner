@@ -43,16 +43,8 @@ $Zpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Selec
     $Zpool_Algorithm_Norm = Get-Algorithm $Zpool_Algorithm
     $Zpool_Fee = $Zpool_Request.$_.fees
     $Zpool_Coin = ""
-
-    $Divisor = 1000000
-
-    switch ($Zpool_Algorithm_Norm) {
-        "equihash" {$Divisor /= 1000}
-        "blake2s" {$Divisor *= 1000}
-        "keccak" {$Divisor *= 1000}
-        "keccakc" {$Divisor *= 1000}
-        "sha256t" {$Divisor *= 1000}
-    }	
+	
+    $Divisor = 1000000 * [Double]$Zpool_Request.$_.mbtc_mh_factor
 	
     $Zpool_Fees = 1-($Zpool_Fee/100)
 

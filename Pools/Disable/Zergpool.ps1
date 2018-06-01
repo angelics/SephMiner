@@ -43,19 +43,8 @@ $Zergpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Se
     $Zergpool_Algorithm_Norm = Get-Algorithm $Zergpool_Algorithm
     $Zergpool_Fee = $Zergpool_Request.$_.fees
     $Zergpool_Coin = ""
-
-    $Divisor = 1000000
-
-    switch ($ZergPool_Algorithm_Norm) {
-        "equihash" {$Divisor /= 1000}
-        "blake2s" {$Divisor *= 1000}
-        "blakecoin" {$Divisor *= 1000}
-        "keccak" {$Divisor *= 1000}
-        "sha256t"{$Divisor *= 1000}
-        "keccakc"{$Divisor *= 1000}
-        "yescrypt"{$Divisor /= 1000}
-        "yescryptr16"{$Divisor /= 1000}
-    }
+	
+    $Divisor = 1000000 * [Double]$ZergPool_Request.$_.mbtc_mh_factor
 	
     $Zergpool_Fees = 1-($Zergpool_Fee/100)
 	

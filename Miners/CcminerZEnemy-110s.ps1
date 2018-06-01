@@ -18,11 +18,11 @@ $Commands = [PSCustomObject]@{
     "bitcore" = " -N 3" #Bitcore
     "phi"     = " -N 1" #Phi
     "vit"     = "" #Vitalium
-    "tribus"  = "" #Tribus
+    "tribus"  = " -N 1" #Tribus
     "x16s"    = " -N 3" #Pigeon
     "x16r"    = " -N 3" #Raven
     "x17"     = " -N 1" #X17
-    "xevan"   = "" #Xevan
+    "xevan"   = " -N 1" #Xevan
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName

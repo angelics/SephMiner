@@ -13,6 +13,7 @@ $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty Ba
 $ZergPoolCoins_Request = [PSCustomObject]@{}
 
 try {
+    $Zergpool_Request = Invoke-RestMethod "http://api.zergpool.com:8080/api/status" -UseBasicParsing -TimeoutSec 10 -ErrorAction Stop
     $ZergPoolCoins_Request = Invoke-RestMethod "http://api.zergpool.com:8080/api/currencies" -UseBasicParsing -TimeoutSec 10 -ErrorAction Stop
 }
 catch {
@@ -41,25 +42,14 @@ $ZergPoolCoins_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore
     $ZergPoolCoins_Algorithm = $ZergPoolCoins_Request.$_.algo
     $ZergPoolCoins_Algorithm_Norm = Get-Algorithm $ZergPoolCoins_Algorithm
     $ZergPoolCoins_Coin = $ZergPoolCoins_Request.$_.name
-    $ZergpoolCoins_Fee = $ZergpoolCoins_Variance.$_.fees
+    $ZergpoolCoins_Fee = $Zergpool_Request.$ZergPoolCoins_Algorithm.fees
     $ZergPoolCoins_Currency = $_
-
-    $Divisor = 1000000000
-
-    switch ($ZergPoolCoins_Algorithm_Norm) {
-        "equihash" {$Divisor /= 1000}
-        "blake2s" {$Divisor *= 1000}
-        "blakecoin" {$Divisor *= 1000}
-        "keccak" {$Divisor *= 1000}
-        "sha256t"{$Divisor *= 1000}
-        "keccakc"{$Divisor *= 1000}
-        "yescrypt"{$Divisor /= 1000}
-        "yescryptr16"{$Divisor /= 1000}
-    }
+	
+    $Divisor = 1000000000 * [Double]$Zergpool_Request.$ZergPoolCoins_Algorithm.mbtc_mh_factor
     
     $ZergpoolCoins_Fees = 1-($ZergpoolCoins_Fee/100)
     
-    $Variance = 1 - $ZergpoolCoins_Variance."$ZergPoolCoins_Currency".variance
+    $Variance = 1 - $ZergpoolCoins_Variance.$ZergPoolCoins_Currency.variance
 	
     if ($Variance -ne 0){$Variance -= 0.01}
 	
