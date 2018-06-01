@@ -17,8 +17,8 @@ if ($DriverVersion -lt $RequiredVersion) {
     return
 }
 
-$Path = ".\Bin\Delos-NVIDIA-112\ccminer.exe"
-$Uri = "https://semitest.000webhostapp.com/binary/DelosMiner1.1.2.zip"
+$Path = ".\Bin\Delos-NVIDIA-121\ccminer.exe"
+$Uri = "https://semitest.000webhostapp.com/binary/DelosMiner1.2.1-x64-cu92.zip"
 $Fee = 1
 
 $Commands = [PSCustomObject]@{

@@ -1,55 +1,60 @@
-# SephMiner
-multipoolminer 95d4193 with bug fixed or improvements commits
-
+# SephMiner セフマイナー
+-multipoolminer 95d4193 with bug fixed or improvements commits
+-マルチプールマイナー95d4193から不具合や改善
 * Added gpu reset / oc profiles.
-
-* Added pool and miner fee.
-
+-自動的にGPUを回復（リセット）
+-アルゴリズムによって自動的にオーバークロックプロフィールを設定
 * Added pool coin variance.
-
+-プール分散の計算
 * Moved in,br to Europe.
-
+-インド、ブラジルをヨーロッパのサーバ-に
 * Removed monitoring.
-
+-モニタリングを取り除く
 * Excluded electroneum from miningpoolhubcoins, until auto-exchange is available.
-
-* Excluded maxcoin from miningpoolhubcoins, unless auto-exchange set to BTC.
+-miningpoolhubcoinsからelectroneum除外された、 until auto-exchange is available.
+* Excluded maxcoin from miningpoolhubcoins, remove it if auto-exchange set to BTC.
+-miningpoolhubcoinsからmaxcoin除外されたが、remove it if auto-exchange set to BTC.
 ```
 default config.txt for miningpoolhubcoins have Ethereum with disabledexchange.
+-miningpoolhubcoinsのEthereumをdisabledexchange既定にしました
 ```
 * Removed ASICS coins from all pools and miners.
-
+-
 * Removed auto-update.
-
+-
 * If you are "upgrading" from master copy, remove all folders except Bin , Stats and OC. Run resetprofit after.
-
+-
 * Default zergpool, zergpoolcoins mining address in config.txt is LTC. please change to "BTC": "$Wallet", if you are going to use BTC wallet.
-
+-
 * **Default donation 24 minutes, minimum 10**
+-
 ```
-24mins = 1.667%
+-24mins = 1.667%
+-
 ```
 ```
-10mins = 0.694%
+-10mins = 0.694%
+-
 ```
 
 * **personnaly** recommend only use miningpoolhub or miningpoolhubcoins,zpool and zergpool1 or zergpool3
+-
 
 * always move to disable folder for un-used pools
-
+-
 * always move to disable folder for un-used miners
+-
 
 # NVIDIA
-NVIDIA users please upgrade to 397.93 for cuda 9.2
-NVIDIA users need to download nvidiainspecter to use OC feature
-
+-NVIDIA users need to download nvidiainspecter to use OC feature
+-
 ```
-http://www.guru3d.com/files-details/nvidia-inspector-download.html
+-http://www.guru3d.com/files-details/nvidia-inspector-download.html
 ```
 # AMD
-AMD users need to download OverdriveNTool to use OC feature
+-AMD users need to download OverdriveNTool to use OC feature
 ```
-https://forums.guru3d.com/threads/overdriventool-tool-for-amd-gpus.416116/
+-https://forums.guru3d.com/threads/overdriventool-tool-for-amd-gpus.416116/
 ```
 
 # OC profile name:
@@ -59,9 +64,9 @@ ethash blake2s_AMD.bat
 ```
 
 # OhGodAnETHlargementPill
-* recommended for heavymem miners, only supports 1080 / 1080ti atm
+* recommended 1080 / 1080ti atm
 ```
-https://github.com/OhGodACompany/OhGodAnETHlargementPill
+-https://github.com/OhGodACompany/OhGodAnETHlargementPill
 ```
 
 # Lists of algos added:
