@@ -672,6 +672,7 @@ while ($true) {
         @{Label = "Launched"; Expression = {Switch ($_.Activated) {0 {"Never"} 1 {"Once"} Default {"$_ Times"}}}}, 
         @{Label = "Type"; Expression = {$_.Type}},
         @{Label = "Miner"; Expression = {$_.Name}},
+		@{Label = "Pool"; Expression = {$_.PoolName}}, 
         @{Label = "Algorithm"; Expression = {$_.Algorithm}},
         @{Label = "Command"; Expression = {"$($_.Path.TrimStart((Convert-Path ".\"))) $($_.Arguments)"}}
     ) | Out-Host
@@ -684,39 +685,19 @@ while ($true) {
         @{Label = "Launched"; Expression = {Switch ($_.Activated) {0 {"Never"} 1 {"Once"} Default {"$_ Times"}}}}, 
         @{Label = "Type"; Expression = {$_.Type}},
         @{Label = "Miner"; Expression = {$_.Name}},
+        @{Label = "Pool"; Expression = {$_.PoolName}}, 
         @{Label = "Algorithm"; Expression = {$_.Algorithm}},
         @{Label = "Command"; Expression = {"$($_.Path.TrimStart((Convert-Path ".\"))) $($_.Arguments)"}}
     ) | Out-Host
 	
     #Display watchdog timers
     $WatchdogTimers | Where-Object Kicked -GT $Timer.AddSeconds( - $WatchdogReset) | Format-Table -Wrap (
-        @{Label = "Miner"; Expression = {$_.MinerName}}, 
+        @{Label = "Miner"; Expression = {$_.MinerName}},
+		@{Label = "Type"; Expression = {$_.Type}},
         @{Label = "Pool"; Expression = {$_.PoolName}}, 
         @{Label = "Algorithm"; Expression = {$_.Algorithm}}, 
         @{Label = "Watchdog Timer"; Expression = {"{0:n0} Seconds" -f ($Timer - $_.Kicked | Select-Object -ExpandProperty TotalSeconds)}; Align = 'right'}
     ) | Out-Host
-	
-    #Display idle list
-	#$ActiveMiners | Where-Object {$_.Activated -GT 0 -and $_.Status -EQ "Idle"} | Sort $(if ($_.Process -eq $null) {$_.Active}else {if ($_.Process.ExitTime -gt $_.Process.StartTime) {($_.Active + ($_.Process.ExitTime - $_.Process.StartTime))}else {($_.Active + ((Get-Date) - $_.Process.StartTime))}}) |  Select -First (3) | Format-Table -Wrap -GroupBy Status (
-    #    @{Label = "Active"; Expression = {"{0:dd} Days {0:hh} Hours {0:mm} Minutes" -f $(if ($_.Process -eq $null) {$_.Active}else {if ($_.Process.ExitTime -gt $_.Process.StartTime) {($_.Active + ($_.Process.ExitTime - $_.Process.StartTime))}else {($_.Active + ((Get-Date) - $_.Process.StartTime))}})}}, 
-    #    @{Label = "Launched"; Expression = {Switch ($_.Activated) {0 {"Never"} 1 {"Once"} Default {"$_ Times"}}}}, 
-    #    @{Label = "Command"; Expression = {"$($_.Path.TrimStart((Convert-Path ".\"))) $($_.Arguments)"}}
-	#) | Out-Host
-	
-	#Display failed list
-	#$ActiveMiners | Where-Object {$_.Activated -GT 0 -and $_.Status -EQ "Failed"} | Sort {if ($_.Process -eq $null) {[DateTime]0}else {$_.Process.StartTime}} | Format-Table -Wrap -GroupBy Status (
-    #    @{Label = "Active"; Expression = {"{0:dd} Days {0:hh} Hours {0:mm} Minutes" -f $(if ($_.Process -eq $null) {$_.Active}else {if ($_.Process.ExitTime -gt $_.Process.StartTime) {($_.Active + ($_.Process.ExitTime - $_.Process.StartTime))}else {($_.Active + ((Get-Date) - $_.Process.StartTime))}})}}, 
-    #    @{Label = "Launched"; Expression = {Switch ($_.Activated) {0 {"Never"} 1 {"Once"} Default {"$_ Times"}}}}, 
-    #    @{Label = "Command"; Expression = {"$($_.Path.TrimStart((Convert-Path ".\"))) $($_.Arguments)"}}
-	#) | Out-Host
-	
-	#Display active miners list
-    #$ActiveMiners | Where-Object {$_.Activated -GT 0 -and $_.Status -EQ "Running"} | Sort {if ($_.Process -eq $null) {[DateTime]0}else {$_.Process.StartTime}} | Format-Table -Wrap -GroupBy Status (
-    #    @{Label = "Speed"; Expression = {$_.Speed_Live | ForEach-Object {"$($_ | ConvertTo-Hash)/s"}}; Align = 'right'}, 
-    #    @{Label = "Active"; Expression = {"{0:dd} Days {0:hh} Hours {0:mm} Minutes" -f $(if ($_.Process -eq $null) {$_.Active}else {if ($_.Process.ExitTime -gt $_.Process.StartTime) {($_.Active + ($_.Process.ExitTime - $_.Process.StartTime))}else {($_.Active + ((Get-Date) - $_.Process.StartTime))}})}}, 
-    #    @{Label = "Launched"; Expression = {Switch ($_.Activated) {0 {"Never"} 1 {"Once"} Default {"$_ Times"}}}}, 
-    #    @{Label = "Command"; Expression = {"$($_.Path.TrimStart((Convert-Path ".\"))) $($_.Arguments)"}}
-    #) | Out-Host
 
     #Display profit comparison
     if ($Downloader.State -eq "Running") {$Downloader | Wait-Job -Timeout 10 | Out-Null}
@@ -750,18 +731,15 @@ while ($true) {
         $balances | Format-Table Name, Total_*
     }
 	
+	$RunningMiners = $ActiveMiners | Where-Object Status -EQ "Running"
+	
     #Display active miners list
 	Write-Host " Status : Running " -foregroundcolor "Yellow"
-    $ActiveMiners | Where-Object {$_.Activated -GT 0 -and $_.Status -EQ "Running"} | Sort-Object -Descending Status, {if ($_.Process -eq $null) {[DateTime]0}else {$_.Process.StartTime}} | Format-Table (
+    $RunningMiners | Where-Object $_.Activated -GT 0 | Sort-Object -Descending Status, {if ($_.Process -eq $null) {[DateTime]0}else {$_.Process.StartTime}} | Format-Table -Wrap (
         @{Label = "Active"; Expression = {"{0:dd} Days {0:hh} Hours {0:mm} Minutes" -f $(if ($_.Process -eq $null) {$_.Active}else {if ($_.Process.ExitTime -gt $_.Process.StartTime) {($_.Active + ($_.Process.ExitTime - $_.Process.StartTime))}else {($_.Active + ((Get-Date) - $_.Process.StartTime))}})}}, 
         @{Label = "Launched"; Expression = {Switch ($_.Activated) {0 {"Never"} 1 {"Once"} Default {"$_ Times"}}}}, 
-        @{Label = "Type"; Expression = {$_.Type}},
-        @{Label = "Miner"; Expression = {$_.Name}},
-        @{Label = "Algorithm"; Expression = {$_.Algorithm}},
         @{Label = "Command"; Expression = {"$($_.Path.TrimStart((Convert-Path ".\"))) $($_.Arguments)"}}
     ) | Out-Host
-	
-	$RunningMiners = $ActiveMiners | Where-Object Status -EQ "Running"
 	
     #Reduce Memory
     Get-Job -State Completed | Remove-Job
