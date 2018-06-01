@@ -16,7 +16,7 @@ $Fee = 0
 
 $Commands = [PSCustomObject]@{
     #"blake2s"   = "" #Blake2s not profit
-    #"c11"       = " -i 21" #C11 CcminerAlexis78-13
+    "c11"       = " -i 21" #C11
     #"hsr"       = "" #Hsr CcminerDelos-112
     #"keccak"    = " -m 2 -i 29" #Keccak CcminerAlexis78-13
     #"keccakc"   = " -i 29" #Keccakc CcminerAlexis78-13

@@ -667,7 +667,7 @@ while ($true) {
     #Display idle miners list
 	$idleminers = $ActiveMiners | Where-Object {$_.Activated -GT 0 -and $_.Status -EQ "Idle"}
 	if ($idleminers.count){Write-Host " Status : Idle "}
-    $idleminers | Sort-Object -Descending Status, {if ($_.Process -eq $null) {[DateTime]0}else {$_.Process.StartTime}} | Select-Object -First (6) | Format-Table -Wrap (
+    $idleminers | Sort-Object -Descending Status, {if ($_.Process -eq $null) {[DateTime]0}else {$_.Process.StartTime}} | Select-Object -First (6) | Format-Table (
         @{Label = "Active"; Expression = {"{0:dd} Days {0:hh} Hours {0:mm} Minutes" -f $(if ($_.Process -eq $null) {$_.Active}else {if ($_.Process.ExitTime -gt $_.Process.StartTime) {($_.Active + ($_.Process.ExitTime - $_.Process.StartTime))}else {($_.Active + ((Get-Date) - $_.Process.StartTime))}})}}, 
         @{Label = "Launched"; Expression = {Switch ($_.Activated) {0 {"Never"} 1 {"Once"} Default {"$_ Times"}}}}, 
         @{Label = "Type"; Expression = {$_.Type}},
@@ -678,7 +678,7 @@ while ($true) {
     #Display failed miners list
 	$failedminers = $ActiveMiners | Where-Object {$_.Activated -GT 0 -and $_.Status -EQ "Failed"}
 	if ($failedminers.count){Write-Host " Status : Failed $($failedminers.Count)" -foregroundcolor "Red"}
-    $failedminers | Sort-Object -Descending Status, {if ($_.Process -eq $null) {[DateTime]0}else {$_.Process.StartTime}} | Format-Table -Wrap ( 
+    $failedminers | Sort-Object -Descending Status, {if ($_.Process -eq $null) {[DateTime]0}else {$_.Process.StartTime}} | Format-Table ( 
         @{Label = "Active"; Expression = {"{0:dd} Days {0:hh} Hours {0:mm} Minutes" -f $(if ($_.Process -eq $null) {$_.Active}else {if ($_.Process.ExitTime -gt $_.Process.StartTime) {($_.Active + ($_.Process.ExitTime - $_.Process.StartTime))}else {($_.Active + ((Get-Date) - $_.Process.StartTime))}})}}, 
         @{Label = "Launched"; Expression = {Switch ($_.Activated) {0 {"Never"} 1 {"Once"} Default {"$_ Times"}}}}, 
         @{Label = "Type"; Expression = {$_.Type}},
@@ -728,7 +728,7 @@ while ($true) {
 	
     #Display active miners list
 	Write-Host " Status : Running " -foregroundcolor "Yellow"
-    $ActiveMiners | Where-Object {$_.Activated -GT 0 -and $_.Status -EQ "Running"} | Sort-Object -Descending Status, {if ($_.Process -eq $null) {[DateTime]0}else {$_.Process.StartTime}} | Format-Table -Wrap (
+    $ActiveMiners | Where-Object {$_.Activated -GT 0 -and $_.Status -EQ "Running"} | Sort-Object -Descending Status, {if ($_.Process -eq $null) {[DateTime]0}else {$_.Process.StartTime}} | Format-Table (
         @{Label = "Active"; Expression = {"{0:dd} Days {0:hh} Hours {0:mm} Minutes" -f $(if ($_.Process -eq $null) {$_.Active}else {if ($_.Process.ExitTime -gt $_.Process.StartTime) {($_.Active + ($_.Process.ExitTime - $_.Process.StartTime))}else {($_.Active + ((Get-Date) - $_.Process.StartTime))}})}}, 
         @{Label = "Launched"; Expression = {Switch ($_.Activated) {0 {"Never"} 1 {"Once"} Default {"$_ Times"}}}}, 
         @{Label = "Type"; Expression = {$_.Type}},
