@@ -10,8 +10,8 @@ param(
 $Type = "AMD"
 if (-not $Devices.$Type) {return} # No AMD mining device present in system
 
-$Path = ".\Bin\AMD-SRBMiner\SRBMiner-CN.exe"
-$Uri = "https://github.com/MultiPoolMiner/miner-binaries/releases/download/SRBMiner/SRBMiner-CN-V1-5-6.zip"
+$Path = ".\Bin\AMD-SRBMiner-157\SRBMiner-CN.exe"
+$Uri = "https://semitest.000webhostapp.com/binary/SRBMiner-CN-V1-5-7.zip"
 $Fees = 0.85
 $Port = 21555
 $API = "SRBMiner"
@@ -22,7 +22,7 @@ $Commands = [PSCustomObject]@{
     "alloy"           = "" # CryptoNightAlloy
     "artocash"        = "" # CryptoNightArtoCash
     "b2n"             = "" # CryptoNightB2N
-    "liteV7"          = "" # CryptoNightLite V7
+    "liteV7"          = "" # CryptoNightLiteV7
     "heavy"           = "" # CryptoNightHeavy
     "ipbc"            = "" # CryptoNightIpbc
     "marketcash"      = "" # CryptoNightMarketCash
@@ -30,7 +30,7 @@ $Commands = [PSCustomObject]@{
     "alloy:2"         = "" # CryptoNightAlloy double threads
     "artocash2"       = "" # CryptoNightArtoCash double threads
     "b2n:2"           = "" # CryptoNightB2N double threads
-    "liteV7:2"        = "" # CryptoNightLite V7 double threads
+    "liteV7:2"        = "" # CryptoNightLiteV7 double threads
     "heavy:2"         = "" # CryptoNightHeavy double threads
     "ipbc:2"          = "" # CryptoNightIpbc double threads
     "marketcash:2"    = "" # CryptoNightMarketCash double threads

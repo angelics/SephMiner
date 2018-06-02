@@ -26,17 +26,20 @@ $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty Ba
 $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty Name | Where-Object {$Pools.(Get-Algorithm $_).Protocol -eq "stratum+tcp" <#temp fix#>} | ForEach-Object {
 
     $Algorithm_Norm = Get-Algorithm $_
+	
+    if ($Pools.$Algorithm_Norm) {
 
-    $HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100)
+        $HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100)
 
-    [PSCustomObject]@{
-        Type      = $Type
-        Path      = $Path
-        Arguments = "-a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)"
-        HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
-        API       = "Ccminer"
-        Port      = 4068
-        URI       = $Uri
-        MinerFee  = @($Fee)
-    }
+        [PSCustomObject]@{
+            Type      = $Type
+            Path      = $Path
+            Arguments = "-a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)"
+            HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
+            API       = "Ccminer"
+            Port      = 4068
+            URI       = $Uri
+            MinerFee  = @($Fee)
+        }
+	}
 }

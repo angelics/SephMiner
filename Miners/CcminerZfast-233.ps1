@@ -17,19 +17,12 @@ if ($DriverVersion -lt $RequiredVersion) {
     return
 }
 
-$Path = ".\Bin\Delos-NVIDIA-121\ccminer.exe"
-$Uri = "https://semitest.000webhostapp.com/binary/DelosMiner1.2.1-x64-cu92.zip"
-$Fee = 1
+$Path = ".\Bin\zFast-NVIDIA-233\zFastminer-v233.exe"
+$Uri = "https://semitest.000webhostapp.com/binary/zFastminer-v233.zip"
+$Fee = 1.8
 
 $Commands = [PSCustomObject]@{
-    "hmq1725" = " -N 3" #hmq1725
-    "hsr"     = " -N 3" #hsr
-    "skunk"   = " -N 5" #skunk
-    "bitcore" = " -N 3" #Bitcore
-    "phi"     = " -N 1" #Phi
-    "x16s"    = " -N 3" #Pigeon
-    #"x16r"    = " -N 3" #Raven
-    "x17"     = " -N 1" #X17
+    "lyra2z" = " -N 1" #Lyra2z
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
@@ -38,16 +31,19 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
 
     $Algorithm_Norm = Get-Algorithm $_
 
-    $HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100)
+    if ($Pools.$Algorithm_Norm.host -match ".*miningpoolhub\.com") {
+	
+        $HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100)
 
-    [PSCustomObject]@{
-        Type      = $Type
-        Path      = $Path
-        Arguments = "-a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)"
-        HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
-        API       = "Ccminer"
-        Port      = 4068
-        URI       = $Uri
-        MinerFee  = @($Fee)
+        [PSCustomObject]@{
+            Type      = $Type
+            Path      = $Path
+            Arguments = "-a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)"
+            HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
+            API       = "Ccminer"
+            Port      = 4068
+            URI       = $Uri
+            MinerFee  = @($Fee)
+        }
     }
 }
