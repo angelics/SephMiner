@@ -639,15 +639,12 @@ while ($true) {
     #Display mining information
 	Write-Host "1BTC = " $NewRates.$($Config.Currency | Select -Index 0) "$($Config.Currency | Select -Index 0)"
     $Miners | Where-Object {$_.Profit -ge 1E-5 -or $_.Profit -eq $null} | Sort-Object -Property Type, @{Expression = {if ($MinersNeedingBenchmark.count -gt 0) {$_.HashRates.PSObject.Properties.Name}}}, @{Expression = {if ($MinersNeedingBenchmark.count -gt 0) {$_.Profit}}; Descending = $true}, @{Expression = {if ($MinersNeedingBenchmark.count -lt 1) {[double]$_.Profit_Bias}}; Descending = $true} | Format-Table -GroupBy Type (
-        @{Label = "Miner"; Expression = {$_.Name}},
-		@{Label = "MinerFee"; Expression = {"$(($_.MinerFee | Foreach-Object {$_.ToString("N2")}) -join '%/')%"}}, 
+        @{Label = "Miner [Fee]"; Expression = {"$($_.Name) [$(($_.MinerFee | Foreach-Object {$_.ToString("N2")}) -join '%/')%]"}},
         @{Label = "Algorithm"; Expression = {$_.HashRates.PSObject.Properties.Name}}, 
         @{Label = "Speed"; Expression = {$_.HashRates.PSObject.Properties.Value | ForEach-Object {if ($_ -ne $null) {"$($_ | ConvertTo-Hash)/s"}else {"Benchmarking"}}}; Align = 'right'}, 
         @{Label = "$($Config.Currency | Select-Object -Index 0)/Day"; Expression = {if ($_.Profit) {ConvertTo-LocalCurrency $($_.Profit) $($Rates.$($Config.Currency | Select-Object -Index 0)) -Offset 2} else {"Unknown"}}; Align = "right"},
-        @{Label = "Accuracy"; Expression = {$_.Pools.PSObject.Properties.Value.MarginOfError | ForEach-Object {(1 - $_).ToString("P0")}}; Align = 'right'}, 
-        @{Label = "Pool"; Expression = {$_.Pools.PSObject.Properties.Value | ForEach-Object {if ($_.Info) {"$($_.Name)-$($_.Info)"}else {"$($_.Name)"}}}},
-        @{Label = "PoolFee"; Expression = {$_.Pools.PSObject.Properties.Value | ForEach-Object  {if ($_.PoolFee) {"$($_.PoolFee.ToString("N2"))%"} else {"unknown"}}}; Align='center'},
-        @{Label = "Variance"; Expression = {$_.Pools.PSObject.Properties.Value | ForEach-Object  {if ($_.Variance) {"$($_.Variance.ToString("N2"))"} else {"No Variance"}}}; Align='center'}
+        @{Label = "Accuracy"; Expression = {$_.Pools.PSObject.Properties.Value.MarginOfError | ForEach-Object {(1 - $_).ToString("P0")}}; Align = 'right'},
+        @{Label = "Pool [Fee] [Variance]"; Expression = {$_.Pools.PSObject.Properties.Value | ForEach-Object {if ($_.Info) {"$($_.Name)-$($_.Info) [$('{0:N2}' -f $_.PoolFee)%] [$('{0:N2}' -f $_.Variance)]"}else {"$($_.Name) [$('{0:N2}' -f $_.PoolFee)%] [$('{0:N2}' -f $_.Variance)]"}}}}
     ) | Out-Host
 
     Write-Host "--------------------------------------------------------------------------------"

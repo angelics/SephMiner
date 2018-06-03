@@ -10,13 +10,6 @@ param(
 $Type = "NVIDIA"
 if (-not $Devices.$Type) {return} # No NVIDIA mining device present in system
 
-$DriverVersion = (Get-Devices).NVIDIA.Platform.Version -replace ".*CUDA ",""
-$RequiredVersion = "9.1.00"
-if ($DriverVersion -lt $RequiredVersion) {
-    Write-Log -Level Warn "Miner ($($Name)) requires CUDA version $($RequiredVersion) or above (installed version is $($DriverVersion)). Please update your Nvidia drivers to 390.77 or newer. "
-    return
-}
-
 $Path = ".\Bin\Ethash-Claymore-118\EthDcrMiner64.exe"
 $API = "Claymore"
 $Uri = "https://semitest.000webhostapp.com/binary/Claymore%27s%20Dual%20Ethereum+Decred_Siacoin_Lbry_Pascal_Blake2s_Keccak%20AMD+NVIDIA%20GPU%20Miner%20v11.8%20-%20Catalyst%2015.12-18.x%20-%20CUDA%208.0_9.1_7.5_6.5.zip"
@@ -36,10 +29,9 @@ $Commands = [PSCustomObject]@{
     "ethash2gb;blake2s:55"  = @("", "")
     "ethash2gb;blake2s:80"  = @("", "")
     "ethash2gb;blake2s:105" = @("", "")
-    "ethash2gb;blake2s:130" = @("", "")
+    "ethash2gb;keccak:5"    = @("", "")
     "ethash2gb;keccak:30"   = @("", "")
     "ethash2gb;keccak:55"   = @("", "")
-    "ethash2gb;keccak:80"   = @("", "")
 }
 $CommonCommands = @(" -logsmaxsize 1", "") # array, first value for main algo, second value for secondary algo
 

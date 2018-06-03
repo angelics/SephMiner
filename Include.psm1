@@ -105,10 +105,12 @@ function Get-DeviceIDs {
     $DeviceIDs | Add-Member "All" @() # array of all devices, ids will be in hex format
     $DeviceIDs | Add-Member "3gb" @() # array of all devices with more than 3MiB VRAM, ids will be in hex format
     $DeviceIDs | Add-Member "4gb" @() # array of all devices with more than 4MiB VRAM, ids will be in hex format
+	$DeviceIDs | Add-Member "1050ti" @() # array of all 1050ti
     $DeviceIDs | Add-Member "1060" @() # array of all 1060
     $DeviceIDs | Add-Member "1070" @() # array of all 1070
+    $DeviceIDs | Add-Member "1070ti" @() # array of all 1070ti
     $DeviceIDs | Add-Member "1080" @() # array of all 1080
-    $DeviceIDs | Add-Member "1050ti" @() # array of all 1050ti
+    $DeviceIDs | Add-Member "1080ti" @() # array of all 1080ti
 
     # Get DeviceIDs, filter out all disabled hw models and IDs
     if ($Config.MinerInstancePerCardModel) {
@@ -118,10 +120,12 @@ function Get-DeviceIDs {
                 $DeviceIDs."All" += [Convert]::ToString(($_ + $DeviceIdOffset), $DeviceIdBase)
                 if ($DeviceTypeModel.GlobalMemsize -ge 3000000000) {$DeviceIDs."3gb" += [Convert]::ToString(($_ + $DeviceIdOffset), $DeviceIdBase)}
                 if ($DeviceTypeModel.GlobalMemsize -ge 4000000000) {$DeviceIDs."4gb" += [Convert]::ToString(($_ + $DeviceIdOffset), $DeviceIdBase)}
-                if ($DeviceTypeModel.Name -match ".*1060.*") {$DeviceIDs."1060" += [Convert]::ToString(($_ + $DeviceIdOffset), $DeviceIdBase)}
-                if ($DeviceTypeModel.Name -match ".*1070.*") {$DeviceIDs."1070" += [Convert]::ToString(($_ + $DeviceIdOffset), $DeviceIdBase)}
-                if ($DeviceTypeModel.Name -match ".*1080.*") {$DeviceIDs."1080" += [Convert]::ToString(($_ + $DeviceIdOffset), $DeviceIdBase)}
-                if ($DeviceTypeModel.Name -match ".*1050 ti.*") {$DeviceIDs."1050ti" += [Convert]::ToString(($_ + $DeviceIdOffset), $DeviceIdBase)}
+                if ($DeviceTypeModel.Name -match ".*1050 ti") {$DeviceIDs."1050ti" += [Convert]::ToString(($_ + $DeviceIdOffset), $DeviceIdBase)}
+                if ($DeviceTypeModel.Name -match ".*1060$") {$DeviceIDs."1060" += [Convert]::ToString(($_ + $DeviceIdOffset), $DeviceIdBase)}
+                if ($DeviceTypeModel.Name -match ".*1070$") {$DeviceIDs."1070" += [Convert]::ToString(($_ + $DeviceIdOffset), $DeviceIdBase)}
+                if ($DeviceTypeModel.Name -match ".*1070 ti") {$DeviceIDs."1070ti" += [Convert]::ToString(($_ + $DeviceIdOffset), $DeviceIdBase)}
+                if ($DeviceTypeModel.Name -match ".*1080$") {$DeviceIDs."1080" += [Convert]::ToString(($_ + $DeviceIdOffset), $DeviceIdBase)}
+                if ($DeviceTypeModel.Name -match ".*1080 ti") {$DeviceIDs."1080ti" += [Convert]::ToString(($_ + $DeviceIdOffset), $DeviceIdBase)}
             }
         }
     }
@@ -130,10 +134,12 @@ function Get-DeviceIDs {
         $DeviceIDs."All" = @($Devices.$Type | Where-Object {$Config.Devices.$Type.IgnoreHWModel -inotcontains $_.Name_Norm -and $Config.Miners.$Name.IgnoreHWModel -inotcontains $_.Name_Norm}).DeviceIDs | Where-Object {$Config.Devices.$Type.IgnoreDeviceID -notcontains $_ -and $Config.Miners.$Name.IgnoreDeviceID -notcontains $_} | ForEach-Object {[Convert]::ToString(($_ + $DeviceIdOffset), $DeviceIdBase)}
         $DeviceIDs."3gb" = @($Devices.$Type | Where-Object {$Config.Devices.$Type.IgnoreHWModel -inotcontains $_.Name_Norm -and $Config.Miners.$Name.IgnoreHWModel -inotcontains $_.Name_Norm} | Where-Object {$_.GlobalMemsize -gt 3000000000}).DeviceIDs | Where-Object {$Config.Devices.$Type.IgnoreDeviceID -notcontains $_ -and $Config.Miners.$Name.IgnoreDeviceID -notcontains $_} | ForEach-Object {[Convert]::ToString(($_ + $DeviceIdOffset), $DeviceIdBase)}
         $DeviceIDs."4gb" = @($Devices.$Type | Where-Object {$Config.Devices.$Type.IgnoreHWModel -inotcontains $_.Name_Norm -and $Config.Miners.$Name.IgnoreHWModel -inotcontains $_.Name_Norm} | Where-Object {$_.GlobalMemsize -gt 4000000000}).DeviceIDs | Where-Object {$Config.Devices.$Type.IgnoreDeviceID -notcontains $_ -and $Config.Miners.$Name.IgnoreDeviceID -notcontains $_} | ForEach-Object {[Convert]::ToString(($_ + $DeviceIdOffset), $DeviceIdBase)}
-        $DeviceIDs."1060" = @($Devices.$Type | Where-Object {$Config.Devices.$Type.IgnoreHWModel -inotcontains $_.Name_Norm -and $Config.Miners.$Name.IgnoreHWModel -inotcontains $_.Name_Norm} | Where-Object {$_.Name -match ".*1060.*"}).DeviceIDs | Where-Object {$Config.Devices.$Type.IgnoreDeviceID -notcontains $_ -and $Config.Miners.$Name.IgnoreDeviceID -notcontains $_} | ForEach-Object {[Convert]::ToString(($_ + $DeviceIdOffset), $DeviceIdBase)}
-        $DeviceIDs."1070" = @($Devices.$Type | Where-Object {$Config.Devices.$Type.IgnoreHWModel -inotcontains $_.Name_Norm -and $Config.Miners.$Name.IgnoreHWModel -inotcontains $_.Name_Norm} | Where-Object {$_.Name -match ".*1070.*"}).DeviceIDs | Where-Object {$Config.Devices.$Type.IgnoreDeviceID -notcontains $_ -and $Config.Miners.$Name.IgnoreDeviceID -notcontains $_} | ForEach-Object {[Convert]::ToString(($_ + $DeviceIdOffset), $DeviceIdBase)}
-        $DeviceIDs."1080" = @($Devices.$Type | Where-Object {$Config.Devices.$Type.IgnoreHWModel -inotcontains $_.Name_Norm -and $Config.Miners.$Name.IgnoreHWModel -inotcontains $_.Name_Norm} | Where-Object {$_.Name -match ".*1080.*"}).DeviceIDs | Where-Object {$Config.Devices.$Type.IgnoreDeviceID -notcontains $_ -and $Config.Miners.$Name.IgnoreDeviceID -notcontains $_} | ForEach-Object {[Convert]::ToString(($_ + $DeviceIdOffset), $DeviceIdBase)}
-        $DeviceIDs."1050ti" = @($Devices.$Type | Where-Object {$Config.Devices.$Type.IgnoreHWModel -inotcontains $_.Name_Norm -and $Config.Miners.$Name.IgnoreHWModel -inotcontains $_.Name_Norm} | Where-Object {$_.Name -match ".*1050 ti.*"}).DeviceIDs | Where-Object {$Config.Devices.$Type.IgnoreDeviceID -notcontains $_ -and $Config.Miners.$Name.IgnoreDeviceID -notcontains $_} | ForEach-Object {[Convert]::ToString(($_ + $DeviceIdOffset), $DeviceIdBase)}
+        $DeviceIDs."1050ti" = @($Devices.$Type | Where-Object {$Config.Devices.$Type.IgnoreHWModel -inotcontains $_.Name_Norm -and $Config.Miners.$Name.IgnoreHWModel -inotcontains $_.Name_Norm} | Where-Object {$_.Name -match ".*1050 ti"}).DeviceIDs | Where-Object {$Config.Devices.$Type.IgnoreDeviceID -notcontains $_ -and $Config.Miners.$Name.IgnoreDeviceID -notcontains $_} | ForEach-Object {[Convert]::ToString(($_ + $DeviceIdOffset), $DeviceIdBase)}
+        $DeviceIDs."1060" = @($Devices.$Type | Where-Object {$Config.Devices.$Type.IgnoreHWModel -inotcontains $_.Name_Norm -and $Config.Miners.$Name.IgnoreHWModel -inotcontains $_.Name_Norm} | Where-Object {$_.Name -match ".*1060$"}).DeviceIDs | Where-Object {$Config.Devices.$Type.IgnoreDeviceID -notcontains $_ -and $Config.Miners.$Name.IgnoreDeviceID -notcontains $_} | ForEach-Object {[Convert]::ToString(($_ + $DeviceIdOffset), $DeviceIdBase)}
+        $DeviceIDs."1070ti" = @($Devices.$Type | Where-Object {$Config.Devices.$Type.IgnoreHWModel -inotcontains $_.Name_Norm -and $Config.Miners.$Name.IgnoreHWModel -inotcontains $_.Name_Norm} | Where-Object {$_.Name -match ".*1070$"}).DeviceIDs | Where-Object {$Config.Devices.$Type.IgnoreDeviceID -notcontains $_ -and $Config.Miners.$Name.IgnoreDeviceID -notcontains $_} | ForEach-Object {[Convert]::ToString(($_ + $DeviceIdOffset), $DeviceIdBase)}
+        $DeviceIDs."1070" = @($Devices.$Type | Where-Object {$Config.Devices.$Type.IgnoreHWModel -inotcontains $_.Name_Norm -and $Config.Miners.$Name.IgnoreHWModel -inotcontains $_.Name_Norm} | Where-Object {$_.Name -match ".*1070 ti"}).DeviceIDs | Where-Object {$Config.Devices.$Type.IgnoreDeviceID -notcontains $_ -and $Config.Miners.$Name.IgnoreDeviceID -notcontains $_} | ForEach-Object {[Convert]::ToString(($_ + $DeviceIdOffset), $DeviceIdBase)}
+        $DeviceIDs."1080" = @($Devices.$Type | Where-Object {$Config.Devices.$Type.IgnoreHWModel -inotcontains $_.Name_Norm -and $Config.Miners.$Name.IgnoreHWModel -inotcontains $_.Name_Norm} | Where-Object {$_.Name -match ".*1080$"}).DeviceIDs | Where-Object {$Config.Devices.$Type.IgnoreDeviceID -notcontains $_ -and $Config.Miners.$Name.IgnoreDeviceID -notcontains $_} | ForEach-Object {[Convert]::ToString(($_ + $DeviceIdOffset), $DeviceIdBase)}
+        $DeviceIDs."1080ti" = @($Devices.$Type | Where-Object {$Config.Devices.$Type.IgnoreHWModel -inotcontains $_.Name_Norm -and $Config.Miners.$Name.IgnoreHWModel -inotcontains $_.Name_Norm} | Where-Object {$_.Name -match ".*1080 ti"}).DeviceIDs | Where-Object {$Config.Devices.$Type.IgnoreDeviceID -notcontains $_ -and $Config.Miners.$Name.IgnoreDeviceID -notcontains $_} | ForEach-Object {[Convert]::ToString(($_ + $DeviceIdOffset), $DeviceIdBase)}
     }
     $DeviceIDs
 }
