@@ -17,7 +17,7 @@ $Port = 4001
 $Fee = 1
 
 $Commands = [PSCustomObject]@{
-    "Hsr" = "" #Hsr
+    "Hsr" = " -N 3" #Hsr
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName

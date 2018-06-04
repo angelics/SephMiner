@@ -15,11 +15,11 @@ $Uri = "https://mega.nz/#!yDwFVIoT!KW_AXPHv_u0lzjXaCrl-Vud9e7_tpm4EBLFh9jsa_hs"
 $Fee = 1
 
 $Commands = [PSCustomObject]@{
-    "hmq1725" = "" #hmq1725
-    "hsr" = "" #hsr
-    "skunk" = "" #skunk
+    "hmq1725" = " -N 3" #hmq1725
+    "hsr"     = " -N 3" #hsr
+    "skunk"   = " -N 3" #skunk
     "bitcore" = " -N 3" #Bitcore
-    #"phi"     = " -N 1" #Phi zenemy 110s better
+    #"phi"     = " -N 1" #Phi CcminerZEnemy-110s
     "x16s"    = " -N 3" #Pigeon
     "x16r"    = " -N 3" #Raven
     "x17"     = " -N 1" #X17

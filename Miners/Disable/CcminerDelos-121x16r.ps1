@@ -22,7 +22,7 @@ $Uri = "https://semitest.000webhostapp.com/binary/DelosMiner-x16r1.2.1-x64-cu92.
 $Fee = 1
 
 $Commands = [PSCustomObject]@{
-    "x16r"    = " -N 3" #Raven
+    #"x16r"    = " -N 3" #Raven crash
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName

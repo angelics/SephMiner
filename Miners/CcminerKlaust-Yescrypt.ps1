@@ -15,7 +15,7 @@ $Uri = "https://semitest.000webhostapp.com/binary/CCMiner%20Klaust%20-%20Yescryp
 $Fee = 0
 
 $Commands = [PSCustomObject]@{
-    #"yescrypt"      = "" #yescrypt CcminerKlaust-Yescrypt92
+    "yescrypt"      = "" #yescrypt CcminerKlaust-Yescrypt92
     "yescryptR8"    = "" #yescryptR8
     "yescryptR16"   = "" #Yenten
     "yescryptR16v2" = "" #PPNP
