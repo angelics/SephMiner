@@ -10,19 +10,12 @@ param(
 $Type = "NVIDIA"
 if (-not $Devices.$Type) {return} # No NVIDIA mining device present in system
 
-$DriverVersion = (Get-Devices).NVIDIA.Platform.Version -replace ".*CUDA ",""
-$RequiredVersion = "9.2.00"
-if ($DriverVersion -lt $RequiredVersion) {
-    Write-Log -Level Warn "Miner ($($Name)) requires CUDA version $($RequiredVersion) or above (installed version is $($DriverVersion)). Please update your Nvidia drivers to 397.93 or newer. "
-    return
-}
-
-$Path = ".\Bin\CoolMiner-NVIDIA\coolMiner-x64.exe"
-$Uri = "https://semitest.000webhostapp.com/binary/coolMiner-x64.zip"
-$Fee = 1
+$Path = ".\Bin\Vertminer-NVIDIA-102\vertminer.exe"
+$Uri = "https://github.com/vertcoin-project/vertminer-nvidia/releases/download/v1.0-stable.2/vertminer-nvdia-v1.0.2_windows.zip"
+$Fee = 2
 
 $Commands = [PSCustomObject]@{
-    "lyra2z" = " -N 1" #Lyra2z
+    "Lyra2REv2" = " -N 1" #Lyra2RE2
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
@@ -38,7 +31,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
         [PSCustomObject]@{
             Type      = $Type
             Path      = $Path
-            Arguments = "-a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_))"
+            Arguments = "-o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)"
             HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
             API       = "Ccminer"
             Port      = 4068
