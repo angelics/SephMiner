@@ -18,7 +18,7 @@ if ($DriverVersion -lt $RequiredVersion) {
 }
 
 $Path = ".\Bin\ZEnemy-NVIDIA-111v2\z-enemy.exe"
-$Uri = "https://semitest.000webhostapp.com/binary/z-enemy.1-11-x32-aerium.zip"
+$Uri = "https://semitest.000webhostapp.com/binary/z-enemy.1-11-public-final_v2.zip"
 $Fee = 1
 
 $Commands = [PSCustomObject]@{
