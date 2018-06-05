@@ -18,13 +18,13 @@ if ($DriverVersion -lt $RequiredVersion) {
 }
 
 $Path = ".\Bin\ZEnemy-NVIDIA-111v2\z-enemy.exe"
-$Uri = "https://semitest.000webhostapp.com/binary/z-enemy.1-11-public-final_v2.zip"
+$Uri = "https://semitest.000webhostapp.com/binary/z-enemy-111-c11-test.7z"
 $Fee = 1
 
 $Commands = [PSCustomObject]@{
     "aeriumx"    = "" #aeriumx
     "bitcore"    = " -N 3" #Bitcore
-    #"c11"        = " -N 3" #c11
+    "c11"        = " -N 3" #c11
     "phi"        = " -N 1" #Phi
     "poly"       = "" #poly
     "vit"        = "" #Vitalium
