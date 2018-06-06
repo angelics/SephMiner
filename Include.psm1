@@ -694,7 +694,7 @@ function Start-SubProcess {
         [Int]$Priority = 0
     )
 
-    $PriorityNames = [PSCustomObject]@{-2 = "Idle"; -1 = "BelowNormal"; 0 = "Normal"; 1 = "AboveNormal"; 2 = "High"; 3 = "RealTime"}
+    $PriorityNames = [PSCustomObject]@{-2 = "Idle"; -1 = "BelowNormal"; 0 = "Normal"; 1 = "AboveNormal"; 2 = "High"; 3 = "RealTime"}
 
     $Job = Start-Job -ArgumentList $PID, $FilePath, $ArgumentList, $WorkingDirectory {
         param($ControllerProcessID, $FilePath, $ArgumentList, $WorkingDirectory)
@@ -736,7 +736,7 @@ function Start-SubProcess {
     $Process.Handle | Out-Null
     $Process
 
-    if ($Process) {$Process.PriorityClass = $PriorityNames.$Priority}
+    if ($Process) {$Process.PriorityClass = $PriorityNames.$Priority}
 }
 
 function Expand-WebRequest {
@@ -856,7 +856,7 @@ class Miner {
     $Wrap
     $API
     $Port
-    [string[]]$Algorithm = @()
+    $Algorithm
     $Type
     $Index
     $Profit
@@ -872,12 +872,10 @@ class Miner {
     $New
     $Active
     $Activated
-    hidden [Int]$Activated = 0
     $Status
     $Benchmarked
     $CName
     $Pool
-    hidden [Array]$Data = @()
 
     [String[]]GetProcessNames() {
         return @(([IO.FileInfo]($this.Path | Split-Path -Leaf -ErrorAction Ignore)).BaseName)
@@ -911,55 +909,18 @@ class Miner {
         }
     }
 
-    [Int]GetActivateCount() {
-        return $this.Activated
-    [String[]]UpdateMinerData () {
+    [PSCustomObject]GetMinerData ([Bool]$Safe = $false) {
         $Lines = @()
 
         if ($this.Process.HasMoreData) {
             $this.Process | Receive-Job | ForEach-Object {
                 $Line = $_ -replace "`n|`r", ""
                 if ($Line -replace "\x1B\[[0-?]*[ -/]*[@-~]", "") {$Lines += $Line}
-                                "th/s*" {$HashRate *= [Math]::Pow(1000, 4)}
-
-                            $HashRates += $HashRate
-                    }
-                        Date = $Date
-                        Device = $Devices
-                    }
-            }
-        $HashRates_Devices = @($this.Data | Where-Object Device | Select-Object -ExpandProperty Device -Unique)
-        if (-not $HashRates_Devices) {$HashRates_Devices = @("Device")}
-
-        $HashRates_Counts = @{}
-        $HashRates_Averages = @{}
-        $HashRates_Variances = @{}
-
-        $this.Data | Where-Object HashRate | Where-Object Date -GE (Get-Date).ToUniversalTime().AddSeconds( - $Seconds) | ForEach-Object {
-            $Data_Devices = $_.Device
-            if (-not $Data_Devices) {$Data_Devices = $HashRates_Devices}
-
-            $Data_HashRates = $_.HashRate.$Algorithm
-
-            $Data_Devices | ForEach-Object {$HashRates_Counts.$_++}
-            $Data_Devices | ForEach-Object {$HashRates_Averages.$_ += @(($Data_HashRates | Measure-Object -Sum | Select-Object -ExpandProperty Sum) / $Data_Devices.Count)}
-            $HashRates_Variances."$($Data_Devices | ConvertTo-Json)" += @($Data_HashRates | Measure-Object -Sum | Select-Object -ExpandProperty Sum)
-        }
-
-        $HashRates_Count = $HashRates_Counts.Values | ForEach-Object {$_} | Measure-Object -Minimum | Select-Object -ExpandProperty Minimum
-        $HashRates_Average = ($HashRates_Averages.Values | ForEach-Object {$_} | Measure-Object -Average | Select-Object -ExpandProperty Average) * $HashRates_Averages.Keys.Count
-        $HashRates_Variance = $HashRates_Variances.Keys | ForEach-Object {$_} | ForEach-Object {$HashRates_Variances.$_ | Measure-Object -Average -Minimum -Maximum} | ForEach-Object {if ($_.Average) {($_.Maximum - $_.Minimum) / $_.Average}} | Measure-Object -Maximum | Select-Object -ExpandProperty Maximum
-
-        if ($Safe) {
-            if ($HashRates_Count -lt 3 -or $HashRates_Variance -gt 0.05) {
-                return 0
-            }
-            else {
-                return $HashRates_Average * (1 + ($HashRates_Variance / 2))
             }
         }
-        else {
-            return $HashRates_Average
+
+        return [PSCustomObject]@{
+            Lines = $Lines
         }
     }
 }
