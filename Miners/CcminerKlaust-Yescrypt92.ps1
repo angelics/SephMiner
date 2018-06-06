@@ -17,7 +17,7 @@ if ($DriverVersion -lt $RequiredVersion) {
     return
 }
 
-$Path = ".\Bin\NVIDIA-KlausT-Yescrypt92\ccminer-x64-cuda9.2.exe"
+$Path = ".\Bin\NVIDIA-KlausT-Yescrypt\ccminer-x64-cuda9.2.exe"
 $Uri = "https://semitest.000webhostapp.com/binary/CCMiner%20Klaust%20-%20Yescrypt.7z"
 $Fee = 0
 

@@ -10,8 +10,15 @@ param(
 $Type = "NVIDIA"
 if (-not $Devices.$Type) {return} # No NVIDIA mining device present in system
 
-$Path = ".\Bin\NVIDIA-KlausT-Yescrypt\ccminer.exe"
-$Uri = "https://semitest.000webhostapp.com/binary/CCMiner%20Klaust%20-%20Yescrypt91.7z"
+$DriverVersion = (Get-Devices).NVIDIA.Platform.Version -replace ".*CUDA ",""
+$RequiredVersion = "9.1.00"
+if ($DriverVersion -lt $RequiredVersion) {
+    Write-Log -Level Warn "Miner ($($Name)) requires CUDA version $($RequiredVersion) or above (installed version is $($DriverVersion)). Please update your Nvidia drivers to 390.77 or newer. "
+    return
+}
+
+$Path = ".\Bin\NVIDIA-KlausT-Yescrypt\ccminer-x64-cuda9.1.exe"
+$Uri = "https://semitest.000webhostapp.com/binary/CCMiner%20Klaust%20-%20Yescrypt.7z"
 $Fee = 0
 
 $Commands = [PSCustomObject]@{
