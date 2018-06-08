@@ -10,6 +10,13 @@ param(
 $Type = "NVIDIA"
 if (-not $Devices.$Type) {return} # No NVIDIA mining device present in system
 
+$DriverVersion = (Get-Devices).NVIDIA.Platform.Version -replace ".*CUDA ",""
+$RequiredVersion = "9.1.00"
+if ($DriverVersion -gt $RequiredVersion) {
+    Write-Log -Level Warn "Miner ($($Name)) requires CUDA version $($RequiredVersion) or lower (installed version is $($DriverVersion)). Please downgrade your Nvidia drivers to 390.77. "
+    return
+}
+
 $Path = ".\Bin\HSR-Palgin-2e3913c\hsrminer_hsr.exe"
 $API = "Ccminer"
 $Uri = "https://github.com/palginpav/hsrminer/raw/master/HSR%20algo/Windows/hsrminer_hsr.exe"

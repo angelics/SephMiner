@@ -584,7 +584,7 @@ while ($true) {
 			$DefaultOCName = ".\OC\default_"+$_.Type+".bat"
 			$Pill = ".\OC\Start_Pill.bat"
 				if (Test-Path $Pill) {
-					if ($_.Type -eq "nvidia" -and $_.Algorithm -match "ethash.*") {
+					if ($_.Type -eq "nvidia" -and ($_.Algorithm -match "ethash.*" -or $_.Algorithm -match "cryptonight.*")) {
 						Write-Host -F Yellow "Dosing with" $Pill
 						Write-Log "Dosing with $Pill"
 						Start-Process –WindowStyle Hidden $Pill -WorkingDirectory ".\OC"

@@ -8,10 +8,7 @@ param(
 )
 
 $Type = "NVIDIA"
-if ($Devices.$Type.count -lt 2) {
-	Write-Log -Level Warn "Miner ($($Name)) requires 2 NVIDIA mining device present in system"
-	return
-} 
+if (-not $Devices.$Type) {return} # No NVIDIA mining device present in system
 
 $DriverVersion = (Get-Devices).NVIDIA.Platform.Version -replace ".*CUDA ",""
 $RequiredVersion = "9.2.00"
