@@ -2,6 +2,7 @@ using module ..\Include.psm1
 
 class BMiner : Miner {
     [PSCustomObject]GetMinerData ([String[]]$Algorithm, [Bool]$Safe = $false) {
+        if ($_.Status -NE "Running"){return @()}
         $Server = "localhost"
         $Timeout = 10 #seconds
 
