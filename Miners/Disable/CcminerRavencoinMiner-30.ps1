@@ -1,4 +1,4 @@
-using module ..\Include.psm1
+﻿using module ..\Include.psm1
 
 param(
     [PSCustomObject]$Pools,
@@ -17,25 +17,12 @@ if ($DriverVersion -lt $RequiredVersion) {
     return
 }
 
-$Path = ".\Bin\NVIDIA-Alexis78-13\ccminer.exe"
-$Uri = "https://github.com/nemosminer/ccminerAlexis78/releases/download/Alexis78-v1.3/ccminerAlexis78v1.3x64.7z"
+$Path = ".\Bin\NVIDIA-RavencoinMiner-30\ccminer.exe"
+$Uri = "https://github.com/nemosminer/RavencoinMiner/releases/download/v3.0(9.2)/ccminerRavenx32.zip"
 $Fee = 0
 
 $Commands = [PSCustomObject]@{
-    #"blake2s"   = "" #Blake2s not profit
-    #"c11"       = " -i 21 -N 3" #C11 crash
-    "hsr"       = " -N 3" #Hsr CcminerDelos-112
-    #"keccak"    = " -m 2 -i 29" #Keccak ExcavatorNvidia-144a
-    #"keccakc"   = " -i 29" #Keccakc CcminerTpruvot-22692
-    "lyra2"     = "" #Lyra2
-    #"lyra2v2"   = " -N 1" #Lyra2RE2 ExcavatorNvidia-144a
-    #"neoscrypt" = "" #NeoScrypt
-    "poly"      = "" #Poly
-    "skein2"    = "" #skein2
-    "whirlcoin" = "" #WhirlCoin
-    "whirlpool" = "" #Whirlpool
-    #"x11evo"    = " -N 1 -i 21" #x11evo crash
-    #"x17"       = " -i 20" #X17 crash
+    "x16r" = " -i 21" #Raven
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
@@ -50,7 +37,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
         Type      = $Type
         Path      = $Path
         Arguments = "-a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)"
-        HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
+        HashRates = [PSCustomObject]@{$Algorithm_Norm = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week}
         API       = "Ccminer"
         Port      = 4068
         URI       = $Uri

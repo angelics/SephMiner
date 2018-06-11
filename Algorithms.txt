@@ -36,6 +36,7 @@
     "maxcoin":  "Keccak",
     "neoscrypt":  "NeoScrypt",
     "phi":  "PHI",
+    "phi2":  "PHI2",
     "phi1612":  "PHI",
     "poly":  "Polytimos",
     "polytimos":  "Polytimos",
