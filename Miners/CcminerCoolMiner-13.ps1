@@ -22,7 +22,7 @@ $Uri = "https://semitest.000webhostapp.com/binary/coolMiner-x64-v1-3.zip"
 $Fee = 1
 
 $Commands = [PSCustomObject]@{
-    "lyra2z" = " -N 1" #Lyra2z
+    "lyra2z" = " -N 1 -i 18" #Lyra2z -i 18, 1050ti max
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName

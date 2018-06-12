@@ -20,9 +20,9 @@ $MinerFeeInPercentDualMode = 1.5
 $Commands = [PSCustomObject]@{
     "ethash"                = @("")
     "ethash2gb"             = @("")
-    "ethash;blake2s:80"     = @("", "")
-    "ethash;blake2s:100"    = @("", "")
-    "ethash;blake2s:120"    = @("", "")
+    "ethash;blake2s:105"    = @("", "")
+    "ethash;blake2s:130"    = @("", "")
+    "ethash;blake2s:155"    = @("", "")
     "ethash;keccak:30"      = @("", "")
     "ethash;keccak:50"      = @("", "")
     "ethash;keccak:70"      = @("", "")
@@ -32,6 +32,7 @@ $Commands = [PSCustomObject]@{
     "ethash2gb;keccak:5"    = @("", "")
     "ethash2gb;keccak:30"   = @("", "")
     "ethash2gb;keccak:55"   = @("", "")
+    "ethash2gb;keccak:80"   = @("", "")
 }
 $CommonCommands = @(" -logsmaxsize 1", "") # array, first value for main algo, second value for secondary algo
 

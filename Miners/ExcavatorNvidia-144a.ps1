@@ -81,7 +81,5 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
                 Port             = $Port
                 URI              = $Uri
                 MinerFee         = @($Fee)
-                PrerequisitePath = "$env:SystemRoot\System32\msvcr120.dll"
-                PrerequisiteURI  = "http://download.microsoft.com/download/2/E/6/2E61CFA4-993B-4DD4-91DA-3737CD5CD6E3/vcredist_x64.exe"
             }
 }

@@ -43,6 +43,7 @@
     "sha256t":  "sha256t",
     "sigt":  "Skunk",
     "skunk":  "Skunk",
+    "skunkhash":  "Skunk",
     "timetravel":  "Timetravel",
     "timetravel10":  "Bitcore",
     "tribus":  "Tribus",

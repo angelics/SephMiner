@@ -1,4 +1,4 @@
-﻿using module ..\Include.psm1
+using module ..\Include.psm1
 
 param(
     [PSCustomObject]$Pools,
@@ -10,31 +10,12 @@ param(
 $Type = "NVIDIA"
 if (-not $Devices.$Type) {return} # No NVIDIA mining device present in system
 
-$DriverVersion = (Get-Devices).NVIDIA.Platform.Version -replace ".*CUDA ",""
-$RequiredVersion = "9.1.00"
-if ($DriverVersion -lt $RequiredVersion) {
-    Write-Log -Level Warn "Miner ($($Name)) requires CUDA version $($RequiredVersion) or above (installed version is $($DriverVersion)). Please update your Nvidia drivers to 390.77 or newer. "
-    return
-}
-
-$Path = ".\Bin\ZEnemy-NVIDIA-111v3\z-enemy.exe"
-$Uri = "http://semitest.000webhostapp.com/binary/z-enemy.1-11-public-final_v3.zip"
+$Path = ".\Bin\NVIDIA-pigeoncoin-26\ccminer.exe"
+$Uri = "https://github.com/Pigeoncoin-Miner/Pigeoncoin/releases/download/v2.6-32bit/Pigeoncoin-Miner.32bit.2.6.zip"
 $Fee = 1
 
 $Commands = [PSCustomObject]@{
-    "aeriumx"    = "" #aeriumx
-    "bitcore"    = " -N 3" #Bitcore
-    "c11"        = " -N 3" #c11
-    "phi"        = " -N 1" #Phi
-    "poly"       = "" #poly
-    "vit"        = "" #Vitalium
-    "skunk"      = " -N 3" #skunk
-    "timetravel" = " -N 3" #timetravel
-    "tribus"     = " -N 1" #Tribus
-    "x16s"       = " -i 21 -N 3" #Pigeon
-    #"x16r"       = " -i 21 -N 3" #Raven CcminerPigeoncoin-26
-    "x17"        = " -N 1" #X17
-    "xevan"      = " -N 1" #Xevan
+    "x16s" = " -N 3" #x16s
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName

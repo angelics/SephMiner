@@ -51,15 +51,7 @@ $ZergPoolCoins_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore
     
     $Variance = 1 - $ZergpoolCoins_Variance.$ZergPoolCoins_Currency.variance
 	
-    if ($Variance -ne 0){$Variance -= 0.01}
-	
-    if($CREA -and $ZergPoolCoins_Currency -eq "CREA"){$Variance = 1}
-    if($YTN -and $ZergPoolCoins_Currency -eq "YTN"){$Variance = 1}
-    if($PGN -and $ZergPoolCoins_Currency -eq "PGN"){$Variance = 1}
-    if($RVN -and $ZergPoolCoins_Currency -eq "RVN"){$Variance = 1}
-    if($HSR -and $ZergPoolCoins_Currency -eq "HSR"){$Variance = 1}
-    if($BTX -and $ZergPoolCoins_Currency -eq "BTX"){$Variance = 1}
-    if($MAC -and $ZergPoolCoins_Currency -eq "MAC"){$Variance = 1}
+    if($ZergPoolCoins_Currency -match $DisableExchange){$Variance = 1} else {$Variance -= 0.01}
 	
     $Stat = Set-Stat -Name "$($Name)_$($_)_Profit" -Value ([Double]$ZergPoolCoins_Request.$_.estimate / $Divisor) -Duration $StatSpan -ChangeDetection $true
 
