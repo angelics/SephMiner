@@ -17,7 +17,6 @@ $Commands = [PSCustomObject]@{
     #"bitcore"    = "" #Bitcore
     #"blake2s"    = "" #Blake2s
     #"c11"        = "" #C11
-    #"equihash"   = " --gpu-threads 2 --worksize 256" #Equihash
     #"ethash"     = " --gpu-threads 1 --worksize 192 --xintensity 1024" #Ethash
     #"hmq1725"    = "" #HMQ1725
     #"jha"        = "" #JHA

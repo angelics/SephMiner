@@ -20,7 +20,6 @@
     "cryptonight_v7": "CryptoNightV7",
     "cryptonight_v7_stellite": "CryptoNightV7stellite",
     "daggerhashimoto":  "Ethash",
-    "equihash":  "Equihash",
     "eth":  "Ethash",
     "ethash":  "Ethash",
     "hmq1725":  "HMQ1725",

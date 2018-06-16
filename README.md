@@ -79,10 +79,10 @@ https://github.com/OhGodACompany/OhGodAnETHlargementPill
 * veltor
 * blakecoin
 * vanilla
+* equihash
 
 # Lists of algos to be removed:
 * ethash
-* equihash
 
 # Lists of miner removed:
 * CcminerHsr
