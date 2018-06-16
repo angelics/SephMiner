@@ -46,7 +46,11 @@ $ZergPoolCoins_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore
     $ZergPoolCoins_Currency = $_
 	
     $Divisor = 1000000000 * [Double]$Zergpool_Request.$ZergPoolCoins_Algorithm.mbtc_mh_factor
-    
+    if ($Divisor -eq 0) {
+        Write-Log -Level Info "Unable to determine divisor for $ZergPoolCoins_Coin using $ZergPoolCoins_Algorithm_Norm algorithm"
+        return
+    }
+	
     $ZergpoolCoins_Fees = 1-($ZergpoolCoins_Fee/100)
     
     $Variance = 1 - $ZergpoolCoins_Variance.$ZergPoolCoins_Currency.variance

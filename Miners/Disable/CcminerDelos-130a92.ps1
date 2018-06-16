@@ -11,30 +11,28 @@ $Type = "NVIDIA"
 if (-not $Devices.$Type) {return} # No NVIDIA mining device present in system
 
 $DriverVersion = (Get-Devices).NVIDIA.Platform.Version -replace ".*CUDA ",""
-$RequiredVersion = "9.1.00"
+$RequiredVersion = "9.2.00"
 if ($DriverVersion -lt $RequiredVersion) {
-    Write-Log -Level Warn "Miner ($($Name)) requires CUDA version $($RequiredVersion) or above (installed version is $($DriverVersion)). Please update your Nvidia drivers to 390.77 or newer. "
+    Write-Log -Level Warn "Miner ($($Name)) requires CUDA version $($RequiredVersion) or above (installed version is $($DriverVersion)). Please update your Nvidia drivers to 397.93 or newer. "
     return
 }
 
-$Path = ".\Bin\ZEnemy-NVIDIA-111v3\z-enemy.exe"
-$Uri = "http://semitest.000webhostapp.com/binary/z-enemy.1-11-public-final_v3.zip"
+$Path = ".\Bin\Delos-NVIDIA-130a92\ccminer.exe"
+$Uri = "http://semitest.000webhostapp.com/binary/DelosMiner1.3.0a-x86-cu92.zip"
 $Fee = 1
 
 $Commands = [PSCustomObject]@{
-    "aeriumx"    = "" #aeriumx
-    "bitcore"    = " -N 3" #Bitcore
-    "c11"        = " -N 3" #c11
-    "phi"        = " -N 1" #Phi
-    "poly"       = "" #poly
-    "vit"        = "" #Vitalium
-    "skunk"      = " -N 3" #skunk
-    "timetravel" = " -N 3" #timetravel
-    "tribus"     = " -N 1" #Tribus
-    "x16s"       = " -i 21 -N 3" #Pigeon CcminerPigeoncoin-26
-    "x16r"       = " -i 21 -N 3" #Raven
-    "x17"        = " -N 1" #X17
-    "xevan"      = " -N 1" #Xevan
+    "c11"     = " -N 3" #c11
+    "hmq1725" = " -N 3" #hmq1725
+    "hsr"     = " -N 3" #hsr
+    "lyra2v2" = " -N 3" #LYRA2v2
+    "skunk"   = " -N 3" #skunk
+    "tribus"  = " -N 1" #Tribus
+    "bitcore" = " -N 3" #Bitcore
+    "phi"     = " -N 1" #Phi
+    "x16s"    = " -N 3" #Pigeon
+    "x16r"    = " -N 3" #Raven
+    "x17"     = " -N 1" #X17
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
