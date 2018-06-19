@@ -68,7 +68,6 @@ https://github.com/OhGodACompany/OhGodAnETHlargementPill
 * decred
 * lbry
 * pascal
-* skein
 * myr-gr
 * nist5
 * sia
@@ -109,3 +108,5 @@ angelics ETH = 0xBD0e3c16447b68CE01fAA19f65aE9e3882a54C54
 angelics LTC = Lex2wqKA44ZGkBvHhWE3STrqicbCdGG125
 
 angelics DASH = XvJ4t1dWy86a3p6KRt7rtVQgeqcGAdsSNh
+
+angelics DGB = DExeaiEKDQa6WUJ9FCFV4M3SWSh9DDhipb

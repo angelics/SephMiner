@@ -33,7 +33,7 @@
     },
     "ZergpoolCoins": {
       "LTC": "Lex2wqKA44ZGkBvHhWE3STrqicbCdGG125",
-	  "DisableExchange":  ["LTC"],
+      "DisableExchange":  ["LTC"],
       "Worker": "SephMiner",
       "ExcludeAlgorithm":  ["qubit", "blakecoin", "groestl", "nist5", "sib", "scrypt", "x11", "myrgr", "sha256", "x13", "quark"]
     }
