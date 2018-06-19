@@ -51,6 +51,7 @@ $MiningPoolHubCoins_Request.return | Where-Object {$ExcludeCoin -inotcontains $_
 
     if($DisableExchange -contains $MiningPoolHubCoins_Coin){$Variance = 1}
 	
+	if($MiningPoolHubCoins_Coin -eq "Ethereum") {$MiningPoolHubCoins_Fee = 0} #valid until 180630
     $MiningPoolHubCoins_Fees = 1-($MiningPoolHubCoins_Fee/100)
 	
     $Stat = Set-Stat -Name "$($Name)_$($MiningPoolHubCoins_Coin)_Profit" -Value ([Double]$_.profit / $Divisor) -Duration $StatSpan -ChangeDetection $true

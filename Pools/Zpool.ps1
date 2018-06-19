@@ -60,8 +60,8 @@ $Zpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Selec
     if($BTX -and $Zpool_Algorithm_Norm -eq "bitcore"){$Variance = 1}
     if($MAC -and $Zpool_Algorithm_Norm -eq "timetravel"){$Variance = 1}
     if($YTN -and $Zpool_Algorithm_Norm -eq "yescryptR16"){$Variance = 1}
-    if($PGN -and $Zpool_Algorithm_Norm -eq "x16s"){$Variance = 1}
     if($GRLC -and $Zpool_Algorithm_Norm -eq "allium"){$Variance = 1}
+    if($XMG -and $Zpool_Algorithm_Norm -eq "m7m"){$Variance = 1}
 
     if ((Get-Stat -Name "$($Name)_$($Zpool_Algorithm_Norm)_Profit") -eq $null) {$Stat = Set-Stat -Name "$($Name)_$($Zpool_Algorithm_Norm)_Profit" -Value ([Double]$Zpool_Request.$_.estimate_last24h / $Divisor) -Duration (New-TimeSpan -Days 1)}
     else {$Stat = Set-Stat -Name "$($Name)_$($Zpool_Algorithm_Norm)_Profit" -Value ([Double]$Zpool_Request.$_.estimate_current / $Divisor) -Duration $StatSpan -ChangeDetection $true}

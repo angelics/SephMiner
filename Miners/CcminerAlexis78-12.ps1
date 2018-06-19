@@ -24,6 +24,7 @@ $Commands = [PSCustomObject]@{
     #"lyra2v2"   = " -N 1" #Lyra2RE2 ExcavatorNvidia-144a
     #"neoscrypt" = "" #NeoScrypt PalginNvidiaFork-45ee8fa
     "poly"      = "" #Poly
+    "skein"     = "" #skein
     "skein2"    = "" #skein2
     "whirlcoin" = "" #WhirlCoin
     "whirlpool" = "" #Whirlpool

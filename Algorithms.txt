@@ -41,6 +41,8 @@
     "polytimos":  "Polytimos",
     "sha256t":  "sha256t",
     "sigt":  "Skunk",
+    "skein":  "Skein",
+    "skein2":  "Skein2",
     "skunk":  "Skunk",
     "skunkhash":  "Skunk",
     "timetravel":  "Timetravel",
