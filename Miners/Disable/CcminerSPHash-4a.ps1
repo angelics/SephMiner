@@ -15,8 +15,9 @@ $Uri = "https://github.com/sp-hash/suprminer/releases/download/spmod-git4a/raven
 $Fee = 0
 
 $Commands = [PSCustomObject]@{
-    "x16s" = "" #X16s
-    "x16r" = "" #X16r
+    "hsr"  = " -N 3" #hsr
+    "x16s" = "" #X16s CcminerZEnemy-111v3
+    "x16r" = "" #X16r CcminerZEnemy-111v3
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName

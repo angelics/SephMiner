@@ -16,10 +16,10 @@ $Fee = 0
 
 $Commands = [PSCustomObject]@{
     #"blake2s"   = "" #Blake2s not profit
-    "c11"       = " -i 21" #C11
+    #"c11"       = " -i 21" #C11 CcminerAlexis78-13
     #"hsr"       = "" #Hsr PalginNvidia-2e3913c
     #"keccak"    = " -m 2 -i 29" #Keccak CcminerAlexis78-13
-    "keccakc"   = " -i 29" #Keccakc CcminerAlexis78-13
+    #"keccakc"   = " -i 29" #Keccakc CcminerAlexis78-13
     "lyra2"     = "" #Lyra2
     #"lyra2v2"   = " -N 1" #Lyra2RE2 ExcavatorNvidia-144a
     #"neoscrypt" = "" #NeoScrypt PalginNvidiaFork-45ee8fa
