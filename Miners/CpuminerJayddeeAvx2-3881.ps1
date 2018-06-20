@@ -52,6 +52,7 @@ $Commands = [PSCustomObject]@{
     #"sha256d"       = "" #DoubleSHA256
     "sha256t"       = "" #sha256t
     #"shavite3"      = "" #Shavite3
+    "skein"         = "" #skein
     #"skein2"        = "" #Woodcoin
     "skunk"         = "" #Skunk
     "timetravel"    = "" #Timetravel
