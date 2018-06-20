@@ -94,7 +94,6 @@ https://github.com/OhGodACompany/OhGodAnETHlargementPill
 * eminer
 * MkxminerAmd
 * NsgminerNvidia
-* SgminerSkein
 * SgminerXevan
 
 # This is a free project feel free to donate be much appreciated:
