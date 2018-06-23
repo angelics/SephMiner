@@ -9,7 +9,7 @@ param(
 
 $Path = ".\Bin\JCE-CPU-029e\jce_cn_cpu_miner64.exe"
 $API = "XMRig"
-$Uri = "https://github.com/jceminer/cn_cpu_miner/raw/master/jce_cn_cpu_miner.windows.029d.zip"
+$Uri = "https://github.com/jceminer/cn_cpu_miner/raw/master/jce_cn_cpu_miner.windows.029e.zip"
 $Port = 4046
 $Fee = 1.5
 
