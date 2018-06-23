@@ -44,8 +44,7 @@ $ZergPoolCoins_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore
     $ZergPoolCoins_Coin = $ZergPoolCoins_Request.$_.name
     $ZergpoolCoins_Fee = $Zergpool_Request.$ZergPoolCoins_Algorithm.fees
     $ZergPoolCoins_Currency = $_
-    $Variances = $ZergpoolCoins_Variance.$ZergPoolCoins_Currency.variance
-    $Variances += $ZergpoolCoins_Variance.$ZergPoolCoins_Currency.variance2
+	if ($ZergpoolCoins_Variance.$ZergPoolCoins_Algorithm_Norm.variance2 -eq $null){$Variances = $ZergpoolCoins_Variance.$ZergPoolCoins_Algorithm_Norm.variance} else {$Variances = $ZergpoolCoins_Variance.$ZergPoolCoins_Algorithm_Norm.variance2}
 	
     $Divisor = 1000000000 * [Double]$Zergpool_Request.$ZergPoolCoins_Algorithm.mbtc_mh_factor
     if ($Divisor -eq 0) {
