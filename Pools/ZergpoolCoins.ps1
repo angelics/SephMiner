@@ -44,6 +44,8 @@ $ZergPoolCoins_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore
     $ZergPoolCoins_Coin = $ZergPoolCoins_Request.$_.name
     $ZergpoolCoins_Fee = $Zergpool_Request.$ZergPoolCoins_Algorithm.fees
     $ZergPoolCoins_Currency = $_
+    $Variances = $ZergpoolCoins_Variance.$ZergPoolCoins_Currency.variance
+    $Variances += $ZergpoolCoins_Variance.$ZergPoolCoins_Currency.variance2
 	
     $Divisor = 1000000000 * [Double]$Zergpool_Request.$ZergPoolCoins_Algorithm.mbtc_mh_factor
     if ($Divisor -eq 0) {
@@ -53,9 +55,9 @@ $ZergPoolCoins_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore
 	
     $ZergpoolCoins_Fees = 1-($ZergpoolCoins_Fee/100)
     
-    $Variance = 1 - $ZergpoolCoins_Variance.$ZergPoolCoins_Currency.variance
+    $Variance = 1 - $Variances
 	
-    if($ZergPoolCoins_Currency -match $DisableExchange){$Variance = 1} else {$Variance -= 0.01}
+    if($ZergPoolCoins_Currency -match $DisableExchange){$Variance = 1}
 	
     $Stat = Set-Stat -Name "$($Name)_$($_)_Profit" -Value ([Double]$ZergPoolCoins_Request.$_.estimate / $Divisor) -Duration $StatSpan -ChangeDetection $true
 
