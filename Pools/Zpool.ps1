@@ -43,7 +43,8 @@ $Zpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Selec
     $Zpool_Algorithm_Norm = Get-Algorithm $Zpool_Algorithm
     $Zpool_Fee = $Zpool_Request.$_.fees
     $Zpool_Coin = ""
-	if ($Zpool_Variance.$Zpool_Algorithm_Norm.variance2 -eq $null){$Variances = $Zpool_Variance.$Zpool_Algorithm_Norm.variance} else {$Variances = $Zpool_Variance.$Zpool_Algorithm_Norm.variance2}
+	
+	if ($Zpool_Variance.$Zpool_Algorithm_Norm.variance2){$Variances = $Zpool_Variance.$Zpool_Algorithm_Norm.variance2} else {$Variances = $Zpool_Variance.$Zpool_Algorithm_Norm.variance}
 	
     $Divisor = 1000000 * [Double]$Zpool_Request.$_.mbtc_mh_factor
 	
