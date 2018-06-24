@@ -22,9 +22,9 @@ $Uri = "https://github.com/ourpool/ourminer/files/2130351/OurMiner-x32-1.0.0-cud
 $Fee = 0
 
 $Commands = [PSCustomObject]@{
-    "lyra2z" = " -N 1" #lyra2z default -i 17
-    "x16s"   = " -N 3" #Pigeon default -i 20
-    "x16r"   = " -N 3" #Raven default -i 20
+    "lyra2z" = " -N 1 -i 20" #lyra2z
+    "x16s"   = " -N 3 -i 21" #Pigeon
+    "x16r"   = " -N 3 -i 21" #Raven
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
