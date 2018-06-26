@@ -17,11 +17,6 @@ param(
     [String]$API_Key = "", 
     [Parameter(Mandatory = $false)]
     [Int]$Interval = 60, #seconds before reading hash rate from miners
-    [Parameter(Mandatory = $false)]
-    [Array]$ExtendIntervalAlgorithm = @("X16R", "X16S"), #Extend interval duration by a factor of 10x $Interval for these algorithms
-    [Parameter(Mandatory = $false)]
-    [Array]$ExtendIntervalMinerName = @("PalginNvidia-2e3913c"), #Extend interval duration by a factor of 10x $Interval for these miners
-    [Parameter(Mandatory = $false)]
     [Alias("Location")]
     [String]$Region = "europe", #europe/us/asia
     [Parameter(Mandatory = $false)]
@@ -740,14 +735,20 @@ while ($true) {
     Get-Job -State Completed | Remove-Job
     [GC]::Collect()
 
-    #When benchmarking miners/algorithm in ExtendInterval... add 2x $Config.Interval to $StatEnd, extend StatSpan, extend watchdog times
-    $BenchmarkingMiners = $RunningMiners | Where-Object {$_.Speed -eq $null}
-    if ($BenchmarkingMiners | Where-Object {$Config.ExtendIntervalMinerName -icontains $_.Name -or ($_.Algorithm | Where-Object {$Config.ExtendIntervalAlgorithm -icontains $_})}) {
-        $StatEnd = $StatEnd.AddSeconds($Config.Interval * 2)
+    #Benchmarking miners/algorithm with ExtendInterval
+    $Multiplier = 0
+    $RunningMiners | Where-Object {$_.Speed -eq $null} | ForEach-Object {
+        if ($_.ExtendInterval -ge $Multiplier) {$Multiplier = $_.ExtendInterval}
+    }
+    
+    #Multiply $Config.Interval and add it to $StatEnd, extend StatSpan, extend watchdog times
+    if ($Multiplier -gt 0) {
+        if ($Multiplier -gt 10) {$Multiplier = 10}
+        $StatEnd = $StatEnd.AddSeconds($Config.Interval * $Multiplier)
         $StatSpan = New-TimeSpan $StatStart $StatEnd
         $WatchdogInterval = ($WatchdogInterval / $Strikes * ($Strikes - 1)) + $StatSpan.TotalSeconds
         $WatchdogReset = ($WatchdogReset / ($Strikes * $Strikes * $Strikes) * (($Strikes * $Strikes * $Strikes) - 1)) + $StatSpan.TotalSeconds
-        Write-Log "Benchmarking watchdog sensitive algorithm or miner. Increasing interval time temporarily to 2x interval ($($Config.Interval * 2) seconds). "
+        Write-Log "Benchmarking watchdog sensitive algorithm or miner. Increasing interval time temporarily to $($Multiplier)x interval ($($Config.Interval * $($Multiplier)) seconds). "
     }
 
     #Do nothing for a few seconds as to not overload the APIs and display miner download status
@@ -763,39 +764,31 @@ while ($true) {
     Write-Log "Saving hash rates. "
     $ActiveMiners | ForEach-Object {
         $Miner = $_
-        $Miner.Speed_Live = 0
+        $Miner.Speed_Live = [Double[]]@()
 
+        if ($Miner.New) {$Miner.New = [Boolean]($Miner.Algorithm | Where-Object {-not (Get-Stat -Name "$($Miner.Name)_$($_)_HashRate")})}
+		 
         if ($Miner.New) {$Miner.Benchmarked++}
 
-		$Miner_Data = [PSCustomObject]@{}
+        $Miner_Data = [PSCustomObject]@{}
         $Miner_Data = $Miner.GetMinerData($Miner.Algorithm, ($Miner.New -and $Miner.Benchmarked -lt $Strikes))
-        $Miner_Data.Lines | ForEach-Object {Write-Log -Level Verbose "$($Miner.Name): $_"}
-
-        if ($Miner.Process -and -not $Miner.Process.HasExited) {
-            $Miner.Speed_Live = $Miner_Data.HashRate.PSObject.Properties.Value
-
-            $Miner.Algorithm | Where-Object {$Miner_Data.HashRate.$_} | ForEach-Object {
-                $Stat = Set-Stat -Name "$($Miner.Name)_$($_)_HashRate" -Value $Miner_Data.HashRate.$_ -Duration $StatSpan -FaultDetection ($Config.ExtendIntervalAlgorithm -inotcontains $_ -and $Config.ExtendIntervalMinerName -inotcontains $Miner.Name)
-
-                #Update watchdog timer
-                $Miner_Name = $Miner.Name
-                $Miner_Algorithm = $_
-                $WatchdogTimer = $WatchdogTimers | Where-Object {$_.MinerName -eq $Miner_Name -and $_.PoolName -eq $Pools.$Miner_Algorithm.Name -and $_.Algorithm -eq $Miner_Algorithm}
-                if ($Stat -and $WatchdogTimer -and $Stat.Updated -gt $WatchdogTimer.Kicked) {
-                    $WatchdogTimer.Kicked = $Stat.Updated
+        $Miner.Speed_Live = $Miner_Data.HashRate.PSObject.Properties.Value
+		
+        if ($Miner.Status -EQ "Running" -or $Miner.New) {
+            $Miner.Algorithm | ForEach-Object {
+                if ($Miner.Process -and -not $Miner.Process.HasExited) {
+                    if ((-not $Miner.New) -or $Miner_Speed -or $Miner.Benchmarked -ge ($Strikes * $Strikes) -or $Miner.GetActivateCount() -ge $Strikes) {
+                        $Stat = Set-Stat -Name "$($Miner.Name)_$($_)_HashRate" -Value $Miner_Data.HashRate.$_ -Duration $StatSpan -FaultDetection (-not $_.ExtendInterval)
+                    }
+                    #Update watchdog timer
+                    $Miner_Name = $Miner.Name
+                    $Miner_Algorithm = $_
+                    $WatchdogTimer = $WatchdogTimers | Where-Object {$_.MinerName -eq $Miner_Name -and $_.PoolName -eq $Pools.$Miner_Algorithm.Name -and $_.Algorithm -eq $Miner_Algorithm}
+                    if ($Stat -and $WatchdogTimer -and $Stat.Updated -gt $WatchdogTimer.Kicked) {
+                        $WatchdogTimer.Kicked = $Stat.Updated
+                    }
                 }
-
-                $Miner.New = $false
-            }
-        }
-
-        #Benchmark timeout
-        if ($Miner.Benchmarked -ge ($Strikes * $Strikes) -or ($Miner.Benchmarked -ge $Strikes -and $Miner.Activated -ge $Strikes)) {
-            $Miner.Algorithm | Where-Object {-not $Miner_HashRate.$_} | ForEach-Object {
-                if ((Get-Stat -Name "$($Miner.Name)_$($_)_HashRate") -eq $null) {
-                    $Stat = Set-Stat -Name "$($Miner.Name)_$($_)_HashRate" -Value 0 -Duration $StatSpan
-                }
-            }
+			}
         }
     }
     Write-Log "Starting next run. "

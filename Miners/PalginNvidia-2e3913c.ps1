@@ -32,6 +32,10 @@ $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty Ba
 $Commands | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name | ForEach-Object {
 
     $Algorithm_Norm = Get-Algorithm $_
+
+    Switch ($Algorithm_Norm) {
+        default {$ExtendInterval = 3}
+    }
     
     if ($Pools.$Algorithm_Norm) { # must have a valid pool to mine
 
@@ -40,15 +44,16 @@ $Commands | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Obj
         $HashRate = $HashRate * (1 - $Fee / 100)
 
         [PSCustomObject]@{
-            Name      = $Name
-            Type      = $Type
-            Path      = $Path
-            Arguments = ("-o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)")
-            HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
-            API       = $Api
-            Port      = $Port
-            URI       = $Uri
-            MinerFee  = @($Fee)
+            Name           = $Name
+            Type           = $Type
+            Path           = $Path
+            Arguments      = ("-o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)")
+            HashRates      = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
+            API            = $Api
+            Port           = $Port
+            URI            = $Uri
+            MinerFee       = @($Fee)
+            ExtendInterval = $ExtendInterval
         }
     }
 }

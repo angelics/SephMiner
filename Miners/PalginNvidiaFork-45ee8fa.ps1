@@ -24,16 +24,21 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
 
     $Algorithm_Norm = Get-Algorithm $_
 
+    Switch ($Algorithm_Norm) {
+        default {$ExtendInterval = 3}
+    }
+
     $HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100)
 
     [PSCustomObject]@{
-        Type      = $Type
-        Path      = $Path
-        Arguments = "-o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)"
-        HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
-        API       = "Ccminer"
-        Port      = 4068
-        URI       = $Uri
-        MinerFee  = @($Fee)
+        Type           = $Type
+        Path           = $Path
+        Arguments      = "-o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)"
+        HashRates      = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
+        API            = "Ccminer"
+        Port           = 4068
+        URI            = $Uri
+        MinerFee       = @($Fee)
+        ExtendInterval = $ExtendInterval
     }
 }

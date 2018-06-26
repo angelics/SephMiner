@@ -876,6 +876,7 @@ class Miner {
     $Benchmarked
     $CName
     $Pool
+    $ExtendInterval
 
     [String[]]GetProcessNames() {
         return @(([IO.FileInfo]($this.Path | Split-Path -Leaf -ErrorAction Ignore)).BaseName)
