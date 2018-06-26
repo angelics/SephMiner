@@ -63,9 +63,9 @@ set type=amd,nvidia,cpu
 REM asic algo = sha256,scrypt,x11,x13,x14,15,quark,qubit,decred,lbry,sia,Pascal,cryptonight,cryptonight-light,skein,myr-gr,groestl,nist5,sib,x11gost,veltor,blakecoin,vanilla,equihash,ethash
 set ExcludeAlgorithm=equihash
 set ExcludeMinerName=ccminerlyra2re2,prospector
-set switchingprevention=2
+set switchingprevention=3
 REM min 240, api interval confirmed by PINPIN 180424
-set interval=240
+set interval=180
 set delay=0
 
 set command=%cur%\SephMiner.ps1 -wallet %wallet% -username %username% -workername %workername% -region %region% -currency %currency%,btc -type %type% -ExcludeMinerName %ExcludeMinerName% -donate 24 -switchingprevention %switchingprevention% -interval %interval% -watchdog -ExcludeAlgorithm %ExcludeAlgorithm% -delay %delay% -ShowPoolBalances

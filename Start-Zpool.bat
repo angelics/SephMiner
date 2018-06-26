@@ -65,8 +65,8 @@ REM asic algo = sha256,scrypt,x11,x13,x14,15,quark,qubit,decred,lbry,sia,Pascal,
 set algorithm=neoscrypt,lyra2z,m7m,xevan,hmq1725,blake2s,c11,phi,x17,bitcore,x11evo,hsr,yescrypt,tribus,lyra2v2,keccakc,sha256t,timetravel,skunk,yescryptR16,x16r,allium
 set ExcludeAlgorithm=equihash,keccak
 set ExcludeMinerName=ccminerlyra2re2,prospector
-set switchingprevention=2
-set interval=240
+set switchingprevention=3
+set interval=180
 set delay=0
 
 set command=%cur%\SephMiner.ps1 -wallet %wallet% -username %username% -workername %workername% -region %region% -currency %currency%,btc -type %type% -poolname %poolname% -algorithm %algorithm% -ExcludeAlgorithm %ExcludeAlgorithm% -ExcludeMinerName %ExcludeMinerName% -donate 24 -switchingprevention %switchingprevention% -interval %interval% -ExcludePoolName %ExcludePoolName% -delay %delay% -ShowPoolBalances

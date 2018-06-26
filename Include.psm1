@@ -896,6 +896,10 @@ class Miner {
         $this.Process.CloseMainWindow() | Out-Null
         $this.Status = "Idle"
     }
+	
+    [Int]GetActivateCount() {
+        return $this.Activated
+    }
 
     [DateTime]GetActiveLast() {
         if ($this.Process.PSBeginTime -and $this.Process.PSEndTime) {
