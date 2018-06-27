@@ -125,8 +125,6 @@ while ($true) {
             API_ID                        = $API_ID
             API_Key                       = $API_Key
             Interval                      = $Interval
-            ExtendIntervalAlgorithm       = $ExtendIntervalAlgorithm
-            ExtendIntervalMinerName       = $ExtendIntervalMinerName
             Region                        = $Region
             SSL                           = $SSL
             Type                          = $Type
@@ -463,6 +461,7 @@ while ($true) {
                 Benchmarked          = 0
                 CName                = $Miner.CName
                 Pool                 = $Miner.Pools.PSObject.Properties.Value.Name
+                ExtendInterval       = $Miner.ExtendInterval
             }
         }
     }
@@ -767,28 +766,37 @@ while ($true) {
         $Miner.Speed_Live = [Double[]]@()
 
         if ($Miner.New) {$Miner.New = [Boolean]($Miner.Algorithm | Where-Object {-not (Get-Stat -Name "$($Miner.Name)_$($_)_HashRate")})}
-		 
-        if ($Miner.New) {$Miner.Benchmarked++}
 
+        if ($Miner.New) {$Miner.Benchmarked++}
+		
         $Miner_Data = [PSCustomObject]@{}
         $Miner_Data = $Miner.GetMinerData($Miner.Algorithm, ($Miner.New -and $Miner.Benchmarked -lt $Strikes))
-        $Miner.Speed_Live = $Miner_Data.HashRate.PSObject.Properties.Value
-		
-        if ($Miner.Status -EQ "Running" -or $Miner.New) {
-            $Miner.Algorithm | ForEach-Object {
-                if ($Miner.Process -and -not $Miner.Process.HasExited) {
-                    if ((-not $Miner.New) -or $Miner_Speed -or $Miner.Benchmarked -ge ($Strikes * $Strikes) -or $Miner.GetActivateCount() -ge $Strikes) {
-                        $Stat = Set-Stat -Name "$($Miner.Name)_$($_)_HashRate" -Value $Miner_Data.HashRate.$_ -Duration $StatSpan -FaultDetection (-not $_.ExtendInterval)
-                    }
-                    #Update watchdog timer
-                    $Miner_Name = $Miner.Name
-                    $Miner_Algorithm = $_
-                    $WatchdogTimer = $WatchdogTimers | Where-Object {$_.MinerName -eq $Miner_Name -and $_.PoolName -eq $Pools.$Miner_Algorithm.Name -and $_.Algorithm -eq $Miner_Algorithm}
-                    if ($Stat -and $WatchdogTimer -and $Stat.Updated -gt $WatchdogTimer.Kicked) {
-                        $WatchdogTimer.Kicked = $Stat.Updated
-                    }
+
+        if ($Miner.Process -and -not $Miner.Process.HasExited) {
+            $Miner.Speed_Live = $Miner_Data.HashRate.PSObject.Properties.Value
+
+            $Miner.Algorithm | Where-Object {$Miner_Data.HashRate.$_} | ForEach-Object {
+                $Stat = Set-Stat -Name "$($Miner.Name)_$($_)_HashRate" -Value $Miner_Data.HashRate.$_ -Duration $StatSpan -FaultDetection (-not $Miner.ExtendInterval)
+
+                #Update watchdog timer
+                $Miner_Name = $Miner.Name
+                $Miner_Algorithm = $_
+                $WatchdogTimer = $WatchdogTimers | Where-Object {$_.MinerName -eq $Miner_Name -and $_.PoolName -eq $Pools.$Miner_Algorithm.Name -and $_.Algorithm -eq $Miner_Algorithm}
+                if ($Stat -and $WatchdogTimer -and $Stat.Updated -gt $WatchdogTimer.Kicked) {
+                    $WatchdogTimer.Kicked = $Stat.Updated
                 }
-			}
+
+                $Miner.New = $false
+            }
+        }
+
+        #Benchmark timeout
+        if ($Miner.Benchmarked -ge ($Strikes * $Strikes) -or ($Miner.Benchmarked -ge $Strikes -and $Miner.Activated -ge $Strikes)) {
+            $Miner.Algorithm | Where-Object {-not $Miner_HashRate.$_} | ForEach-Object {
+                if ((Get-Stat -Name "$($Miner.Name)_$($_)_HashRate") -eq $null) {
+                    $Stat = Set-Stat -Name "$($Miner.Name)_$($_)_HashRate" -Value 0 -Duration $StatSpan
+                }
+            }
         }
     }
     Write-Log "Starting next run. "
