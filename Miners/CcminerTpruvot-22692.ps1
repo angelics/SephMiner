@@ -22,7 +22,7 @@ $Uri = "http://semitest.000webhostapp.com/binary/CCMiner%202.2.6R2.7z"
 $Fee = 0
 
 $Commands = [PSCustomObject]@{
-    "allium"     = "" #allium
+    #"allium"     = " -N 1" #allium CcminerTpruvot-23
     #"bitcore"     = " -N 3"#bitcore CcminerZEnemy-111v3
     #"blake2s"     = "" #Blake2s
     "bmw"         = "" #bmw
