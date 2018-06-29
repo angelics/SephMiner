@@ -12,9 +12,9 @@ if (-not $Devices.$Type) {return} # No AMD mining device present in system
 
 $Path = ".\Bin\AMD-SRBMiner-158\SRBMiner-CN.exe"
 $Uri = "https://semitest.000webhostapp.com/binary/SRBMiner-CN-V1-5-8.zip"
-$Fees = 0.85
 $Port = Get-FreeTcpPort -DefaultPort 21555
 $API = "SRBMiner"
+$Fees = 0.85
 
 # Commands are case sensitive!
 $Commands = [PSCustomObject]@{

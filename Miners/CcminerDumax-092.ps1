@@ -19,7 +19,6 @@ if ($DriverVersion -lt $RequiredVersion) {
 
 $Path = ".\Bin\NVIDIA-Dumax-092\ccminer.exe"
 $Uri = "https://github.com/DumaxFr/ccminer/releases/download/dumax-0.9.2/ccminer-dumax-0.9.2-win64.zip"
-$MinerAPITCPPort = Get-FreeTcpPort
 $Port = Get-FreeTcpPort -DefaultPort 4068
 $Fee = 0
 
