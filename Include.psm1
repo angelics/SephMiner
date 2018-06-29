@@ -276,6 +276,24 @@ function Write-Log {
     End {}
 }
 
+function Get-FreeTcpPort {
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory = $false)]
+        [Int]$DefaultPort
+    )
+	if ($DefaultPort){$StartPort = $DefaultPort} else {$StartPort = 4068}
+    $PortFound = $false
+    $Port = $StartPort
+    while ($Port -le ($StartPort + 10) -and !$PortFound) {
+        try {$Null = New-Object System.Net.Sockets.TCPClient -ArgumentList 127.0.0.1, $Port; $Port++
+		}
+		catch {
+            $Port; $PortFound = $True
+		}
+	}
+}
+
 function Set-Stat {
     [CmdletBinding()]
     param(
@@ -575,7 +593,7 @@ function Get-ChildItemContentParallel {
     }
 
     # Wait for all runspaces to finish running and get their data
-    While ($RunspaceCollection) {
+    while ($RunspaceCollection) {
         ForEach($Runspace in $RunspaceCollection.ToArray()) {
             if ($Runspace.Runspace.IsCompleted) {
                 # End the runspace and get the returned objects

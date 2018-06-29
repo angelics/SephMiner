@@ -11,6 +11,7 @@ if (-not $Devices.$Type) {return} # No AMD mining device present in system
 
 $Path = ".\Bin\AMD-KL-105\sgminer.exe"
 $Uri = "https://github.com/KL0nLutiy/sgminer-kl/releases/download/kl-1.0.5/sgminer-kl-1.0.5-windows.zip"
+$Port = Get-FreeTcpPort -DefaultPort 4028
 $Fee = 1
 
 $Commands = [PSCustomObject]@{
@@ -39,10 +40,10 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
     [PSCustomObject]@{
         Type           = $Type
         Path           = $Path
-        Arguments      = "--api-listen -k $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_) --gpu-platform $([array]::IndexOf(([OpenCl.Platform]::GetPlatformIDs() | Select-Object -ExpandProperty Vendor), 'Advanced Micro Devices, Inc.'))"
+        Arguments      = "--api-listen --api-port $($Port) -k $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_) --gpu-platform $([array]::IndexOf(([OpenCl.Platform]::GetPlatformIDs() | Select-Object -ExpandProperty Vendor), 'Advanced Micro Devices, Inc.'))"
         HashRates      = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
         API            = "Xgminer"
-        Port           = 4028
+        Port           = $Port
         URI            = $Uri
         MinerFee       = @($Fee)
         ExtendInterval = $ExtendInterval

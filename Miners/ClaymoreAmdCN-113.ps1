@@ -11,7 +11,7 @@ if (-not $Devices.$Type) {return} # No AMD mining device present in system
 
 $Path = ".\Bin\CryptoNight-Claymore-113\NsGpuCNMiner.exe"
 $Uri = "https://github.com/MultiPoolMiner/miner-binaries/releases/download/claymorecryptonoteamd/Claymore.CryptoNote.AMD.GPU.Miner.v11.3.-.POOL.-.Catalyst.15.12-18.x.zip"
-$Port = 13333
+$Port = Get-FreeTcpPort -DefaultPort 13333
 $Fee = 0
 
 $Commands = [PSCustomObject]@{
@@ -31,7 +31,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
     [PSCustomObject]@{
         Type      = $Type
         Path      = $Path
-        Arguments = ("-r -1 -pow7 1 -mport -$Port -xpool $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -xwal $($Pools.$Algorithm_Norm.User) -xpsw $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)")
+        Arguments = ("-r -1 -pow7 1 -mport -$($Port) -xpool $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -xwal $($Pools.$Algorithm_Norm.User) -xpsw $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)")
         HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
         API       = "Claymore"
         Port      = $Port

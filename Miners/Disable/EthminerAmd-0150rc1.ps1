@@ -13,7 +13,7 @@ if (-not $Devices.$Type) {return} # No AMD mining device present in system
 $Path = ".\Bin\Ethash-Ethminer-0150rc11\ethminer.exe"
 $API = "Claymore"
 $Uri = "https://github.com/ethereum-mining/ethminer/releases/download/v0.15.0rc1/ethminer-0.15.0rc1-Windows.zip"
-$Port = 23333
+$Port = Get-FreeTcpPort -DefaultPort 23333
 $Fee = 0
 
 $Commands = [PSCustomObject]@{
@@ -44,7 +44,7 @@ $Commands | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Obj
             Name      = $Name
             Type      = $Type
             Path      = $Path
-            Arguments = ("--api-port $Port -P $($Pools.$Algorithm_Norm.Protocol)://$([System.Web.HttpUtility]::UrlEncode($Pools.$Algorithm_Norm.User)):$([System.Web.HttpUtility]::UrlEncode($Pools.$Algorithm_Norm.Pass))@$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port)$($Commands.$_) --opencl --opencl-devices $($DeviceIDs)")
+            Arguments = ("--api-port $($Port) -P $($Pools.$Algorithm_Norm.Protocol)://$([System.Web.HttpUtility]::UrlEncode($Pools.$Algorithm_Norm.User)):$([System.Web.HttpUtility]::UrlEncode($Pools.$Algorithm_Norm.Pass))@$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port)$($Commands.$_) --opencl --opencl-devices $($DeviceIDs)")
             HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
             API       = $Api
             Port      = $Port

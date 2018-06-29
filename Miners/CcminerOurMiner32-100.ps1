@@ -19,6 +19,7 @@ if ($DriverVersion -lt $RequiredVersion) {
 
 $Path = ".\Bin\OurMiner-NVIDIA-100\ourminer-x32.exe"
 $Uri = "https://github.com/ourpool/ourminer/files/2130351/OurMiner-x32-1.0.0-cuda-9.1.zip"
+$Port = Get-FreeTcpPort -DefaultPort 4068
 $Fee = 0
 
 $Commands = [PSCustomObject]@{
@@ -26,6 +27,8 @@ $Commands = [PSCustomObject]@{
     "x16s"   = " -N 3 -i 21" #Pigeon
     "x16r"   = " -N 3 -i 21" #Raven
 }
+
+$CommonCommands = "" #eg. " -d 0,1,8,9"
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
 
@@ -44,10 +47,10 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
     [PSCustomObject]@{
         Type           = $Type
         Path           = $Path
-        Arguments      = "-a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)"
+        Arguments      = "-b $($Port) -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)"
         HashRates      = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
         API            = "Ccminer"
-        Port           = 4068
+        Port           = $Port
         URI            = $Uri
         MinerFee       = @($Fee)
         ExtendInterval = $ExtendInterval

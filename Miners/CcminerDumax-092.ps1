@@ -19,6 +19,8 @@ if ($DriverVersion -lt $RequiredVersion) {
 
 $Path = ".\Bin\NVIDIA-Dumax-092\ccminer.exe"
 $Uri = "https://github.com/DumaxFr/ccminer/releases/download/dumax-0.9.2/ccminer-dumax-0.9.2-win64.zip"
+$MinerAPITCPPort = Get-FreeTcpPort
+$Port = Get-FreeTcpPort -DefaultPort 4068
 $Fee = 0
 
 $Commands = [PSCustomObject]@{
@@ -47,10 +49,10 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
     [PSCustomObject]@{
         Type           = $Type
         Path           = $Path
-        Arguments      = "-a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_) --submit-stale"
+        Arguments      = "-b $($Port) -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_) --submit-stale"
         HashRates      = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
         API            = "Ccminer"
-        Port           = 4068
+        Port           = $Port
         URI            = $Uri
         MinerFee       = @($Fee)
         ExtendInterval = $ExtendInterval

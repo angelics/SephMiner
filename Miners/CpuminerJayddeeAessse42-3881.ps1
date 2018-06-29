@@ -9,6 +9,7 @@ param(
 
 $Path = ".\Bin\CPU-JayDDee-3881\cpuminer-aes-sse42.exe"
 $Uri = "https://github.com/JayDDee/cpuminer-opt/files/1996977/cpuminer-opt-3.8.8.1-windows.zip"
+$Port = Get-FreeTcpPort -DefaultPort 4048
 $Fee = 0
 
 $Commands = [PSCustomObject]@{
@@ -92,10 +93,10 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
     [PSCustomObject]@{
         Type           = "CPU"
         Path           = $Path
-        Arguments      = "-a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)$($CommonCommands)"
+        Arguments      = "-b $($Port) -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)$($CommonCommands)"
         HashRates      = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
         API            = "Ccminer"
-        Port           = 4068
+        Port           = $Port
         URI            = $Uri
         MinerFee       = @($Fee)
         ExtendInterval = $ExtendInterval

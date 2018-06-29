@@ -13,7 +13,7 @@ if (-not $Devices.$Type) {return} # No AMD mining device present in system
 $Path = ".\Bin\Ethash-Claymore-118\EthDcrMiner64.exe"
 $API = "Claymore"
 $Uri = "https://semitest.000webhostapp.com/binary/Claymore%27s%20Dual%20Ethereum+Decred_Siacoin_Lbry_Pascal_Blake2s_Keccak%20AMD+NVIDIA%20GPU%20Miner%20v11.8%20-%20Catalyst%2015.12-18.x%20-%20CUDA%208.0_9.1_7.5_6.5.zip"
-$Port = 13333
+$Port = Get-FreeTcpPort -DefaultPort 13333
 $MinerFeeInPercentSingleMode = 1.0
 $MinerFeeInPercentDualMode = 1.5
 
@@ -78,7 +78,7 @@ $Commands | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Obj
                 Name      = $Miner_Name
                 Type      = $Type
                 Path      = $Path
-                Arguments = ("-mode 1 -mport -$Port -epool $($Pools.$MainAlgorithm_Norm.Host):$($Pools.$MainAlgorithm_Norm.Port) -ewal $($Pools.$MainAlgorithm_Norm.User) -epsw $($Pools.$MainAlgorithm_Norm.Pass)$MainAlgorithmCommands$($CommonCommands | Select -Index 0) -esm $EthereumStratumMode -showdiff 1 -allpools 1 -allcoins 1 -platform 1 -logsmaxsize 1 -y 1 -di $($DeviceIDs -join '')" -replace "\s+", " ").trim()
+                Arguments = ("-mode 1 -mport -$($Port) -epool $($Pools.$MainAlgorithm_Norm.Host):$($Pools.$MainAlgorithm_Norm.Port) -ewal $($Pools.$MainAlgorithm_Norm.User) -epsw $($Pools.$MainAlgorithm_Norm.Pass)$MainAlgorithmCommands$($CommonCommands | Select -Index 0) -esm $EthereumStratumMode -showdiff 1 -allpools 1 -allcoins 1 -platform 1 -logsmaxsize 1 -y 1 -di $($DeviceIDs -join '')" -replace "\s+", " ").trim()
                 HashRates = [PSCustomObject]@{$MainAlgorithm_Norm = $HashRateMainAlgorithm}
                 API       = $Api
                 Port      = $Port
@@ -112,7 +112,7 @@ $Commands | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Obj
                     Name      = $Miner_Name
                     Type      = $Type
                     Path      = $Path
-                    Arguments = ("-mode 0 -mport -$Port -epool $($Pools.$MainAlgorithm_Norm.Host):$($Pools.$MainAlgorithm.Port) -ewal $($Pools.$MainAlgorithm_Norm.User) -epsw $($Pools.$MainAlgorithm_Norm.Pass)$MainAlgorithmCommands$($CommonCommands | Select -Index 1) -esm $EthereumStratumMode -showdiff 1 -allpools 1 -allcoins 1 -dcoin $SecondaryAlgorithm -dcri $SecondaryAlgorithmIntensity -dpool $($Pools.$SecondaryAlgorithm_Norm.Host):$($Pools.$SecondaryAlgorithm_Norm.Port) -dwal $($Pools.$SecondaryAlgorithm_Norm.User) -dpsw $($Pools.$SecondaryAlgorithm_Norm.Pass)$SecondaryAlgorithmCommands$($CommonCommands | Select -Index 1) -platform 1 -di $($DeviceIDs -join '')" -replace "\s+", " ").trim()
+                    Arguments = ("-mode 0 -mport -$($Port) -epool $($Pools.$MainAlgorithm_Norm.Host):$($Pools.$MainAlgorithm.Port) -ewal $($Pools.$MainAlgorithm_Norm.User) -epsw $($Pools.$MainAlgorithm_Norm.Pass)$MainAlgorithmCommands$($CommonCommands | Select -Index 0) -esm $EthereumStratumMode -showdiff 1 -allpools 1 -allcoins 1 -dcoin $SecondaryAlgorithm -dcri $SecondaryAlgorithmIntensity -dpool $($Pools.$SecondaryAlgorithm_Norm.Host):$($Pools.$SecondaryAlgorithm_Norm.Port) -dwal $($Pools.$SecondaryAlgorithm_Norm.User) -dpsw $($Pools.$SecondaryAlgorithm_Norm.Pass)$SecondaryAlgorithmCommands$($CommonCommands | Select -Index 1) -platform 1 -di $($DeviceIDs -join '')" -replace "\s+", " ").trim()
                     HashRates = [PSCustomObject]@{$MainAlgorithm_Norm = $HashRateMainAlgorithm; $SecondaryAlgorithm_Norm = $HashRateSecondaryAlgorithm}
                     API       = $Api
                     Port      = $Port

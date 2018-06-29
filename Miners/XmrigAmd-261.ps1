@@ -13,7 +13,7 @@ if (-not $Devices.$Type) {return} # No AMD mining device present in system
 $Path = ".\Bin\CryptoNight-AMD-261\xmrig-amd.exe"
 $API = "XMRig"
 $Uri = "https://github.com/xmrig/xmrig-amd/releases/download/v2.6.1/xmrig-amd-2.6.1-win64.zip"
-$Port = 3335
+$Port = Get-FreeTcpPort -DefaultPort 3335
 $Fee = 1
 
 $Commands = [PSCustomObject]@{
@@ -37,7 +37,7 @@ $Commands | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Obj
             Name      = $Name
             Type      = $Type
             Path      = $Path
-            Arguments = ("--api-port $Port -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_) --keepalive --nicehash --donate-level 1")
+            Arguments = ("--api-port $($Port) -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_) --keepalive --nicehash --donate-level 1")
             HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
             API       = $Api
             Port      = $Port

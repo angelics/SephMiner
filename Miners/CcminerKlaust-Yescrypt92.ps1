@@ -19,6 +19,7 @@ if ($DriverVersion -lt $RequiredVersion) {
 
 $Path = ".\Bin\NVIDIA-KlausT-Yescrypt\ccminer-x64-cuda9.2.exe"
 $Uri = "https://semitest.000webhostapp.com/binary/CCMiner%20Klaust%20-%20Yescrypt.7z"
+$Port = Get-FreeTcpPort -DefaultPort 4068
 $Fee = 0
 
 $Commands = [PSCustomObject]@{
@@ -29,6 +30,8 @@ $Commands = [PSCustomObject]@{
     "yescryptR24"   = "" #yescryptR24
     "yescryptR32"   = "" #WAVI
 }
+
+$CommonCommands = "" #eg. " -d 0,1,8,9"
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
 
@@ -41,10 +44,10 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
     [PSCustomObject]@{
         Type      = $Type
         Path      = $Path
-        Arguments = "-a $_ -b 4068 -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)"
+        Arguments = "-b $($Port) -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)"
         HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
         API       = "Ccminer"
-        Port      = 4068
+        Port      = $Port
         URI       = $Uri
         MinerFee  = @($Fee)
     }

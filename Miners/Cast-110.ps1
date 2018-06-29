@@ -13,7 +13,7 @@ if (-not $Devices.$Type) {return} # No AMD mining device present in system
 $Path = ".\Bin\CryptoNight-Cast-110\cast_xmr-vega.exe"
 $API = "XMRig"
 $Uri = "http://www.gandalph3000.com/download/cast_xmr-vega-win64_110.zip"
-$Port = 7777
+$Port = Get-FreeTcpPort -DefaultPort 7777
 $Fee = 1.5
 
 $Commands = [PSCustomObject]@{
@@ -49,7 +49,7 @@ $Commands | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Obj
             Name      = $Name
             Type      = $Type
             Path      = $Path
-            Arguments = ("--remoteaccess --algo=$($Commands.$_ | Select-Object -Index 0) -S $($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_ | Select-Object -Index 1)$($CommonCommands) --fastjobswitch  -G $($DeviceIDs -join ',')")
+            Arguments = ("--remoteaccess --remoteport $($Port) --algo=$($Commands.$_ | Select-Object -Index 0) -S $($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_ | Select-Object -Index 1)$($CommonCommands) --fastjobswitch  -G $($DeviceIDs -join ',')")
             HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
             API       = $Api
             Port      = $Port

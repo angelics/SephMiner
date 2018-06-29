@@ -12,6 +12,7 @@ if (-not $Devices.$Type) {return} # No NVIDIA mining device present in system
 
 $Path = ".\Bin\Excavator-144a\excavator.exe"
 $Uri = "https://github.com/nicehash/excavator/releases/download/v1.4.4a/excavator_v1.4.4a_NVIDIA_Win64.zip"
+$Port = Get-FreeTcpPort -DefaultPort 3456
 $Fee = 0
 
 $Commands = [PSCustomObject]@{
@@ -34,7 +35,6 @@ $Commands = [PSCustomObject]@{
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
-$Port = 3456 + (2 * 10000)
 
 $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty Name | ForEach-Object {
 
@@ -75,7 +75,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
                 Name             = $Miner_Name
                 Type             = $Type
                 Path             = $Path
-                Arguments        = "-p $Port -c $($Pools.$($Algorithm_Norm).Name)_$($Algorithm_Norm)_$($Pools.$($Algorithm_Norm).User)_$($Threads)_Nvidia.json -na"
+                Arguments        = "-p $($Port) -c $($Pools.$($Algorithm_Norm).Name)_$($Algorithm_Norm)_$($Pools.$($Algorithm_Norm).User)_$($Threads)_Nvidia.json -na"
                 HashRates        = [PSCustomObject]@{$($Algorithm_Norm) = $Stats."$($Miner_Name)_$($Algorithm_Norm)_HashRate".Week}
                 API              = "Excavator"
                 Port             = $Port

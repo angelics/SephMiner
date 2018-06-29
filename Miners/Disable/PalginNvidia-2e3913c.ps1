@@ -20,7 +20,7 @@ if ($DriverVersion -gt $RequiredVersion) {
 $Path = ".\Bin\HSR-Palgin-2e3913c\hsrminer_hsr.exe"
 $API = "Ccminer"
 $Uri = "https://github.com/palginpav/hsrminer/raw/master/HSR%20algo/Windows/hsrminer_hsr.exe"
-$Port = 4001
+$Port = Get-FreeTcpPort -DefaultPort 4001
 $Fee = 1
 
 $Commands = [PSCustomObject]@{

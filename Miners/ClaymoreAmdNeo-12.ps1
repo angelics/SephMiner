@@ -12,7 +12,7 @@ if (-not $Devices.$Type) {return} # No AMD present in system
 
 $Path = ".\Bin\NeoScrypt-Claymore-12\NeoScryptMiner.exe"
 $Uri = "https://github.com/MultiPoolMiner/miner-binaries/releases/download/neoscryptminer/Claymore.s.NeoScrypt.AMD.GPU.Miner.v1.2.zip"
-$Port = 13333
+$Port = Get-FreeTcpPort -DefaultPort 13333
 $MinerFeeInPercent = 2.5
 $MinerFeeInPercentSSL = 2
 
@@ -36,7 +36,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
     [PSCustomObject]@{
         Type       = $Type
         Path       = $Path
-        Arguments  = ("-r -1 -mport -$Port -pool $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -wal $($Pools.$Algorithm_Norm.User) -psw $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)")
+        Arguments  = ("-r -1 -mport -$($Port) -pool $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -wal $($Pools.$Algorithm_Norm.User) -psw $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)")
         HashRates  = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
         API        = "Claymore"
         Port       = $Port

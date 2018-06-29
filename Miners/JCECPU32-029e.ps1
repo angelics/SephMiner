@@ -10,7 +10,7 @@ param(
 $Path = ".\Bin\JCE-CPU-029e\jce_cn_cpu_miner32.exe"
 $API = "XMRig"
 $Uri = "https://github.com/jceminer/cn_cpu_miner/raw/master/jce_cn_cpu_miner.windows.029e.zip"
-$Port = 4046
+$Port = Get-FreeTcpPort -DefaultPort 4046
 $Fee = 3
 
 $Commands = [PSCustomObject]@{
@@ -40,7 +40,7 @@ $Commands | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Obj
         Name      = $Name
         Type      = "CPU"
         Path      = $Path
-        Arguments = ("--auto $($Commands.$_ | Select-Object -Index 0) -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_ | Select-Object -Index 1) --low --forever --any --mport 4046 --stakjson $($Nicehash)")
+        Arguments = ("--auto $($Commands.$_ | Select-Object -Index 0) -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_ | Select-Object -Index 1) --low --forever --any --mport $($Port) --stakjson $($Nicehash)")
         HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
         API       = $Api
         Port      = $Port

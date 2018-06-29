@@ -11,7 +11,7 @@ $Path = ".\Bin\CryptoNight-FireIce-245NF\xmr-stak.exe"
 $Uri = "https://github.com/nemosminer/xmr-stak/releases/download/xmr-stakv2.4.5/xmr-stak-2.4.5.zip"
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
-$Port = 3334
+$Port = Get-FreeTcpPort -DefaultPort 3334
 $Fee = 2
 
 $Commands = [PSCustomObject]@{

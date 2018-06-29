@@ -12,6 +12,7 @@ if (-not $Devices.$Type) {return} # No NVIDIA mining device present in system
 
 $Path = ".\Bin\NVIDIA-Alexis78-12\ccminer.exe"
 $Uri = "https://github.com/nemosminer/ccminerAlexis78/releases/download/Alexis78-v1.2/ccminerAlexis78v1.2x64.7z"
+$Port = Get-FreeTcpPort -DefaultPort 4068
 $Fee = 0
 
 $Commands = [PSCustomObject]@{
@@ -32,6 +33,8 @@ $Commands = [PSCustomObject]@{
     #"x17"       = " -i 20" #X17 crash
 }
 
+$CommonCommands = "" #eg. " -d 0,1,8,9"
+
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
 
 $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty Name | Where-Object {$Pools.(Get-Algorithm $_).Protocol -eq "stratum+tcp" <#temp fix#>} | ForEach-Object {
@@ -47,10 +50,10 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
     [PSCustomObject]@{
         Type           = $Type
         Path           = $Path
-        Arguments      = "-a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)"
+        Arguments      = "-b $($Port) -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)"
         HashRates      = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
         API            = "Ccminer"
-        Port           = 4068
+        Port           = $Port
         URI            = $Uri
         MinerFee       = @($Fee)
         ExtendInterval = $ExtendInterval
