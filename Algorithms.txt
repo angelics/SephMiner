@@ -1,6 +1,6 @@
 {
     "aergo":  "Aergo",
-    "aeriumx":  "aeriumx",
+    "aeriumx":  "Aergo",
     "allium":  "Allium",
     "axiom":  "MemoHash",
     "bitcore":  "Bitcore",
