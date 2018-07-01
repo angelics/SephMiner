@@ -50,7 +50,7 @@ if %ping_time% %greater% 0 %then%
    goto:recheck
    :endrecheck
    if %gpu_average% %greater% 40 %then%
-      echo ------------------- %date% %time% reboot warning>> %log_file%
+      echo ------------------- %date% %time% strike1, gpu low usage, net working, recheck ok>> %log_file%
       goto start
    %endif%
    echo.
@@ -123,7 +123,7 @@ if %ping_time% %greater% 0 %then%
    set /a total=%gpu_usage0%+%gpu_usage1%+%gpu_usage2%+%gpu_usage3%+%gpu_usage4%+%gpu_usage5%
    set /a gpu_average=%total%/6
    if %gpu_average% %greater% 40 %then%
-      echo ------------------- %date% %time% reboot warning>> %log_file%
+      echo ------------------- %date% %time% strike2, gpu low usage, net working, recheck ok>> %log_file%
       goto start
    %endif%
    echo.
@@ -133,13 +133,13 @@ if %ping_time% %greater% 0 %then%
    echo ping is [92m%ping_time%[0m - OK, not internet problem
    timeout /t 5 >nul
    goto lastcheck
-%endif%
-:else
+%else%
    cls
    echo      %date% %time% No internet connection>> %log_file%
    echo No internet connection, keep working...
    timeout /t 5 >nul
    goto lastcheck
+%endif%
 
 :recheck
    for /F %%p in ('"C:\Program Files\NVIDIA Corporation\NVSMI\nvidia-smi" --id^=0 --query-gpu^=utilization.gpu --format^=csv^,noheader^,nounits') do set gpu_usage0=%%p
@@ -148,7 +148,7 @@ if %ping_time% %greater% 0 %then%
    for /F %%p in ('"C:\Program Files\NVIDIA Corporation\NVSMI\nvidia-smi" --id^=1 --query-gpu^=utilization.gpu --format^=csv^,noheader^,nounits') do set gpu_usage3=%%p
    for /F %%p in ('"C:\Program Files\NVIDIA Corporation\NVSMI\nvidia-smi" --id^=0 --query-gpu^=utilization.gpu --format^=csv^,noheader^,nounits') do set gpu_usage4=%%p
    for /F %%p in ('"C:\Program Files\NVIDIA Corporation\NVSMI\nvidia-smi" --id^=1 --query-gpu^=utilization.gpu --format^=csv^,noheader^,nounits') do set gpu_usage5=%%p
-   set /a total=%gpu_usage0%+%gpu_usage1%+%gpu_usage2%+%gpu_usage3%+%gpu_usage4%+%gpu_usage5%+%gpu_usage6%
+   set /a total=%gpu_usage0%+%gpu_usage1%+%gpu_usage2%+%gpu_usage3%+%gpu_usage4%+%gpu_usage5%
    set /a gpu_average=%total%/6
 goto endrecheck
 :end
