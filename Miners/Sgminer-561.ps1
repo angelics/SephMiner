@@ -6,12 +6,13 @@ param(
     [PSCustomObject]$Config,
     [PSCustomObject]$Devices
 )
-$Type = "AMD"
-if (-not $Devices.$Type) {return} # No AMD mining device present in system
 
+if (-not $Devices.AMD) {return} # No AMD mining device present in system
+
+$Type = "AMD"
 $Path = ".\Bin\AMD-NiceHash-561\sgminer.exe"
 $Uri = "https://github.com/nicehash/sgminer/releases/download/5.6.1/sgminer-5.6.1-nicehash-51-windows-amd64.zip"
-$Port = Get-FreeTcpPort -DefaultPort 4028
+$Port = 4028
 $Fee = 0
 
 $Commands = [PSCustomObject]@{
@@ -34,6 +35,8 @@ $Commands = [PSCustomObject]@{
     #"xevan-mod"  = " --intensity 15" #Xevan
 }
 
+$CommonCommands = "" #eg. " -d 0,1,8,9"
+
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
 
 $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty Name | Where-Object {$Pools.(Get-Algorithm $_).Protocol -eq "stratum+tcp" <#temp fix#>} | ForEach-Object {
@@ -43,7 +46,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
     [PSCustomObject]@{
         Type      = $Type
         Path      = $Path
-        Arguments = "--api-listen --api-port $($Port) -k $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_) --gpu-platform $([array]::IndexOf(([OpenCl.Platform]::GetPlatformIDs() | Select-Object -ExpandProperty Vendor), 'Advanced Micro Devices, Inc.'))"
+        Arguments = "--api-listen --api-port $($Port) -k $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)$($CommonCommands) --gpu-platform $([array]::IndexOf(([OpenCl.Platform]::GetPlatformIDs() | Select-Object -ExpandProperty Vendor), 'Advanced Micro Devices, Inc.'))"
         HashRates = [PSCustomObject]@{$Algorithm_Norm = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week}
         API       = "Xgminer"
         Port      = $Port

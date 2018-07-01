@@ -6,12 +6,13 @@ param(
     [PSCustomObject]$Config,
     [PSCustomObject]$Devices
 )
-$Type = "AMD"
-if (-not $Devices.$Type) {return} # No AMD mining device present in system
 
+if (-not $Devices.AMD) {return} # No AMD mining device present in system
+
+$Type = "AMD"
 $Path = ".\Bin\AMD-HSR-555\sgminer.exe"
 $Uri = "https://github.com/Partiolainen/sgminer-gm/releases/download/5.5.5-part/sgminer-5.5.5-part-hsr.win.x64.zip"
-$Port = Get-FreeTcpPort -DefaultPort 4028
+$Port = 4028
 $Fee = 0
 
 $Commands = [PSCustomObject]@{

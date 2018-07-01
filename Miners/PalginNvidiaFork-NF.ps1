@@ -7,12 +7,12 @@ param(
     [PSCustomObject]$Devices
 )
 
-$Type = "NVIDIA"
-if (-not $Devices.$Type) {return} # No NVIDIA mining device present in system
+if (-not $Devices.NVIDIA) {return} # No NVIDIA mining device present in system
 
+$Type = "NVIDIA"
 $Path = ".\Bin\\NeoScrypt-Palginfork-NF\\hsrminer_neoscrypt_fork_hp.exe"
 $Uri = "https://mega.nz/#!6GZ2xRYY!Xw9drYz3q7YTr0G1_DsWhWml96YwqdxyL_Ynm9_jMGg"
-$Port = Get-FreeTcpPort -DefaultPort 4068
+$Port = 4068
 $Fee = 0
 
 $Commands = [PSCustomObject]@{
@@ -34,7 +34,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
     [PSCustomObject]@{
         Type           = $Type
         Path           = $Path
-        Arguments      = "--api-bind=$($Port) -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)"
+        Arguments      = "--api-bind=$($Port) -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)$($CommonCommands)"
         HashRates      = [PSCustomObject]@{$Algorithm_Norm = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week}
         API            = "Ccminer"
         Port           = $Port

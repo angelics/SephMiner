@@ -7,12 +7,12 @@ param(
     [PSCustomObject]$Devices
 )
 
-$Type = "AMD"
-if (-not $Devices.$Type) {return} # No AMD mining device present in system
+if (-not $Devices.AMD) {return} # No AMD mining device present in system
 
+$Type = "AMD"
 $Path = ".\Bin\AMD-Xevan-1\sgminer.exe"
 $Uri = "https://github.com/LIMXTEC/Xevan-GPU-Miner/releases/download/1/sgminer-xevan-5.5.0-nicehash-1-windows-amd64.zip"
-$Port = Get-FreeTcpPort -DefaultPort 4028
+$Port = 4028
 $Fee = 0
 
 $Commands = [PSCustomObject]@{

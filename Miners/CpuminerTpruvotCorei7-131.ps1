@@ -7,9 +7,10 @@ param(
     [PSCustomObject]$Devices
 )
 
+$Type = "CPU"
 $Path = ".\Bin\CPU-TPruvot-131\cpuminer-gw64-corei7.exe"
 $Uri = "https://github.com/tpruvot/cpuminer-multi/releases/download/v1.3.1-multi/cpuminer-multi-rel1.3.1-x64.zip"
-$Port = Get-FreeTcpPort -DefaultPort 4048
+$Port = 4048
 $Fee = 0
 
 $Commands = [PSCustomObject]@{
@@ -41,7 +42,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
     $HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100)
 
     [PSCustomObject]@{
-        Type           = "CPU"
+        Type           = $Type
         Path           = $Path
         Arguments      = "-q -b $($Port) -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)$($CommonCommands)"
         HashRates      = [PSCustomObject]@{$Algorithm_Norm = $HashRate}

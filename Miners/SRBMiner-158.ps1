@@ -7,12 +7,12 @@ param(
     [PSCustomObject]$Devices
 )
 
-$Type = "AMD"
-if (-not $Devices.$Type) {return} # No AMD mining device present in system
+if (-not $Devices.AMD) {return} # No AMD mining device present in system
 
+$Type = "AMD"
 $Path = ".\Bin\AMD-SRBMiner-158\SRBMiner-CN.exe"
 $Uri = "https://semitest.000webhostapp.com/binary/SRBMiner-CN-V1-5-8.zip"
-$Port = Get-FreeTcpPort -DefaultPort 21555
+$Port = 21555
 $API = "SRBMiner"
 $Fees = 0.85
 
@@ -36,6 +36,7 @@ $Commands = [PSCustomObject]@{
     "marketcash:2"    = "" # CryptoNightMarketCash double threads
     "normalv7:2"      = "" # CryptoNightV7
 }
+
 $CommonCommands = ""
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
@@ -66,7 +67,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
         Name       = $Miner_Name
         Type       = $Type
         Path       = $Path
-        Arguments  = "--config $ConfigFile --cpool $($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) --cwallet $($Pools.$Algorithm_Norm.User) --cpassword $($Pools.$Algorithm_Norm.Pass) --ctls $($Pools.$Algorithm_Norm.SSL) --cnicehash $($Pools.$Algorithm_Norm.Name -eq 'NiceHash')$Command.$_$CommonCommands"
+        Arguments  = "--config $ConfigFile --cpool $($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) --cwallet $($Pools.$Algorithm_Norm.User) --cpassword $($Pools.$Algorithm_Norm.Pass) --ctls $($Pools.$Algorithm_Norm.SSL) --cnicehash $($Pools.$Algorithm_Norm.Name -eq 'NiceHash')$($Command.$_)$($CommonCommands)"
         HashRates  = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
         API        = $Api
         Port       = $Port

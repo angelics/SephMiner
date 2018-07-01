@@ -6,12 +6,13 @@ param(
     [PSCustomObject]$Config,
     [PSCustomObject]$Devices
 )
-$Type = "AMD"
-if (-not $Devices.$Type) {return} # No AMD mining device present in system
 
+if (-not $Devices.AMD) {return} # No AMD mining device present in system
+
+$Type = "AMD"
 $Path = ".\Bin\AMD-Lyra2z-djm3403\sgminer.exe"
 $Uri = "https://github.com/djm34/sgminer-msvc2015/releases/download/v0.3/kernel.rar"
-$Port = Get-FreeTcpPort -DefaultPort 4028
+$Port = 4028
 $Fee = 0
 
 $Commands = [PSCustomObject]@{

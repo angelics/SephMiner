@@ -6,12 +6,13 @@ param(
     [PSCustomObject]$Config,
     [PSCustomObject]$Devices
 )
-$Type = "AMD"
-if (-not $Devices.$Type) {return} # No AMD mining device present in system
 
+if (-not $Devices.AMD) {return} # No AMD mining device present in system
+
+$Type = "AMD"
 $Path = ".\Bin\AMD-Bitcore-10\sgminer-x64.exe"
 $Uri = "https://github.com/Quake4/MindMinerPrerequisites/raw/master/AMD/sgminer-bitcore/sgminer-bitcore-5.6.1.9.zip"
-$Port = Get-FreeTcpPort -DefaultPort 4028
+$Port = 4028
 $Fee = 0
 
 $Commands = [PSCustomObject]@{

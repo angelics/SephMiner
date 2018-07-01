@@ -7,9 +7,10 @@ param(
     [PSCustomObject]$Devices
 )
 
+$Type = "CPU"
 $Path = ".\Bin\CPU-JayDDee-3881\cpuminer-aes-sse42.exe"
 $Uri = "https://github.com/JayDDee/cpuminer-opt/files/1996977/cpuminer-opt-3.8.8.1-windows.zip"
-$Port = Get-FreeTcpPort -DefaultPort 4048
+$Port = 4048
 $Fee = 0
 
 $Commands = [PSCustomObject]@{
@@ -91,7 +92,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
     $HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100)
 
     [PSCustomObject]@{
-        Type           = "CPU"
+        Type           = $Type
         Path           = $Path
         Arguments      = "-q -b $($Port) -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)$($CommonCommands)"
         HashRates      = [PSCustomObject]@{$Algorithm_Norm = $HashRate}

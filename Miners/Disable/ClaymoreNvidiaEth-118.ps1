@@ -8,13 +8,13 @@ param(
     [PSCustomObject]$MinerAPITCPPort
 )
 
-$Type = "NVIDIA"
-if (-not $Devices.$Type) {return} # No NVIDIA mining device present in system
+if (-not $Devices.NVIDIA) {return} # No NVIDIA mining device present in system
 
+$Type = "NVIDIA"
 $Path = ".\Bin\Ethash-Claymore-118\EthDcrMiner64.exe"
 $API = "Claymore"
 $Uri = "https://semitest.000webhostapp.com/binary/Claymore%27s%20Dual%20Ethereum+Decred_Siacoin_Lbry_Pascal_Blake2s_Keccak%20AMD+NVIDIA%20GPU%20Miner%20v11.8%20-%20Catalyst%2015.12-18.x%20-%20CUDA%208.0_9.1_7.5_6.5.zip"
-$Port = Get-FreeTcpPort -DefaultPort 23333
+$Port = 23333
 $MinerFeeInPercentSingleMode = 1.0
 $MinerFeeInPercentDualMode = 1.5
 

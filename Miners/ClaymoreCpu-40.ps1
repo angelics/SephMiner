@@ -7,10 +7,11 @@ param(
     [PSCustomObject]$Devices
 )
 
+$Type = "CPU"
 $Path = ".\Bin\CryptoNight-Claymore-Cpu-40\NsCpuCNMiner64.exe"
 $API = "Claymore"
 $Uri = "https://github.com/MultiPoolMiner/miner-binaries/releases/download/claymorecpu/Claymore.CryptoNote.CPU.Miner.v4.0.-.POOL.zip"
-$Port = Get-FreeTcpPort -DefaultPort 3333
+$Port = 3333
 $Fee = 0
 
 $Commands = [PSCustomObject]@{
@@ -31,7 +32,7 @@ $Commands | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Obj
 
         [PSCustomObject]@{
             Name      = $Name
-            Type      = "CPU"
+            Type      = $Type
             Path      = $Path
             Arguments = ("-r -1 -mport -$($Port) -pow7 1 -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)")
             HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}

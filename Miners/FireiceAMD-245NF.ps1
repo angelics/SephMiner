@@ -6,14 +6,13 @@ param(
     [PSCustomObject]$Config,
     [PSCustomObject]$Devices
 )
-$Type = "AMD"
-if (-not $Devices.$Type) {return} # No AMD mining device present in system
 
+if (-not $Devices.AMD) {return} # No AMD mining device present in system
+
+$Type = "AMD"
 $Path = ".\Bin\CryptoNight-FireIce-245NF\xmr-stak.exe"
 $Uri = "https://github.com/nemosminer/xmr-stak/releases/download/xmr-stakv2.4.5/xmr-stak-2.4.5.zip"
-
-$Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
-$Port = Get-FreeTcpPort -DefaultPort 3336
+$Port = 3336
 $Fee = 0
 
 $Commands = [PSCustomObject]@{
@@ -23,6 +22,10 @@ $Commands = [PSCustomObject]@{
     "cryptonight_V7"          = "" #CryptoNightV7 --nvidia cn7.txt
     "cryptonight_V7_stellite" = "" #CryptoNightV7stellite --nvidia cn7stellite.txt
 }
+
+$CommonCommands = "" #eg. " -d 0,1,8,9"
+
+$Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
 
 $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty Name | ForEach-Object {
 
@@ -60,12 +63,12 @@ $HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100
         http_pass       = ""
         prefer_ipv4     = $true
     } | ConvertTo-Json -Depth 10
-) -replace "^{" -replace "}$" | Set-Content "$(Split-Path $Path)\$($Pools.$Algorithm_Norm.Name)_$($Algorithm_Norm)_$($Pools.$Algorithm_Norm.User)_Amd.txt" -Force -ErrorAction SilentlyContinue
+) -replace "^{" -replace "}$" | Set-Content "$(Split-Path $Path)\$($Pools.$Algorithm_Norm.Name)_$($Algorithm_Norm)_$($Pools.$Algorithm_Norm.User)_$($Type).txt" -Force -ErrorAction SilentlyContinue
 
 	[PSCustomObject]@{
     Type      = $Type
     Path      = $Path
-    Arguments = "-C $($Pools.$Algorithm_Norm.Name)_$($Algorithm_Norm)_$($Pools.$Algorithm_Norm.User)_Amd.txt -c $($Pools.$Algorithm_Norm.Name)_$($Algorithm_Norm)_$($Pools.$Algorithm_Norm.User)_Amd.txt --noUAC --noCPU --noNVIDIA $($Commands.$_)"
+    Arguments = "-C $($Pools.$Algorithm_Norm.Name)_$($Algorithm_Norm)_$($Pools.$Algorithm_Norm.User)_$($Type).txt -c $($Pools.$Algorithm_Norm.Name)_$($Algorithm_Norm)_$($Pools.$Algorithm_Norm.User)_$($Type).txt --noUAC --noCPU --noNVIDIA $($Commands.$_)$($CommonCommands)"
     HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
     API       = "XMRig"
     Port      = $Port

@@ -7,10 +7,11 @@ param(
     [PSCustomObject]$Devices
 )
 
+$Type = "CPU"
 $Path = ".\Bin\JCE-CPU-029e\jce_cn_cpu_miner64.exe"
 $API = "XMRig"
 $Uri = "https://github.com/jceminer/cn_cpu_miner/raw/master/jce_cn_cpu_miner.windows.029e.zip"
-$Port = Get-FreeTcpPort -DefaultPort 4046
+$Port = 4046
 $Fee = 1.5
 
 $Commands = [PSCustomObject]@{
@@ -23,6 +24,8 @@ $Commands = [PSCustomObject]@{
     "CryptonightMKT"   = @("--variation 9","") #CryptonightMKT
     "CryptonightArto"  = @("--variation 10","") #CryptonightArto
 }
+
+$CommonCommands = "" #eg. " -d 0,1,8,9"
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
 
@@ -38,9 +41,9 @@ $Commands | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Obj
 
     [PSCustomObject]@{
         Name      = $Name
-        Type      = "CPU"
+        Type      = $Type
         Path      = $Path
-        Arguments = ("--auto $($Commands.$_ | Select-Object -Index 0) -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_ | Select-Object -Index 1) --low --forever --any --mport $($Port) --stakjson $($Nicehash)")
+        Arguments = ("--auto $($Commands.$_ | Select-Object -Index 0) -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_ | Select-Object -Index 1)$($CommonCommands) --low --forever --any --mport $($Port) --stakjson $($Nicehash)")
         HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
         API       = $Api
         Port      = $Port

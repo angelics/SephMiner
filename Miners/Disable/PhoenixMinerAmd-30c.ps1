@@ -7,19 +7,21 @@ param(
     [PSCustomObject]$Devices
 )
 
-$Type = "AMD"
-if (-not $Devices.$Type) {return} # No AMD mining device present in system
+if (-not $Devices.AMD) {return} # No AMD mining device present in system
 
+$Type = "AMD"
 $Path = ".\Bin\PhoenixMiner\PhoenixMiner.exe"
 $API = "Claymore"
 $Uri = "https://semitest.000webhostapp.com/binary/PhoenixMiner_3.0c.zip"
-$Port = Get-FreeTcpPort -DefaultPort 23334
+$Port = 23334
 $Fee = 0.65
 
 $Commands = [PSCustomObject]@{
     "ethash"    = ""
     "ethash2gb" = ""
 }
+
+$CommonCommands = "" #eg. " -d 0,1,8,9"
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
 
@@ -46,7 +48,7 @@ $Commands | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Obj
             Name      = $Name
             Type      = $Type
             Path      = $Path
-            Arguments = ("-rmode 0 -cdmport $($Port) -cdm 1 -pool $($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -wal $($Pools.$Algorithm_Norm.User) -pass $($Pools.$Algorithm_Norm.Pass)$($Commands.$_) -proto 4 -coin auto -amd -gpus $($DeviceIDs -join ',')")
+            Arguments = ("-rmode 0 -cdmport $($Port) -cdm 1 -pool $($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -wal $($Pools.$Algorithm_Norm.User) -pass $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)$($CommonCommands) -proto 4 -coin auto -amd -gpus $($DeviceIDs -join ',')")
             HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
             API       = $Api
             Port      = $Port

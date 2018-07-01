@@ -7,16 +7,19 @@ param(
     [PSCustomObject]$Devices
 )
 
+$Type = "CPU"
 $Path = ".\Bin\CryptoNight-CPU-262\xmrig.exe"
 $API = "XMRig"
 $Uri = "https://github.com/xmrig/xmrig/releases/download/v2.6.2/xmrig-2.6.2-msvc-win64.zip"
-$Port = Get-FreeTcpPort -DefaultPort 3334
+$Port = 3334
 $Fee = 1
 
 $Commands = [PSCustomObject]@{
     "cn"                = "" #CryptoNightV7
     "cryptonight-heavy" = "" #CryptoNightHeavy
 }
+
+$CommonCommands = "" #eg. " -d 0,1,8,9"
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
 
@@ -32,9 +35,9 @@ $Commands | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Obj
 
         [PSCustomObject]@{
             Name      = $Name
-            Type      = "CPU"
+            Type      = $Type
             Path      = $Path
-            Arguments = ("--api-port $($Port) -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_) --keepalive --nicehash --donate-level 1")
+            Arguments = ("--api-port $($Port) -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)$($CommonCommands) --keepalive --nicehash --donate-level 1")
             HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
             API       = $Api
             Port      = $Port

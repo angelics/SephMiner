@@ -7,12 +7,12 @@ param(
     [PSCustomObject]$Devices
 )
 
-$Type = "NVIDIA"
-if (-not $Devices.$Type) {return} # No NVIDIA mining device present in system
+if (-not $Devices.NVIDIA) {return} # No NVIDIA mining device present in system
 
+$Type = "NVIDIA"
 $Path = ".\Bin\NVIDIA-Nanashi-22r2\ccminer.exe"
 $URI = "https://github.com/Nanashi-Meiyo-Meijin/ccminer/releases/download/v2.2-mod-r2/2.2-mod-r2-CUDA9.binary.zip"
-$Port = Get-FreeTcpPort -DefaultPort 4068
+$Port = 4068
 $Fee = 0
 
 $Commands = [PSCustomObject]@{
@@ -21,6 +21,8 @@ $Commands = [PSCustomObject]@{
 	#"lyra2v2"   = " -N 1" #Lyra2RE2
     #"neoscrypt" = "" #NeoScrypt palginnvidia better. 1080
 }
+
+$CommonCommands = "" #eg. " -d 0,1,8,9"
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
 
@@ -35,7 +37,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
         [PSCustomObject]@{
             Type      = $Type
             Path      = $Path
-            Arguments = "-q -b $($Port) -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)"
+            Arguments = "-q -b $($Port) -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)$(CommonCommands)"
             HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
             API       = "Ccminer"
             Port      = $Port

@@ -7,12 +7,12 @@ param(
     [PSCustomObject]$Devices
 )
 
-$Type = "NVIDIA"
-if (-not $Devices.$Type) {return} # No NVIDIA mining device present in system
+if (-not $Devices.NVIDIA) {return} # No NVIDIA mining device present in system
 
+$Type = "NVIDIA"
 $Path = ".\Bin\Excavator-144a\excavator.exe"
 $Uri = "https://github.com/nicehash/excavator/releases/download/v1.4.4a/excavator_v1.4.4a_NVIDIA_Win64.zip"
-$Port = Get-FreeTcpPort -DefaultPort 3456
+$Port = 3456
 $Fee = 0
 
 $Commands = [PSCustomObject]@{

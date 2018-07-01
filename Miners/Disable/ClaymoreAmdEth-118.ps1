@@ -33,7 +33,7 @@ $Commands = [PSCustomObject]@{
     "ethash2gb;keccak:30"  = @("","")
     "ethash2gb;keccak:55"  = @("","")
 }
-$CommonCommands = @("", "") # array, first value for main algo, second value for secondary algo
+$CommonCommands = @(" -logsmaxsize 1", "") # array, first value for main algo, second value for secondary algo
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
 

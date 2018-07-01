@@ -7,13 +7,13 @@ param(
     [PSCustomObject]$Devices
 )
 
-$Type = "AMD"
-if (-not $Devices.$Type) {return} # No AMD mining device present in system
+if (-not $Devices.AMD) {return} # No AMD mining device present in system
 
+$Type = "AMD"
 $Path = ".\Bin\CryptoNight-Cast-110\cast_xmr-vega.exe"
 $API = "XMRig"
 $Uri = "http://www.gandalph3000.com/download/cast_xmr-vega-win64_110.zip"
-$Port = Get-FreeTcpPort -DefaultPort 7777
+$Port = 7777
 $Fee = 1.5
 
 $Commands = [PSCustomObject]@{

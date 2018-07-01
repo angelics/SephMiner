@@ -7,12 +7,12 @@ param(
     [PSCustomObject]$Devices
 )
 
-$Type = "AMD"
-if (-not $Devices.$Type) {return} # No AMD present in system
+if (-not $Devices.AMD) {return} # No AMD present in system
 
+$Type = "AMD"
 $Path = ".\Bin\NeoScrypt-Claymore-12\NeoScryptMiner.exe"
 $Uri = "https://github.com/MultiPoolMiner/miner-binaries/releases/download/neoscryptminer/Claymore.s.NeoScrypt.AMD.GPU.Miner.v1.2.zip"
-$Port = Get-FreeTcpPort -DefaultPort 13333
+$Port = 13333
 $MinerFeeInPercent = 2.5
 $MinerFeeInPercentSSL = 2
 
