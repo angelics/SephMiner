@@ -3,7 +3,6 @@ stats/
 logs/
 wrapper/
 downloads/
-monitor/
 *.zip
 *.7z
 *.rar
