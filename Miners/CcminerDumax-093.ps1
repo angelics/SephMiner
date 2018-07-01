@@ -17,14 +17,14 @@ if ($DriverVersion -lt $RequiredVersion) {
     return
 }
 
-$Path = ".\Bin\NVIDIA-Dumax-092\ccminer.exe"
-$Uri = "https://github.com/DumaxFr/ccminer/releases/download/dumax-0.9.2/ccminer-dumax-0.9.2-win64.zip"
+$Path = ".\Bin\NVIDIA-Dumax-093\ccminer.exe"
+$Uri = "https://github.com/DumaxFr/ccminer/releases/download/dumax-0.9.3/ccminer-dumax-0.9.3-win64.zip"
 $Port = Get-FreeTcpPort -DefaultPort 4068
 $Fee = 0
 
 $Commands = [PSCustomObject]@{
     "phi"  = " -N 1" #phi
-    "phi2" = "" #phi2
+    "phi2" = " -i 20" #phi2
     "x16r" = " -N 3" #X16r
     "x16s" = " -N 3" #X16s
     "x17"  = " -N 1" #X17
