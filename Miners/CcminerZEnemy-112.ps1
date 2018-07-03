@@ -9,6 +9,7 @@ param(
 
 if (-not $Devices.NVIDIA) {return} # No NVIDIA mining device present in system
 
+
 $DriverVersion = (Get-Devices).NVIDIA.Platform.Version -replace ".*CUDA ",""
 $RequiredVersion = "9.1.00"
 if ($DriverVersion -lt $RequiredVersion) {
@@ -17,16 +18,30 @@ if ($DriverVersion -lt $RequiredVersion) {
 }
 
 $Type = "NVIDIA"
-$Path = ".\Bin\CuBalloon-NVIDIA-102\cuballoon.exe"
-$Uri = "https://github.com/Belgarion/cuballoon/files/2143221/CuBalloon.1.0.2.Windows.zip"
+$Path = ".\Bin\ZEnemy-NVIDIA-112\z-enemy.exe"
+$Uri = "http://semitest.000webhostapp.com/binary/z-enemy.1-12public.zip"
 $Port = 4068
-$Fee = 3.5
+$Fee = 1
 
 $Commands = [PSCustomObject]@{
-    "balloon"    = "" #Balloon
+    "aeriumx"    = "" #aeriumx
+    "bitcore"    = "" #Bitcore
+    "c11"        = "" #c11
+    "phi"        = "" #Phi
+    "phi2"       = "" #Phi2
+    "poly"       = "" #poly
+    "vit"        = "" #Vitalium
+    "skunk"      = "" #skunk
+    "sonoa"      = "" #sonoa
+    "timetravel" = "" #timetravel
+    "tribus"     = "" #Tribus
+    "x16s"       = " -i 21" #Pigeon CcminerPigeoncoin-26
+    "x16r"       = " -i 21" #Raven
+    "x17"        = "" #X17
+    "xevan"      = "" #Xevan
 }
 
-$CommonCommands = " --cuda_threads 128 --cuda_blocks 48" #--cuda_threads 256 1070, --cuda_threads 384 1080, --cuda_threads 448 1080ti
+$CommonCommands = "" #eg. " -d 0,1,8,9"
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
 
@@ -58,7 +73,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
     [PSCustomObject]@{
         Type           = $Type
         Path           = $Path
-        Arguments      = "-q -b $($Port) -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)$($CommonCommands) -N $($N) -t 0 "
+        Arguments      = "-q -b $($Port) -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)$($CommonCommands) -N $($N)"
         HashRates      = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
         API            = "Ccminer"
         Port           = $Port
