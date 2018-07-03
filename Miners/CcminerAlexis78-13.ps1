@@ -24,18 +24,18 @@ $Fee = 0
 
 $Commands = [PSCustomObject]@{
     #"blake2s"   = "" #Blake2s not profit
-    #"c11"       = " -i 21 -N 3" #C11 crash
-    "hsr"       = " -N 3" #Hsr CcminerDelos-112
+    #"c11"       = " -i 21" #C11 crash
+    "hsr"       = "" #Hsr CcminerDelos-112
     #"keccak"    = " -m 2 -i 29" #Keccak ExcavatorNvidia-144a
     #"keccakc"   = " -i 29" #Keccakc CcminerTpruvot-22692
     "lyra2"     = "" #Lyra2
-    #"lyra2v2"   = " -N 1" #Lyra2RE2 ExcavatorNvidia-144a
+    #"lyra2v2"   = "" #Lyra2RE2 ExcavatorNvidia-144a
     #"neoscrypt" = "" #NeoScrypt
     "poly"      = "" #Poly
     "skein2"    = "" #skein2
     "whirlcoin" = "" #WhirlCoin
     "whirlpool" = "" #Whirlpool
-    #"x11evo"    = " -N 1 -i 21" #x11evo crash
+    #"x11evo"    = " -i 21" #x11evo crash
     #"x17"       = " -i 20" #X17 crash
 }
 
@@ -48,7 +48,9 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
     $Algorithm_Norm = Get-Algorithm $_
 
     Switch ($Algorithm_Norm) {
-        default {$ExtendInterval = 3}
+        "Lyra2RE2" {$N = 1}
+        default    {$ExtendInterval = 3
+		$N = 3}
     }
 
     $HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100)
@@ -56,7 +58,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
     [PSCustomObject]@{
         Type           = $Type
         Path           = $Path
-        Arguments      = "-q -b $($Port) -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)$(CommonCommands)"
+        Arguments      = "-q -b $($Port) -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)$(CommonCommands) -N $($N)"
         HashRates      = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
         API            = "Ccminer"
         Port           = $Port

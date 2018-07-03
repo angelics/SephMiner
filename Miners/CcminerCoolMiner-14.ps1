@@ -23,7 +23,7 @@ $Port = 4068
 $Fee = 1
 
 $Commands = [PSCustomObject]@{
-    "lyra2z" = " -N 1" #Lyra2z
+    "lyra2z" = "" #Lyra2z
 }
 
 $CommonCommands = "" #eg. " -d 0,1,8,9"
@@ -34,6 +34,25 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
 
     $Algorithm_Norm = Get-Algorithm $_
 
+    Switch ($Algorithm_Norm) {
+        "allium"        {$ExtendInterval = 2}
+        "CryptoNightV7" {$ExtendInterval = 2}
+        "Lyra2RE2"      {$ExtendInterval = 2
+		$N = 1}
+        "lyra2z"        {$N = 1}
+        "phi"           {$N = 1}
+        "phi2"          {$ExtendInterval = 2}
+        "tribus"        {$ExtendInterval = 2
+		$N = 1}
+        "X16R"          {$ExtendInterval = 3}
+        "X16S"          {$ExtendInterval = 3}
+        "X17"           {$ExtendInterval = 2}
+        "Xevan"         {$ExtendInterval = 2
+		$N = 1}
+        default         {$ExtendInterval = 3
+		$N = 3}
+    }
+	
     if ($Pools.$Algorithm_Norm) {
 	
         $HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100)
@@ -41,7 +60,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
         [PSCustomObject]@{
             Type      = $Type
             Path      = $Path
-            Arguments = "-q -b $($Port) -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)$(CommonCommands)"
+            Arguments = "-q -b $($Port) -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)$(CommonCommands) -N $($N)"
             HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
             API       = "Ccminer"
             Port      = $Port
