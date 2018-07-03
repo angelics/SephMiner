@@ -3,6 +3,7 @@
     "aeriumx":  "Aergo",
     "allium":  "Allium",
     "axiom":  "MemoHash",
+    "balloon":  "Balloon",
     "bitcore":  "Bitcore",
     "blake2s":  "Blake2s",
     "c11":  "C11",
