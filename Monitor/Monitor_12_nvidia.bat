@@ -153,7 +153,7 @@ if %ping_time% %greater% 0 %then%
    goto lastcheck
 %else%
    cls
-   echo      %date% %time% No internet connection>> %log_file%
+   echo      %date% %time% strike2 No internet connection>> %log_file%
    echo No internet connection, keep working...
    timeout /t 5 >nul
    goto lastcheck
