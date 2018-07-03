@@ -46,22 +46,13 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
         "Xevan"         {$ExtendInterval = 2}
         default         {$ExtendInterval = 0}
     }
-	
-    Switch ($Algorithm_Norm) {
-        "Lyra2RE2" {$Average = 1}
-        "lyra2z"   {$Average = 1}
-        "phi"      {$Average = 1}
-        "tribus"   {$Average = 1}
-        "Xevan"    {$Average = 1}
-        default    {$Average = 3}
-    }
 
     $HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100)
 
     [PSCustomObject]@{
         Type           = $Type
         Path           = $Path
-        Arguments      = "-q -b $($Port) -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)$($CommonCommands) -N $($Average) -t 0 "
+        Arguments      = "-q -b $($Port) -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)$($CommonCommands) -t 0 "
         HashRates      = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
         API            = "Ccminer"
         Port           = $Port
