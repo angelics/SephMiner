@@ -11,7 +11,7 @@ if (-not $Devices.NVIDIA) {return} # No NVIDIA mining device present in system
 
 $Type = "NVIDIA"
 $Path = ".\Bin\NVIDIA-Alexis78-12\ccminer.exe"
-$Uri = "https://github.com/nemosminer/ccminerAlexis78/releases/download/Alexis78-v1.2/ccminerAlexis78v1.2x64.7z"
+$Uri = "https://semitest.000webhostapp.com/binary/ccminerAlexis78v1.2x32.7z"
 $Port = 4068
 $Fee = 0
 
@@ -22,14 +22,14 @@ $Commands = [PSCustomObject]@{
     #"keccak"    = " -m 2 -i 29" #Keccak ExcavatorNvidia-144a
     #"keccakc"   = " -i 29" #Keccakc CcminerAlexis78-13
     "lyra2"     = "" #Lyra2
-    #"lyra2v2"   = " -N 1" #Lyra2RE2 ExcavatorNvidia-144a
+    #"lyra2v2"   = "" #Lyra2RE2 ExcavatorNvidia-144a
     #"neoscrypt" = "" #NeoScrypt PalginNvidiaFork-45ee8fa
     "poly"      = "" #Poly
     "skein"     = "" #skein
     "skein2"    = "" #skein2
     "whirlcoin" = "" #WhirlCoin
     "whirlpool" = "" #Whirlpool
-    "x11evo"    = " -N 1 -i 21" #x11evo
+    "x11evo"    = " -i 21" #x11evo
     #"x17"       = " -i 20" #X17 crash
 }
 
