@@ -24,7 +24,7 @@ $Fee = 0
 
 $Commands = [PSCustomObject]@{
     "phi"  = "" #phi
-    "phi2" = " -i 20" #phi2
+    #"phi2" = " -i 20" #phi2 CcminerZEnemy-112
     "x16r" = "" #X16r
     "x16s" = "" #X16s
     "x17"  = "" #X17

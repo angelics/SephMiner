@@ -9,9 +9,16 @@ param(
 
 if (-not $Devices.NVIDIA) {return} # No NVIDIA mining device present in system
 
+$DriverVersion = (Get-Devices).NVIDIA.Platform.Version -replace ".*CUDA ",""
+$RequiredVersion = "9.2.00"
+if ($DriverVersion -lt $RequiredVersion) {
+    Write-Log -Level Warn "Miner ($($Name)) requires CUDA version $($RequiredVersion) or above (installed version is $($DriverVersion)). Please update your Nvidia drivers to 397.93 or newer. "
+    return
+}
+
 $Type = "NVIDIA"
-$Path = ".\Bin\NVIDIA-TPruvot-23\ccminer-x64.exe"
-$Uri = "https://github.com/tpruvot/ccminer/releases/download/2.3-tpruvot/ccminer-2.3-cuda9.7z"
+$Path = ".\Bin\NVIDIA-TPruvot-23b1\ccminer-x64.exe"
+$Uri = "http://semitest.000webhostapp.com/binary/ccminer-2.3-B1.7z"
 $Port = 4068
 $Fee = 0
 
