@@ -16,7 +16,7 @@ $Port = 4068
 $Fee = 0
 
 $Commands = [PSCustomObject]@{
-    "allium"     = " -i 21" #allium
+    #"allium"     = " -i 21" #allium CcminerTpruvot-23b1
     #"bitcore"     = "" #bitcore CcminerZEnemy-111v3
     #"blake2s"     = "" #Blake2s
     "bmw"         = "" #bmw
@@ -27,7 +27,7 @@ $Commands = [PSCustomObject]@{
     "fugue256"    = "" #fugue256
     "graft"       = "" #graft
     "heavy"       = "" #heavy
-    "hsr"         = "" #hsr
+    "hsr"         = "" #hsr CcminerAlexis78-13
     #"hmq1725"     = " -N 3" #hmq1725 crash
     "jha"         = "" #JHA
     #"keccak"      = " -i 29 -m 2" #Keccak ExcavatorNvidia-144a

@@ -44,6 +44,7 @@
     "sha256t":  "sha256t",
     "sigt":  "Skunk",
     "skein":  "Skein",
+    "skeincoin":  "Skein",
     "skein2":  "Skein2",
     "skunk":  "Skunk",
     "skunkhash":  "Skunk",

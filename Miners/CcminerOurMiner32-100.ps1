@@ -24,7 +24,7 @@ $Fee = 0
 
 $Commands = [PSCustomObject]@{
     "lyra2z" = " -i 20" #lyra2z
-    "x16s"   = " -i 21" #Pigeon
+    #"x16s"   = " -i 21" #Pigeon CcminerZEnemy-112
     "x16r"   = " -i 21" #Raven
 }
 

@@ -27,7 +27,7 @@ $Commands = [PSCustomObject]@{
     "aeriumx"    = "" #aeriumx
     "bitcore"    = "" #Bitcore
     "c11"        = "" #c11
-    "phi"        = "" #Phi
+    #"phi"        = "" #Phi CcminerDumax-093
     "phi2"       = "" #Phi2
     "poly"       = "" #poly
     "vit"        = "" #Vitalium
@@ -36,7 +36,7 @@ $Commands = [PSCustomObject]@{
     "timetravel" = "" #timetravel
     "tribus"     = "" #Tribus
     "x16s"       = " -i 21" #Pigeon
-    "x16r"       = " -i 21" #Raven
+    #"x16r"       = " -i 21" #Raven CcminerOurMiner32-100
     "x17"        = "" #X17
     "xevan"      = "" #Xevan
 }

@@ -19,7 +19,7 @@ $Commands = [PSCustomObject]@{
     "cryptonight_heavy"       = "" #CryptoNightHeavy --nvidia cnheavy.txt
     "cryptonight_lite_v7"     = "" #CryptoNightLiteV7 --nvidia cnlitev7.txt
     "cryptonight_lite_v7_xor" = "" #CryptoNightLiteV7xor --nvidia cnlitev7xor.txt
-    "cryptonight_V7"          = "" #CryptoNightV7 --nvidia cn7.txt
+    #"cryptonight_V7"          = "" #CryptoNightV7 --nvidia cn7.txt CcminerTpruvot-23
     "cryptonight_V7_stellite" = "" #CryptoNightV7stellite --nvidia cn7stellite.txt
 }
 

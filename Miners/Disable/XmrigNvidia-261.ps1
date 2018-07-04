@@ -17,7 +17,7 @@ $Port = 3335
 $Fee = 1
 
 $Commands = [PSCustomObject]@{
-    "cn"                = "" #CryptoNightV7
+    #"cn"                = "" #CryptoNightV7 CcminerTpruvot-23
     "cryptonight-heavy" = "" #CryptoNightHeavy
 }
 
