@@ -18,7 +18,7 @@ if ($DriverVersion -lt $RequiredVersion) {
 }
 
 $Type = "NVIDIA"
-$Path = ".\Bin\NVIDIA-EWBF-Equihash-030\miner.exe"
+$Path = ".\Bin\NVIDIA-EWBF-Equihash-03\miner.exe"
 $Uri = "http://semitest.000webhostapp.com/binary/EWBF%20Equihash%20miner%20v0.3.zip"
 $Port = 42000
 $Fee = 0
