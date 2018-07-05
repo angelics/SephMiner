@@ -26,7 +26,7 @@ $Commands = [PSCustomObject]@{
     "balloon"    = "" #Balloon
 }
 
-$CommonCommands = " --cuda_threads 128 --cuda_blocks 48" #--cuda_devices 0,1,2 --cuda_threads 128 1060,--cuda_threads 256 1070, --cuda_threads 384 1080, --cuda_threads 448 1080ti
+$CommonCommands = " --cuda_threads 128 --cuda_blocks 48" #--cuda_devices 0,1,2 --cuda_threads 128 1060/3gb,--cuda_threads 256 1070, --cuda_threads 384 1080, --cuda_threads 448 1080ti
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
 

@@ -23,6 +23,7 @@
     "daggerhashimoto":  "Ethash",
     "eth":  "Ethash",
     "ethash":  "Ethash",
+    "equihash-BTG":  "BitcoinGold",
     "graft":  "graft",
     "hmq1725":  "HMQ1725",
     "hodl":  "Hodlcoin",
