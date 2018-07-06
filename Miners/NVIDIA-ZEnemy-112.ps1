@@ -9,7 +9,6 @@ param(
 
 if (-not $Devices.NVIDIA) {return} # No NVIDIA mining device present in system
 
-
 $DriverVersion = (Get-Devices).NVIDIA.Platform.Version -replace ".*CUDA ",""
 $RequiredVersion = "9.1.00"
 if ($DriverVersion -lt $RequiredVersion) {
@@ -19,9 +18,10 @@ if ($DriverVersion -lt $RequiredVersion) {
 
 $Type = "NVIDIA"
 $Path = ".\Bin\ZEnemy-NVIDIA-112\z-enemy.exe"
-$Uri = "http://semitest.000webhostapp.com/binary/z-enemy.1-12public.zip"
-$Port = 4068
-$Fee = 1
+$API  = "Ccminer"
+$Uri  = "http://semitest.000webhostapp.com/binary/z-enemy.1-12public.zip"
+$Port = Get-FreeTcpPort -DefaultPort 4068
+$Fee  = 1
 
 $Commands = [PSCustomObject]@{
     "aeriumx"    = "" #aeriumx
@@ -53,6 +53,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
         "allium"        {$ExtendInterval = 2}
         "CryptoNightV7" {$ExtendInterval = 2}
         "Lyra2RE2"      {$ExtendInterval = 2}
+        "phi"           {$ExtendInterval = 2}
         "phi2"          {$ExtendInterval = 2}
         "tribus"        {$ExtendInterval = 2}
         "X16R"          {$ExtendInterval = 3}
@@ -78,7 +79,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
         Path           = $Path
         Arguments      = "-q -b $($Port) -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)$($CommonCommands) -N $($Average)"
         HashRates      = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
-        API            = "Ccminer"
+        API            = $API
         Port           = $Port
         URI            = $Uri
         MinerFee       = @($Fee)

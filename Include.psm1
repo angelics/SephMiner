@@ -283,15 +283,8 @@ function Get-FreeTcpPort {
         [Int]$DefaultPort
     )
     if ($DefaultPort){$StartPort = $DefaultPort} else {$StartPort = 4068}
-    $PortFound = $false
-    $Port = $StartPort
-    while ($Port -le ($StartPort + 10) -and !$PortFound) {
-        try {$Null = New-Object System.Net.Sockets.TCPClient -ArgumentList 127.0.0.1, $Port; $Port++
-        }
-        catch {
-            $Port; $PortFound = $True
-        }
-	}
+    while (Get-NetTCPConnection -LocalPort $StartPort -EA SilentlyContinue) {$StartPort++}
+    $StartPort
 }
 
 function Set-Stat {

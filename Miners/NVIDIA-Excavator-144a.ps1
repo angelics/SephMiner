@@ -10,27 +10,28 @@ param(
 if (-not $Devices.NVIDIA) {return} # No NVIDIA mining device present in system
 
 $Type = "NVIDIA"
-$Path = ".\Bin\Excavator-144a\excavator.exe"
-$Uri = "https://github.com/nicehash/excavator/releases/download/v1.4.4a/excavator_v1.4.4a_NVIDIA_Win64.zip"
-$Port = 3456
-$Fee = 0
+$Path = ".\Bin\NVIDIA-Excavator-144a\excavator.exe"
+$API  = "Excavator"
+$Uri  = "https://github.com/nicehash/excavator/releases/download/v1.4.4a/excavator_v1.4.4a_NVIDIA_Win64.zip"
+$Port = Get-FreeTcpPort -DefaultPort 3456
+$Fee  = 0
 
 $Commands = [PSCustomObject]@{
     #"daggerhashimoto:1" = @("","") #Ethash 1 thread commands,difficulty
     #"equihash:1"        = @("","") #Equihash 1 thread
     #"neoscrypt:1"       = @("","") #NeoScrypt 1 thread
-    "lyra2rev2:1"       = @("","") #Lyra2RE2 1 thread
+    #"lyra2rev2:1"       = @("","") #Lyra2RE2 1 thread
     #"blake2s:1"         = @("","") #blake2s 1 thread
     "keccak:1"          = @("","") #keccak 1 thread
     #"daggerhashimoto:2" = @("","") #Ethash 2 threads
     #"equihash:2"        = @("","") #Equihash 2 threads
     #"neoscrypt:2"       = @("","") #NeoScrypt 2 threads
-    "lyra2rev2:2"       = @("","") #Lyra2RE2 2 threads
+    #"lyra2rev2:2"       = @("","") #Lyra2RE2 2 threads
     "keccak:2"          = @("","") #keccak 2 threads
     #"daggerhashimoto:3" = @("","") #Ethash 3 threads
     #"equihash:3"        = @("","") #Equihash 3 threads
     #"neoscrypt:3"       = @("","") #NeoScrypt 3 threads
-    "lyra2rev2:3"       = @("","") #Lyra2RE2 3 threads
+    #"lyra2rev2:3"       = @("","") #Lyra2RE2 3 threads
     "keccak:3"          = @("","") #keccak 3 threads
 }
 
@@ -77,7 +78,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
                 Path             = $Path
                 Arguments        = "-p $($Port) -c $($Pools.$($Algorithm_Norm).Name)_$($Algorithm_Norm)_$($Pools.$($Algorithm_Norm).User)_$($Threads)_$($Type).json -na"
                 HashRates        = [PSCustomObject]@{$($Algorithm_Norm) = $Stats."$($Miner_Name)_$($Algorithm_Norm)_HashRate".Week}
-                API              = "Excavator"
+                API              = $API
                 Port             = $Port
                 URI              = $Uri
                 MinerFee         = @($Fee)

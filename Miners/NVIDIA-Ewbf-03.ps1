@@ -9,7 +9,6 @@ param(
 
 if (-not $Devices.NVIDIA) {return} # No NVIDIA mining device present in system
 
-
 $DriverVersion = (Get-Devices).NVIDIA.Platform.Version -replace ".*CUDA ",""
 $RequiredVersion = "9.1.00"
 if ($DriverVersion -lt $RequiredVersion) {
@@ -19,9 +18,10 @@ if ($DriverVersion -lt $RequiredVersion) {
 
 $Type = "NVIDIA"
 $Path = ".\Bin\NVIDIA-EWBF-Equihash-03\miner.exe"
-$Uri = "http://semitest.000webhostapp.com/binary/EWBF%20Equihash%20miner%20v0.3.zip"
-$Port = 42000
-$Fee = 0
+$API  = "DSTM"
+$Uri  = "http://semitest.000webhostapp.com/binary/EWBF%20Equihash%20miner%20v0.3.zip"
+$Port = Get-FreeTcpPort -DefaultPort 42000
+$Fee  = 0
 
 $Commands = [PSCustomObject]@{
     "equihash-BTG"   = @("144_5","--pers BgoldPoW","") #EquihashBTG
@@ -44,7 +44,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
         Path           = $Path
         Arguments      = "--algo $($Commands.$_ | Select-Object -Index 0) --eexit 1 --api 0.0.0.0:$($Port) --server $($Pools.$Algorithm_Norm.Host) --port $($Pools.$Algorithm_Norm.Port) --user $($Pools.$Algorithm_Norm.User) --pass $($Pools.$Algorithm_Norm.Pass)$($Commands.$_ | Select-Object -Index 2)$($CommonCommands) $($Commands.$_ | Select-Object -Index 1) --fee 0 --log 1 --color"
         HashRates      = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
-        API            = "DSTM"
+        API            = $API
         Port           = $Port
         URI            = $Uri
         MinerFee       = @($Fee)

@@ -11,7 +11,7 @@
       "User": "$UserName",
       "Worker": "$WorkerName",
       "ExcludeAlgorithm":  ["Sia", "Qubit", "X11", "MyriadGroestl", "Groestl", "Scrypt", "Equihash"],
-      "DisableExchange":  ["Ethereum", "EthereumClassic"],
+      "DisableExchange":  ["Ethereum", "EthereumClassic", "Digibyte"],
       "ExcludeCoin":  ["maxcoin", "Electroneum"],
       "API_ID": "$API_ID",
       "API_Key": "$API_Key"
@@ -24,7 +24,7 @@
     "Zpool": {
       "BTC": "$Wallet",
       "Worker": "$WorkerName",
-      "ExcludeAlgorithm":  ["qubit", "blakecoin", "groestl", "nist5", "sib", "scrypt", "x11", "myrgr", "sha256", "x13", "quark", "decred", "lbry", "x14", "Equihash"]
+      "ExcludeAlgorithm":  ["qubit", "blakecoin", "groestl", "nist5", "sib", "scrypt", "x11", "myrgr", "sha256", "x13", "quark", "decred", "lbry", "x14"]
     },
     "Zergpool": {
       "LTC": "Lex2wqKA44ZGkBvHhWE3STrqicbCdGG125",

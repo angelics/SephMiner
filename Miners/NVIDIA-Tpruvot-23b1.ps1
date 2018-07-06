@@ -9,26 +9,34 @@ param(
 
 if (-not $Devices.NVIDIA) {return} # No NVIDIA mining device present in system
 
+$DriverVersion = (Get-Devices).NVIDIA.Platform.Version -replace ".*CUDA ",""
+$RequiredVersion = "9.2.00"
+if ($DriverVersion -lt $RequiredVersion) {
+    Write-Log -Level Warn "Miner ($($Name)) requires CUDA version $($RequiredVersion) or above (installed version is $($DriverVersion)). Please update your Nvidia drivers to 397.93 or newer. "
+    return
+}
+
 $Type = "NVIDIA"
-$Path = ".\Bin\NVIDIA-TPruvot-23\ccminer-x64.exe"
-$Uri = "https://github.com/tpruvot/ccminer/releases/download/2.3-tpruvot/ccminer-2.3-cuda9.7z"
-$Port = 4068
-$Fee = 0
+$Path = ".\Bin\NVIDIA-TPruvot-23b1\ccminer-x64.exe"
+$API  = "Ccminer"
+$Uri  = "http://semitest.000webhostapp.com/binary/ccminer-2.3-B1.7z"
+$Port = Get-FreeTcpPort -DefaultPort 4068
+$Fee  = 0
 
 $Commands = [PSCustomObject]@{
-    #"allium"     = " -i 21" #allium CcminerTpruvot-23b1
-    #"bitcore"     = "" #bitcore CcminerZEnemy-111v3
+    "allium"     = " -i 21" #allium
+    #"bitcore"     = "" #bitcore CcminerZEnemy-112
     #"blake2s"     = "" #Blake2s
     "bmw"         = "" #bmw
-    #"c11"         = "" #C11 CcminerZEnemy-111v3
+    #"c11"         = "" #C11
     "deep"        = "" #deep
     "dmd-gr"      = "" #dmd-gr
     "fresh"       = "" #fresh
     "fugue256"    = "" #fugue256
     "graft"       = "" #graft
-    "heavy"       = "" #heavy
-    "hsr"         = "" #hsr CcminerAlexis78-13
-    #"hmq1725"     = " -N 3" #hmq1725 crash
+    "heavy"       = "" #heavy 
+    #"hsr"         = "" #hsr CcminerAlexis78-13
+    "hmq1725"     = "" #hmq1725
     "jha"         = "" #JHA
     #"keccak"      = " -i 29 -m 2" #Keccak ExcavatorNvidia-144a
     "keccakc"     = " -i 29" #keccakc
@@ -40,23 +48,23 @@ $Commands = [PSCustomObject]@{
     "mjollnir"    = "" #mjollnir
     #"neoscrypt"   = "" #NeoScrypt PalginNvidiaFork-45ee8fa
     "penta"       = "" #penta
-    #"phi"         = "" #phi CcminerZEnemy-111v3
+    #"phi"         = "" #phi CcminerDumax-093
     #"phi2"         = "" #phi2 CcminerZEnemy-112
     "polytimos"   = "" #polytimos
     "scrypt-jane" = "" #scrypt-jane
     "s3"          = "" #s3
     #"sha256t"     = " -i 29 -r 0 " #sha256t crash
     "skein2"      = "" #Skein2
-    #"skunk"       = "" #Skunk CcminerZEnemy-111v3
+    #"skunk"       = "" #Skunk CcminerZEnemy-112
     "sonoa"       = "" #sonoa
     "stellite"    = "" #stellite
-    #"timetravel"  = "" #Timetravel CcminerZEnemy-111v3
-    #"tribus"      = "" #Tribus CcminerZEnemy-111v3
+    #"timetravel"  = "" #Timetravel CcminerZEnemy-112
+    #"tribus"      = "" #Tribus CcminerZEnemy-112
 	#"x11evo"      = "" #X11evo CcminerAlexis78-12
     "x12"         = "" #X12
     #"x16r"        = "" #X16r
     #"x16s"        = "" #X16s
-    #"x17"         = "" #X17 CcminerZEnemy-111v3
+    #"x17"         = "" #X17
     "whirlpool"   = "" #whirlpool
     "wildkeccak"  = "" #wildkeccak
     "zr5"         = "" #zr5
@@ -74,6 +82,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
         "allium"        {$ExtendInterval = 2}
         "CryptoNightV7" {$ExtendInterval = 2}
         "Lyra2RE2"      {$ExtendInterval = 2}
+        "phi"           {$ExtendInterval = 2}
         "phi2"          {$ExtendInterval = 2}
         "tribus"        {$ExtendInterval = 2}
         "X16R"          {$ExtendInterval = 3}
@@ -99,7 +108,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
         Path           = $Path
         Arguments      = "-q -b $($Port) -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)$($CommonCommands) -N $($Average) --submit-stale"
         HashRates      = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
-        API            = "Ccminer"
+        API            = $API
         Port           = $Port
         URI            = $Uri
         MinerFee       = @($Fee)
