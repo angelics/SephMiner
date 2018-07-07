@@ -9,24 +9,15 @@ param(
 
 if (-not $Devices.NVIDIA) {return} # No NVIDIA mining device present in system
 
-$DriverVersion = (Get-Devices).NVIDIA.Platform.Version -replace ".*CUDA ",""
-$RequiredVersion = "9.1.00"
-if ($DriverVersion -lt $RequiredVersion) {
-    Write-Log -Level Warn "Miner ($($Name)) requires CUDA version $($RequiredVersion) or above (installed version is $($DriverVersion)). Please update your Nvidia drivers to 390.77 or newer. "
-    return
-}
-
 $Type = "NVIDIA"
-$Path = ".\Bin\NVIDIA-EWBF-Equihash-03\miner.exe"
+$Path = ".\Bin\NVIDIA-EWBF-34b\miner.exe"
 $API  = "DSTM"
-$Uri  = "http://semitest.000webhostapp.com/binary/EWBF%20Equihash%20miner%20v0.3.zip"
+$Uri  = "http://semitest.000webhostapp.com/binary/Zec%20Miner%200.3.4b.zip"
 $Port = Get-FreeTcpPort -DefaultPort 42000
 $Fee  = 0
 
 $Commands = [PSCustomObject]@{
-    "equihash-BTG"   = @("144_5","--pers BgoldPoW","") #EquihashBTG
-    "equihash192"    = @("192_7","--pers ZERO_PoW","") #equihash192
-    "Minexcoin"      = @("96_5","","") #Minexcoin
+    "equihash"   = "" #Equihash
 }
 
 $CommonCommands = "" #eg. " --cuda_devices 0 1 8 9"
@@ -42,7 +33,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
     [PSCustomObject]@{
         Type           = $Type
         Path           = $Path
-        Arguments      = "--algo $($Commands.$_ | Select-Object -Index 0) --eexit 1 --api 0.0.0.0:$($Port) --server $($Pools.$Algorithm_Norm.Host) --port $($Pools.$Algorithm_Norm.Port) --user $($Pools.$Algorithm_Norm.User) --pass $($Pools.$Algorithm_Norm.Pass)$($Commands.$_ | Select-Object -Index 2)$($CommonCommands) $($Commands.$_ | Select-Object -Index 1) --fee 0 --log 1 --color"
+        Arguments      = "--eexit 1 --api 0.0.0.0:$($Port) --server $($Pools.$Algorithm_Norm.Host) --port $($Pools.$Algorithm_Norm.Port) --user $($Pools.$Algorithm_Norm.User) --pass $($Pools.$Algorithm_Norm.Pass)$($CommonCommands) --fee 0 --intensity 64"
         HashRates      = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
         API            = $API
         Port           = $Port
