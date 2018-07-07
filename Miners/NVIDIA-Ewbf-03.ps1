@@ -17,16 +17,16 @@ if ($DriverVersion -lt $RequiredVersion) {
 }
 
 $Type = "NVIDIA"
-$Path = ".\Bin\NVIDIA-EWBF-Equihash-03\miner.exe"
+$Path = ".\Bin\NVIDIA-EWBF-03\miner.exe"
 $API  = "DSTM"
 $Uri  = "http://semitest.000webhostapp.com/binary/EWBF%20Equihash%20miner%20v0.3.zip"
 $Port = Get-FreeTcpPort -DefaultPort 42000
 $Fee  = 0
 
 $Commands = [PSCustomObject]@{
-    "equihash-BTG"   = @("144_5","--pers BgoldPoW","") #EquihashBTG
-    "equihash192"    = @("192_7","--pers ZERO_PoW","") #equihash192
-    "Minexcoin"      = @("96_5","","") #Minexcoin
+    "equihash-BTG"   = @("144_5 --pers BgoldPoW","") #EquihashBTG
+    "equihash192"    = @("192_7 --pers ZERO_PoW","") #equihash192
+    "Minexcoin"      = @("96_5","") #Minexcoin
 }
 
 $CommonCommands = "" #eg. " --cuda_devices 0 1 8 9"
@@ -42,7 +42,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
     [PSCustomObject]@{
         Type           = $Type
         Path           = $Path
-        Arguments      = "--algo $($Commands.$_ | Select-Object -Index 0) --eexit 1 --api 0.0.0.0:$($Port) --server $($Pools.$Algorithm_Norm.Host) --port $($Pools.$Algorithm_Norm.Port) --user $($Pools.$Algorithm_Norm.User) --pass $($Pools.$Algorithm_Norm.Pass)$($Commands.$_ | Select-Object -Index 2)$($CommonCommands) $($Commands.$_ | Select-Object -Index 1) --fee 0 --log 1 --color"
+        Arguments      = "--algo $($Commands.$_ | Select-Object -Index 0) --eexit 1 --api 0.0.0.0:$($Port) --server $($Pools.$Algorithm_Norm.Host) --port $($Pools.$Algorithm_Norm.Port) --user $($Pools.$Algorithm_Norm.User) --pass $($Pools.$Algorithm_Norm.Pass)$($Commands.$_ | Select-Object -Index 1)$($CommonCommands) --fee 0 --log 1 --color"
         HashRates      = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
         API            = $API
         Port           = $Port
