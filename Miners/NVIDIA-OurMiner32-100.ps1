@@ -17,28 +17,16 @@ if ($DriverVersion -lt $RequiredVersion) {
 }
 
 $Type = "NVIDIA"
-$Path = ".\Bin\NVIDIA-ZEnemy-112\z-enemy.exe"
+$Path = ".\Bin\NVIDIA-OurMiner-100\ourminer-x32.exe"
 $API  = "Ccminer"
-$Uri  = "http://semitest.000webhostapp.com/binary/z-enemy.1-12public.zip"
+$Uri  = "https://github.com/ourpool/ourminer/files/2130351/OurMiner-x32-1.0.0-cuda-9.1.zip"
 $Port = Get-FreeTcpPort -DefaultPort 4068
-$Fee  = 1
+$Fee  = 0
 
 $Commands = [PSCustomObject]@{
-    "aeriumx"    = "" #aeriumx
-    "bitcore"    = "" #Bitcore
-    "c11"        = "" #c11
-    #"phi"        = "" #Phi CcminerDumax-093
-    "phi2"       = "" #Phi2
-    "poly"       = "" #poly
-    "vit"        = "" #Vitalium
-    "skunk"      = "" #skunk
-    "sonoa"      = "" #sonoa
-    "timetravel" = "" #timetravel
-    "tribus"     = "" #Tribus
-    "x16s"       = " -i 21" #Pigeon
-    #"x16r"       = " -i 21" #Raven CcminerOurMiner32-100
-    "x17"        = "" #X17
-    "xevan"      = "" #Xevan
+    "lyra2z" = " -i 20" #lyra2z
+    #"x16s"   = " -i 21" #Pigeon CcminerZEnemy-112
+    "x16r"   = " -i 21" #Raven
 }
 
 $CommonCommands = "" #eg. " -d 0,1,8,9"
@@ -71,7 +59,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
         "Xevan"    {$Average = 1}
         default    {$Average = 3}
     }
-
+	
     $HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100)
 
     [PSCustomObject]@{

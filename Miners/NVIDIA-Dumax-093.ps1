@@ -17,28 +17,18 @@ if ($DriverVersion -lt $RequiredVersion) {
 }
 
 $Type = "NVIDIA"
-$Path = ".\Bin\NVIDIA-ZEnemy-112\z-enemy.exe"
+$Path = ".\Bin\NVIDIA-Dumax-093\ccminer.exe"
 $API  = "Ccminer"
-$Uri  = "http://semitest.000webhostapp.com/binary/z-enemy.1-12public.zip"
+$Uri  = "https://github.com/DumaxFr/ccminer/releases/download/dumax-0.9.3/ccminer-dumax-0.9.3-win64.zip"
 $Port = Get-FreeTcpPort -DefaultPort 4068
-$Fee  = 1
+$Fee  = 0
 
 $Commands = [PSCustomObject]@{
-    "aeriumx"    = "" #aeriumx
-    "bitcore"    = "" #Bitcore
-    "c11"        = "" #c11
-    #"phi"        = "" #Phi CcminerDumax-093
-    "phi2"       = "" #Phi2
-    "poly"       = "" #poly
-    "vit"        = "" #Vitalium
-    "skunk"      = "" #skunk
-    "sonoa"      = "" #sonoa
-    "timetravel" = "" #timetravel
-    "tribus"     = "" #Tribus
-    "x16s"       = " -i 21" #Pigeon
-    #"x16r"       = " -i 21" #Raven CcminerOurMiner32-100
-    "x17"        = "" #X17
-    "xevan"      = "" #Xevan
+    "phi"  = "" #phi
+    #"phi2" = " -i 20" #phi2 CcminerZEnemy-112
+    #"x16r" = "" #X16r CcminerOurMiner32-100
+    #"x16s" = "" #X16s CcminerZEnemy-112
+    #"x17"  = "" #X17 CcminerZEnemy-112
 }
 
 $CommonCommands = "" #eg. " -d 0,1,8,9"
@@ -77,7 +67,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
     [PSCustomObject]@{
         Type           = $Type
         Path           = $Path
-        Arguments      = "-q -b $($Port) -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)$($CommonCommands) -N $($Average)"
+        Arguments      = "-q -b $($Port) -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)$($CommonCommands) -N $($Average) --submit-stale"
         HashRates      = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
         API            = $API
         Port           = $Port

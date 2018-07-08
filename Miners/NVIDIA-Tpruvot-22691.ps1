@@ -17,28 +17,53 @@ if ($DriverVersion -lt $RequiredVersion) {
 }
 
 $Type = "NVIDIA"
-$Path = ".\Bin\NVIDIA-ZEnemy-112\z-enemy.exe"
+$Path = ".\Bin\NVIDIA-TPruvot-22691\ccminer.exe"
 $API  = "Ccminer"
-$Uri  = "http://semitest.000webhostapp.com/binary/z-enemy.1-12public.zip"
+$Uri  = "http://semitest.000webhostapp.com/binary/CCMiner%202.2.6R1.7z"
 $Port = Get-FreeTcpPort -DefaultPort 4068
-$Fee  = 1
+$Fee  = 0
 
 $Commands = [PSCustomObject]@{
-    "aeriumx"    = "" #aeriumx
-    "bitcore"    = "" #Bitcore
-    "c11"        = "" #c11
-    #"phi"        = "" #Phi CcminerDumax-093
-    "phi2"       = "" #Phi2
-    "poly"       = "" #poly
-    "vit"        = "" #Vitalium
-    "skunk"      = "" #skunk
-    "sonoa"      = "" #sonoa
-    "timetravel" = "" #timetravel
-    "tribus"     = "" #Tribus
-    "x16s"       = " -i 21" #Pigeon
-    #"x16r"       = " -i 21" #Raven CcminerOurMiner32-100
-    "x17"        = "" #X17
-    "xevan"      = "" #Xevan
+    #"allium"     = "" #allium CcminerTpruvot-23
+    #"bitcore"     = "" #bitcore crash
+    #"blake2s"     = "" #Blake2s
+    "bmw"         = "" #bmw
+    #"c11"         = "" #C11 CcminerZEnemy-111v3
+    "deep"        = "" #deep
+    "dmd-gr"      = "" #dmd-gr
+    "fresh"       = "" #fresh
+    "fugue256"    = "" #fugue256
+    "heavy"       = "" #heavy
+    #"hsr"         = "" #hsr
+    #"hmq1725"     = "" #hmq1725 crash
+    "jha"         = "" #JHA
+    #"keccak"      = " -m 2" #Keccak
+    #"keccakc"     = "" #keccakc CcminerAlexis78-12
+    "luffa"       = "" #luffa
+    "lyra2"       = "" #lyra2
+    #"lyra2v2"     = "" #Lyra2RE2
+    #"lyra2z"      = "" #Lyra2z
+    "mjollnir"    = "" #mjollnir
+    #"neoscrypt"   = "" #NeoScrypt PalginNvidiaFork-45ee8fa
+    "penta"       = "" #penta
+    #"phi"         = "" #phi CcminerZEnemy-111v3
+    #"phi2"         = "" #phi2 CcminerZEnemy-112
+    "polytimos"   = "" #polytimos
+    "scrypt-jane" = "" #scrypt-jane
+    "s3"          = "" #s3
+    "sha256t"     = "" #sha256t
+    "skein2"      = "" #Skein2
+    #"skunk"       = "" #Skunk CcminerZEnemy-111v3
+    #"timetravel"  = "" #Timetravel crash
+    #"tribus"      = "" #Tribus CcminerZEnemy-111v3
+	#"x11evo"      = "" #X11evo CcminerAlexis78-12
+    "x12"         = "" #X12
+    #"x16r"        = "" #X16r
+    #"x16s"        = "" #X16s
+    #"x17"         = "" #X17 CcminerZEnemy-111v3
+    "whirlpool"   = "" #whirlpool
+    "wildkeccak"  = "" #wildkeccak
+    "zr5"         = "" #zr5
 }
 
 $CommonCommands = "" #eg. " -d 0,1,8,9"
@@ -77,7 +102,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
     [PSCustomObject]@{
         Type           = $Type
         Path           = $Path
-        Arguments      = "-q -b $($Port) -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)$($CommonCommands) -N $($Average)"
+        Arguments      = "-q -b $($Port) -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)$($CommonCommands) -N $($Average) --submit-stale"
         HashRates      = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
         API            = $API
         Port           = $Port

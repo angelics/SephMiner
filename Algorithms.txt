@@ -66,6 +66,7 @@
     "x17":  "X17",
     "xmr":  "CryptoNightV7",
     "xevan":  "Xevan",
+    "xevan-mod":  "Xevan",
     "yescrypt":  "Yescrypt",
     "yescryptR8": "yescryptR8",
     "yescryptR16":  "yescryptR16",
