@@ -28,7 +28,7 @@ $Commands = [PSCustomObject]@{
     #"phi2" = " -i 20" #phi2 CcminerZEnemy-112
     #"x16r" = "" #X16r CcminerOurMiner32-100
     #"x16s" = "" #X16s CcminerZEnemy-112
-    #"x17"  = "" #X17 CcminerZEnemy-112
+    #"x17"  = "" #X17 NVIDIA-Alexis78-12b1
 }
 
 $CommonCommands = "" #eg. " -d 0,1,8,9"

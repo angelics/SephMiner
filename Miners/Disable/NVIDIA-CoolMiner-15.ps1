@@ -10,23 +10,21 @@ param(
 if (-not $Devices.NVIDIA) {return} # No NVIDIA mining device present in system
 
 $DriverVersion = (Get-Devices).NVIDIA.Platform.Version -replace ".*CUDA ",""
-$RequiredVersion = "9.1.00"
+$RequiredVersion = "9.2.00"
 if ($DriverVersion -lt $RequiredVersion) {
-    Write-Log -Level Warn "Miner ($($Name)) requires CUDA version $($RequiredVersion) or above (installed version is $($DriverVersion)). Please update your Nvidia drivers to 390.77 or newer. "
+    Write-Log -Level Warn "Miner ($($Name)) requires CUDA version $($RequiredVersion) or above (installed version is $($DriverVersion)). Please update your Nvidia drivers to 397.93 or newer. "
     return
 }
 
 $Type = "NVIDIA"
-$Path = ".\Bin\NVIDIA-OurMiner-100\ourminer-x32.exe"
+$Path = ".\Bin\NVIDIA-CoolMiner-15\coolMiner-x64.exe"
 $API  = "Ccminer"
-$Uri  = "https://github.com/ourpool/ourminer/files/2130351/OurMiner-x32-1.0.0-cuda-9.1.zip"
+$Uri  = "http://semitest.000webhostapp.com/binary/coolMiner-x64-v1.5.7z"
 $Port = Get-FreeTcpPort -DefaultPort 4068
-$Fee  = 0
+$Fee  = 1
 
 $Commands = [PSCustomObject]@{
-    "lyra2z" = " -i 20" #lyra2z
-    "x16s"   = " -i 21" #Pigeon CcminerZEnemy-112
-    "x16r"   = " -i 21" #Raven
+    "lyra2z" = "" #Lyra2z
 }
 
 $CommonCommands = "" #eg. " -d 0,1,8,9"
@@ -60,17 +58,19 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
         default    {$Average = 3}
     }
 	
-    $HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100)
+    if ($Pools.$Algorithm_Norm) {
+	
+        $HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100)
 
-    [PSCustomObject]@{
-        Type           = $Type
-        Path           = $Path
-        Arguments      = "-q -b $($Port) -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)$($CommonCommands) -N $($Average)"
-        HashRates      = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
-        API            = $API
-        Port           = $Port
-        URI            = $Uri
-        MinerFee       = @($Fee)
-        ExtendInterval = $ExtendInterval
+        [PSCustomObject]@{
+            Type      = $Type
+            Path      = $Path
+            Arguments = "-q -b $($Port) -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)$($CommonCommands) -N $($Average)"
+            HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
+            API       = $APi
+            Port      = $Port
+            URI       = $Uri
+            MinerFee  = @($Fee)
+        }
     }
 }
