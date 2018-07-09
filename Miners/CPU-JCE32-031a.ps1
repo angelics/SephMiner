@@ -8,21 +8,24 @@ param(
 )
 
 $Type = "CPU"
-$Path = ".\Bin\CPU-JCE-029e\jce_cn_cpu_miner32.exe"
+$Path = ".\Bin\CPU-JCE-031a\jce_cn_cpu_miner32.exe"
 $API  = "XMRig"
-$Uri  = "https://github.com/jceminer/cn_cpu_miner/raw/master/jce_cn_cpu_miner.windows.029e.zip"
+$Uri  = "https://github.com/jceminer/cn_cpu_miner/raw/master/jce_cn_cpu_miner.windows.031a.zip"
 $Port = Get-FreeTcpPort -DefaultPort 4046
 $Fee  = 3
 
 $Commands = [PSCustomObject]@{
-    "CryptoNightV7"    = @("--variation 3","") #CryptoNightV7 first item is algo number, second for additional miner commands
-    "CryptoLightV7"    = @("--variation 4","") #CryptoLightV7
-    "CryptoNightHeavy" = @("--variation 5","") #CryptoNightHeavy
-    "CryptolightIPBC"  = @("--variation 6","") #CryptolightIPBC
-    "CryptonightXTL"   = @("--variation 7","") #CryptonightXTL
-    "CryptonightAlloy" = @("--variation 8","") #CryptonightAlloy
-    "CryptonightMKT"   = @("--variation 9","") #CryptonightMKT
-    "CryptonightArto"  = @("--variation 10","") #CryptonightArto
+    "CryptoNightV7"         = @("--variation 3","") #CryptoNightV7 first item is algo number, second for additional miner commands
+    "CryptoLightV7"         = @("--variation 4","") #CryptoLightV7
+    "CryptoNightHeavy"      = @("--variation 5","") #CryptoNightHeavy
+    "CryptolightIPBC"       = @("--variation 6","") #CryptolightIPBC
+    "CryptonightXTL"        = @("--variation 7","") #CryptonightXTL
+    "CryptonightAlloy"      = @("--variation 8","") #CryptonightAlloy
+    "CryptonightMKT"        = @("--variation 9","") #CryptonightMKT
+    "CryptonightArto"       = @("--variation 10","") #CryptonightArto
+    "CryptonightFastMasari" = @("--variation 11","") #CryptonightFastMasari
+    "CryptonightHaven"      = @("--variation 12","") #CryptonightHaven
+    "CryptonightBitTubev4"  = @("--variation 13","") #CryptonightBitTubev4
 }
 
 $CommonCommands = "" #eg. " -d 0,1,8,9"

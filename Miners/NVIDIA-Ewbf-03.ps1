@@ -24,9 +24,9 @@ $Port = Get-FreeTcpPort -DefaultPort 42000
 $Fee  = 0
 
 $Commands = [PSCustomObject]@{
-    "equihash-BTG"   = @("144_5 --pers BgoldPoW","") #EquihashBTG
-    "equihash192"    = @("192_7 --pers ZERO_PoW","") #equihash192
-    "Minexcoin"      = @("96_5","") #Minexcoin
+    "equihash-BTG"   = @("144_5 --pers BgoldPoW","") #Equihash1445
+    "equihash192"    = @("192_7 --pers ZERO_PoW","") #Equihash1927
+    "Minexcoin"      = @("96_5","") #Equihash965
 }
 
 $CommonCommands = "" #eg. " --cuda_devices 0 1 8 9"

@@ -20,18 +20,18 @@ $Commands = [PSCustomObject]@{
     #"daggerhashimoto:1" = @("","") #Ethash 1 thread commands,difficulty
     #"equihash:1"        = @("","") #Equihash 1 thread
     #"neoscrypt:1"       = @("","") #NeoScrypt 1 thread
-    #"lyra2rev2:1"       = @("","") #Lyra2RE2 1 thread
+    "lyra2rev2:1"       = @("","") #Lyra2RE2 1 thread
     #"blake2s:1"         = @("","") #blake2s 1 thread
     "keccak:1"          = @("","") #keccak 1 thread
     #"daggerhashimoto:2" = @("","") #Ethash 2 threads
     #"equihash:2"        = @("","") #Equihash 2 threads
     #"neoscrypt:2"       = @("","") #NeoScrypt 2 threads
-    #"lyra2rev2:2"       = @("","") #Lyra2RE2 2 threads
+    "lyra2rev2:2"       = @("","") #Lyra2RE2 2 threads
     "keccak:2"          = @("","") #keccak 2 threads
     #"daggerhashimoto:3" = @("","") #Ethash 3 threads
     #"equihash:3"        = @("","") #Equihash 3 threads
     #"neoscrypt:3"       = @("","") #NeoScrypt 3 threads
-    #"lyra2rev2:3"       = @("","") #Lyra2RE2 3 threads
+    "lyra2rev2:3"       = @("","") #Lyra2RE2 3 threads
     "keccak:3"          = @("","") #keccak 3 threads
 }
 
