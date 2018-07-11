@@ -12,8 +12,8 @@ setlocal EnableDelayedExpansion
 
 mode con cols=50 lines=10
 cls
-REM 60+12 sec countdown
-FOR /L %%A IN (72,-1,0) DO (
+REM 60+12*2 sec countdown
+FOR /L %%A IN (84,-1,0) DO (
   cls
   echo Timeout [92;1m%%A[0m seconds...
   timeout /t 1 >nul
@@ -54,6 +54,11 @@ shutdown.exe /r /t 00
 goto eof
 
 :check
+tasklist /FI "imagename eq NVIDIAinspector.exe" 2>NUL | find /I /N "NVIDIAinspector.exe">NUL
+if "%ERRORLEVEL%"=="0" %then%
+REM wait 12s
+timeout /t 12 >nul
+%endif%
 for /F %%p in ('"C:\Program Files\NVIDIA Corporation\NVSMI\nvidia-smi" --id^=0 --query-gpu^=utilization.gpu --format^=csv^,noheader^,nounits') do set gpu_usage0=%%p
 for /F %%p in ('"C:\Program Files\NVIDIA Corporation\NVSMI\nvidia-smi" --id^=1 --query-gpu^=utilization.gpu --format^=csv^,noheader^,nounits') do set gpu_usage1=%%p
 for /F %%p in ('"C:\Program Files\NVIDIA Corporation\NVSMI\nvidia-smi" --id^=0 --query-gpu^=utilization.gpu --format^=csv^,noheader^,nounits') do set gpu_usage2=%%p
@@ -74,12 +79,12 @@ if %gpu_average% %greater% 40 %then%
 	echo [102;92;1mMining is working[0m
 	set "strike="
 	set strike=0
-	REM pause 10+12 to recheck gpu usage
-	timeout /t 22 >nul
+	REM pause 12*2 to recheck gpu usage
+	timeout /t 24 >nul
 %else%
 	REM check if net down
 	set /a strike += 1
-	timeout /t 22 >nul
+	timeout /t 24 >nul
 %endif%
 goto eof
 

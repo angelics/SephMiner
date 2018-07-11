@@ -12,7 +12,7 @@ $Path = ".\Bin\CryptoNight-FireIce-245NF\xmr-stak.exe"
 $API  = "XMRig"
 $Uri  = "https://github.com/nemosminer/xmr-stak/releases/download/xmr-stakv2.4.5/xmr-stak-2.4.5.zip"
 $Port = Get-FreeTcpPort -DefaultPort 3334
-$Fee  = 2
+$Fee  = 0
 
 $Commands = [PSCustomObject]@{
     "cryptonight_heavy"       = "" #CryptoNightHeavy --nvidia cnheavy.txt

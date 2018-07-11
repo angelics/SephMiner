@@ -68,7 +68,7 @@ set switchingprevention=3
 set interval=180
 set delay=0
 
-set command=%cur%\SephMiner.ps1 -wallet %wallet% -username %username% -workername %workername% -region %region% -currency %currency%,btc -type %type% -poolname %poolname% -algorithm %algorithm% -ExcludeAlgorithm %ExcludeAlgorithm% -donate 24 -watchdog -switchingprevention %switchingprevention% -interval %interval% -ExcludePoolName %ExcludePoolName% -delay %delay% -ShowPoolBalances
+set command=%cur%\SephMiner.ps1 -wallet %wallet% -username %username% -workername %workername% -region %region% -currency %currency%,btc -type %type% -poolname %poolname% -algorithm %algorithm% -ExcludeAlgorithm %ExcludeAlgorithm% -donate 24 -switchingprevention %switchingprevention% -interval %interval% -ExcludePoolName %ExcludePoolName% -delay %delay% -ShowPoolBalances
 title  %title%
 
 pwsh -noexit -executionpolicy bypass -windowstyle maximized -command "%command%"

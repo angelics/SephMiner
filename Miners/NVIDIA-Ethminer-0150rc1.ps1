@@ -46,7 +46,7 @@ $Commands | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Obj
             Name      = $Name
             Type      = $Type
             Path      = $Path
-            Arguments = ("--api-port $($Port) -P $($Pools.$Algorithm_Norm.Protocol)://$([System.Web.HttpUtility]::UrlEncode($Pools.$Algorithm_Norm.User)):$([System.Web.HttpUtility]::UrlEncode($Pools.$Algorithm_Norm.Pass))@$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port)$($Commands.$_)$($CommonCommands) --cuda --cuda-devices $($DeviceIDs)")
+            Arguments = "--api-port $($Port) -P $($Pools.$Algorithm_Norm.Protocol)://$([System.Web.HttpUtility]::UrlEncode($Pools.$Algorithm_Norm.User)):$([System.Web.HttpUtility]::UrlEncode($Pools.$Algorithm_Norm.Pass))@$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port)$($Commands.$_)$($CommonCommands) --cuda --cuda-devices $($DeviceIDs)"
             HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
             API       = $Api
             Port      = $Port

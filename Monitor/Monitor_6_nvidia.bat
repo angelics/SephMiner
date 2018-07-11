@@ -54,6 +54,11 @@ shutdown.exe /r /t 00
 goto eof
 
 :check
+tasklist /FI "imagename eq NVIDIAinspector.exe" 2>NUL | find /I /N "NVIDIAinspector.exe">NUL
+if "%ERRORLEVEL%"=="0" %then%
+REM wait 6s
+timeout /t 6 >nul
+%endif%
 for /F %%p in ('"C:\Program Files\NVIDIA Corporation\NVSMI\nvidia-smi" --id^=0 --query-gpu^=utilization.gpu --format^=csv^,noheader^,nounits') do set gpu_usage0=%%p
 for /F %%p in ('"C:\Program Files\NVIDIA Corporation\NVSMI\nvidia-smi" --id^=1 --query-gpu^=utilization.gpu --format^=csv^,noheader^,nounits') do set gpu_usage1=%%p
 for /F %%p in ('"C:\Program Files\NVIDIA Corporation\NVSMI\nvidia-smi" --id^=0 --query-gpu^=utilization.gpu --format^=csv^,noheader^,nounits') do set gpu_usage2=%%p

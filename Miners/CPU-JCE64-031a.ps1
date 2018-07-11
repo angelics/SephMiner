@@ -12,7 +12,7 @@ $Path = ".\Bin\CPU-JCE-031a\jce_cn_cpu_miner64.exe"
 $API  = "XMRig"
 $Uri  = "https://github.com/jceminer/cn_cpu_miner/raw/master/jce_cn_cpu_miner.windows.031a.zip"
 $Port = Get-FreeTcpPort -DefaultPort 4046
-$Fee  = 3
+$Fee  = 1.5
 
 $Commands = [PSCustomObject]@{
     "CryptoNightV7"         = @("--variation 3","") #CryptoNightV7 first item is algo number, second for additional miner commands
