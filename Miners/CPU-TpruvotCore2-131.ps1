@@ -15,16 +15,16 @@ $Port = Get-FreeTcpPort -DefaultPort 4048
 $Fee  = 0
 
 $Commands = [PSCustomObject]@{
-    "blake2s"    = "" #Blake2s
-    "c11"        = "" #C11
-    "keccak"     = "" #Keccak
-    "lyra2rev2"  = "" #Lyra2RE2
-    "neoscrypt"  = "" #NeoScrypt
-    "skein"      = "" #skein
-    "timetravel" = "" #Timetravel
-    "x11evo"     = "" #X11evo
-    "x17"        = "" #X17
-    "xevan"      = "" #Xevan
+    #"blake2s"    = "" #Blake2s
+    #"c11"        = "" #C11 not profitable
+    #"keccak"     = "" #Keccak
+    #"lyra2rev2"  = "" #Lyra2RE2
+    #"neoscrypt"  = "" #NeoScrypt crash
+    #"skein"      = "" #skein
+    #"timetravel" = "" #Timetravel not profitable
+    #"x11evo"     = "" #X11evo not profitable
+    #"x17"        = "" #X17 not profitable
+    #"xevan"      = "" #Xevan not profitable
     "yescrypt"   = "" #Yescrypt
 }
 

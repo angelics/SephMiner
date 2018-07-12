@@ -23,9 +23,6 @@ FOR /L %%A IN (84,-1,0) DO (
 FOR /L %%A in () do (
 cls
 call :check
-if %strike% EQU 3 %then%
-	goto reboot
-%endif%
 )
 
 :reboot
@@ -74,17 +71,20 @@ for /F %%p in ('"C:\Program Files\NVIDIA Corporation\NVSMI\nvidia-smi" --id^=1 -
 set /a total=%gpu_usage0%+%gpu_usage1%+%gpu_usage2%+%gpu_usage3%+%gpu_usage4%+%gpu_usage5%+%gpu_usage6%+%gpu_usage7%+%gpu_usage8%+%gpu_usage9%+%gpu_usage10%+%gpu_usage11%
 set /a gpu_average=%total%/12
 echo %strike%: Average Usage of *12 GPUs usage is %gpu_average%%%
-if %gpu_average% %greater% 40 %then%
+if %gpu_average% %greater% 51 %then%
 	echo [92;1mMining is working[0m
 	echo [102;92;1mMining is working[0m
 	set "strike="
 	set strike=0
-	REM pause 12*2 to recheck gpu usage
-	timeout /t 24 >nul
+	REM pause 10 to recheck gpu usage
+	timeout /t 10 >nul
 %else%
 	REM check if net down
 	set /a strike += 1
-	timeout /t 24 >nul
+	timeout /t 10 >nul
+%endif%
+if %strike% EQU 3 %then%
+	goto reboot
 %endif%
 goto eof
 

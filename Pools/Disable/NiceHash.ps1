@@ -47,38 +47,40 @@ $NiceHash_Request.result.simplemultialgo | Where-Object {$ExcludeAlgorithm -inot
 
         if ($BTC) {
             [PSCustomObject]@{
-                Algorithm     = $NiceHash_Algorithm_Norm
-                Info          = $NiceHash_Coin
-                Price         = $Stat.Live
-                StablePrice   = $Stat.Week
-                MarginOfError = $Stat.Week_Fluctuation
-                Protocol      = "stratum+tcp"
-                Host          = "$NiceHash_Algorithm.$NiceHash_Region.$NiceHash_Host"
-                Port          = $NiceHash_Port
-                User          = "$BTC.$Worker"
-                Pass          = "x"
-                Region        = $NiceHash_Region_Norm
-                SSL           = $false
-                Updated       = $Stat.Updated
-                PoolFee       = $NiceHash_Fee
+                Algorithm           = $NiceHash_Algorithm_Norm
+                Info                = $NiceHash_Coin
+                Price               = $Stat.Live
+                StablePrice         = $Stat.Week
+                MarginOfError       = $Stat.Week_Fluctuation
+                Protocol            = "stratum+tcp"
+                Host                = "$NiceHash_Algorithm.$NiceHash_Region.$NiceHash_Host"
+                Port                = $NiceHash_Port
+                User                = "$BTC.$Worker"
+                Pass                = "x"
+                Region              = $NiceHash_Region_Norm
+                SSL                 = $false
+                Updated             = $Stat.Updated
+                PoolFee             = $NiceHash_Fee
+                SwitchingPrevention = 1
             }
 
             if ($NiceHash_Algorithm_Norm -eq "CryptonightV7" -or $NiceHash_Algorithm_Norm -eq "Equihash") {
                 [PSCustomObject]@{
-                    Algorithm     = $NiceHash_Algorithm_Norm
-                    Info          = $NiceHash_Coin
-                    Price         = $Stat.Live
-                    StablePrice   = $Stat.Week
-                    MarginOfError = $Stat.Week_Fluctuation
-                    Protocol      = "stratum+ssl"
-                    Host          = "$NiceHash_Algorithm.$NiceHash_Region.$NiceHash_Host"
-                    Port          = $NiceHash_Port + 30000
-                    User          = "$BTC.$Worker"
-                    Pass          = "x"
-                    Region        = $NiceHash_Region_Norm
-                    SSL           = $true
-                    Updated       = $Stat.Updated
-                    PoolFee       = $NiceHash_Fee
+                    Algorithm           = $NiceHash_Algorithm_Norm
+                    Info                = $NiceHash_Coin
+                    Price               = $Stat.Live
+                    StablePrice         = $Stat.Week
+                    MarginOfError       = $Stat.Week_Fluctuation
+                    Protocol            = "stratum+ssl"
+                    Host                = "$NiceHash_Algorithm.$NiceHash_Region.$NiceHash_Host"
+                    Port                = $NiceHash_Port + 30000
+                    User                = "$BTC.$Worker"
+                    Pass                = "x"
+                    Region              = $NiceHash_Region_Norm
+                    SSL                 = $true
+                    Updated             = $Stat.Updated
+                    PoolFee             = $NiceHash_Fee
+                    SwitchingPrevention = 1
                 }
             }
         }
