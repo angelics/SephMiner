@@ -51,10 +51,10 @@ shutdown.exe /r /t 00
 goto eof
 
 :check
+set /a timer=12+%strike%
 tasklist /FI "imagename eq NVIDIAinspector.exe" 2>NUL | find /I /N "NVIDIAinspector.exe">NUL
 if "%ERRORLEVEL%"=="0" %then%
-REM wait 12s
-timeout /t 12 >nul
+timeout /t %timer% >nul
 %endif%
 for /F %%p in ('"C:\Program Files\NVIDIA Corporation\NVSMI\nvidia-smi" --id^=0 --query-gpu^=utilization.gpu --format^=csv^,noheader^,nounits') do set gpu_usage0=%%p
 for /F %%p in ('"C:\Program Files\NVIDIA Corporation\NVSMI\nvidia-smi" --id^=1 --query-gpu^=utilization.gpu --format^=csv^,noheader^,nounits') do set gpu_usage1=%%p
@@ -76,12 +76,11 @@ if %gpu_average% %greater% 51 %then%
 	echo [102;92;1mMining is working[0m
 	set "strike="
 	set strike=0
-	REM pause 10 to recheck gpu usage
-	timeout /t 10 >nul
+	timeout /t %timer% >nul
 %else%
 	REM check if net down
 	set /a strike += 1
-	timeout /t 10 >nul
+	timeout /t %timer% >nul
 %endif%
 if %strike% EQU 3 %then%
 	goto reboot
