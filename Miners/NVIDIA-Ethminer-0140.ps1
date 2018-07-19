@@ -26,19 +26,23 @@ $CommonCommands = "" #eg. " -d 0,1,8,9"
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
 
-# Get array of IDs of all devices in device set, returned DeviceIDs are of base $DeviceIdBase representation starting from $DeviceIdOffset
-$DeviceIDsSet = Get-DeviceIDs -Config $Config -Devices $Devices -Type $Type -DeviceTypeModel $($Devices.$Type) -DeviceIdBase 10 -DeviceIdOffset 0
-
 $Commands | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name | ForEach-Object {
 
     $Algorithm_Norm = Get-Algorithm $_
     
-    Switch ($Algorithm_Norm) { # default is all devices, ethash has a 4GB minimum memory limit
-        "Ethash"    {$DeviceIDs = $DeviceIDsSet."4gb"}
-        "Ethash2gb" {$DeviceIDs = $DeviceIDsSet."2gb"}
-        "Ethash3gb" {$DeviceIDs = $DeviceIDsSet."3gb"}
-        default     {$DeviceIDs = $DeviceIDsSet."All"}
+	if ($Type -EQ "NVIDIA"){
+        # Get array of IDs of all devices in device set, returned DeviceIDs are of base $DeviceIdBase representation starting from $DeviceIdOffset
+        $DeviceIDsSet = Get-DeviceIDs -Config $Config -Devices $Devices -Type NVIDIA -DeviceTypeModel $($Devices.NVIDIA) -DeviceIdBase 10 -DeviceIdOffset 0
+        Switch ($MainAlgorithm_Norm) { # default is all devices, ethash has a 4GB minimum memory limit
+            "Ethash"    {$DeviceIDs = $DeviceIDsSet."4gb"}
+            "Ethash2gb" {$DeviceIDs = $DeviceIDsSet."2gb"}
+            "Ethash3gb" {$DeviceIDs = $DeviceIDsSet."3gb"}
+            default     {$DeviceIDs = $DeviceIDsSet."All"}
+        }
     }
+	else {
+	    $DeviceIDs = (Get-DeviceIDs -Config $Config -Devices $Devices -Type NVIDIA -DeviceTypeModel $($Devices.NVIDIA) -DeviceIdBase 10 -DeviceIdOffset 0)."$($Type)"
+	}
 	
     if ($Pools.$Algorithm_Norm -and $DeviceIDs) { # must have a valid pool to mine and available devices
 

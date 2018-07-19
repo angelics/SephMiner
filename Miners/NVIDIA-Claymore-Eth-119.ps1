@@ -59,22 +59,27 @@ $Commands = [PSCustomObject]@{
 }
 $CommonCommands = @(" -logsmaxsize 1 -dbg 1 -logfile debug.log", "") # array, first value for main algo, second value for secondary algo
 
-$Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
-
 # Get array of IDs of all devices in device set, returned DeviceIDs are of base $DeviceIdBase representation starting from $DeviceIdOffset
-$DeviceIDsSet = Get-DeviceIDs -Config $Config -Devices $Devices -Type $Type -DeviceTypeModel $($Devices.$Type) -DeviceIdBase 16 -DeviceIdOffset 0
+$DeviceIDsSet = Get-DeviceIDs -Config $Config -Devices $Devices -Type NVIDIA -DeviceTypeModel $($Devices.NVIDIA) -DeviceIdBase 16 -DeviceIdOffset 0
+
+$Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
 
 $Commands | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name | ForEach-Object {
 
     $MainAlgorithm = $_.Split(";") | Select -Index 0
     $MainAlgorithm_Norm = Get-Algorithm $MainAlgorithm
     
-    Switch ($MainAlgorithm_Norm) { # default is all devices, ethash has a 4GB minimum memory limit
-        "Ethash"    {$DeviceIDs = $DeviceIDsSet."4gb"}
-        "Ethash2gb" {$DeviceIDs = $DeviceIDsSet."2gb"}
-        "Ethash3gb" {$DeviceIDs = $DeviceIDsSet."3gb"}
-        default     {$DeviceIDs = $DeviceIDsSet."All"}
+	if ($Type -EQ "NVIDIA"){
+        Switch ($MainAlgorithm_Norm) { # default is all devices, ethash has a 4GB minimum memory limit
+            "Ethash"    {$DeviceIDs = $DeviceIDsSet."4gb"}
+            "Ethash2gb" {$DeviceIDs = $DeviceIDsSet."2gb"}
+            "Ethash3gb" {$DeviceIDs = $DeviceIDsSet."3gb"}
+            default     {$DeviceIDs = $DeviceIDsSet."All"}
+        }
     }
+	else {
+		$DeviceIDs = $DeviceIDsSet."$($Type)"
+	}
 
     if ($Pools.$MainAlgorithm_Norm -and $DeviceIDs) { # must have a valid pool to mine and available devices
 
@@ -88,15 +93,27 @@ $Commands | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Obj
             $Miner_Name = "$($Miner_Name)$($MainAlgorithm_Norm -replace '^ethash', '')"
             $HashRateMainAlgorithm = ($Stats."$($Miner_Name)_$($MainAlgorithm_Norm)_HashRate".Week)
 
-            if (($DeviceIDsSet."3gb").Count -eq 0) {
-                # All GPUs are 2GB, miner is completely free in this case, developer fee will not be mined at all.
-                $Fee = @($null)
-            }
-            else {
-                $HashRateMainAlgorithm = $HashRateMainAlgorithm * (1 - $MinerFeeInPercentSingleMode / 100)
-                #Second coin (Decred/Siacoin/Lbry/Pascal/Blake2s/Keccak) is mined without developer fee
-                $Fee = @($MinerFeeInPercentSingleMode, 0)
-            }
+            if ($Type -EQ "NVIDIA"){
+                if (($DeviceIDsSet."4gb").Count -eq 0) {
+                    # All GPUs are 3GB, miner is completely free in this case, developer fee will not be mined at all.
+                    $Fee = @($null)
+                }
+                else {
+                    $HashRateMainAlgorithm = $HashRateMainAlgorithm * (1 - $MinerFeeInPercentSingleMode / 100)
+                    #Second coin (Decred/Siacoin/Lbry/Pascal/Blake2s/Keccak) is mined without developer fee
+                    $Fee = @($MinerFeeInPercentSingleMode, 0)
+                }
+			}
+			else {
+				if ($Type -EQ "10603gb") {
+				    $Fee = @($null)
+                }
+				else {
+                    $HashRateMainAlgorithm = $HashRateMainAlgorithm * (1 - $MinerFeeInPercentSingleMode / 100)
+                    #Second coin (Decred/Siacoin/Lbry/Pascal/Blake2s/Keccak) is mined without developer fee
+                    $Fee = @($MinerFeeInPercentSingleMode, 0)
+                }
+			}
 
             # Single mining mode
             [PSCustomObject]@{
@@ -121,15 +138,27 @@ $Commands | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Obj
             $HashRateMainAlgorithm = ($Stats."$($Miner_Name)_$($MainAlgorithm_Norm)_HashRate".Week)
             $HashRateSecondaryAlgorithm = ($Stats."$($Miner_Name)_$($SecondaryAlgorithm_Norm)_HashRate".Week)
 
-            if (($DeviceIDsSet."3gb").Count -eq 0) {
-                # All GPUs are 2GB, miner is completely free in this case, developer fee will not be mined at all.
-                $Fee = @($null)
-            }
-            else {
-                $HashRateMainAlgorithm = $HashRateMainAlgorithm * (1 - $MinerFeeInPercentDualMode / 100)
-                #Second coin (Decred/Siacoin/Lbry/Pascal/Blake2s/Keccak) is mined without developer fee
-                $Fee = @($MinerFeeInPercentDualMode, 0)
-            }
+            if ($Type -EQ "NVIDIA"){
+                if (($DeviceIDsSet."4gb").Count -eq 0) {
+                    # All GPUs are 3GB, miner is completely free in this case, developer fee will not be mined at all.
+                    $Fee = @($null)
+                }
+                else {
+                    $HashRateMainAlgorithm = $HashRateMainAlgorithm * (1 - $MinerFeeInPercentDualMode / 100)
+                    #Second coin (Decred/Siacoin/Lbry/Pascal/Blake2s/Keccak) is mined without developer fee
+                    $Fee = @($MinerFeeInPercentDualMode, 0)
+                }
+			}
+			else {
+				if ($Type -EQ "10603gb") {
+				    $Fee = @($null)
+                }
+				else {
+                    $HashRateMainAlgorithm = $HashRateMainAlgorithm * (1 - $MinerFeeInPercentDualMode / 100)
+                    #Second coin (Decred/Siacoin/Lbry/Pascal/Blake2s/Keccak) is mined without developer fee
+                    $Fee = @($MinerFeeInPercentDualMode, 0)
+                }
+			}
 
             if ($Pools.$SecondaryAlgorithm_Norm -and $SecondaryAlgorithmIntensity -gt 0) { # must have a valid pool to mine and positive intensity
                 # Dual mining mode
