@@ -19,11 +19,11 @@ $Fee  = 0
 $Commands = [PSCustomObject]@{
     #"blake2s"   = "" #Blake2s not profit
     "c11"       = " -i 21" #C11
-    "hsr"       = "" #Hsr
+    #"hsr"       = "" #Hsr NVIDIA-TRex-051
     #"keccak"    = " -m 2 -i 29" #Keccak ExcavatorNvidia-144a
     "keccakc"   = " -i 29" #Keccakc
     "lyra2"     = "" #Lyra2
-    "lyra2v2"   = "" #Lyra2RE2
+    #"lyra2v2"   = "" #Lyra2RE2 NVIDIA-CryptoDredge-070
     #"neoscrypt" = "" #NeoScrypt PalginNvidiaFork-45ee8fa
     "poly"      = "" #Poly
     "skein"     = "" #skein
@@ -31,10 +31,12 @@ $Commands = [PSCustomObject]@{
     "whirlcoin" = "" #WhirlCoin
     "whirlpool" = "" #Whirlpool
     "x11evo"    = " -i 21" #x11evo
-    "x17"       = " -i 20" #X17
+    #"x17"       = " -i 20" #X17 NVIDIA-TRex-051
 }
 
 $CommonCommands = "" #eg. " -d 0,1,8,9"
+
+$DeviceIDs = (Get-DeviceIDs -Config $Config -Devices $Devices -Type NVIDIA -DeviceTypeModel $($Devices.NVIDIA) -DeviceIdBase 10 -DeviceIdOffset 0)."$(if ($Type -EQ "NVIDIA"){"All"}else{$Type})"
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
 
@@ -70,7 +72,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
     [PSCustomObject]@{
         Type           = $Type
         Path           = $Path
-        Arguments      = "-q -b $($Port) -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)$($CommonCommands) -N $($Average)"
+        Arguments      = "-q -b $($Port) -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)$($CommonCommands) -N $($Average) -d $($DeviceIDs -join ',')"
         HashRates      = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
         API            = $API
         Port           = $Port

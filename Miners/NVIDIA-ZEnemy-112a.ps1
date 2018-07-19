@@ -26,22 +26,24 @@ $Fee  = 1
 $Commands = [PSCustomObject]@{
     "aeriumx"    = "" #aeriumx
     "bitcore"    = "" #Bitcore
-    "c11"        = "" #c11 NVIDIA-Alexis78-12b1
-    "phi"        = "" #Phi CcminerDumax-093
-    "phi2"       = "" #Phi2
+    #"c11"        = "" #c11 NVIDIA-Alexis78-12b1
+    #"phi"        = "" #Phi CcminerDumax-093
+    #"phi2"       = "" #Phi2 NVIDIA-TRex-051
     "poly"       = "" #poly
     "vit"        = "" #Vitalium
     "skunk"      = "" #skunk
     "sonoa"      = "" #sonoa
     "timetravel" = "" #timetravel
-    "tribus"     = "" #Tribus
-    "x16s"       = " -i 21" #Pigeon
-    "x16r"       = " -i 21" #Raven
-    "x17"        = "" #X17 NVIDIA-Alexis78-12b1
+    #"tribus"     = "" #Tribus NVIDIA-TRex-051
+    #"x16s"       = " -i 21" #Pigeon
+    #"x16r"       = " -i 21" #Raven
+    "x17"        = "" #X17
     "xevan"      = "" #Xevan
 }
 
 $CommonCommands = "" #eg. " -d 0,1,8,9"
+
+$DeviceIDs = (Get-DeviceIDs -Config $Config -Devices $Devices -Type NVIDIA -DeviceTypeModel $($Devices.NVIDIA) -DeviceIdBase 10 -DeviceIdOffset 0)."$(if ($Type -EQ "NVIDIA"){"All"}else{$Type})"
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
 
@@ -77,7 +79,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
     [PSCustomObject]@{
         Type           = $Type
         Path           = $Path
-        Arguments      = "-q -b $($Port) -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)$($CommonCommands) -N $($Average)"
+        Arguments      = "-q -b $($Port) -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)$($CommonCommands) -N $($Average) -d $($DeviceIDs -join ',')"
         HashRates      = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
         API            = $API
         Port           = $Port

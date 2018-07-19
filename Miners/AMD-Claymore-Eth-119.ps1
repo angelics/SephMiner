@@ -20,6 +20,7 @@ $MinerFeeInPercentDualMode = 1.5
 $Commands = [PSCustomObject]@{
     "ethash"               = @("")
     "ethash2gb"            = @("","")
+    "ethash3gb"            = @("","")
     "ethash;blake2s:5"     = @("","")
     "ethash;blake2s:25"    = @("","")
     "ethash;blake2s:45"    = @("","")
@@ -32,8 +33,14 @@ $Commands = [PSCustomObject]@{
     "ethash2gb;keccak:5"   = @("","")
     "ethash2gb;keccak:30"  = @("","")
     "ethash2gb;keccak:55"  = @("","")
+    "ethash3gb;blake2s:5"  = @("","")
+    "ethash3gb;blake2s:25" = @("","")
+    "ethash3gb;blake2s:45" = @("","")
+    "ethash3gb;keccak:5"   = @("","")
+    "ethash3gb;keccak:30"  = @("","")
+    "ethash3gb;keccak:55"  = @("","")
 }
-$CommonCommands = @(" -logsmaxsize 1", "") # array, first value for main algo, second value for secondary algo
+$CommonCommands = @(" -logsmaxsize 1 -dbg 1 -logfile debug.log", "") # array, first value for main algo, second value for secondary algo
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
 
@@ -47,6 +54,7 @@ $Commands | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Obj
     
     Switch ($MainAlgorithm_Norm) { # default is all devices, ethash has a 4GB minimum memory limit
         "Ethash"    {$DeviceIDs = $DeviceIDsSet."4gb"}
+        "Ethash2gb" {$DeviceIDs = $DeviceIDsSet."2gb"}
         "Ethash3gb" {$DeviceIDs = $DeviceIDsSet."3gb"}
         default     {$DeviceIDs = $DeviceIDsSet."All"}
     }

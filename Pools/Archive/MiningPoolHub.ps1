@@ -64,7 +64,7 @@ $MiningPoolHub_Request.return | Where-Object {$ExcludeAlgorithm -inotcontains (G
         if ($User) {
             [PSCustomObject]@{
                 Algorithm     = $MiningPoolHub_Algorithm_Norm
-                Info          = $MiningPoolHub_Coin
+                CoinName      = $MiningPoolHub_Coin
                 Price         = $Stat.Live
                 StablePrice   = $Stat.Week
                 MarginOfError = $Stat.Week_Fluctuation
@@ -83,7 +83,7 @@ $MiningPoolHub_Request.return | Where-Object {$ExcludeAlgorithm -inotcontains (G
                 if ($MiningPoolHub_Algorithm_Norm -eq "Equihash") {
                     [PSCustomObject]@{
                         Algorithm     = $MiningPoolHub_Algorithm_Norm
-                        Info          = $MiningPoolHub_Coin
+                        CoinName      = $MiningPoolHub_Coin
                         Price         = $Stat.Live
                         StablePrice   = $Stat.Week
                         MarginOfError = $Stat.Week_Fluctuation

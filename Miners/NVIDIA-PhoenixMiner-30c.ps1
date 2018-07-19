@@ -19,6 +19,7 @@ $Fee  = 0.65
 $Commands = [PSCustomObject]@{
     "ethash"    = ""
     "ethash2gb" = ""
+    "ethash3gb" = ""
 }
 
 $CommonCommands = "" #eg. " -d 0,1,8,9"
@@ -34,6 +35,7 @@ $Commands | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Obj
     
     Switch ($Algorithm_Norm) { # default is all devices, ethash has a 4GB minimum memory limit
         "Ethash"    {$DeviceIDs = $DeviceIDsSet."4gb"}
+        "Ethash2gb" {$DeviceIDs = $DeviceIDsSet."2gb"}
         "Ethash3gb" {$DeviceIDs = $DeviceIDsSet."3gb"}
         default     {$DeviceIDs = $DeviceIDsSet."All"}
     }

@@ -17,16 +17,20 @@ if ($DriverVersion -lt $RequiredVersion) {
 }
 
 $Type = "NVIDIA"
-$Path = ".\Bin\NVIDIA-OurMiner-100\ourminer-x32.exe"
+$Path = ".\Bin\NVIDIA-TRex-051\t-rex.exe"
 $API  = "Ccminer"
-$Uri  = "https://github.com/ourpool/ourminer/files/2130351/OurMiner-x32-1.0.0-cuda-9.1.zip"
+$Uri  = "http://semitest.000webhostapp.com/binary/t-rex-0.5.1-win-cuda9.1.zip"
 $Port = Get-FreeTcpPort -DefaultPort 4068
-$Fee  = 0
+$Fee  = 1
 
 $Commands = [PSCustomObject]@{
-    #"lyra2z" = " -i 20" #lyra2z NVIDIA-CryptoDredge-070
-    "x16s"   = " -i 21" #x16s
-    "x16r"   = " -i 21" #x16r
+    "c11"    = "" #c11
+    "hsr"    = "" #hsr
+    "lyra2z" = "" #lyra2z
+    "phi"    = "" #phi
+    "phi2"   = "" #phi2
+    "tribus" = "" #tribus
+    "x17"    = "" #x17
 }
 
 $CommonCommands = "" #eg. " -d 0,1,8,9"
@@ -52,22 +56,13 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
         "Xevan"         {$ExtendInterval = 2}
         default         {$ExtendInterval = 0}
     }
-	
-    Switch ($Algorithm_Norm) {
-        "Lyra2RE2" {$Average = 1}
-        "lyra2z"   {$Average = 1}
-        "phi"      {$Average = 1}
-        "tribus"   {$Average = 1}
-        "Xevan"    {$Average = 1}
-        default    {$Average = 3}
-    }
-	
+
     $HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100)
 
     [PSCustomObject]@{
         Type           = $Type
         Path           = $Path
-        Arguments      = "-q -b $($Port) -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)$($CommonCommands) -N $($Average) -d $($DeviceIDs -join ',')"
+        Arguments      = "-b 127.0.0.1:$($Port) -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)$($CommonCommands) -d $($DeviceIDs -join ',')"
         HashRates      = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
         API            = $API
         Port           = $Port

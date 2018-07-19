@@ -24,7 +24,7 @@
     "eth":  "Ethash",
     "ethash":  "Ethash",
     "equihash":  "Equihash",
-    "equihash-BTG":  "equihashBTG",
+    "equihash-BTG":  "Equihash144",
     "equihash144":  "Equihash144",
     "equihash192":  "Equihash192",
     "eEquihash96":  "Equihash96",

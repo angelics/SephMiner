@@ -75,7 +75,7 @@ $PhiPhi_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Sele
         $PhiPhi_Currencies | ForEach-Object {
             [PSCustomObject]@{
                 Algorithm     = $PhiPhi_Algorithm_Norm
-                Info          = $PhiPhi_Coin
+                CoinName      = $PhiPhi_Coin
                 Price         = $Stat.Live
                 StablePrice   = $Stat.Week
                 MarginOfError = $Stat.Week_Fluctuation

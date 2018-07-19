@@ -48,7 +48,7 @@ $NiceHash_Request.result.simplemultialgo | Where-Object {$ExcludeAlgorithm -inot
         if ($BTC) {
             [PSCustomObject]@{
                 Algorithm           = $NiceHash_Algorithm_Norm
-                Info                = $NiceHash_Coin
+                CoinName            = $NiceHash_Coin
                 Price               = $Stat.Live
                 StablePrice         = $Stat.Week
                 MarginOfError       = $Stat.Week_Fluctuation
@@ -67,7 +67,7 @@ $NiceHash_Request.result.simplemultialgo | Where-Object {$ExcludeAlgorithm -inot
             if ($NiceHash_Algorithm_Norm -eq "CryptonightV7" -or $NiceHash_Algorithm_Norm -eq "Equihash") {
                 [PSCustomObject]@{
                     Algorithm           = $NiceHash_Algorithm_Norm
-                    Info                = $NiceHash_Coin
+                    CoinName            = $NiceHash_Coin
                     Price               = $Stat.Live
                     StablePrice         = $Stat.Week
                     MarginOfError       = $Stat.Week_Fluctuation

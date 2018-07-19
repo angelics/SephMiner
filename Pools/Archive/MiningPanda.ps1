@@ -53,7 +53,7 @@ $MiningPanda_Currencies | Where-Object {$ExcludeAlgorithm -inotcontains (Get-Alg
 
         [PSCustomObject]@{
             Algorithm     = $MiningPanda_Algorithm_Norm
-            Info          = $MiningPanda_Coin
+            CoinName      = $MiningPanda_Coin
             Price         = $Stat.Live
             StablePrice   = $Stat.Week
             MarginOfError = $Stat.Week_Fluctuation

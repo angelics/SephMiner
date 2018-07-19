@@ -32,12 +32,12 @@ $Commands = [PSCustomObject]@{
     #"hmq1725"     = " -N 3" #hmq1725 crash
     "jha"         = "" #JHA
     #"keccak"      = " -i 29 -m 2" #Keccak ExcavatorNvidia-144a
-    #"keccakc"     = " -i 29" #keccakc NVIDIA-Alexis78-12b1
+    "keccakc"     = " -i 29" #keccakc
     "luffa"       = "" #luffa
     "lyra2"       = "" #lyra2
     #"lyra2v2"     = "" #Lyra2RE2
     #"lyra2z"      = " -i 20" #Lyra2z CcminerOurMiner32-100
-    "monero"      = "" #CryptoNightV7
+    #"monero"      = "" #CryptoNightV7 NVIDIA-Tpruvot-23b1
     "mjollnir"    = "" #mjollnir
     #"neoscrypt"   = "" #NeoScrypt PalginNvidiaFork-45ee8fa
     "penta"       = "" #penta
@@ -64,6 +64,8 @@ $Commands = [PSCustomObject]@{
 }
 
 $CommonCommands = "" #eg. " -d 0,1,8,9"
+
+$DeviceIDs = (Get-DeviceIDs -Config $Config -Devices $Devices -Type NVIDIA -DeviceTypeModel $($Devices.NVIDIA) -DeviceIdBase 10 -DeviceIdOffset 0)."$(if ($Type -EQ "NVIDIA"){"All"}else{$Type})"
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
 
@@ -99,7 +101,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
     [PSCustomObject]@{
         Type           = $Type
         Path           = $Path
-        Arguments      = "-q -b $($Port) -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)$($CommonCommands) -N $($Average) --submit-stale"
+        Arguments      = "-q -b $($Port) -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)$($CommonCommands) -N $($Average) --submit-stale -d $($DeviceIDs -join ',')"
         HashRates      = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
         API            = $API
         Port           = $Port

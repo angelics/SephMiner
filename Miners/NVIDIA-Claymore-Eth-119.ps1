@@ -19,8 +19,9 @@ $MinerFeeInPercentSingleMode = 1.0
 $MinerFeeInPercentDualMode = 1.5
 
 $Commands = [PSCustomObject]@{
-    "ethash"                = @("")
-    "ethash2gb"             = @("")
+    #"ethash"                = @("")
+    #"ethash2gb"             = @("")
+    #"ethash3gb"             = @("")
     "ethash;blake2s:105"    = @("", "")
     "ethash;blake2s:130"    = @("", "")
     "ethash;blake2s:155"    = @("", "")
@@ -43,8 +44,20 @@ $Commands = [PSCustomObject]@{
     "ethash2gb;keccak:30"   = @("", "")
     "ethash2gb;keccak:55"   = @("", "")
     "ethash2gb;keccak:80"   = @("", "")
+    "ethash3gb;blake2s:55"  = @("", "")
+    "ethash3gb;blake2s:80"  = @("", "")
+    "ethash3gb;blake2s:105" = @("", "")
+    "ethash3gb;blake2s:130" = @("", "")
+    "ethash3gb;blake2s:155" = @("", "")
+    "ethash3gb;blake2s:180" = @("", "")
+    "ethash3gb;blake2s:205" = @("", "")
+    "ethash3gb;blake2s:230" = @("", "")
+    "ethash3gb;keccak:5"    = @("", "")
+    "ethash3gb;keccak:30"   = @("", "")
+    "ethash3gb;keccak:55"   = @("", "")
+    "ethash3gb;keccak:80"   = @("", "")
 }
-$CommonCommands = @(" -logsmaxsize 1", "") # array, first value for main algo, second value for secondary algo
+$CommonCommands = @(" -logsmaxsize 1 -dbg 1 -logfile debug.log", "") # array, first value for main algo, second value for secondary algo
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
 
@@ -58,6 +71,7 @@ $Commands | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Obj
     
     Switch ($MainAlgorithm_Norm) { # default is all devices, ethash has a 4GB minimum memory limit
         "Ethash"    {$DeviceIDs = $DeviceIDsSet."4gb"}
+        "Ethash2gb" {$DeviceIDs = $DeviceIDsSet."2gb"}
         "Ethash3gb" {$DeviceIDs = $DeviceIDsSet."3gb"}
         default     {$DeviceIDs = $DeviceIDsSet."All"}
     }

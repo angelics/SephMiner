@@ -12,8 +12,16 @@ $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty Ba
 
 $MiningPoolHubCoins_Request = [PSCustomObject]@{}
 
+#defines minimum memory required per coin, default is 4gb
+$MinMem = [PSCustomObject]@{
+    "Expanse"  = "2gb"
+    "Soilcoin" = "2gb"
+    "Ubiq"     = "2gb"
+    "Musicoin" = "3gb"
+}
+
 try {
-    $MiningPoolHubCoins_Request = Invoke-RestMethod "http://miningpoolhub.com/index.php?page=api&action=getminingandprofitsstatistics&$(Get-Date -Format "yyyy-MM-dd_HH-mm")" -UseBasicParsing -TimeoutSec 10 -ErrorAction Stop
+    $MiningPoolHubCoins_Request = Invoke-RestMethod "http://miningpoolhub.com/index.php?page=api&action=getminingandprofitsstatistics&$(Get-Date -Format "yyyy-MM-dd_HH-mm")" -UseBasicParsing -TimeoutSec 15 -ErrorAction Stop
 }
 catch {
     Write-Log -Level Warn "Pool API ($Name) has failed. "
@@ -26,7 +34,7 @@ if (($MiningPoolHubCoins_Request.return | Measure-Object).Count -le 1) {
 }
 
 try {
-    $MiningPoolHubCoins_Variance = Invoke-RestMethod "https://semitest.000webhostapp.com/variance/mphc.variance.txt" -UseBasicParsing -TimeoutSec 10 -ErrorAction SilentlyContinue
+    $MiningPoolHubCoins_Variance = Invoke-RestMethod "https://semitest.000webhostapp.com/variance/mphc.variance.txt" -UseBasicParsing -TimeoutSec 15 -ErrorAction SilentlyContinue
 }
 catch {
     Write-Log -Level Warn "Pool Variance ($Name) has failed. Mining Without variance in calcualtion."
@@ -68,7 +76,7 @@ $MiningPoolHubCoins_Request.return | Where-Object {$ExcludeCoin -inotcontains $_
             if ($MiningPoolHubCoins_Algorithm_Norm -eq "EquihashBTG") {
                 [PSCustomObject]@{
                     Algorithm     = $MiningPoolHubCoins_Algorithm_Norm
-                    Info          = $MiningPoolHubCoins_Coin
+                    CoinName      = $MiningPoolHubCoins_Coin
                     Price         = $Stat.Live
                     StablePrice   = $Stat.Week
                     MarginOfError = $Stat.Week_Fluctuation
@@ -86,8 +94,8 @@ $MiningPoolHubCoins_Request.return | Where-Object {$ExcludeCoin -inotcontains $_
 			}
 			else {
                     [PSCustomObject]@{
-                    Algorithm     = $MiningPoolHubCoins_Algorithm_Norm
-                    Info          = $MiningPoolHubCoins_Coin
+                    Algorithm     = "$($MiningPoolHubCoins_Algorithm_Norm)$(if ($MiningPoolHubCoins_Algorithm_Norm -EQ "Ethash"){$MinMem.$MiningPoolHubCoins_Coin})"
+                    CoinName      = $MiningPoolHubCoins_Coin
                     Price         = $Stat.Live
                     StablePrice   = $Stat.Week
                     MarginOfError = $Stat.Week_Fluctuation
@@ -103,30 +111,10 @@ $MiningPoolHubCoins_Request.return | Where-Object {$ExcludeCoin -inotcontains $_
                     Variance      = $Variance
                 }
 			}
-            if ($MiningPoolHubCoins_Algorithm_Norm -eq "Ethash" -and $MiningPoolHubCoins_Coin -NotLike "*ethereum*") {
-                [PSCustomObject]@{
-                    Algorithm     = "$($MiningPoolHubCoins_Algorithm_Norm)2gb"
-                    Info          = $MiningPoolHubCoins_Coin
-                    Price         = $Stat.Live
-                    StablePrice   = $Stat.Week
-                    MarginOfError = $Stat.Week_Fluctuation
-                    Protocol      = "stratum+tcp"
-                    Host          = $MiningPoolHubCoins_Hosts | Sort-Object -Descending {$_ -ilike "$MiningPoolHubCoins_Region*"} | Select-Object -First 1
-                    Port          = $MiningPoolHubCoins_Port
-                    User          = "$User.$Worker"
-                    Pass          = "x"
-                    Region        = $MiningPoolHubCoins_Region_Norm
-                    SSL           = $false
-                    Updated       = $Stat.Updated
-                    PoolFee       = $MiningPoolHubCoins_Fee
-                    Variance      = $Variance
-                }
-            }
-
             if ($MiningPoolHubCoins_Algorithm_Norm -eq "Equihash") {
                 [PSCustomObject]@{
                     Algorithm     = $MiningPoolHubCoins_Algorithm_Norm
-                    Info          = $MiningPoolHubCoins_Coin
+                    CoinName      = $MiningPoolHubCoins_Coin
                     Price         = $Stat.Live
                     StablePrice   = $Stat.Week
                     MarginOfError = $Stat.Week_Fluctuation

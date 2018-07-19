@@ -17,11 +17,11 @@ $Port = Get-FreeTcpPort -DefaultPort 3335
 $Fee  = 0
 
 $Commands = [PSCustomObject]@{
-    "cryptonight_heavy"       = "" #CryptoNightHeavy --nvidia cnheavy.txt
-    "cryptonight_lite_v7"     = "" #CryptoNightLiteV7 --nvidia cnlitev7.txt
-    "cryptonight_lite_v7_xor" = "" #CryptoNightLiteV7xor --nvidia cnlitev7xor.txt
-    #"cryptonight_V7"          = "" #CryptoNightV7 --nvidia cn7.txt CcminerTpruvot-23
-    "cryptonight_V7_stellite" = "" #CryptoNightV7stellite --nvidia cn7stellite.txt
+    "cryptonight_heavy"       = " --nvidia $($Type)_cnheavy.txt" #CryptoNightHeavy
+    "cryptonight_lite_v7"     = " --nvidia $($Type)_cnlitev7.txt" #CryptoNightLiteV7 
+    "cryptonight_lite_v7_xor" = " --nvidia $($Type)_cnlitev7xor.txt" #CryptoNightLiteV7xor
+    #"cryptonight_V7"          = " --nvidia $($Type)_cn7.txt" #CryptoNightV7 CcminerTpruvot-23
+    "cryptonight_V7_stellite" = " --nvidia $($Type)_cn7stellite.txt" #CryptoNightV7stellite
 }
 
 $CommonCommands = "" #eg. " -d 0,1,8,9"
@@ -81,13 +81,14 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
 ) -replace "^{" -replace "}$" | Set-Content "$(Split-Path $Path)\$($Pools.$Algorithm_Norm.Name)_$($Algorithm_Norm)_$($Pools.$Algorithm_Norm.User)_$($Type).txt" -Force -ErrorAction SilentlyContinue
 
 	[PSCustomObject]@{
-    Type      = $Type
-    Path      = $Path
-    Arguments = "-C $($Pools.$Algorithm_Norm.Name)_$($Algorithm_Norm)_$($Pools.$Algorithm_Norm.User)_$($Type).txt -c $($Pools.$Algorithm_Norm.Name)_$($Algorithm_Norm)_$($Pools.$Algorithm_Norm.User)_$($Type).txt --noUAC --noAMD --noCPU $($Commands.$_)$($CommonCommands)"
-    HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
-    API       = $APi
-    Port      = $Port
-    URI       = $Uri
-    MinerFee  = @($Fee)
+    Type           = $Type
+    Path           = $Path
+    Arguments      = "-C $($Pools.$Algorithm_Norm.Name)_$($Algorithm_Norm)_$($Pools.$Algorithm_Norm.User)_$($Type).txt -c $($Pools.$Algorithm_Norm.Name)_$($Algorithm_Norm)_$($Pools.$Algorithm_Norm.User)_$($Type).txt --noUAC --noAMD --noCPU $($Commands.$_)$($CommonCommands)"
+    HashRates      = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
+    API            = $APi
+    Port           = $Port
+    URI            = $Uri
+    MinerFee       = @($Fee)
+	ExtendInterval = $ExtendInterval
 	}
 }

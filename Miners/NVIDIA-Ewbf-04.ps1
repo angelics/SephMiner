@@ -1,4 +1,4 @@
-﻿using module ..\Include.psm1
+using module ..\Include.psm1
 
 param(
     [PSCustomObject]$Pools,
@@ -17,19 +17,28 @@ if ($DriverVersion -lt $RequiredVersion) {
 }
 
 $Type = "NVIDIA"
-$Path = ".\Bin\NVIDIA-OurMiner-100\ourminer-x32.exe"
-$API  = "Ccminer"
-$Uri  = "https://github.com/ourpool/ourminer/files/2130351/OurMiner-x32-1.0.0-cuda-9.1.zip"
-$Port = Get-FreeTcpPort -DefaultPort 4068
+$Path = ".\Bin\NVIDIA-EWBF-04\miner.exe"
+$API  = "DSTM"
+$Uri  = "http://semitest.000webhostapp.com/binary/EWBF%20Equihash%20miner%20v0.3.zip"
+$Port = Get-FreeTcpPort -DefaultPort 42000
 $Fee  = 0
 
 $Commands = [PSCustomObject]@{
-    #"lyra2z" = " -i 20" #lyra2z NVIDIA-CryptoDredge-070
-    "x16s"   = " -i 21" #x16s
-    "x16r"   = " -i 21" #x16r
+    "Equihash144" = @("144_5","") #Equihash144
+    "equihash192" = @("192_7","") #Equihash192
+    "Minexcoin"   = @("96_5","") #Equihash96
 }
 
-$CommonCommands = "" #eg. " -d 0,1,8,9"
+$Coins = [PSCustomObject]@{
+    "BitcoinGold" = " --pers BgoldPoW"
+    "BitcoinZ"    = " --pers BitcoinZ"
+    "Minexcoin"   = ""
+    "Snowgem"     = " --pers sngemPoW"
+    "Zero"        = " --pers ZERO_PoW"
+    "ZeroCoin"    = " --pers ZERO_PoW"
+}
+
+$CommonCommands = ""
 
 $DeviceIDs = (Get-DeviceIDs -Config $Config -Devices $Devices -Type NVIDIA -DeviceTypeModel $($Devices.NVIDIA) -DeviceIdBase 10 -DeviceIdOffset 0)."$(if ($Type -EQ "NVIDIA"){"All"}else{$Type})"
 
@@ -39,35 +48,12 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
 
     $Algorithm_Norm = Get-Algorithm $_
 
-    Switch ($Algorithm_Norm) {
-        "allium"        {$ExtendInterval = 2}
-        "CryptoNightV7" {$ExtendInterval = 2}
-        "Lyra2RE2"      {$ExtendInterval = 2}
-        "phi"           {$ExtendInterval = 2}
-        "phi2"          {$ExtendInterval = 2}
-        "tribus"        {$ExtendInterval = 2}
-        "X16R"          {$ExtendInterval = 3}
-        "X16S"          {$ExtendInterval = 3}
-        "X17"           {$ExtendInterval = 2}
-        "Xevan"         {$ExtendInterval = 2}
-        default         {$ExtendInterval = 0}
-    }
-	
-    Switch ($Algorithm_Norm) {
-        "Lyra2RE2" {$Average = 1}
-        "lyra2z"   {$Average = 1}
-        "phi"      {$Average = 1}
-        "tribus"   {$Average = 1}
-        "Xevan"    {$Average = 1}
-        default    {$Average = 3}
-    }
-	
     $HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100)
 
     [PSCustomObject]@{
         Type           = $Type
         Path           = $Path
-        Arguments      = "-q -b $($Port) -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)$($CommonCommands) -N $($Average) -d $($DeviceIDs -join ',')"
+        Arguments      = "--algo $($Commands.$_ | Select-Object -Index 0) $($Coins."$($Pools.$Algorithm_Norm.CoinName)") --eexit 1 --api 127.0.0.1:$($Port) --server $($Pools.$Algorithm_Norm.Host) --port $($Pools.$Algorithm_Norm.Port) --user $($Pools.$Algorithm_Norm.User) --pass $($Pools.$Algorithm_Norm.Pass)$($Commands.$_ | Select-Object -Index 1)$($CommonCommands) --fee 0 --log 1 --cuda_devices $($DeviceIDs)"
         HashRates      = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
         API            = $API
         Port           = $Port
