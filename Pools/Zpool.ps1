@@ -28,7 +28,7 @@ if ((($Zpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore |
 
 $LocalVariance = ".\Variance\zpool.variance.txt"
 try {
-    Invoke-RestMethod "https://semitest.000webhostapp.com/variance/zpool.variance.tx" -UseBasicParsing -TimeoutSec 10 -ErrorAction SilentlyContinue -Outfile $LocalVariance
+    Invoke-RestMethod "https://semitest.000webhostapp.com/variance/zpool.variance.txt" -UseBasicParsing -TimeoutSec 10 -ErrorAction SilentlyContinue -Outfile $LocalVariance
     }
 catch {
 	Write-Log -Level Warn "Pool Variance ($Name) has failed. Mining using local variance in calcualtion."
