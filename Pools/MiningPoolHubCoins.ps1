@@ -40,7 +40,7 @@ try {
 catch {
     Write-Log -Level Warn "Pool Variance ($Name) has failed. Mining using local variance in calcualtion."
 	if (Test-Path $LocalVariance) {
-		$MiningPoolHubCoins_Variance = Get-ChildItemContent "mphc.variance.txt"
+		$MiningPoolHubCoins_Variance = Get-ChildItemContent $LocalVariance | Select-Object -ExpandProperty Content
 	}
 }
 

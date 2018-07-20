@@ -33,7 +33,7 @@ try {
 catch {
     Write-Log -Level Warn "Pool Variance ($Name) has failed. Mining using local variance in calcualtion."
 	if (Test-Path $LocalVariance) {
-		$ZergpoolCoins_Variance = Get-ChildItemContent "zergpoolc.variance.txt"
+		$ZergpoolCoins_Variance = Get-ChildItemContent $LocalVariance | Select-Object -ExpandProperty Content
 	}
 }
 
