@@ -89,6 +89,6 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
     Port           = $Port
     URI            = $Uri
     MinerFee       = @($Fee)
-	ExtendInterval = $ExtendInterval
+    ExtendInterval = $ExtendInterval
 	}
 }

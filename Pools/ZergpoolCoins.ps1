@@ -26,11 +26,15 @@ if (($ZergPoolCoins_Request | Get-Member -MemberType NoteProperty -ErrorAction I
     return
 }
 	
+$LocalVariance = ".\Variance\zergpoolc.variance.txt"
 try {
     $ZergpoolCoins_Variance = Invoke-RestMethod "https://semitest.000webhostapp.com/variance/zergpoolc.variance.txt" -UseBasicParsing -TimeoutSec 15 -ErrorAction SilentlyContinue
 }
 catch {
-    Write-Log -Level Warn "Pool Variance ($Name) has failed. Mining Without variance in calcualtion."
+    Write-Log -Level Warn "Pool Variance ($Name) has failed. Mining using local variance in calcualtion."
+	if (Test-Path $LocalVariance) {
+		$ZergpoolCoins_Variance = Get-ChildItemContent "zergpoolc.variance.txt"
+	}
 }
 
 $ZergPoolCoins_Regions = "us"

@@ -26,11 +26,15 @@ if ((($Zpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore |
     return
 }
 
+$LocalVariance = ".\Variance\zpool.variance.txt"
 try {
     $Zpool_Variance = Invoke-RestMethod "https://semitest.000webhostapp.com/variance/zpool.variance.txt" -UseBasicParsing -TimeoutSec 15 -ErrorAction SilentlyContinue
 }
 catch {
-    Write-Log -Level Warn "Pool Variance ($Name) has failed. Mining Without variance in calcualtion."
+    Write-Log -Level Warn "Pool Variance ($Name) has failed. Mining using local variance in calcualtion."
+	if (Test-Path $LocalVariance) {
+		$Zpool_Variance = Get-ChildItemContent "zpool.variance.txt"
+	}
 }
 
 $Zpool_Regions = "us"

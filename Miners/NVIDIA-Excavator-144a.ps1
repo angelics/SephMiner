@@ -27,12 +27,12 @@ $Commands = [PSCustomObject]@{
     #"equihash:2"        = @("","") #Equihash 2 threads
     #"neoscrypt:2"       = @("","") #NeoScrypt 2 threads
     #"lyra2rev2:2"       = @("","") #Lyra2RE2 2 threads NVIDIA-CryptoDredge-070
-    "keccak:2"          = @("","") #keccak 2 threads
+    #"keccak:2"          = @("","") #keccak 2 threads
     #"daggerhashimoto:3" = @("","") #Ethash 3 threads
     #"equihash:3"        = @("","") #Equihash 3 threads
     #"neoscrypt:3"       = @("","") #NeoScrypt 3 threads
     #"lyra2rev2:3"       = @("","") #Lyra2RE2 3 threads NVIDIA-CryptoDredge-070
-    "keccak:3"          = @("","") #keccak 3 threads
+    #"keccak:3"          = @("","") #keccak 3 threads
 }
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
