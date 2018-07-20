@@ -35,13 +35,17 @@ if (($MiningPoolHubCoins_Request.return | Measure-Object).Count -le 1) {
 
 $LocalVariance = ".\Variance\mphc.variance.txt"
 try {
-    $MiningPoolHubCoins_Variance = Invoke-RestMethod "https://semitest.000webhostapp.com/variance/mphc.variance.txt" -UseBasicParsing -TimeoutSec 15 -ErrorAction SilentlyContinue
+    Invoke-RestMethod "https://semitest.000webhostapp.com/variance/mphc.variance.txt" -UseBasicParsing -TimeoutSec 10 -ErrorAction SilentlyContinue -Outfile $LocalVariance
     }
 catch {
-    Write-Log -Level Warn "Pool Variance ($Name) has failed. Mining using local variance in calcualtion."
-	if (Test-Path $LocalVariance) {
-		$MiningPoolHubCoins_Variance = Get-ChildItemContent $LocalVariance | Select-Object -ExpandProperty Content
-	}
+	Write-Log -Level Warn "Pool Variance ($Name) has failed. Mining using local variance in calcualtion."
+}
+
+if (Test-Path $LocalVariance) {
+	$MiningPoolHubCoins_Variance = Get-ChildItemContent $LocalVariance | Select-Object -ExpandProperty Content
+}
+else {
+	Write-Log -Level Warn "Pool Variance ($Name) has failed. No variance in calcualtion."
 }
 
 $MiningPoolHubCoins_Regions = "europe", "us-east", "asia"
