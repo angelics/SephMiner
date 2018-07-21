@@ -15,7 +15,7 @@
 "BUEN":{"variance":0.27},
 "BTX":{"variance":0.04,"variance2":0.11},
 "CBS":{"variance":0.03},
-"CHC":{"variance":0.01},
+"CHC":{"variance":0.01,"variance2":0.10},
 "CMM":{"variance":0.00,"variance2":0.09},
 "COG":{"variance":0.01},
 "CPR":{"variance":0.06},

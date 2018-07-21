@@ -23,15 +23,15 @@ $Uri  = "http://semitest.000webhostapp.com/binary/t-rex-0.5.1-win-cuda9.1.zip"
 $Port = Get-FreeTcpPort -DefaultPort 4068
 $Fee  = 1
 
-$Commands = [PSCustomObject]@{
-    "c11"    = "" #c11
-    "hsr"    = "" #hsr
-    "lyra2z" = "" #lyra2z
-    "phi"    = "" #phi
-    "phi2"   = "" #phi2
-    "tribus" = "" #tribus
-    "x17"    = "" #x17
-}
+$Commands = [PSCustomObject[]]@(
+    [PSCustomObject]@{Algorithm = "c11"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #c11
+    [PSCustomObject]@{Algorithm = "hsr"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #hsr
+    [PSCustomObject]@{Algorithm = "lyra2z"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #lyra2z
+    [PSCustomObject]@{Algorithm = "phi"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #phi
+    [PSCustomObject]@{Algorithm = "phi2"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #phi2
+    [PSCustomObject]@{Algorithm = "tribus"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #tribus
+    [PSCustomObject]@{Algorithm = "x17"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #x17
+)
 
 $CommonCommands = "" #eg. " -d 0,1,8,9"
 
@@ -39,9 +39,11 @@ $DeviceIDs = (Get-DeviceIDs -Config $Config -Devices $Devices -Type NVIDIA -Devi
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
 
-$Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty Name | Where-Object {$Pools.(Get-Algorithm $_).Protocol -eq "stratum+tcp" <#temp fix#>} | ForEach-Object {
+$Commands | Where-Object {$Pools.(Get-Algorithm $_.Algorithm).Protocol -eq "stratum+tcp" <#temp fix#>} | ForEach-Object {
 
-    $Algorithm_Norm = Get-Algorithm $_
+    $Algorithm_Norm = Get-Algorithm $_.Algorithm
+	
+    $StaticDiff = $_."$($Pools.$Algorithm_Norm.Name)"
 
     Switch ($Algorithm_Norm) {
         "allium"        {$ExtendInterval = 2}
@@ -62,7 +64,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
     [PSCustomObject]@{
         Type           = $Type
         Path           = $Path
-        Arguments      = "-b 127.0.0.1:$($Port) -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)$($CommonCommands) -d $($DeviceIDs -join ',')"
+        Arguments      = "-b 127.0.0.1:$($Port) -a $($_.Algorithm) -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($StaticDiff)$($_.Params)$($CommonCommands) -d $($DeviceIDs -join ',')"
         HashRates      = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
         API            = $API
         Port           = $Port

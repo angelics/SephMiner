@@ -23,16 +23,16 @@ $Uri  = "https://github.com/technobyl/CryptoDredge/releases/download/v0.7.0/Cryp
 $Port = Get-FreeTcpPort -DefaultPort 4068
 $Fee  = 1
 
-$Commands = [PSCustomObject]@{
-    "allium"    = "" #Allium
-    "lyra2v2"   = "" #Lyra2REv2
-    "lyra2z"    = "" #Lyra2z
-    "neoscrypt" = "" #NeoScrypt
-    "phi2"      = "" #PHI2
-    #"phi1612"   = "" #PHI1612 NVIDIA-Dumax-093
-    #"skein"     = "" #Skein NVIDIA-Alexis78-12b1 
-    #"skunkhash" = "" #Skunk NVIDIA-ZEnemy-112a
-}
+$Commands = [PSCustomObject[]]@(
+    [PSCustomObject]@{Algorithm = "allium"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #Allium
+    [PSCustomObject]@{Algorithm = "lyra2v2"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #Lyra2REv2
+    [PSCustomObject]@{Algorithm = "lyra2z"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #Lyra2z
+    [PSCustomObject]@{Algorithm = "neoscrypt"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #NeoScrypt
+    [PSCustomObject]@{Algorithm = "phi2"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #PHI2
+    #[PSCustomObject]@{Algorithm = "phi1612"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #PHI1612 NVIDIA-Dumax-093
+    #[PSCustomObject]@{Algorithm = "skein"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #Skein NVIDIA-Alexis78-12b1 
+    #[PSCustomObject]@{Algorithm = "skunkhash"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #Skunk NVIDIA-ZEnemy-112a
+)
 
 $CommonCommands = " --no-color"
 
@@ -40,10 +40,12 @@ $DeviceIDs = (Get-DeviceIDs -Config $Config -Devices $Devices -Type NVIDIA -Devi
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
 
-$Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty Name | Where-Object {$Pools.(Get-Algorithm $_).Protocol -eq "stratum+tcp" <#temp fix#>} | ForEach-Object {
+$Commands | Where-Object {$Pools.(Get-Algorithm $_.Algorithm).Protocol -eq "stratum+tcp" <#temp fix#>} | ForEach-Object {
 
-    $Algorithm_Norm = Get-Algorithm $_
-
+    $Algorithm_Norm = Get-Algorithm $_.Algorithm
+	
+    $StaticDiff = $_."$($Pools.$Algorithm_Norm.Name)"
+	
     Switch ($Algorithm_Norm) {
         "allium"        {$ExtendInterval = 2}
         "CryptoNightV7" {$ExtendInterval = 2}
@@ -63,7 +65,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
     [PSCustomObject]@{
         Type           = $Type
         Path           = $Path
-        Arguments      = "--api-type ccminer-tcp --api-bind 127.0.0.1:$($Port) -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)$($CommonCommands) -d $($DeviceIDs -join ',')"
+        Arguments      = "--api-type ccminer-tcp --api-bind 127.0.0.1:$($Port) -a $($_.Algorithm) -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($StaticDiff)$($_.Params)$($CommonCommands) -d $($DeviceIDs -join ',')"
         HashRates      = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
         API            = $API
         Port           = $Port

@@ -10,14 +10,14 @@ param(
 if (-not $Devices.NVIDIA) {return} # No NVIDIA mining device present in system
 
 $Type = "NVIDIA"
-$Path = ".\Bin\\NVIDIA-Palginfork-45ee8fa\\hsrminer_neoscrypt_fork_hp.exe"
+$Path = ".\Bin\NVIDIA-Palginfork-45ee8fa\hsrminer_neoscrypt_fork_hp.exe"
 $Uri  = "https://github.com/justaminer/hsrm-fork/raw/master/hsrminer_neoscrypt_fork_hp.zip"
 $Port = Get-FreeTcpPort -DefaultPort 4068
 $Fee  = 1
 
-$Commands = [PSCustomObject]@{
-    "neoscrypt" = "" #NeoScrypt
-}
+$Commands = [PSCustomObject[]]@(
+    [PSCustomObject]@{Algorithm = "neoscrypt"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #NeoScrypt
+)
 
 $CommonCommands = "" #eg. " -d 0,1,8,9"
 
@@ -25,9 +25,11 @@ $DeviceIDs = (Get-DeviceIDs -Config $Config -Devices $Devices -Type NVIDIA -Devi
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
 
-$Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty Name | Where-Object {$Pools.(Get-Algorithm $_).Protocol -eq "stratum+tcp" <#temp fix#>} | ForEach-Object {
+$Commands | Where-Object {$Pools.(Get-Algorithm $_.Algorithm).Protocol -eq "stratum+tcp" <#temp fix#>} | ForEach-Object {
 
-    $Algorithm_Norm = Get-Algorithm $_
+    $Algorithm_Norm = Get-Algorithm $_.Algorithm
+	
+    $StaticDiff = $_."$($Pools.$Algorithm_Norm.Name)"
 
     Switch ($Algorithm_Norm) {
         default {$ExtendInterval = 3}
@@ -38,7 +40,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
     [PSCustomObject]@{
         Type           = $Type
         Path           = $Path
-        Arguments      = "--api-bind=$($Port) -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)$($CommonCommands) -d $($DeviceIDs -join ',')"
+        Arguments      = "--api-bind=$($Port) -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($StaticDiff)$($_.Params)$($CommonCommands) -d $($DeviceIDs -join ',')"
         HashRates      = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
         API            = "Ccminer"
         Port           = $Port

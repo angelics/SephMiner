@@ -35,8 +35,8 @@ $Commands = [PSCustomObject[]]@(
     [PSCustomObject]@{Algorithm = "sonoa"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #sonoa
     [PSCustomObject]@{Algorithm = "timetravel"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #timetravel
     #[PSCustomObject]@{Algorithm = "tribus"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #Tribus NVIDIA-TRex-051
-    #[PSCustomObject]@{Algorithm = "x16s"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #x16s
-    #[PSCustomObject]@{Algorithm = "x16r"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #x16r
+    [PSCustomObject]@{Algorithm = "x16s"; Params = " -i 21"; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #x16s
+    [PSCustomObject]@{Algorithm = "x16r"; Params = " -i 21"; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #x16r
     [PSCustomObject]@{Algorithm = "x17"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #x17
     [PSCustomObject]@{Algorithm = "xevan"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #xevan
 )
@@ -51,7 +51,7 @@ $Commands | Where-Object {$Pools.(Get-Algorithm $_.Algorithm).Protocol -eq "stra
 
     $Algorithm_Norm = Get-Algorithm $_.Algorithm
 
-	$StaticDiff = $_."$($Pools.$Algorithm_Norm.Name)"
+    $StaticDiff = $_."$($Pools.$Algorithm_Norm.Name)"
 	
     Switch ($Algorithm_Norm) {
         "allium"        {$ExtendInterval = 2}
