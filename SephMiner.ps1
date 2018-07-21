@@ -583,7 +583,7 @@ while ($true) {
         @{Label = "$($Config.Currency | Select-Object -Index 0)/Day"; Expression = {if ($_.Profit) {ConvertTo-LocalCurrency $($_.Profit) $($Rates.$($Config.Currency | Select-Object -Index 0)) -Offset 2} else {"Unknown"}}; Align = "right"},
         @{Label = "Accuracy"; Expression = {$_.Pools.PSObject.Properties.Value.MarginOfError | ForEach-Object {(1 - $_).ToString("P0")}}; Align = 'right'},
         @{Label = "BTC/H/Day"; Expression = {$_.Pools.PSObject.Properties.Value.Price | Select-Object -Index 0 | ConvertTo-Price}; Align = 'right'},
-        @{Label = "Pool [Fee] [Variance]"; Expression = {$_.Pools.PSObject.Properties.Value | ForEach-Object {if ($_.Info) {"$($_.Name)-$($_.Info) [$('{0:N2}' -f $_.PoolFee)%] [$('{0:N2}' -f $_.Variance)]"}else {"$($_.Name) [$('{0:N2}' -f $_.PoolFee)%] [$('{0:N2}' -f $_.Variance)]"}}}}
+        @{Label = "Pool [Fee] [Variance]"; Expression = {$_.Pools.PSObject.Properties.Value | ForEach-Object {if ($_.CoinName) {"$($_.Name)-$($_.CoinName) [$('{0:N2}' -f $_.PoolFee)%] [$('{0:N2}' -f $_.Variance)]"}else {"$($_.Name) [$('{0:N2}' -f $_.PoolFee)%] [$('{0:N2}' -f $_.Variance)]"}}}}
     ) | Out-Host
 
     Write-Host "--------------------------------------------------------------------------------"
