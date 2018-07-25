@@ -24,6 +24,9 @@ $Commands = [PSCustomObject]@{
 
 $CommonCommands = "" #eg. " -d 0,1,8,9"
 
+# Get array of IDs of all devices in device set, returned DeviceIDs are of base $DeviceIdBase representation starting from $DeviceIdOffset
+$DeviceIDsSet = Get-DeviceIDs -Config $Config -Devices $Devices -Type NVIDIA -DeviceTypeModel $($Devices.NVIDIA) -DeviceIdBase 10 -DeviceIdOffset 1
+
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
 
 $Commands | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name | ForEach-Object {
@@ -31,8 +34,6 @@ $Commands | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Obj
     $Algorithm_Norm = Get-Algorithm $_
     
 	if ($Type -EQ "NVIDIA"){
-        # Get array of IDs of all devices in device set, returned DeviceIDs are of base $DeviceIdBase representation starting from $DeviceIdOffset
-        $DeviceIDsSet = Get-DeviceIDs -Config $Config -Devices $Devices -Type NVIDIA -DeviceTypeModel $($Devices.NVIDIA) -DeviceIdBase 10 -DeviceIdOffset 1
         Switch ($MainAlgorithm_Norm) { # default is all devices, ethash has a 4GB minimum memory limit
             "Ethash"    {$DeviceIDs = $DeviceIDsSet."4gb"}
             "Ethash2gb" {$DeviceIDs = $DeviceIDsSet."2gb"}
@@ -41,7 +42,7 @@ $Commands | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Obj
         }
     }
 	else {
-        $DeviceIDs = (Get-DeviceIDs -Config $Config -Devices $Devices -Type NVIDIA -DeviceTypeModel $($Devices.NVIDIA) -DeviceIdBase 10 -DeviceIdOffset 0)."$($Type)"
+        $DeviceIDs = $DeviceIDsSet."$($Type)"
 	}
 	
     if ($Pools.$Algorithm_Norm -and $DeviceIDs) { # must have a valid pool to mine and available devices

@@ -311,7 +311,8 @@ while ($true) {
         }
 
         $Miner_Profit_MarginOfError = [Double]($Miner_Profits_MarginOfError.PSObject.Properties.Value | Measure-Object -Sum).Sum
-
+        if ($Miner_Profit_MarginOfError -LT 0) {Write-Log -Level Warn "$($Miner.HashRates.PSObject.Properties.Name) less than zero $($Miner_Profit_MarginOfError)"}
+		
         $Miner.HashRates | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty Name | ForEach-Object {
             if (-not [String]$Miner.HashRates.$_) {
                 $Miner_HashRates.$_ = $null

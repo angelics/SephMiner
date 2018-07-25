@@ -241,9 +241,11 @@ function Set-Stat {
     $Path = "Stats\$Name.txt"
     $SmallestValue = 1E-20
 
+    $Stat = Get-Content $Path -ErrorAction SilentlyContinue
+    
     try {
-        $Stat = Get-Content $Path -ErrorAction Stop | ConvertFrom-Json -ErrorAction Stop
 
+        $Stat = $Stat | ConvertFrom-Json -ErrorAction Stop
         $Stat = [PSCustomObject]@{
             Live = [Double]$Stat.Live
             Minute = [Double]$Stat.Minute
@@ -370,8 +372,16 @@ function Get-Stat {
         $Stats = [PSCustomObject]@{}
         Get-ChildItem "Stats" | ForEach-Object {
             $BaseName = $_.BaseName
-            $_ | Get-Content | ConvertFrom-Json -ErrorAction SilentlyContinue | ForEach-Object {
-                $Stats | Add-Member $BaseName $_
+            $FullName = $_.FullName
+            try {
+                $_ | Get-Content -ErrorAction Stop | ConvertFrom-Json -ErrorAction Stop | ForEach-Object {
+                    $Stats | Add-Member $BaseName $_
+                }
+            }
+            catch {
+                #Remove broken stat file
+                Write-Log -Level Warn "Stat file ($BaseName) is corrupt and will be removed. "
+                Remove-Item -Path $FullName -Force -Confirm:$false
             }
         }
         Return $Stats
