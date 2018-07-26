@@ -137,7 +137,7 @@ while ($true) {
             Delay                         = $Delay
             SwitchingPrevention           = $SwitchingPrevention
             ShowPoolBalances              = $ShowPoolBalances
-			ShowPoolBalancesExcludedPools = $ShowPoolBalancesForExcludedPools
+            ShowPoolBalancesExcludedPools = $ShowPoolBalancesForExcludedPools
         } | Select-Object -ExpandProperty Content
     }
 

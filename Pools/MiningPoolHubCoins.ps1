@@ -81,27 +81,7 @@ $MiningPoolHubCoins_Request.return | Where-Object {$ExcludeCoin -inotcontains $_
         $MiningPoolHubCoins_Region_Norm = Get-Region ($MiningPoolHubCoins_Region -replace "^us-east$", "us")
 
         if ($User) {
-            if ($MiningPoolHubCoins_Algorithm_Norm -eq "EquihashBTG") {
                 [PSCustomObject]@{
-                    Algorithm     = $MiningPoolHubCoins_Algorithm_Norm
-                    CoinName      = $MiningPoolHubCoins_Coin
-                    Price         = $Stat.Live
-                    StablePrice   = $Stat.Week
-                    MarginOfError = $Stat.Week_Fluctuation
-                    Protocol      = "stratum+tcp"
-                    Host          = "$($MiningPoolHubCoins_Region).equihash-$($MiningPoolHubCoins_Host)"
-                    Port          = $MiningPoolHubCoins_Port
-                    User          = "$User.$Worker"
-                    Pass          = "x"
-                    Region        = $MiningPoolHubCoins_Region_Norm
-                    SSL           = $false
-                    Updated       = $Stat.Updated
-                    PoolFee       = $MiningPoolHubCoins_Fee
-                    Variance      = $Variance
-                }
-			}
-			else {
-                    [PSCustomObject]@{
                     Algorithm     = "$($MiningPoolHubCoins_Algorithm_Norm)$(if ($MiningPoolHubCoins_Algorithm_Norm -EQ "Ethash"){$MinMem.$MiningPoolHubCoins_Coin})"
                     CoinName      = $MiningPoolHubCoins_Coin
                     Price         = $Stat.Live
@@ -118,7 +98,6 @@ $MiningPoolHubCoins_Request.return | Where-Object {$ExcludeCoin -inotcontains $_
                     PoolFee       = $MiningPoolHubCoins_Fee
                     Variance      = $Variance
                 }
-			}
             if ($MiningPoolHubCoins_Algorithm_Norm -eq "Equihash") {
                 [PSCustomObject]@{
                     Algorithm     = $MiningPoolHubCoins_Algorithm_Norm
