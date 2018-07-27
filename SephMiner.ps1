@@ -17,6 +17,7 @@ param(
     [String]$API_Key = "", 
     [Parameter(Mandatory = $false)]
     [Int]$Interval = 60, #seconds before reading hash rate from miners
+    [Parameter(Mandatory = $false)]
     [Alias("Location")]
     [String]$Region = "europe", #europe/us/asia
     [Parameter(Mandatory = $false)]
@@ -92,6 +93,9 @@ if (Get-Command "Unblock-File" -ErrorAction SilentlyContinue) {Get-ChildItem . -
 if ((Get-Command "Get-MpPreference" -ErrorAction SilentlyContinue) -and (Get-MpComputerStatus -ErrorAction SilentlyContinue) -and (Get-MpPreference).ExclusionPath -notcontains (Convert-Path .)) {
     Start-Process (@{desktop = "powershell"; core = "pwsh"}.$PSEdition) "-Command Import-Module '$env:Windir\System32\WindowsPowerShell\v1.0\Modules\Defender\Defender.psd1'; Add-MpPreference -ExclusionPath '$(Convert-Path .)'" -Verb runAs
 }
+
+#Check for software updates
+if (Test-Path .\Updater.ps1) {$Downloader = Start-Job -InitializationScript ([scriptblock]::Create("Set-Location('$(Get-Location)')")) -ArgumentList ($PSVersionTable.PSVersion, "") -FilePath .\Updater.ps1}
 
 #Set donation parameters
 $LastDonated = $Timer.AddDays(-1).AddHours(1)
@@ -169,7 +173,7 @@ while ($true) {
     # Copy the user's config before changing anything for donation runs
     # This is used when getting pool balances so it doesn't get pool balances of the donation address instead
     $UserConfig = $Config
-	
+
     #Activate or deactivate donation
     if ($Config.Donate -lt 10) {$Config.Donate = 10}
     if ($Timer.AddDays(-1) -ge $LastDonated.AddSeconds(59)) {$LastDonated = $Timer}
@@ -218,6 +222,7 @@ while ($true) {
 
     #Update the pool balances
     if ($Config.ShowPoolBalances -or $Config.ShowPoolBalancesExcludedPools) {
+        Write-Log "Getting pool balances. "
         $Balances = Get-Balance -Config $UserConfig -Rates $Rates
     }
 	
@@ -382,6 +387,7 @@ while ($true) {
         Start-Sleep $Config.Interval
         continue
     }
+
     $ActiveMiners | ForEach-Object {
         $_.Profit = 0
         $_.Profit_Comparison = 0
@@ -630,7 +636,7 @@ while ($true) {
     if (($BestMiners_Combo | Where-Object Profit -EQ $null | Measure-Object).Count -eq 0 -and $Downloader.State -ne "Running") {
         $MinerComparisons = 
         [PSCustomObject]@{"Miner" = "SephMiner"}, 
-        [PSCustomObject]@{"Miner" = $BestMiners_Combo_Comparison | ForEach-Object {"$($_.Name)-$($_.Algorithm -join "/")"}}
+        [PSCustomObject]@{"Miner" = $BestMiners_Combo_Comparison | ForEach-Object {"$($_.Name)-$($_.Algorithm -join '/')"}}
 
         $BestMiners_Combo_Stat = Set-Stat -Name "Profit" -Value ($BestMiners_Combo | Measure-Object Profit -Sum).Sum -Duration $StatSpan
 
@@ -650,11 +656,11 @@ while ($true) {
 
         $MinerComparisons | Out-Host
     }
-    
+
     #Display pool balances, formatting it to show all the user specified currencies
     if ($Config.ShowPoolBalances -or $Config.ShowPoolBalancesExcludedPools) {
         Write-Host "Pool Balances: "
-        $balances | Format-Table Name, Total_*
+        $Balances | Format-Table -Wrap Name, Total_*
     }
 	
 	$RunningMiners = $ActiveMiners | Where-Object Status -EQ "Running"
