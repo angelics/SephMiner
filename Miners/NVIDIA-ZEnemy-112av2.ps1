@@ -24,21 +24,21 @@ $Port = Get-FreeTcpPort -DefaultPort 4068
 $Fee  = 1
 
 $Commands = [PSCustomObject[]]@(
-    [PSCustomObject]@{Algorithm = "aeriumx"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #aeriumx
-    [PSCustomObject]@{Algorithm = "bitcore"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #Bitcore
-    #[PSCustomObject]@{Algorithm = "c11"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #c11 NVIDIA-Alexis78-12b1
-    #[PSCustomObject]@{Algorithm = "phi"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #Phi CcminerDumax-093
-    [PSCustomObject]@{Algorithm = "phi2"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #Phi2 NVIDIA-TRex-051
-    [PSCustomObject]@{Algorithm = "poly"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #poly
-    [PSCustomObject]@{Algorithm = "vit"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #Vitalium
-    [PSCustomObject]@{Algorithm = "skunk"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #skunk
-    [PSCustomObject]@{Algorithm = "sonoa"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #sonoa
-    [PSCustomObject]@{Algorithm = "timetravel"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #timetravel
-    #[PSCustomObject]@{Algorithm = "tribus"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #Tribus NVIDIA-TRex-051
-    [PSCustomObject]@{Algorithm = "x16s"; Params = " -i 21"; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #x16s
-    [PSCustomObject]@{Algorithm = "x16r"; Params = " -i 21"; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #x16r
-    [PSCustomObject]@{Algorithm = "x17"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #x17
-    [PSCustomObject]@{Algorithm = "xevan"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #xevan
+    [PSCustomObject]@{Algorithm = "aeriumx"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #aeriumx
+    [PSCustomObject]@{Algorithm = "bitcore"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Bitcore
+    #[PSCustomObject]@{Algorithm = "c11"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #c11 NVIDIA-Alexis78-12b1
+    #[PSCustomObject]@{Algorithm = "phi"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Phi CcminerDumax-093
+    [PSCustomObject]@{Algorithm = "phi2"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Phi2 NVIDIA-TRex-051
+    [PSCustomObject]@{Algorithm = "poly"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #poly
+    [PSCustomObject]@{Algorithm = "vit"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Vitalium
+    [PSCustomObject]@{Algorithm = "skunk"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #skunk
+    [PSCustomObject]@{Algorithm = "sonoa"; Params = ""} #sonoa
+    [PSCustomObject]@{Algorithm = "timetravel"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #timetravel
+    #[PSCustomObject]@{Algorithm = "tribus"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Tribus NVIDIA-TRex-051
+    [PSCustomObject]@{Algorithm = "x16s"; Params = " -i 21"; Zpool = ""; ZergpoolCoins = ""} #x16s
+    [PSCustomObject]@{Algorithm = "x16r"; Params = " -i 21"; Zpool = ""; ZergpoolCoins = ""} #x16r
+    [PSCustomObject]@{Algorithm = "x17"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #x17
+    [PSCustomObject]@{Algorithm = "xevan"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #xevan
 )
 
 $CommonCommands = "" #eg. " -d 0,1,8,9"

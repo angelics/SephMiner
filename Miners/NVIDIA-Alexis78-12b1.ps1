@@ -17,21 +17,21 @@ $Port = Get-FreeTcpPort -DefaultPort 4068
 $Fee  = 0
 
 $Commands = [PSCustomObject[]]@(
-    #[PSCustomObject]@{Algorithm = "blake2s"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #blake2s not profit
-    [PSCustomObject]@{Algorithm = "c11"; Params = " -i 21"; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #c11
-    #[PSCustomObject]@{Algorithm = "hsr"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #Hsr NVIDIA-TRex-051
+    #[PSCustomObject]@{Algorithm = "blake2s"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #blake2s not profit
+    [PSCustomObject]@{Algorithm = "c11"; Params = " -i 21"; Zpool = ""; ZergpoolCoins = ""} #c11
+    #[PSCustomObject]@{Algorithm = "hsr"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Hsr NVIDIA-TRex-051
     #[PSCustomObject]@{Algorithm = "keccak"; Params = " -m 2 -i 29"; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #Keccak ExcavatorNvidia-144a
-    [PSCustomObject]@{Algorithm = "keccakc"; Params = " -i 29"; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #keccakc
-    [PSCustomObject]@{Algorithm = "lyra2"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #lyra2
+    [PSCustomObject]@{Algorithm = "keccakc"; Params = " -i 29"; Zpool = ""; ZergpoolCoins = ""} #keccakc
+    [PSCustomObject]@{Algorithm = "lyra2"; Params = ""} #lyra2
     #[PSCustomObject]@{Algorithm = "lyra2v2"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #Lyra2RE2 NVIDIA-CryptoDredge-070
     #[PSCustomObject]@{Algorithm = "neoscrypt"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #NeoScrypt PalginNvidiaFork-45ee8fa
-    [PSCustomObject]@{Algorithm = "poly"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #poly
+    [PSCustomObject]@{Algorithm = "poly"; Params = ""} #poly
     [PSCustomObject]@{Algorithm = "skein"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #skein
-    [PSCustomObject]@{Algorithm = "skein2"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #skein2
-    [PSCustomObject]@{Algorithm = "whirlcoin"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #whirlcoin
-    [PSCustomObject]@{Algorithm = "whirlpool"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #whirlpool
-    [PSCustomObject]@{Algorithm = "x11evo"; Params = " -i 21"; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #x11evo
-    #[PSCustomObject]@{Algorithm = "x17"; Params = " -i 20"; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #X17 NVIDIA-TRex-051
+    [PSCustomObject]@{Algorithm = "skein2"; Params = ""} #skein2
+    [PSCustomObject]@{Algorithm = "whirlcoin"; Params = ""} #whirlcoin
+    [PSCustomObject]@{Algorithm = "whirlpool"; Params = ""} #whirlpool
+    [PSCustomObject]@{Algorithm = "x11evo"; Params = " -i 21"; Zpool = ""; ZergpoolCoins = ""} #x11evo
+    #[PSCustomObject]@{Algorithm = "x17"; Params = " -i 20"; Zpool = ""; ZergpoolCoins = ""} #X17 NVIDIA-TRex-051
 )
 
 $CommonCommands = "" #eg. " -d 0,1,8,9"

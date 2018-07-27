@@ -23,14 +23,14 @@ $Uri  = "https://semitest.000webhostapp.com/binary/CCMiner%20Klaust%20-%20Yescry
 $Port = Get-FreeTcpPort -DefaultPort 4068
 $Fee  = 0
 
-$Commands = [PSCustomObject]@{
-    "yescrypt"      = "" #yescrypt CcminerKlaust-Yescrypt92
-    "yescryptR8"    = "" #yescryptR8
-    "yescryptR16"   = "" #Yenten
-    "yescryptR16v2" = "" #PPNP
-    "yescryptR24"   = "" #yescryptR24
-    "yescryptR32"   = "" #WAVI
-}
+$Commands = [PSCustomObject[]]@(
+    [PSCustomObject]@{Algorithm = "yescrypt"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #yescrypt
+    [PSCustomObject]@{Algorithm = "yescryptR8"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #yescryptR8
+    [PSCustomObject]@{Algorithm = "yescryptR16"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #Yenten
+    [PSCustomObject]@{Algorithm = "yescryptR16v2"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #PPNP
+    [PSCustomObject]@{Algorithm = "yescryptR24"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #yescryptR24
+    [PSCustomObject]@{Algorithm = "yescryptR32"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #WAVI
+)
 
 $CommonCommands = "" #eg. " -d 0,1,8,9"
 
@@ -38,16 +38,18 @@ $DeviceIDs = (Get-DeviceIDs -Config $Config -Devices $Devices -Type NVIDIA -Devi
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
 
-$Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty Name | Where-Object {$Pools.(Get-Algorithm $_).Protocol -eq "stratum+tcp" <#temp fix#>} | ForEach-Object {
+$Commands | Where-Object {$Pools.(Get-Algorithm $_.Algorithm).Protocol -eq "stratum+tcp" <#temp fix#>} | ForEach-Object {
 
-    $Algorithm_Norm = Get-Algorithm $_
+    $Algorithm_Norm = Get-Algorithm $_.Algorithm
+	
+    $StaticDiff = $_."$($Pools.$Algorithm_Norm.Name)"
 
     $HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100)
 
     [PSCustomObject]@{
         Type      = $Type
         Path      = $Path
-        Arguments = "-q -b $($Port) -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)$($CommonCommands) -d $($DeviceIDs -join ',')"
+        Arguments = "-q -b $($Port) -a $($_.Algorithm) -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($StaticDiff)$($_.Params)$($CommonCommands) -d $($DeviceIDs -join ',')"
         HashRates = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
         API       = $API
         Port      = $Port

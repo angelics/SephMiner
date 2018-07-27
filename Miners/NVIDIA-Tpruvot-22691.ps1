@@ -33,7 +33,6 @@ $Commands = [PSCustomObject[]]@(
     [PSCustomObject]@{Algorithm = "dmd-gr"; Params = ""} #dmd-gr
     [PSCustomObject]@{Algorithm = "fresh"; Params = ""} #fresh
     [PSCustomObject]@{Algorithm = "fugue256"; Params = ""} #fugue256
-    [PSCustomObject]@{Algorithm = "graft"; Params = ""} #graft
     [PSCustomObject]@{Algorithm = "heavy"; Params = ""} #heavy
     #[PSCustomObject]@{Algorithm = "hsr"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #hsr NVIDIA-CcminerAlexis78-12b1
     #[PSCustomObject]@{Algorithm = "hmq1725"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #hmq1725 crash
@@ -44,7 +43,6 @@ $Commands = [PSCustomObject[]]@(
     [PSCustomObject]@{Algorithm = "lyra2"; Params = ""} #lyra2
     #[PSCustomObject]@{Algorithm = "lyra2v2"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #Lyra2RE2
     #[PSCustomObject]@{Algorithm = "lyra2z"; Params = " -i 20"; Zpool = ""; ZergpoolCoins = ""} #Lyra2z
-    [PSCustomObject]@{Algorithm = "monero"; Params = ""; MiningPoolHubCoins = ""} #CryptoNightV7
     [PSCustomObject]@{Algorithm = "mjollnir"; Params = ""} #mjollnir
     #[PSCustomObject]@{Algorithm = "neoscrypt"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #NeoScrypt PalginNvidiaFork-45ee8fa
     [PSCustomObject]@{Algorithm = "penta"; Params = ""} #penta
@@ -56,8 +54,6 @@ $Commands = [PSCustomObject[]]@(
     [PSCustomObject]@{Algorithm = "sha256t"; Params = " -i 29"; Zpool = ""; ZergpoolCoins = ""} #sha256t
     [PSCustomObject]@{Algorithm = "skein2"; Params = ""} #Skein2
     #[PSCustomObject]@{Algorithm = "skunk"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Skunk CcminerZEnemy-111v3
-    [PSCustomObject]@{Algorithm = "sonoa"; Params = ""} #sonoa
-    [PSCustomObject]@{Algorithm = "stellite"; Params = ""} #stellite
     #[PSCustomObject]@{Algorithm = "timetravel"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Timetravel CcminerZEnemy-111v3
     #[PSCustomObject]@{Algorithm = "tribus"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Tribus CcminerZEnemy-111v3
     #[PSCustomObject]@{Algorithm = "x11evo"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #X11evo CcminerAlexis78-12

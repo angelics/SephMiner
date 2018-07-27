@@ -23,52 +23,51 @@ $Uri  = "http://semitest.000webhostapp.com/binary/ccminer-2.3-B1.7z"
 $Port = Get-FreeTcpPort -DefaultPort 4068
 $Fee  = 0
 
-$Commands = [PSCustomObject]@{
-    #"allium"     = " -i 21" #allium NVIDIA-CryptoDredge-070
-    #"bitcore"     = "" #bitcore CcminerZEnemy-112
-    #"blake2s"     = "" #Blake2s
-    "bmw"         = "" #bmw
-    #"c11"         = "" #C11 NVIDIA-Alexis78-12b1
-    "deep"        = "" #deep
-    "dmd-gr"      = "" #dmd-gr
-    "fresh"       = "" #fresh
-    "fugue256"    = "" #fugue256
-    "graft"       = "" #graft
-    "heavy"       = "" #heavy 
-    #"hsr"         = "" #hsr NVIDIA-CcminerAlexis78-12b1
-    "hmq1725"     = "" #hmq1725
-    "jha"         = "" #JHA
-    #"keccak"      = " -i 29 -m 2" #Keccak ExcavatorNvidia-144a
-    #"keccakc"     = " -i 29" #keccakc NVIDIA-Alexis78-12b1
-    "luffa"       = "" #luffa
-    "lyra2"       = "" #lyra2
-    #"lyra2v2"     = "" #Lyra2RE2
-    #"lyra2z"      = " -i 20" #Lyra2z CcminerOurMiner32-100
-    "monero"      = "" #CryptoNightV7
-    "mjollnir"    = "" #mjollnir
-    #"neoscrypt"   = "" #NeoScrypt PalginNvidiaFork-45ee8fa
-    "penta"       = "" #penta
-    #"phi"         = "" #phi CcminerDumax-093
-    #"phi2"         = "" #phi2 CcminerZEnemy-112
-    "polytimos"   = "" #polytimos
-    "scrypt-jane" = "" #scrypt-jane
-    "s3"          = "" #s3
-    #"sha256t"     = " -i 29 -r 0 " #sha256t crash
-    "skein2"      = "" #Skein2
-    #"skunk"       = "" #Skunk CcminerZEnemy-112
-    "sonoa"       = "" #sonoa
-    "stellite"    = "" #stellite
-    #"timetravel"  = "" #Timetravel CcminerZEnemy-112
-    #"tribus"      = "" #Tribus CcminerZEnemy-112
-	#"x11evo"      = "" #X11evo CcminerAlexis78-12
-    "x12"         = "" #X12
-    #"x16r"        = "" #X16r
-    #"x16s"        = "" #X16s
-    #"x17"         = "" #X17
-    "whirlpool"   = "" #whirlpool
-    "wildkeccak"  = "" #wildkeccak
-    "zr5"         = "" #zr5
-}
+$Commands = [PSCustomObject[]]@(
+    #[PSCustomObject]@{Algorithm = "allium"; Params = " -i 21"; Zpool = ""; ZergpoolCoins = ""} #allium NVIDIA-CryptoDredge-070
+    #[PSCustomObject]@{Algorithm = "bitcore"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #bitcore CcminerZEnemy-112
+    #[PSCustomObject]@{Algorithm = "blake2s"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #bitcore CcminerZEnemy-112
+    [PSCustomObject]@{Algorithm = "bmw"; Params = ""} #bmw
+    #[PSCustomObject]@{Algorithm = "c11"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #C11 NVIDIA-Alexis78-12b1
+    [PSCustomObject]@{Algorithm = "deep"; Params = ""} #deep
+    [PSCustomObject]@{Algorithm = "dmd-gr"; Params = ""} #dmd-gr
+    [PSCustomObject]@{Algorithm = "fresh"; Params = ""} #fresh
+    [PSCustomObject]@{Algorithm = "fugue256"; Params = ""} #fugue256
+    [PSCustomObject]@{Algorithm = "heavy"; Params = ""} #heavy
+    #[PSCustomObject]@{Algorithm = "hsr"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #hsr NVIDIA-CcminerAlexis78-12b1
+    [PSCustomObject]@{Algorithm = "hmq1725"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #hmq1725
+    [PSCustomObject]@{Algorithm = "jha"; Params = ""} #JHA
+    #[PSCustomObject]@{Algorithm = "keccak"; Params = " -i 29"; Zpool = " -m 2"; ZergpoolCoins = " -m 2"; MiningPoolHubCoins = ""} #Keccak ExcavatorNvidia-144a
+    #[PSCustomObject]@{Algorithm = "keccakc"; Params = " -i 29"; Zpool = ""; ZergpoolCoins = ""} #keccakc NVIDIA-Alexis78-12b1
+    [PSCustomObject]@{Algorithm = "luffa"; Params = ""} #luffa
+    [PSCustomObject]@{Algorithm = "lyra2"; Params = ""} #lyra2
+    #[PSCustomObject]@{Algorithm = "lyra2v2"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #Lyra2RE2
+    #[PSCustomObject]@{Algorithm = "lyra2z"; Params = " -i 20"; Zpool = ""; ZergpoolCoins = ""} #Lyra2z CcminerOurMiner32-100
+    [PSCustomObject]@{Algorithm = "monero"; Params = ""; MiningPoolHubCoins = ""} #CryptoNightV7
+    [PSCustomObject]@{Algorithm = "mjollnir"; Params = ""} #mjollnir
+    #[PSCustomObject]@{Algorithm = "neoscrypt"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #NeoScrypt PalginNvidiaFork-45ee8fa
+    [PSCustomObject]@{Algorithm = "penta"; Params = ""} #penta
+    #[PSCustomObject]@{Algorithm = "phi"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #phi CcminerDumax-093
+    #[PSCustomObject]@{Algorithm = "phi2"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #phi2 CcminerZEnemy-112
+    [PSCustomObject]@{Algorithm = "polytimos"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #polytimos
+    [PSCustomObject]@{Algorithm = "scrypt-jane"; Params = ""} #scrypt-jane
+    [PSCustomObject]@{Algorithm = "s3"; Params = ""} #s3
+    #[PSCustomObject]@{Algorithm = "sha256t"; Params = " -i 29"; Zpool = ""; ZergpoolCoins = ""} #sha256t crash
+    [PSCustomObject]@{Algorithm = "skein2"; Params = ""} #Skein2
+    #[PSCustomObject]@{Algorithm = "skunk"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Skunk CcminerZEnemy-112
+    [PSCustomObject]@{Algorithm = "sonoa"; Params = ""} #sonoa
+    [PSCustomObject]@{Algorithm = "stellite"; Params = ""} #stellite
+    #[PSCustomObject]@{Algorithm = "timetravel"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Timetravel CcminerZEnemy-112
+    #[PSCustomObject]@{Algorithm = "tribus"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Tribus CcminerZEnemy-112
+    #[PSCustomObject]@{Algorithm = "x11evo"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #X11evo CcminerAlexis78-12
+    [PSCustomObject]@{Algorithm = "x12"; Params = ""} #X12
+    #[PSCustomObject]@{Algorithm = "x16r"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #X16r
+    #[PSCustomObject]@{Algorithm = "x16s"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #X16s
+    #[PSCustomObject]@{Algorithm = "x17"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #X17
+    [PSCustomObject]@{Algorithm = "whirlpool"; Params = ""} #whirlpool
+    [PSCustomObject]@{Algorithm = "wildkeccak"; Params = ""} #wildkeccak
+    [PSCustomObject]@{Algorithm = "zr5"; Params = ""} #zr5
+)
 
 $CommonCommands = "" #eg. " -d 0,1,8,9"
 
@@ -76,9 +75,11 @@ $DeviceIDs = (Get-DeviceIDs -Config $Config -Devices $Devices -Type NVIDIA -Devi
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
 
-$Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty Name | Where-Object {$Pools.(Get-Algorithm $_).Protocol -eq "stratum+tcp" <#temp fix#>} | ForEach-Object {
+$Commands | Where-Object {$Pools.(Get-Algorithm $_.Algorithm).Protocol -eq "stratum+tcp" <#temp fix#>} | ForEach-Object {
 
-    $Algorithm_Norm = Get-Algorithm $_
+    $Algorithm_Norm = Get-Algorithm $_.Algorithm
+	
+    $StaticDiff = $_."$($Pools.$Algorithm_Norm.Name)"
 
     Switch ($Algorithm_Norm) {
         "allium"        {$ExtendInterval = 2}
@@ -109,7 +110,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
     [PSCustomObject]@{
         Type           = $Type
         Path           = $Path
-        Arguments      = "-q -b $($Port) -a $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)$($CommonCommands) -N $($Average) --submit-stale -d $($DeviceIDs -join ',')"
+        Arguments      = "-q -b $($Port) -a $($_.Algorithm) -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($StaticDiff)$($_.Params)$($CommonCommands) -N $($Average) --submit-stale -d $($DeviceIDs -join ',')"
         HashRates      = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
         API            = $API
         Port           = $Port

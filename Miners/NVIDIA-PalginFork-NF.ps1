@@ -29,10 +29,6 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
 
     $Algorithm_Norm = Get-Algorithm $_
 
-    Switch ($Algorithm_Norm) {
-        default         {$ExtendInterval = 2}
-    }
-
     [PSCustomObject]@{
         Type           = $Type
         Path           = $Path
@@ -42,6 +38,6 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
         Port           = $Port
         URI            = $Uri
         MinerFee       = @($Fee)
-        ExtendInterval = $ExtendInterval
+        ExtendInterval = 2
     }
 }

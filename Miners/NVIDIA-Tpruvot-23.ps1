@@ -17,50 +17,50 @@ $Port = Get-FreeTcpPort -DefaultPort 4068
 $Fee  = 0
 
 $Commands = [PSCustomObject[]]@(
-    #[PSCustomObject]@{Algorithm = "allium"; Params = " -i 21"; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #allium CcminerTpruvot-23b1
-    #[PSCustomObject]@{Algorithm = "bitcore"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #bitcore CcminerZEnemy-111v3
-    #[PSCustomObject]@{Algorithm = "blake2s"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #Blake2s
-    [PSCustomObject]@{Algorithm = "bmw"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #bmw
-    #[PSCustomObject]@{Algorithm = "c11"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #C11 CcminerZEnemy-111v3
-    [PSCustomObject]@{Algorithm = "deep"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #deep
-    [PSCustomObject]@{Algorithm = "dmd-gr"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #dmd-gr
-    [PSCustomObject]@{Algorithm = "fresh"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #fresh
-    [PSCustomObject]@{Algorithm = "fugue256"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #fugue256
-    [PSCustomObject]@{Algorithm = "graft"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #graft
-    [PSCustomObject]@{Algorithm = "heavy"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #heavy
-    #[PSCustomObject]@{Algorithm = "hsr"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #hsr NVIDIA-CcminerAlexis78-12b1
-    #[PSCustomObject]@{Algorithm = "hmq1725"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #hmq1725 crash
-    [PSCustomObject]@{Algorithm = "jha"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #JHA
+    #[PSCustomObject]@{Algorithm = "allium"; Params = " -i 21"; Zpool = ""; ZergpoolCoins = ""} #allium CcminerTpruvot-23b1
+    #[PSCustomObject]@{Algorithm = "bitcore"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #bitcore CcminerZEnemy-111v3
+    #[PSCustomObject]@{Algorithm = "blake2s"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Blake2s
+    [PSCustomObject]@{Algorithm = "bmw"; Params = ""} #bmw
+    #[PSCustomObject]@{Algorithm = "c11"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #C11 CcminerZEnemy-111v3
+    [PSCustomObject]@{Algorithm = "deep"; Params = ""} #deep
+    [PSCustomObject]@{Algorithm = "dmd-gr"; Params = ""} #dmd-gr
+    [PSCustomObject]@{Algorithm = "fresh"; Params = ""} #fresh
+    [PSCustomObject]@{Algorithm = "fugue256"; Params = ""} #fugue256
+    [PSCustomObject]@{Algorithm = "graft"; Params = ""} #graft
+    [PSCustomObject]@{Algorithm = "heavy"; Params = ""} #heavy
+    #[PSCustomObject]@{Algorithm = "hsr"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #hsr NVIDIA-CcminerAlexis78-12b1
+    #[PSCustomObject]@{Algorithm = "hmq1725"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #hmq1725 crash
+    [PSCustomObject]@{Algorithm = "jha"; Params = ""} #JHA
     #[PSCustomObject]@{Algorithm = "keccak"; Params = " -i 29"; Zpool = " -m 2"; ZergpoolCoins = " -m 2"; MiningPoolHubCoins = ""} #Keccak ExcavatorNvidia-144a
-    [PSCustomObject]@{Algorithm = "keccakc"; Params = " -i 29"; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #keccakc
-    [PSCustomObject]@{Algorithm = "luffa"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #luffa
-    [PSCustomObject]@{Algorithm = "lyra2"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #lyra2
+    [PSCustomObject]@{Algorithm = "keccakc"; Params = " -i 29"; Zpool = ""; ZergpoolCoins = ""} #keccakc
+    [PSCustomObject]@{Algorithm = "luffa"; Params = ""} #luffa
+    [PSCustomObject]@{Algorithm = "lyra2"; Params = "";} #lyra2
     #[PSCustomObject]@{Algorithm = "lyra2v2"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #Lyra2RE2
-    #[PSCustomObject]@{Algorithm = "lyra2z"; Params = " -i 20"; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #Lyra2z
-    #[PSCustomObject]@{Algorithm = "monero"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #CryptoNightV7 NVIDIA-Tpruvot-23b1
-    [PSCustomObject]@{Algorithm = "mjollnir"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #mjollnir
+    #[PSCustomObject]@{Algorithm = "lyra2z"; Params = " -i 20"; Zpool = ""; ZergpoolCoins = ""} #Lyra2z
+    #[PSCustomObject]@{Algorithm = "monero"; Params = ""; MiningPoolHubCoins = ""} #CryptoNightV7 NVIDIA-Tpruvot-23b1
+    [PSCustomObject]@{Algorithm = "mjollnir"; Params = ""} #mjollnir
     #[PSCustomObject]@{Algorithm = "neoscrypt"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #NeoScrypt PalginNvidiaFork-45ee8fa
-    [PSCustomObject]@{Algorithm = "penta"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #penta
-    #[PSCustomObject]@{Algorithm = "phi"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #phi CcminerZEnemy-111v3
-    #[PSCustomObject]@{Algorithm = "phi2"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #phi2 CcminerZEnemy-112
-    [PSCustomObject]@{Algorithm = "polytimos"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #polytimos
-    [PSCustomObject]@{Algorithm = "scrypt-jane"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #scrypt-jane
-    [PSCustomObject]@{Algorithm = "s3"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #s3
-    #[PSCustomObject]@{Algorithm = "sha256t"; Params = " -i 29"; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #sha256t crash
-    [PSCustomObject]@{Algorithm = "skein2"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #Skein2
-    #[PSCustomObject]@{Algorithm = "skunk"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #Skunk CcminerZEnemy-111v3
-    [PSCustomObject]@{Algorithm = "sonoa"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #sonoa
-    [PSCustomObject]@{Algorithm = "stellite"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #stellite
-    #[PSCustomObject]@{Algorithm = "timetravel"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #Timetravel CcminerZEnemy-111v3
-    #[PSCustomObject]@{Algorithm = "tribus"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #Tribus CcminerZEnemy-111v3
-    #[PSCustomObject]@{Algorithm = "x11evo"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #X11evo CcminerAlexis78-12
-    [PSCustomObject]@{Algorithm = "x12"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #x12
-    #[PSCustomObject]@{Algorithm = "x16r"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #x16r
-    #[PSCustomObject]@{Algorithm = "x16s"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #x16s
-    #[PSCustomObject]@{Algorithm = "x17"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #X17 CcminerZEnemy-111v3
-    [PSCustomObject]@{Algorithm = "whirlpool"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #whirlpool
-    [PSCustomObject]@{Algorithm = "wildkeccak"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #wildkeccak
-    [PSCustomObject]@{Algorithm = "zr5"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #zr5
+    [PSCustomObject]@{Algorithm = "penta"; Params = ""} #penta
+    #[PSCustomObject]@{Algorithm = "phi"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #phi CcminerZEnemy-111v3
+    #[PSCustomObject]@{Algorithm = "phi2"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #phi2 CcminerZEnemy-112
+    [PSCustomObject]@{Algorithm = "polytimos"; Params = ""} #polytimos
+    [PSCustomObject]@{Algorithm = "scrypt-jane"; Params = ""} #scrypt-jane
+    [PSCustomObject]@{Algorithm = "s3"; Params = ""} #s3
+    #[PSCustomObject]@{Algorithm = "sha256t"; Params = " -i 29"; Zpool = ""; ZergpoolCoins = ""} #sha256t crash
+    [PSCustomObject]@{Algorithm = "skein2"; Params = ""} #Skein2
+    #[PSCustomObject]@{Algorithm = "skunk"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Skunk CcminerZEnemy-111v3
+    [PSCustomObject]@{Algorithm = "sonoa"; Params = ""} #sonoa
+    [PSCustomObject]@{Algorithm = "stellite"; Params = ""} #stellite
+    #[PSCustomObject]@{Algorithm = "timetravel"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Timetravel CcminerZEnemy-111v3
+    #[PSCustomObject]@{Algorithm = "tribus"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Tribus CcminerZEnemy-111v3
+    #[PSCustomObject]@{Algorithm = "x11evo"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #X11evo CcminerAlexis78-12
+    [PSCustomObject]@{Algorithm = "x12"; Params = ""} #x12
+    #[PSCustomObject]@{Algorithm = "x16r"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #x16r
+    #[PSCustomObject]@{Algorithm = "x16s"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #x16s
+    #[PSCustomObject]@{Algorithm = "x17"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #X17 CcminerZEnemy-111v3
+    [PSCustomObject]@{Algorithm = "whirlpool"; Params = ""} #whirlpool
+    [PSCustomObject]@{Algorithm = "wildkeccak"; Params = ""} #wildkeccak
+    [PSCustomObject]@{Algorithm = "zr5"; Params = ""} #zr5
 )
 
 $CommonCommands = "" #eg. " -d 0,1,8,9"
