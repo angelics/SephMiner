@@ -20,7 +20,6 @@ $Commands = [PSCustomObject[]]@(
     #[PSCustomObject]@{Algorithm = "allium"; Params = " -i 21"; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #allium CcminerTpruvot-23b1
     #[PSCustomObject]@{Algorithm = "bitcore"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #bitcore CcminerZEnemy-111v3
     #[PSCustomObject]@{Algorithm = "blake2s"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #Blake2s
-    [PSCustomObject]@{Algorithm = "allium"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #allium CcminerTpruvot-23b1
     [PSCustomObject]@{Algorithm = "bmw"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #bmw
     #[PSCustomObject]@{Algorithm = "c11"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #C11 CcminerZEnemy-111v3
     [PSCustomObject]@{Algorithm = "deep"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #deep
@@ -79,6 +78,7 @@ $Commands | Where-Object {$Pools.(Get-Algorithm $_.Algorithm).Protocol -eq "stra
     Switch ($Algorithm_Norm) {
         "allium"        {$ExtendInterval = 2}
         "CryptoNightV7" {$ExtendInterval = 2}
+        "hmq1725"       {$ExtendInterval = 2}
         "Lyra2RE2"      {$ExtendInterval = 2}
         "phi"           {$ExtendInterval = 2}
         "phi2"          {$ExtendInterval = 2}

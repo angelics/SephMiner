@@ -30,13 +30,14 @@ $Commands = [PSCustomObject]@{
 }
 
 $Coins = [PSCustomObject]@{
-    "BitcoinGold" = " --pers BgoldPoW"
-    "BitcoinZ"    = " --pers BitcoinZ"
+    "BitcoinGold" = "--pers BgoldPoW"
+    "BitcoinZ"    = "--pers BitcoinZ"
     "Minexcoin"   = ""
-    "Snowgem"     = " --pers sngemPoW"
-    "ZelCash"     = " --pers ZelProof"
-    "Zero"        = " --pers ZERO_PoW"
-    "ZeroCoin"    = " --pers ZERO_PoW"
+    "Safecoin"    = "--pers Safecoin"
+    "Snowgem"     = "--pers sngemPoW"
+    "ZelCash"     = "--pers ZelProof"
+    "Zero"        = "--pers ZERO_PoW"
+    "ZeroCoin"    = "--pers ZERO_PoW"
 }
 
 $CommonCommands = ""

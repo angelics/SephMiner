@@ -26,6 +26,8 @@
     "equihash":  "Equihash",
     "equihash-BTG":  "Equihash144",
     "equihash144btcz":  "Equihash144",
+    "equihash144safe":  "Equihash144",
+    "equihash144xsg":  "Equihash144",
     "equihash144":  "Equihash144",
     "equihash144zel":  "Equihash144",
     "equihash192":  "Equihash192",

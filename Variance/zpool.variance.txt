@@ -1,7 +1,7 @@
 {
 "aergo":{"variance":0.00,"variance2":0.02},
 "allium":{"variance":0.01,"variance2":0.03},
-"bitcore":{"variance":0.04},
+"bitcore":{"variance":0.04,"variance2":0.06}
 "blake2s":{"variance":0.15},
 "c11":{"variance":0.15},
 "equihash":{"variance":0.04,"variance2":0.05},

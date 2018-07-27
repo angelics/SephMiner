@@ -35,6 +35,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
     Switch ($Algorithm_Norm) {
         "allium"        {$ExtendInterval = 2}
         "CryptoNightV7" {$ExtendInterval = 2}
+        "hmq1725"       {$ExtendInterval = 2}
         "Lyra2RE2"      {$ExtendInterval = 2}
         "phi"           {$ExtendInterval = 2}
         "phi2"          {$ExtendInterval = 2}
@@ -44,7 +45,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
         "X17"           {$ExtendInterval = 2}
         "Xevan"         {$ExtendInterval = 2}
         default         {$ExtendInterval = 0}
-    }    
+    }   
 	
     $HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100)
 

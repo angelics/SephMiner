@@ -42,7 +42,9 @@ class Wrapper : Miner {
             $HashRate_Name = [String]$Algorithm[0]
             $HashRate_Value = [Double]$Data
 
-            $HashRate | Where-Object {$HashRate_Name} | Add-Member @{$HashRate_Name = [Int64]$HashRate_Value}
+            if ($HashRate_Name -and $HashRate_Value -gt 0) {
+                $HashRate | Add-Member @{$HashRate_Name = [Int64]$HashRate_Value}
+            }  
 
             $Algorithm | Where-Object {-not $HashRate.$_} | ForEach-Object {break}
 

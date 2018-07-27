@@ -83,6 +83,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
     Switch ($Algorithm_Norm) {
         "allium"        {$ExtendInterval = 2}
         "CryptoNightV7" {$ExtendInterval = 2}
+        "hmq1725"       {$ExtendInterval = 2}
         "Lyra2RE2"      {$ExtendInterval = 2}
         "phi"           {$ExtendInterval = 2}
         "phi2"          {$ExtendInterval = 2}

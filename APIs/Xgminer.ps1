@@ -33,7 +33,9 @@ class Xgminer : Miner {
             if ($HashRate_Value) {
                 $HashRates += $HashRate = [PSCustomObject]@{}
 
-                $HashRate | Where-Object {$HashRate_Name} | Add-Member @{$HashRate_Name = [Int64]$HashRate_Value}
+            if ($HashRate_Value -gt 0) {
+                $HashRate | Add-Member @{$HashRate_Name = [Int64]$HashRate_Value}
+            }
 
                 $Algorithm | Where-Object {-not $HashRate.$_} | ForEach-Object {break}
 

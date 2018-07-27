@@ -29,7 +29,9 @@ class Xmrig : Miner {
             if (-not $HashRate_Name) {$HashRate_Name = [String]$Algorithm[0]} #fireice fix
             $HashRate_Value = [Double]$Data.hashrate.total[0]
 
-            $HashRate | Where-Object {$HashRate_Name} | Add-Member @{$HashRate_Name = [Int64]$HashRate_Value}
+            if ($HashRate_Name -and $HashRate_Value -gt 0) {
+                $HashRate | Add-Member @{$HashRate_Name = [Int64]$HashRate_Value}
+            }  
 
             $Algorithm | Where-Object {-not $HashRate.$_} | ForEach-Object {break}
 

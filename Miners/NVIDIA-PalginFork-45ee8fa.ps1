@@ -32,7 +32,7 @@ $Commands | Where-Object {$Pools.(Get-Algorithm $_.Algorithm).Protocol -eq "stra
     $StaticDiff = $_."$($Pools.$Algorithm_Norm.Name)"
 
     Switch ($Algorithm_Norm) {
-        default {$ExtendInterval = 3}
+        default         {$ExtendInterval = 2}
     }
 
     $HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100)

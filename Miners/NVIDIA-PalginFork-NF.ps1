@@ -30,7 +30,7 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
     $Algorithm_Norm = Get-Algorithm $_
 
     Switch ($Algorithm_Norm) {
-        default {$ExtendInterval = 3}
+        default         {$ExtendInterval = 2}
     }
 
     [PSCustomObject]@{

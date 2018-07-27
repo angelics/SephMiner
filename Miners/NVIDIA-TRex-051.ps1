@@ -48,6 +48,7 @@ $Commands | Where-Object {$Pools.(Get-Algorithm $_.Algorithm).Protocol -eq "stra
     Switch ($Algorithm_Norm) {
         "allium"        {$ExtendInterval = 2}
         "CryptoNightV7" {$ExtendInterval = 2}
+        "hmq1725"       {$ExtendInterval = 2}
         "Lyra2RE2"      {$ExtendInterval = 2}
         "phi"           {$ExtendInterval = 2}
         "phi2"          {$ExtendInterval = 2}
