@@ -28,7 +28,7 @@ $Commands = [PSCustomObject[]]@(
     [PSCustomObject]@{Algorithm = "bitcore"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Bitcore
     #[PSCustomObject]@{Algorithm = "c11"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #c11 NVIDIA-Alexis78-12b1
     #[PSCustomObject]@{Algorithm = "phi"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Phi CcminerDumax-093
-    [PSCustomObject]@{Algorithm = "phi2"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Phi2 NVIDIA-TRex-051
+    #[PSCustomObject]@{Algorithm = "phi2"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Phi2 NVIDIA-CryptoDredge-080
     [PSCustomObject]@{Algorithm = "poly"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #poly
     [PSCustomObject]@{Algorithm = "vit"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Vitalium
     [PSCustomObject]@{Algorithm = "skunk"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #skunk
