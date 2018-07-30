@@ -46,6 +46,7 @@
 "GIN":{"variance":0.03,"variance2":0.11},
 "GOA":{"variance":0.04},
 "GUN":{"variance":0.01},
+"GRV":{"variance":0.00,"variance2":0.09},
 "GRLC":{"variance":0.01,"variance2":0.08},
 "HAL":{"variance":0.01},
 "HASH":{"variance":0.05},
