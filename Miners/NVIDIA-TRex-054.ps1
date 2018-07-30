@@ -19,7 +19,7 @@ if ($DriverVersion -lt $RequiredVersion) {
 $Type = "NVIDIA"
 $Path = ".\Bin\NVIDIA-TRex-054\t-rex.exe"
 $API  = "Ccminer"
-$Uri  = "http://semitest.000webhostapp.com/binary/t-rex-0.5.1-win-cuda9.1.zip"
+$Uri  = "http://semitest.000webhostapp.com/binary/t-rex-0.5.4-win-cuda9.1.zip"
 $Port = Get-FreeTcpPort -DefaultPort 4068
 $Fee  = 1
 
