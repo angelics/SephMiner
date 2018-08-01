@@ -33,19 +33,19 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
     $Algorithm_Norm = Get-Algorithm $_
 
     Switch ($Algorithm_Norm) {
-        "allium"        {$ExtendInterval = 2}
-        "CryptoNightV7" {$ExtendInterval = 2}
-        "hmq1725"       {$ExtendInterval = 2}
-        "Lyra2RE2"      {$ExtendInterval = 2}
-        "phi"           {$ExtendInterval = 2}
-        "phi2"          {$ExtendInterval = 2}
-        "tribus"        {$ExtendInterval = 2}
-        "X16R"          {$ExtendInterval = 3}
-        "X16S"          {$ExtendInterval = 3}
-        "X17"           {$ExtendInterval = 2}
-        "Xevan"         {$ExtendInterval = 2}
+        "allium"        {$ExtendInterval = 3}
+        "CryptoNightV7" {$ExtendInterval = 3}
+        "hmq1725"       {$ExtendInterval = 3}
+        "Lyra2RE2"      {$ExtendInterval = 3}
+        "phi"           {$ExtendInterval = 3}
+        "phi2"          {$ExtendInterval = 3}
+        "tribus"        {$ExtendInterval = 3}
+        "X16R"          {$ExtendInterval = 4}
+        "X16S"          {$ExtendInterval = 4}
+        "X17"           {$ExtendInterval = 3}
+        "Xevan"         {$ExtendInterval = 3}
         default         {$ExtendInterval = 0}
-    }   
+    }  
 	
     $HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100)
 

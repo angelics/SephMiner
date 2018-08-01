@@ -129,7 +129,7 @@
 "XSH-x17":{"variance":0.04,"variance2":0.05},
 "XVG":{"variance":0.01,"variance2":0.08},
 "XVG-blake2s":{"variance":0.04,"variance2":0.04},
-"XVG-lyra2v2":{"variance":0.01},
+"XVG-lyra2v2":{"variance":0.01,"variance2":0.04},
 "XZC":{"variance":0.13},
 "YTN":{"variance":0.11},
 "ZEL":{"variance":0.03,"variance2":0.15},
