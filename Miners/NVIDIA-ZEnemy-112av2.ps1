@@ -37,7 +37,7 @@ $Commands = [PSCustomObject[]]@(
     #[PSCustomObject]@{Algorithm = "tribus"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Tribus NVIDIA-TRex-051
     #[PSCustomObject]@{Algorithm = "x16s"; Params = " -i 21"; Zpool = ""; ZergpoolCoins = ""} #x16s NVIDIA-TRex-055
     [PSCustomObject]@{Algorithm = "x16r"; Params = " -i 21"; Zpool = ""; ZergpoolCoins = ""} #x16r
-    [PSCustomObject]@{Algorithm = "x17"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #x17
+    #[PSCustomObject]@{Algorithm = "x17"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #x17 NVIDIA-TRex-057
     [PSCustomObject]@{Algorithm = "xevan"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #xevan
 )
 
