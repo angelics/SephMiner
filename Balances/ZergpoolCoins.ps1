@@ -12,7 +12,7 @@ $Request2 = [PSCustomObject]@{}
 
 if($PoolConfig.BTC) {
     try {
-        $Request = Invoke-RestMethod "http://zpool.ca/api/wallet?address=$($PoolConfig.BTC)" -UseBasicParsing -TimeoutSec 10 -ErrorAction Stop
+        $Request = Invoke-RestMethod "http://zerg.zergpool.com/api/wallet?address=$($PoolConfig.BTC)" -UseBasicParsing -TimeoutSec 10 -ErrorAction Stop
     }
     catch {
         Write-Log -Level Warn "Pool Balance API ($Name) has failed. "
@@ -21,7 +21,7 @@ if($PoolConfig.BTC) {
 
 if($PoolConfig.RVN) {
   try {
-    $Request = Invoke-RestMethod "http://zpool.ca/api/wallet?address=$($PoolConfig.RVN)" -UseBasicParsing -TimeoutSec 10 -ErrorAction Stop
+    $Request = Invoke-RestMethod "http://zerg.zergpool.com/api/wallet?address=$($PoolConfig.RVN)" -UseBasicParsing -TimeoutSec 10 -ErrorAction Stop
 	$Request2 = Invoke-RestMethod "https://min-api.cryptocompare.com/data/price?fsym=RVN&tsyms=BTC" -UseBasicParsing -TimeoutSec 10 -ErrorAction Stop
 	
   }
@@ -32,8 +32,19 @@ if($PoolConfig.RVN) {
 
 if($PoolConfig.LTC) {
   try {
-    $Request = Invoke-RestMethod "http://zpool.ca/api/wallet?address=$($PoolConfig.LTC)" -UseBasicParsing -TimeoutSec 10 -ErrorAction Stop
+    $Request = Invoke-RestMethod "http://zerg.zergpool.com/api/wallet?address=$($PoolConfig.LTC)" -UseBasicParsing -TimeoutSec 10 -ErrorAction Stop
 	$Request2 = Invoke-RestMethod "https://min-api.cryptocompare.com/data/price?fsym=LTC&tsyms=BTC" -UseBasicParsing -TimeoutSec 10 -ErrorAction Stop
+	
+  }
+  catch {
+    Write-Log -Level Warn "Pool Balance API ($Name) has failed. "
+  }
+}
+
+if($PoolConfig.DASH) {
+  try {
+    $Request = Invoke-RestMethod "http://zerg.zergpool.com/api/wallet?address=$($PoolConfig.DASH)" -UseBasicParsing -TimeoutSec 10 -ErrorAction Stop
+	$Request2 = Invoke-RestMethod "https://min-api.cryptocompare.com/data/price?fsym=DASH&tsyms=BTC" -UseBasicParsing -TimeoutSec 10 -ErrorAction Stop
 	
   }
   catch {
