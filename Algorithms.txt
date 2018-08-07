@@ -33,6 +33,7 @@
     "equihash192":  "Equihash192",
     "eEquihash96":  "Equihash96",
     "graft":  "graft",
+    "hex":  "hex",
     "hmq1725":  "HMQ1725",
     "hodl":  "Hodlcoin",
     "hsr":  "HSR",

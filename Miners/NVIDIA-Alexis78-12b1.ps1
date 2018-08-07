@@ -18,7 +18,7 @@ $Fee  = 0
 
 $Commands = [PSCustomObject[]]@(
     #[PSCustomObject]@{Algorithm = "blake2s"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #blake2s not profit
-    [PSCustomObject]@{Algorithm = "c11"; Params = " -i 21"; Zpool = ""; ZergpoolCoins = ""} #c11
+    #[PSCustomObject]@{Algorithm = "c11"; Params = " -i 21"; Zpool = ""; ZergpoolCoins = ""} #c11 NVIDIA-TRex-057
     #[PSCustomObject]@{Algorithm = "hsr"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Hsr NVIDIA-TRex-051
     #[PSCustomObject]@{Algorithm = "keccak"; Params = " -m 2 -i 29"; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #Keccak ExcavatorNvidia-144a
     [PSCustomObject]@{Algorithm = "keccakc"; Params = " -i 29"; Zpool = ""; ZergpoolCoins = ""} #keccakc
