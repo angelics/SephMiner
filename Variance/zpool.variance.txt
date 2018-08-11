@@ -5,7 +5,7 @@
 "Blake2s":{"variance":0.15},
 "C11":{"variance":0.15},
 "Equihash":{"variance":0.04,"variance2":0.05},
-"Hex":{"variance":0.01},
+"Hex":{"variance":0.01,"variance2":0.02},
 "Hmq1725":{"variance":0.96},
 "Hsr":{"variance":0.00,"variance2":0.03},
 "Keccak":{"variance":0.02,"variance2":0.03},
