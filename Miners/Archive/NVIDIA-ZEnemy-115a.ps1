@@ -44,7 +44,7 @@ $Commands = [PSCustomObject[]]@(
     [PSCustomObject]@{Algorithm = "xevan"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #xevan
 )
 
-$CommonCommands = "" #eg. " -d 0,1,8,9"
+$CommonCommands = "" #eg. " --cpu-affinity=0x3" core0,1
 
 $DeviceIDs = (Get-DeviceIDs -Config $Config -Devices $Devices -Type NVIDIA -DeviceTypeModel $($Devices.NVIDIA) -DeviceIdBase 10 -DeviceIdOffset 0)."$(if ($Type -EQ "NVIDIA"){"All"}else{$Type})"
 
