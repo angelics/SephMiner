@@ -31,7 +31,7 @@
     "equihash144":  "Equihash144",
     "equihash144zel":  "Equihash144",
     "equihash192":  "Equihash192",
-    "eEquihash96":  "Equihash96",
+    "equihash96":  "Equihash96",
     "graft":  "graft",
     "hex":  "hex",
     "hmq1725":  "HMQ1725",

@@ -12,7 +12,7 @@
 "Keccakc":{"variance":0.00,"variance2":0.02},
 "Lyra2z":{"variance":0.03,"variance2":0.06},
 "Lyra2re2":{"variance":0.04,"variance2":0.05},
-"Neoscrypt":{"variance":0.07,"variance2":0.09},
+"Neoscrypt":{"variance":0.11,"variance2":0.11},
 "Phi":{"variance":0.01,"variance2":0.02},
 "Phi2":{"variance":0.01,"variance2":0.03},
 "Skein":{"variance":0.04,"variance2":0.04},

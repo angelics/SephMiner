@@ -41,7 +41,7 @@ else {
 	Write-Log -Level Warn "Pool Variance ($Name) has failed. No variance in calcualtion."
 }
 
-$ZergPoolCoins_Regions = "us"
+$ZergPoolCoins_Regions = "europe"
 $ZergPoolCoins_Currencies = @("BTC","LTC","DASH") + ($ZergPoolCoins_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name) | Select-Object -Unique | Where-Object {Get-Variable $_ -ValueOnly -ErrorAction SilentlyContinue}
 
 $ZergPoolCoins_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name | Where-Object {$ExcludeCoin -inotcontains $ZergPoolCoins_Request.$_.name -and $ExcludeAlgorithm -inotcontains (Get-Algorithm $ZergPoolCoins_Request.$_.algo) -and ($Coin.count -eq 0 -or $Coin -icontains $ZergPoolCoins_Request.$_.name) -and $ZergPoolCoins_Request.$_.hashrate -gt 0 -and $ZergPoolCoins_Request.$_.noautotrade -eq 0 -and $ZergPoolCoins_Request.$_.timesincelast -ne 0} | ForEach-Object {
