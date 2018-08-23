@@ -76,6 +76,7 @@
 "MBL":{"variance":0.02},
 "MGT":{"variance":0.01,"variance2":0.08},
 "MLM":{"variance":0.04,"variance2":0.08},
+"MNX":{"variance":0.05,"variance2":0.10},
 "MONA":{"variance":0.03},
 "MTI":{"variance":0.00},
 "MUN":{"variance":0.04},
