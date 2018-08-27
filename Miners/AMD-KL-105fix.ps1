@@ -10,30 +10,19 @@ param(
 if (-not $Devices.AMD) {return} # No AMD mining device present in system
 
 $Type = "AMD"
-$Path = ".\Bin\AMD-NiceHash-561\sgminer.exe"
+$Path = ".\Bin\AMD-KL-105fix\sgminer.exe"
 $API  = "Xgminer"
-$Uri  = "https://github.com/nicehash/sgminer/releases/download/5.6.1/sgminer-5.6.1-nicehash-51-windows-amd64.zip"
+$Uri  = "https://github.com/KL0nLutiy/sgminer-kl/releases/download/kl-1.0.5fix/sgminer-kl-1.0.5_fix-windows_x64.zip"
 $Port = Get-FreeTcpPort -DefaultPort 4028
-$Fee  = 0
+$Fee  = 1
 
 $Commands = [PSCustomObject]@{
-    #"bitcore"    = "" #Bitcore
-    #"blake2s"    = "" #Blake2s
-    #"c11"        = "" #C11
-    #"ethash"     = " --gpu-threads 1 --worksize 192 --xintensity 1024" #Ethash
-    #"hmq1725"    = "" #HMQ1725
-    #"jha"        = "" #JHA
-    "maxcoin"     = "" #Keccak
-    #"lyra2rev2"   = " --gpu-threads 2 --worksize 128 --intensity d" #Lyra2RE2
-    #"lyra2z"     = " --worksize 32 --intensity 18" #Lyra2z
-    #"neoscrypt"  = " --gpu-threads 1 --worksize 64 --intensity 15" #NeoScrypt
-    #"skunk"      = "" #Skunk
-    #"timetravel" = "" #Timetravel
-    #"tribus"     = "" #Tribus
-    #"x11evo"     = "" #X11evo
-    #"x17"        = "" #X17
-    "yescrypt"    = " --worksize 4 --rawintensity 256" #Yescrypt
-    #"xevan-mod"  = " --intensity 15" #Xevan
+    "aergo" = " -X 256 -g 2" #aergo
+    "phi"   = " -X 256 -w 256 -g 2" #phi
+    "x16r"  = " -X 256 -g 2 --intensity 18" #Raven increase 19,21
+    "x16s"  = " -X 256 -g 2" #x16s
+    "x17"   = " -X 256 -g 2" #x17
+    "xevan" = " -X 256 -g 2" #Xevan
 }
 
 $CommonCommands = "" #eg. " -d 0,1,8,9"
@@ -43,7 +32,7 @@ $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty Ba
 $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty Name | Where-Object {$Pools.(Get-Algorithm $_).Protocol -eq "stratum+tcp" <#temp fix#>} | ForEach-Object {
 
     $Algorithm_Norm = Get-Algorithm $_
-	
+
     Switch ($Algorithm_Norm) {
         "allium"        {$ExtendInterval = 2}
         "CryptoNightV7" {$ExtendInterval = 2}
@@ -57,12 +46,14 @@ $Commands | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty 
         "Xevan"         {$ExtendInterval = 2}
         default         {$ExtendInterval = 0}
     }
-	
+
+    $HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100)
+
     [PSCustomObject]@{
         Type           = $Type
         Path           = $Path
         Arguments      = "--api-listen --api-port $($Port) -k $_ -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($Commands.$_)$($CommonCommands) --gpu-platform $([array]::IndexOf(([OpenCl.Platform]::GetPlatformIDs() | Select-Object -ExpandProperty Vendor), 'Advanced Micro Devices, Inc.'))"
-        HashRates      = [PSCustomObject]@{$Algorithm_Norm = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week}
+        HashRates      = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
         API            = $API
         Port           = $Port
         URI            = $Uri
