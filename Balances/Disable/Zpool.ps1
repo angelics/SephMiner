@@ -7,49 +7,50 @@ param(
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
 $PoolConfig = $Config.Pools.$Name
 
-$Request = [PSCustomObject]@{}
-$Request2 = [PSCustomObject]@{}
+$APICurrenciesRequest = [PSCustomObject]@{}
+$APIWalletRequest = [PSCustomObject]@{}
 
-if($PoolConfig.BTC) {
-    try {
-        $Request = Invoke-RestMethod "http://zpool.ca/api/wallet?address=$($PoolConfig.BTC)" -UseBasicParsing -TimeoutSec 10 -ErrorAction Stop
-    }
-    catch {
-        Write-Log -Level Warn "Pool Balance API ($Name) has failed. "
-    }
+try {
+    $APICurrenciesRequest = Invoke-RestMethod "http://www.zpool.ca/api/currencies" -UseBasicParsing -TimeoutSec 10 -ErrorAction Stop
 }
-
-if($PoolConfig.RVN) {
-  try {
-    $Request = Invoke-RestMethod "http://zpool.ca/api/wallet?address=$($PoolConfig.RVN)" -UseBasicParsing -TimeoutSec 10 -ErrorAction Stop
-	$Request2 = Invoke-RestMethod "https://min-api.cryptocompare.com/data/price?fsym=RVN&tsyms=BTC" -UseBasicParsing -TimeoutSec 10 -ErrorAction Stop
-	
-  }
-  catch {
+catch {
     Write-Log -Level Warn "Pool Balance API ($Name) has failed. "
-  }
+    return
 }
 
-if($PoolConfig.LTC) {
-  try {
-    $Request = Invoke-RestMethod "http://zpool.ca/api/wallet?address=$($PoolConfig.LTC)" -UseBasicParsing -TimeoutSec 10 -ErrorAction Stop
-	$Request2 = Invoke-RestMethod "https://min-api.cryptocompare.com/data/price?fsym=LTC&tsyms=BTC" -UseBasicParsing -TimeoutSec 10 -ErrorAction Stop
-	
-  }
-  catch {
-    Write-Log -Level Warn "Pool Balance API ($Name) has failed. "
-  }
-}
-
-if (($Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Measure-Object Name).Count -le 1) {
+if (($APICurrenciesRequest | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Measure-Object Name).Count -le 1) {
     Write-Log -Level Warn "Pool Balance API ($Name) returned nothing. "
     return
 }
 
-[PSCustomObject]@{
-    "currency" = $Request.currency
-    "balance" = $Request.balance
-    "pending" = $Request.unsold
-    "total" = $Request.unpaid * $Request2.BTC
-    'lastupdated' = (Get-Date).ToUniversalTime()
+# Guaranteed payout currencies
+$Payout_Currencies = @("BTC")
+$Payout_Currencies = $Payout_Currencies + @($APICurrenciesRequest | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name) | Select-Object -Unique | Sort-Object | Where-Object {$PoolConfig.$_}
+
+if (-not $Payout_Currencies) {
+    Write-Log -Level Verbose "Cannot get balance on pool ($Name) - no wallet address specified. "
+    return
+}
+
+$Payout_Currencies | Foreach-Object {
+    try {
+        $APIWalletRequest = Invoke-RestMethod "http://zpool.ca/api/wallet?address=$($PoolConfig.$_)" -UseBasicParsing -TimeoutSec 10 -ErrorAction Stop
+        if (($APIWalletRequest | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Measure-Object Name).Count -le 1) {
+            Write-Log -Level Warn "Pool Balance API ($Name) for $_ returned nothing. "
+        }
+        else {
+            [PSCustomObject]@{
+                Name        = "$($Name) ($($APIWalletRequest.currency))"
+                Pool        = $Name
+                Currency    = $APIWalletRequest.currency
+                Balance     = $APIWalletRequest.balance
+                Pending     = $APIWalletRequest.unsold
+                Total       = $APIWalletRequest.unpaid
+                LastUpdated = (Get-Date).ToUniversalTime()
+            }
+        }
+    }
+    catch {
+        Write-Log -Level Warn "Pool Balance API ($Name) for $_ has failed. "
+    }
 }
