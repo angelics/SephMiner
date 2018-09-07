@@ -4,7 +4,7 @@
 "AEX":{"variance":0.01,"variance2":0.08},
 "AGN":{"variance":0.02},
 "ALPS":{"variance":0.03},
-"ANDS":{"variance":0.00,"variance2":0.02},
+"ANDS":{"variance":0.00,"variance2":0.03},
 "ARG-lyra2v2":{"variance":0.01},
 "ARG-yescrypt":{"variance":0.00,"variance2":0.09},
 "ARGO":{"variance":0.02},
