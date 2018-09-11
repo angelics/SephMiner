@@ -49,7 +49,7 @@ $Commands = [PSCustomObject[]]@(
     #[PSCustomObject]@{Algorithm = "sha256t"; Params = " -i 29"; Zpool = ""; ZergpoolCoins = ""} #sha256t crash
     [PSCustomObject]@{Algorithm = "skein2"; Params = ""} #Skein2
     #[PSCustomObject]@{Algorithm = "skunk"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Skunk CcminerZEnemy-111v3
-    [PSCustomObject]@{Algorithm = "sonoa"; Params = ""} #sonoa
+    #[PSCustomObject]@{Algorithm = "sonoa"; Params = ""} #sonoa NVIDIA-TRex-063
     [PSCustomObject]@{Algorithm = "stellite"; Params = ""} #stellite
     #[PSCustomObject]@{Algorithm = "timetravel"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Timetravel CcminerZEnemy-111v3
     #[PSCustomObject]@{Algorithm = "tribus"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Tribus CcminerZEnemy-111v3
