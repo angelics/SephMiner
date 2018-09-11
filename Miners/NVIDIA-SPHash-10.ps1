@@ -35,11 +35,13 @@ $DeviceIDs = (Get-DeviceIDs -Config $Config -Devices $Devices -Type NVIDIA -Devi
 
 $Name = Get-Item $MyInvocation.MyCommand.Path | Select-Object -ExpandProperty BaseName
 
-$Commands | Where-Object {$Pools.(Get-Algorithm $_).Protocol -eq "stratum+tcp" <#temp fix#>} | ForEach-Object {
+$Commands | Where-Object {$Pools.(Get-Algorithm $_.Algorithm).Protocol -eq "stratum+tcp" <#temp fix#>} | ForEach-Object {
 
     $Algorithm_Norm = Get-Algorithm $_.Algorithm
 
     $StaticDiff = $_."$($Pools.$Algorithm_Norm.Name)"
+	
+    $HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100)
 	
     Switch ($Algorithm_Norm) {
         "allium"        {$ExtendInterval = 2}
@@ -66,13 +68,14 @@ $Commands | Where-Object {$Pools.(Get-Algorithm $_).Protocol -eq "stratum+tcp" <
     }
 
     [PSCustomObject]@{
-        Type      = $Type
-        Path      = $Path
-        Arguments = "-q -b $($Port) -a $($_.Algorithm) -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($StaticDiff)$($_.Params)$($CommonCommands) -N $($Average) -d $($DeviceIDs -join ',')"
-        HashRates = [PSCustomObject]@{$Algorithm_Norm = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week}
-        API       = $API
-        Port      = $Port
-        URI       = $Uri
-		MinerFee  = @($Fee)
+        Type           = $Type
+        Path           = $Path
+        Arguments      = "-q -b $($Port) -a $($_.Algorithm) -o $($Pools.$Algorithm_Norm.Protocol)://$($Pools.$Algorithm_Norm.Host):$($Pools.$Algorithm_Norm.Port) -u $($Pools.$Algorithm_Norm.User) -p $($Pools.$Algorithm_Norm.Pass)$($StaticDiff)$($_.Params)$($CommonCommands) -N $($Average) -d $($DeviceIDs -join ',')"
+        HashRates      = [PSCustomObject]@{$Algorithm_Norm = $HashRate}
+        API            = $API
+        Port           = $Port
+        URI            = $Uri
+        MinerFee       = @($Fee)
+        ExtendInterval = $ExtendInterval
     }
 }

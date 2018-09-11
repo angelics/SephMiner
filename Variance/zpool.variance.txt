@@ -22,7 +22,7 @@
 "Tribus":{"variance":0.07},
 "X11evo":{"variance":0.00,"variance2":0.04},
 "X16r":{"variance":0.05,"variance2":0.08},
-"X16s":{"variance":0.02,"variance2":0.03},
+"X16s":{"variance":0.02,"variance2":0.06},
 "X17":{"variance":0.04,"variance2":0.08},
 "Xevan":{"variance":0.15},
 "Yescrypt":{"variance":0.25},
