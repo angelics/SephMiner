@@ -17,34 +17,20 @@ if ($DriverVersion -lt $RequiredVersion) {
 }
 
 $Type = "NVIDIA"
-$Path = ".\Bin\NVIDIA-ZEnemy-119\z-enemy.exe"
+$Path = ".\Bin\NVIDIA-SPHash-11\ccminer.exe"
 $API  = "Ccminer"
-$Uri  = "http://semitest.000webhostapp.com/binary/z-enemy.1-19-cuda9.2_x32.zip"
+$Uri  = "https://github.com/sp-hash/suprminer/releases/download/spmod-git11/spmodgit11.7z"
 $Port = Get-FreeTcpPort -DefaultPort 4068
-$Fee  = 1
+$Fee  = 0
 
 $Commands = [PSCustomObject[]]@(
-    [PSCustomObject]@{Algorithm = "aeriumx"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #aeriumx
-    [PSCustomObject]@{Algorithm = "bitcore"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Bitcore
-    [PSCustomObject]@{Algorithm = "c11"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #c11
-    [PSCustomObject]@{Algorithm = "hex"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #HEX
-    [PSCustomObject]@{Algorithm = "hsr"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #hsr
-    [PSCustomObject]@{Algorithm = "phi"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Phi
-    [PSCustomObject]@{Algorithm = "phi2"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Phi2
-    [PSCustomObject]@{Algorithm = "poly"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #poly
-    [PSCustomObject]@{Algorithm = "vit"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Vitalium
-    [PSCustomObject]@{Algorithm = "renesis"; Params = ""} #renesis
-    [PSCustomObject]@{Algorithm = "skunk"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #skunk
-    [PSCustomObject]@{Algorithm = "sonoa"; Params = ""} #sonoa
-    [PSCustomObject]@{Algorithm = "timetravel"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #timetravel
-    [PSCustomObject]@{Algorithm = "tribus"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Tribus
-    [PSCustomObject]@{Algorithm = "x16s"; Params = " -i 21"; Zpool = ""; ZergpoolCoins = ""} #x16s
-    [PSCustomObject]@{Algorithm = "x16r"; Params = " -i 21"; Zpool = ""; ZergpoolCoins = ""} #x16r
-    [PSCustomObject]@{Algorithm = "x17"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #x17
-    [PSCustomObject]@{Algorithm = "xevan"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #xevan
+    #[PSCustomObject]@{Algorithm = "c11"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #c11 NVIDIA-TRex-064
+    #[PSCustomObject]@{Algorithm = "x16s"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #x16s NVIDIA-ZEnemy-119
+    #[PSCustomObject]@{Algorithm = "x16r"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #x16r NVIDIA-ZEnemy-119
+    #[PSCustomObject]@{Algorithm = "x17"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #x17 NVIDIA-TRex-064
 )
 
-$CommonCommands = "" #eg. " --cpu-affinity=0x3" core0,1
+$CommonCommands = "" #eg. " -d 0,1,8,9"
 
 $DeviceIDs = (Get-DeviceIDs -Config $Config -Devices $Devices -Type NVIDIA -DeviceTypeModel $($Devices.NVIDIA) -DeviceIdBase 10 -DeviceIdOffset 0)."$(if ($Type -EQ "NVIDIA"){"All"}else{$Type})"
 
@@ -55,6 +41,8 @@ $Commands | Where-Object {$Pools.(Get-Algorithm $_.Algorithm).Protocol -eq "stra
     $Algorithm_Norm = Get-Algorithm $_.Algorithm
 
     $StaticDiff = $_."$($Pools.$Algorithm_Norm.Name)"
+	
+    $HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100)
 	
     Switch ($Algorithm_Norm) {
         "allium"        {$ExtendInterval = 2}
@@ -79,8 +67,6 @@ $Commands | Where-Object {$Pools.(Get-Algorithm $_.Algorithm).Protocol -eq "stra
         "Xevan"    {$Average = 1}
         default    {$Average = 3}
     }
-
-    $HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100)
 
     [PSCustomObject]@{
         Type           = $Type

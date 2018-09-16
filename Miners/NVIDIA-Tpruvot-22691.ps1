@@ -48,7 +48,7 @@ $Commands = [PSCustomObject[]]@(
     [PSCustomObject]@{Algorithm = "penta"; Params = ""} #penta
     #[PSCustomObject]@{Algorithm = "phi"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #phi CcminerZEnemy-111v3
     #[PSCustomObject]@{Algorithm = "phi2"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #phi2 CcminerZEnemy-112
-    [PSCustomObject]@{Algorithm = "polytimos"; Params = ""} #polytimos
+    #[PSCustomObject]@{Algorithm = "polytimos"; Params = ""} #polytimos NVIDIA-TRex-064
     [PSCustomObject]@{Algorithm = "scrypt-jane"; Params = ""} #scrypt-jane
     [PSCustomObject]@{Algorithm = "s3"; Params = ""} #s3
     [PSCustomObject]@{Algorithm = "sha256t"; Params = " -i 29"; Zpool = ""; ZergpoolCoins = ""} #sha256t

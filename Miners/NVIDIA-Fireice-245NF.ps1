@@ -17,7 +17,7 @@ $Port = Get-FreeTcpPort -DefaultPort 3335
 $Fee  = 0
 
 $Commands = [PSCustomObject]@{
-    "cryptonight_heavy"       = " --nvidia $($Type)_cnheavy.txt" #CryptoNightHeavy
+    #"cryptonight_heavy"       = " --nvidia $($Type)_cnheavy.txt" #CryptoNightHeavy NVIDIA-CryptoDredge-091
     "cryptonight_lite_v7"     = " --nvidia $($Type)_cnlitev7.txt" #CryptoNightLiteV7 
     "cryptonight_lite_v7_xor" = " --nvidia $($Type)_cnlitev7xor.txt" #CryptoNightLiteV7xor
     #"cryptonight_V7"          = " --nvidia $($Type)_cn7.txt" #CryptoNightV7 CcminerTpruvot-23
