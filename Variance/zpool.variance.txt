@@ -1,9 +1,9 @@
 {
 "Aergo":{"variance":0.00,"variance2":0.03},
 "Allium":{"variance":0.01,"variance2":0.03},
-"Bitcore":{"variance":0.04,"variance2":0.06},
+"Bitcore":{"variance":0.04,"variance2":0.08},
 "Blake2s":{"variance":0.15},
-"C11":{"variance":0.15},
+"C11":{"variance":0.48},
 "Equihash":{"variance":0.04,"variance2":0.05},
 "Hex":{"variance":0.01,"variance2":0.02},
 "Hmq1725":{"variance":0.96},
@@ -11,7 +11,7 @@
 "Keccak":{"variance":0.02,"variance2":0.03},
 "Keccakc":{"variance":0.00,"variance2":0.02},
 "Lyra2z":{"variance":0.03,"variance2":0.06},
-"Lyra2re2":{"variance":0.04,"variance2":0.05},
+"Lyra2re2":{"variance":0.04,"variance2":0.07},
 "Neoscrypt":{"variance":0.11,"variance2":0.11},
 "Polytimos":{"variance":0.01,"variance2":0.05},
 "Phi":{"variance":0.01,"variance2":0.05},
@@ -24,7 +24,7 @@
 "X16r":{"variance":0.05,"variance2":0.08},
 "X16s":{"variance":0.02,"variance2":0.06},
 "X17":{"variance":0.04,"variance2":0.08},
-"Xevan":{"variance":0.15},
+"Xevan":{"variance":0.19},
 "Yescrypt":{"variance":0.25},
 "yescryptR16":{"variance":0.03,"variance2":0.05}
 }

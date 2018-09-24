@@ -25,7 +25,7 @@ $Commands = [PSCustomObject[]]@(
     [PSCustomObject]@{Algorithm = "lyra2"; Params = ""} #lyra2
     #[PSCustomObject]@{Algorithm = "lyra2v2"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #Lyra2RE2 NVIDIA-CryptoDredge-070
     #[PSCustomObject]@{Algorithm = "neoscrypt"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #NeoScrypt PalginNvidiaFork-45ee8fa
-    [PSCustomObject]@{Algorithm = "poly"; Params = ""} #poly
+    #[PSCustomObject]@{Algorithm = "poly"; Params = ""} #poly NVIDIA-TRex-066
     [PSCustomObject]@{Algorithm = "skein"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #skein
     [PSCustomObject]@{Algorithm = "skein2"; Params = ""} #skein2
     [PSCustomObject]@{Algorithm = "whirlcoin"; Params = ""} #whirlcoin
