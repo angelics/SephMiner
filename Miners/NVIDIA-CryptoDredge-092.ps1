@@ -19,7 +19,7 @@ if ($DriverVersion -lt $RequiredVersion) {
 $Type = "NVIDIA"
 $Path = ".\Bin\NVIDIA-CryptoDredge-092\CryptoDredge.exe"
 $API  = "Ccminer"
-$Uri  = "https://cryptodredge.org/download/windows/CryptoDredge_0.9.1_win_x64.zip"
+$Uri  = "https://cryptodredge.org/download/windows/CryptoDredge_0.9.2_win_x64.zip"
 $Port = Get-FreeTcpPort -DefaultPort 4068
 $Fee  = 1
 
@@ -27,6 +27,7 @@ $Commands = [PSCustomObject[]]@(
     [PSCustomObject]@{Algorithm = "allium"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Allium
     [PSCustomObject]@{Algorithm = "cnv7"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #cnv7
     [PSCustomObject]@{Algorithm = "cnheavy"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #cnheavy
+    [PSCustomObject]@{Algorithm = "lblk3"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #lblk3
     [PSCustomObject]@{Algorithm = "lyra2v2"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #Lyra2REv2
     [PSCustomObject]@{Algorithm = "lyra2z"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Lyra2z
     [PSCustomObject]@{Algorithm = "neoscrypt"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #NeoScrypt
