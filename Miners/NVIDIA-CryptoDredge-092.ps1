@@ -27,7 +27,7 @@ $Commands = [PSCustomObject[]]@(
     [PSCustomObject]@{Algorithm = "allium"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Allium
     [PSCustomObject]@{Algorithm = "cnv7"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #cnv7
     [PSCustomObject]@{Algorithm = "cnheavy"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #cnheavy
-    [PSCustomObject]@{Algorithm = "lblk3"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #lblk3
+    [PSCustomObject]@{Algorithm = "lbk3"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #lbk3
     [PSCustomObject]@{Algorithm = "lyra2v2"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #Lyra2REv2
     [PSCustomObject]@{Algorithm = "lyra2z"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Lyra2z
     [PSCustomObject]@{Algorithm = "neoscrypt"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #NeoScrypt

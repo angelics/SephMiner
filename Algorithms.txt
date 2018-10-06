@@ -42,7 +42,7 @@
     "hsr":  "HSR",
     "jha":  "JHA",
     "keccak":  "Keccak",
-    "lblk3":  "lblk3",
+    "lbk3":  "lbk3",
     "lyra2re2":  "Lyra2RE2",
     "lyra2rev2":  "Lyra2RE2",
     "lyra2v2":  "Lyra2RE2",
