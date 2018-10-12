@@ -1,7 +1,7 @@
 {
 "Aergo":{"variance":0.00,"variance2":0.04},
 "Allium":{"variance":0.01,"variance2":0.03},
-"BitcoinDiamond":{"variance":0.12,"variance2":0.35},
+"BitcoinDiamond":{"variance":0.15,"variance2":0.35},
 "Bitcore":{"variance":0.04,"variance2":0.08},
 "Blake2s":{"variance":0.15},
 "C11":{"variance":0.48},
@@ -25,7 +25,7 @@
 "X11evo":{"variance":0.00,"variance2":0.05},
 "X16r":{"variance":0.05,"variance2":0.10},
 "X16s":{"variance":0.02,"variance2":0.06},
-"X17":{"variance":0.04,"variance2":0.08},
+"X17":{"variance":0.21,"variance2":0.21},
 "Xevan":{"variance":0.19},
 "Yescrypt":{"variance":0.25},
 "yescryptR16":{"variance":0.03,"variance2":0.05}
