@@ -24,18 +24,18 @@ $Port = Get-FreeTcpPort -DefaultPort 4068
 $Fee  = 1
 
 $Commands = [PSCustomObject[]]@(
-    [PSCustomObject]@{Algorithm = "allium"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Allium
-    [PSCustomObject]@{Algorithm = "cnv7"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #cnv7
-    [PSCustomObject]@{Algorithm = "cnheavy"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #cnheavy
-    [PSCustomObject]@{Algorithm = "lbk3"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #lbk3
-    [PSCustomObject]@{Algorithm = "lyra2v2"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #Lyra2REv2
-    [PSCustomObject]@{Algorithm = "lyra2z"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Lyra2z
-    [PSCustomObject]@{Algorithm = "neoscrypt"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #NeoScrypt
-    [PSCustomObject]@{Algorithm = "phi2"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #PHI2
-    #[PSCustomObject]@{Algorithm = "phi1612"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #PHI1612 NVIDIA-TRex-065
-    [PSCustomObject]@{Algorithm = "skein"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #Skein
-    #[PSCustomObject]@{Algorithm = "skunkhash"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Skunk NVIDIA-TRex-065
-    [PSCustomObject]@{Algorithm = "tribus"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Tribus
+    [PSCustomObject]@{Algorithm = "allium"; Params = ""; Zpool = ""} #Allium
+    [PSCustomObject]@{Algorithm = "cnv7"; Params = ""; Zpool = ""} #cnv7
+    [PSCustomObject]@{Algorithm = "cnheavy"; Params = ""; Zpool = ""} #cnheavy
+    [PSCustomObject]@{Algorithm = "lbk3"; Params = ""; Zpool = ""} #lbk3
+    [PSCustomObject]@{Algorithm = "lyra2v2"; Params = ""; Zpool = ""; MiningPoolHubCoins = ""} #Lyra2REv2
+    [PSCustomObject]@{Algorithm = "lyra2z"; Params = ""; Zpool = ""} #Lyra2z
+    [PSCustomObject]@{Algorithm = "neoscrypt"; Params = ""; Zpool = ""; MiningPoolHubCoins = ""} #NeoScrypt
+    [PSCustomObject]@{Algorithm = "phi2"; Params = ""; Zpool = ""} #PHI2
+    #[PSCustomObject]@{Algorithm = "phi1612"; Params = ""; Zpool = ""} #PHI1612 NVIDIA-TRex-065
+    #[PSCustomObject]@{Algorithm = "skein"; Params = ""; Zpool = ""; MiningPoolHubCoins = ""} #Skein NVIDIA-Alexis78-12b1
+    #[PSCustomObject]@{Algorithm = "skunkhash"; Params = ""; Zpool = ""} #Skunk NVIDIA-TRex-065
+    #[PSCustomObject]@{Algorithm = "tribus"; Params = ""; Zpool = ""} #Tribus NVIDIA-ZEnemy-122
 )
 
 $CommonCommands = " --no-color"
