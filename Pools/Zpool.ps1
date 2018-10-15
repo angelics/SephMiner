@@ -41,7 +41,7 @@ else {
 	Write-Log -Level Warn "Pool Variance ($Name) has failed. No variance in calcualtion."
 }
 
-$Zpool_Regions = "us"
+$Zpool_Regions = "na", "eu", "sea"
 $Zpool_Currencies = @("BTC") + ($ZpoolCoins_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name) | Select-Object -Unique | Where-Object {Get-Variable $_ -ValueOnly -ErrorAction SilentlyContinue}
 
 $Zpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name | Where-Object {$ExcludeAlgorithm -inotcontains (Get-Algorithm $Zpool_Request.$_.name)} | Where-Object {$Zpool_Request.$_.hashrate -gt 0} | ForEach-Object {
@@ -61,9 +61,7 @@ $Zpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Selec
     $Variance = 1 - $Variances
 	
     if($CREA -and $Zpool_Algorithm_Norm -eq "Keccakc"){$Variance = 1}
-    if($OC -and $Zpool_Algorithm_Norm -eq "sha256t"){$Variance = 1}
     if($MAX -and $Zpool_Algorithm_Norm -eq "Keccak"){$Variance = 1}
-    if($HSR -and $Zpool_Algorithm_Norm -eq "hsr"){$Variance = 1}
     if($XRE -and $Zpool_Algorithm_Norm -eq "x11evo"){$Variance = 1}
     if($BTX -and $Zpool_Algorithm_Norm -eq "bitcore"){$Variance = 1}
     if($MAC -and $Zpool_Algorithm_Norm -eq "timetravel"){$Variance = 1}
@@ -90,7 +88,7 @@ $Zpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Selec
                 StablePrice   = $Stat.Week
                 MarginOfError = $Stat.Week_Fluctuation
                 Protocol      = "stratum+tcp"
-                Host          = "$Zpool_Algorithm.$Zpool_Host"
+                Host          = "$Zpool_Algorithm.$Zpool_Region.$Zpool_Host"
                 Port          = $Zpool_Port
                 User          = Get-Variable $_ -ValueOnly
                 Pass          = "$Worker,c=$_"
