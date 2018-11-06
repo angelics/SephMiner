@@ -29,8 +29,8 @@ $Commands = [PSCustomObject[]]@(
     [PSCustomObject]@{Algorithm = "lyra2z"; Params = ""; Zpool = ""} #Lyra2z
     [PSCustomObject]@{Algorithm = "neoscrypt"; Params = ""; Zpool = ""; MiningPoolHubCoins = ""} #NeoScrypt
     [PSCustomObject]@{Algorithm = "phi2"; Params = ""; Zpool = ""} #PHI2
-    [PSCustomObject]@{Algorithm = "phi1612"; Params = ""; Zpool = ""} #PHI1612
-    [PSCustomObject]@{Algorithm = "polytimos"; Params = ""; Zpool = ""} #polytimos
+    #[PSCustomObject]@{Algorithm = "phi1612"; Params = ""; Zpool = ""} #PHI1612 NVIDIA-TRex-073
+    #[PSCustomObject]@{Algorithm = "polytimos"; Params = ""; Zpool = ""} #polytimos NVIDIA-TRex-073
     #[PSCustomObject]@{Algorithm = "skein"; Params = ""; Zpool = ""; MiningPoolHubCoins = ""} #Skein NVIDIA-Alexis78-12b1
     [PSCustomObject]@{Algorithm = "skunkhash"; Params = ""; Zpool = ""} #Skunk
     #[PSCustomObject]@{Algorithm = "tribus"; Params = ""; Zpool = ""} #Tribus NVIDIA-ZEnemy-122

@@ -26,6 +26,7 @@
 "X16r":{"variance":0.05,"variance2":0.10},
 "X16s":{"variance":0.02,"variance2":0.06},
 "X17":{"variance":0.23,"variance2":0.23},
+"X22i":{"variance":0.00,"variance2":0.04},
 "Xevan":{"variance":0.19,"variance2":0.21},
 "Yescrypt":{"variance":0.25},
 "yescryptR16":{"variance":0.03,"variance2":0.05}
