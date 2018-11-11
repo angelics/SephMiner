@@ -28,7 +28,7 @@ $Commands = [PSCustomObject[]]@(
     #[PSCustomObject]@{Algorithm = "poly"; Params = ""; Zpool = ""} #poly NVIDIA-CryptoDredge-095
     [PSCustomObject]@{Algorithm = "vit"; Params = ""; Zpool = ""} #Vitalium
     [PSCustomObject]@{Algorithm = "renesis"; Params = ""} #renesis
-    [PSCustomObject]@{Algorithm = "skunk"; Params = ""; Zpool = ""} #skunk
+    #[PSCustomObject]@{Algorithm = "skunk"; Params = ""; Zpool = ""} #skunk NVIDIA-TRex-073
     [PSCustomObject]@{Algorithm = "sonoa"; Params = ""} #sonoa
     #[PSCustomObject]@{Algorithm = "timetravel"; Params = ""; Zpool = ""} #timetravel NVIDIA-TRex-072
     [PSCustomObject]@{Algorithm = "tribus"; Params = ""; Zpool = ""} #Tribus
