@@ -41,7 +41,7 @@ else {
 	Write-Log -Level Warn "Pool Variance ($Name) has failed. No variance in calcualtion."
 }
 
-$Zpool_Regions = "na", "eu", "sea"
+$Zpool_Regions = "na", "eu", "sea", "jp"
 $Zpool_Currencies = @("BTC") + ($ZpoolCoins_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name) | Select-Object -Unique | Where-Object {Get-Variable $_ -ValueOnly -ErrorAction SilentlyContinue}
 
 $Zpool_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name | Where-Object {$ExcludeAlgorithm -inotcontains (Get-Algorithm $Zpool_Request.$_.name)} | Where-Object {$Zpool_Request.$_.hashrate -gt 0} | ForEach-Object {
