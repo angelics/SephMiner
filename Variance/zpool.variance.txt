@@ -20,6 +20,7 @@
 "Phi2":{"variance":0.01,"variance2":0.03},
 "Skein":{"variance":0.05,"variance2":0.10},
 "Sha256t":{"variance":0.45},
+"Skunk":{"variance":0.04},
 "Sonoa":{"variance":0.05,"variance2":0.07},
 "Timetravel":{"variance":0.04,"variance2":0.07},
 "Tribus":{"variance":0.07},
