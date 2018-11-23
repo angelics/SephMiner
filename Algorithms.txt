@@ -36,6 +36,7 @@
     "equihash192":  "Equihash192",
     "equihash96":  "Equihash96",
     "exosis":  "exosis",
+    "geek":  "geek",
     "graft":  "graft",
     "hex":  "hex",
     "hmq1725":  "HMQ1725",
