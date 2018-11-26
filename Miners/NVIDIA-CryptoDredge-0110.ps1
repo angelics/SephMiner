@@ -35,10 +35,10 @@ $Commands = [PSCustomObject[]]@(
     #[PSCustomObject]@{Algorithm = "skein"; Params = ""; Zpool = ""; MiningPoolHubCoins = ""} #Skein NVIDIA-Alexis78-12b1
     #[PSCustomObject]@{Algorithm = "skunkhash"; Params = ""; Zpool = ""} #Skunk NVIDIA-TRex-080
     #[PSCustomObject]@{Algorithm = "tribus"; Params = ""; Zpool = ""} #Tribus NVIDIA-ZEnemy-122
-    [PSCustomObject]@{Algorithm = "x16r"; Params = ""; Zpool = ""} #x16r
-    [PSCustomObject]@{Algorithm = "x16s"; Params = ""; Zpool = ""} #x16s
-    [PSCustomObject]@{Algorithm = "x17"; Params = ""; Zpool = ""} #x17
-    [PSCustomObject]@{Algorithm = "x22i"; Params = ""; Zpool = ""} #x22i
+    #[PSCustomObject]@{Algorithm = "x16r"; Params = ""; Zpool = ""} #x16r NVIDIA-TRex-081 
+    #[PSCustomObject]@{Algorithm = "x16s"; Params = ""; Zpool = ""} #x16s NVIDIA-TRex-081
+    #[PSCustomObject]@{Algorithm = "x17"; Params = ""; Zpool = ""} #x17 NVIDIA-ZEnemy-125
+    #[PSCustomObject]@{Algorithm = "x22i"; Params = ""; Zpool = ""} #x22i NVIDIA-TRex-081
 )
 
 $CommonCommands = " --no-color"
