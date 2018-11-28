@@ -24,6 +24,7 @@
     "cryptonight_v7": "CryptoNightV8",
     "cryptonight_v7_stellite": "Stellite",
     "daggerhashimoto":  "Ethash",
+    "dedal":  "dedal",
     "eth":  "Ethash",
     "ethash":  "Ethash",
     "equihash":  "Equihash",
