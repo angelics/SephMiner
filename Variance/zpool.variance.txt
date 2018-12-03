@@ -7,6 +7,7 @@
 "C11":{"variance":0.48},
 "dedal":{"variance":0.01,"coin":"NMS"},
 "Equihash":{"variance":0.04,"variance2":0.05},
+"exosis":{"variance":0.10,"coin":"EXO"},
 "Hex":{"variance":0.01,"variance2":0.03},
 "Hmq1725":{"variance":0.96},
 "Hsr":{"variance":0.00,"variance2":0.03},
