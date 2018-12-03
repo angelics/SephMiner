@@ -9,27 +9,19 @@ param(
 
 if (-not $Devices.NVIDIA) {return} # No NVIDIA mining device present in system
 
-$DriverVersion = (Get-Devices).NVIDIA.Platform.Version -replace ".*CUDA ",""
-$RequiredVersion = "9.1.00"
-if ($DriverVersion -lt $RequiredVersion) {
-    Write-Log -Level Warn "Miner ($($Name)) requires CUDA version $($RequiredVersion) or above (installed version is $($DriverVersion)). Please update your Nvidia drivers to 390.77 or newer. "
-    return
-}
-
 $Type = "NVIDIA"
-$Path = ".\Bin\NVIDIA-KlausT-Yescrypt\ccminer-x64-cuda9.1.exe"
+$Path = ".\Bin\NVIDIA-KlausT-Yescrypt\ccminer.exe"
 $API  = "Ccminer"
-$Uri  = "https://semitest.000webhostapp.com/binary/CCMiner%20Klaust%20-%20Yescrypt.7z"
+$Uri  = "https://github.com/nemosminer/ccminerKlausTyescrypt/releases/download/v10/ccminerKlausTyescryptv10.7z"
 $Port = Get-FreeTcpPort -DefaultPort 4068
 $Fee  = 0
 
 $Commands = [PSCustomObject[]]@(
-    [PSCustomObject]@{Algorithm = "yescrypt"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #yescrypt
-    [PSCustomObject]@{Algorithm = "yescryptR8"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #yescryptR8
-    [PSCustomObject]@{Algorithm = "yescryptR16"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #Yenten
-    [PSCustomObject]@{Algorithm = "yescryptR16v2"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #PPNP
-    [PSCustomObject]@{Algorithm = "yescryptR24"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #yescryptR24
-    [PSCustomObject]@{Algorithm = "yescryptR32"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #WAVI
+    [PSCustomObject]@{Algorithm = "yescrypt"; Params = " -i 12.5"; Zpool = ""; MiningPoolHubCoins = ""} #yescrypt
+    [PSCustomObject]@{Algorithm = "yescryptR8"; Params = " -i 12.5"; Zpool = ""; MiningPoolHubCoins = ""} #yescryptR8
+    [PSCustomObject]@{Algorithm = "yescryptR16"; Params = " -i 12.5"; Zpool = ""; MiningPoolHubCoins = ""} #Yenten
+    [PSCustomObject]@{Algorithm = "yescryptR24"; Params = " -i 12.5"; Zpool = ""; MiningPoolHubCoins = ""} #yescryptR24
+    [PSCustomObject]@{Algorithm = "yescryptR32"; Params = " -i 11"; Zpool = ""; MiningPoolHubCoins = ""} #WAVI
 )
 
 $CommonCommands = "" #eg. " -d 0,1,8,9"

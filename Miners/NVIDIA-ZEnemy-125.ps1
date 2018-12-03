@@ -19,13 +19,13 @@ $Fee  = 1
 $Commands = [PSCustomObject[]]@(
     [PSCustomObject]@{Algorithm = "aeriumx"; Params = ""; Zpool = ""} #aeriumx
     #[PSCustomObject]@{Algorithm = "bcd"; Params = ""; Zpool = "";} #bcd NVIDIA-TRex-081
-    [PSCustomObject]@{Algorithm = "bitcore"; Params = ""; Zpool = ""} #Bitcore
+    #[PSCustomObject]@{Algorithm = "bitcore"; Params = ""; Zpool = ""} #Bitcore NVIDIA-TRex-084
     [PSCustomObject]@{Algorithm = "c11"; Params = ""; Zpool = ""} #c11
     [PSCustomObject]@{Algorithm = "hex"; Params = ""; Zpool = ""} #HEX
     [PSCustomObject]@{Algorithm = "hsr"; Params = ""; Zpool = ""} #hsr
     #[PSCustomObject]@{Algorithm = "phi"; Params = ""; Zpool = ""} #Phi NVIDIA-TRex-073
     #[PSCustomObject]@{Algorithm = "phi2"; Params = ""; Zpool = ""} #Phi2 NVIDIA-CryptoDredge-095
-    [PSCustomObject]@{Algorithm = "poly"; Params = ""; Zpool = ""} #poly
+    #[PSCustomObject]@{Algorithm = "poly"; Params = ""; Zpool = ""} #poly NVIDIA-TRex-084
     [PSCustomObject]@{Algorithm = "vit"; Params = ""; Zpool = ""} #Vitalium
     [PSCustomObject]@{Algorithm = "renesis"; Params = ""} #renesis
     #[PSCustomObject]@{Algorithm = "skunk"; Params = ""; Zpool = ""} #skunk NVIDIA-TRex-073
