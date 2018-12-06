@@ -583,9 +583,11 @@ filter ConvertTo-Price {
     [CmdletBinding()]
     $Price = $_
     switch ([math]::truncate([math]::log($Price, [Math]::Pow(1000, 1)))) {
+        -1 {"{0:n8}  H/Day" -f ($Price * [Math]::Pow(1000, 0))}
         -2 {"{0:n8} KH/Day" -f ($Price * [Math]::Pow(1000, 1))}
         -3 {"{0:n8} MH/Day" -f ($Price * [Math]::Pow(1000, 2))}
-        -4 {"{0:n8} GH/Day" -f ($Price * [Math]::Pow(1000, 2))}
+        -4 {"{0:n8} GH/Day" -f ($Price * [Math]::Pow(1000, 3))}
+        -5 {"{0:n8} TH/Day" -f ($Price * [Math]::Pow(1000, 5))}
     }
 }
 
