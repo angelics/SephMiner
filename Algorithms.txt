@@ -46,6 +46,7 @@
     "jha":  "JHA",
     "keccak":  "Keccak",
     "lbk3":  "lbk3",
+    "Lyra2REv3":  "Lyra2REv3",
     "Lyra2vc0banHash":  "Lyra2vc0banHash",
     "lyra2re2":  "Lyra2RE2",
     "lyra2rev2":  "Lyra2RE2",
