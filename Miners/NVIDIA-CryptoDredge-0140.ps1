@@ -23,7 +23,7 @@ $Commands = [PSCustomObject[]]@(
     #[PSCustomObject]@{Algorithm = "c11"; Params = ""; Zpool = ""} #c11 NVIDIA-ZEnemy-122
     [PSCustomObject]@{Algorithm = "cnv8"; Params = ""; Zpool = ""} #cnv8
     [PSCustomObject]@{Algorithm = "cnheavy"; Params = ""; Zpool = ""} #cnheavy
-    [PSCustomObject]@{Algorithm = "dedal"; Params = ""; Zpool = ""} #dedal
+    #[PSCustomObject]@{Algorithm = "dedal"; Params = ""; Zpool = ""} #dedal NVIDIA-TRex-088
     [PSCustomObject]@{Algorithm = "exosis"; Params = ""; Zpool = ""} #exosis
     [PSCustomObject]@{Algorithm = "hmq1725"; Params = ""; Zpool = ""} #hmq1725
     [PSCustomObject]@{Algorithm = "lbk3"; Params = ""; Zpool = ""} #lbk3
@@ -43,7 +43,7 @@ $Commands = [PSCustomObject[]]@(
     #[PSCustomObject]@{Algorithm = "x16s"; Params = ""; Zpool = ""} #x16s NVIDIA-TRex-085
     #[PSCustomObject]@{Algorithm = "x17"; Params = ""; Zpool = ""} #x17 NVIDIA-ZEnemy-125
     [PSCustomObject]@{Algorithm = "x21s"; Params = ""; Zpool = ""} #x21s
-    [PSCustomObject]@{Algorithm = "x22i"; Params = ""; Zpool = ""} #x22i
+    #[PSCustomObject]@{Algorithm = "x22i"; Params = ""; Zpool = ""} #x22i NVIDIA-TRex-088
 )
 
 $CommonCommands = " --no-color"
