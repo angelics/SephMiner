@@ -18,7 +18,6 @@ $Fee  = 1
 
 $Commands = [PSCustomObject]@{
     "aergo" = " -X 256 -g 2" #aergo
-    "c11"   = " -X 256 -w 256 -g 2" #c11
     "geek"   = " -X 256 -g 2" #geek
     "phi"   = " -X 256 -w 256 -g 2" #phi
     "polytimos"   = " -X 256 -w 256 -g 2" #polytimos

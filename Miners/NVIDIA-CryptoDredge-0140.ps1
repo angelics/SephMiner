@@ -20,7 +20,6 @@ $Commands = [PSCustomObject[]]@(
     [PSCustomObject]@{Algorithm = "allium"; Params = ""; Zpool = ""} #Allium
     #[PSCustomObject]@{Algorithm = "bcd"; Params = ""; Zpool = ""} #bcd NVIDIA-TRex-080
     #[PSCustomObject]@{Algorithm = "bitcore"; Params = ""; Zpool = ""} #bitcore NVIDIA-TRex-080
-    #[PSCustomObject]@{Algorithm = "c11"; Params = ""; Zpool = ""} #c11 NVIDIA-ZEnemy-122
     [PSCustomObject]@{Algorithm = "cnv8"; Params = ""; Zpool = ""} #cnv8
     [PSCustomObject]@{Algorithm = "cnheavy"; Params = ""; Zpool = ""} #cnheavy
     #[PSCustomObject]@{Algorithm = "dedal"; Params = ""; Zpool = ""} #dedal NVIDIA-TRex-088

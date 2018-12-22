@@ -18,9 +18,8 @@ $Fee  = 1
 
 $Commands = [PSCustomObject[]]@(
     [PSCustomObject]@{Algorithm = "aeriumx"; Params = ""; Zpool = ""} #aeriumx
-    [PSCustomObject]@{Algorithm = "bcd"; Params = ""; Zpool = "";} #bcd
+    #[PSCustomObject]@{Algorithm = "bcd"; Params = ""; Zpool = "";} #bcd NVIDIA-TRex-089
     #[PSCustomObject]@{Algorithm = "bitcore"; Params = ""; Zpool = ""} #Bitcore NVIDIA-TRex-088
-    [PSCustomObject]@{Algorithm = "c11"; Params = ""; Zpool = ""} #c11
     [PSCustomObject]@{Algorithm = "hex"; Params = ""; Zpool = ""} #HEX
     [PSCustomObject]@{Algorithm = "hsr"; Params = ""; Zpool = ""} #hsr
     #[PSCustomObject]@{Algorithm = "phi"; Params = ""; Zpool = ""} #Phi NVIDIA-TRex-088
@@ -28,12 +27,12 @@ $Commands = [PSCustomObject[]]@(
     #[PSCustomObject]@{Algorithm = "poly"; Params = ""; Zpool = ""} #poly NVIDIA-TRex-088
     [PSCustomObject]@{Algorithm = "vit"; Params = ""; Zpool = ""} #Vitalium
     #[PSCustomObject]@{Algorithm = "skunk"; Params = ""; Zpool = ""} #skunk NVIDIA-TRex-088
-    [PSCustomObject]@{Algorithm = "sonoa"; Params = ""} #sonoa
+    #[PSCustomObject]@{Algorithm = "sonoa"; Params = ""} #sonoa NVIDIA-TRex-089
     #[PSCustomObject]@{Algorithm = "timetravel"; Params = ""; Zpool = ""} #timetravel NVIDIA-TRex-088
-    [PSCustomObject]@{Algorithm = "tribus"; Params = ""; Zpool = ""} #Tribus
-    [PSCustomObject]@{Algorithm = "x16s"; Params = " -i 22"; Zpool = ""} #x16s
-    [PSCustomObject]@{Algorithm = "x16r"; Params = " -i 22"; Zpool = ""} #x16r
-    [PSCustomObject]@{Algorithm = "x17"; Params = ""; Zpool = ""} #x17
+    #[PSCustomObject]@{Algorithm = "tribus"; Params = ""; Zpool = ""} #Tribus NVIDIA-TRex-089
+    #[PSCustomObject]@{Algorithm = "x16s"; Params = " -i 22"; Zpool = ""} #x16s NVIDIA-TRex-089
+    #[PSCustomObject]@{Algorithm = "x16r"; Params = " -i 22"; Zpool = ""} #x16r NVIDIA-TRex-089
+    #[PSCustomObject]@{Algorithm = "x17"; Params = ""; Zpool = ""} #x17 NVIDIA-TRex-089
     [PSCustomObject]@{Algorithm = "xevan"; Params = ""; Zpool = ""} #xevan
 )
 

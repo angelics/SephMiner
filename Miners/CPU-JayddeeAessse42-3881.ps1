@@ -26,7 +26,6 @@ $Commands = [PSCustomObject]@{
 	#"bitcore"       = "" #Bitcore not profitable
     #"blake2s"       = "" #Blake2s not profitable
     #"bmw"           = "" #BMW 256
-    #"c11"           = "" #C11 not profitable
     #"cryptonightv7" = "" #CryptoNightV7 CPU-JCE64-031a
     #"deep"          = "" #Deepcoin
     #"dmd-gr"        = "" #DiamondGroestl
@@ -71,7 +70,6 @@ $Commands = [PSCustomObject]@{
     #"xevan"         = "" #Bitsend not profitable
     "yescrypt"      = "" #GlobalboostY
     #"yescryptr8"    = "" #BitZeny
-    "yescryptr16"   = "" #Yenten
     "yescryptr32"   = "" #WAVI
     #"zr5"           = "" #Ziftr
 }

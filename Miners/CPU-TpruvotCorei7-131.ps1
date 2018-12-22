@@ -16,9 +16,7 @@ $Fee  = 0
 
 $Commands = [PSCustomObject]@{
     #"blake2s"    = "" #Blake2s
-    #"c11"        = "" #C11 not profitable
     #"keccak"     = "" #Keccak
-    #"lyra2rev2"  = "" #Lyra2RE2
     #"neoscrypt"  = "" #NeoScrypt crash
     #"skein"      = "" #skein
     #"timetravel" = "" #Timetravel not profitable

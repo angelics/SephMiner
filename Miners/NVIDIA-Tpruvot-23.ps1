@@ -21,7 +21,6 @@ $Commands = [PSCustomObject[]]@(
     #[PSCustomObject]@{Algorithm = "bitcore"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #bitcore CcminerZEnemy-111v3
     #[PSCustomObject]@{Algorithm = "blake2s"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Blake2s
     [PSCustomObject]@{Algorithm = "bmw"; Params = ""} #bmw
-    #[PSCustomObject]@{Algorithm = "c11"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #C11 CcminerZEnemy-111v3
     [PSCustomObject]@{Algorithm = "deep"; Params = ""} #deep
     [PSCustomObject]@{Algorithm = "dmd-gr"; Params = ""} #dmd-gr
     [PSCustomObject]@{Algorithm = "fresh"; Params = ""} #fresh
@@ -35,7 +34,6 @@ $Commands = [PSCustomObject[]]@(
     [PSCustomObject]@{Algorithm = "keccakc"; Params = " -i 29"; Zpool = ""; ZergpoolCoins = ""} #keccakc
     [PSCustomObject]@{Algorithm = "luffa"; Params = ""} #luffa
     [PSCustomObject]@{Algorithm = "lyra2"; Params = "";} #lyra2
-    #[PSCustomObject]@{Algorithm = "lyra2v2"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #Lyra2RE2
     #[PSCustomObject]@{Algorithm = "lyra2z"; Params = " -i 20"; Zpool = ""; ZergpoolCoins = ""} #Lyra2z
     #[PSCustomObject]@{Algorithm = "monero"; Params = ""; MiningPoolHubCoins = ""} #CryptoNightV7 NVIDIA-Tpruvot-23b1
     [PSCustomObject]@{Algorithm = "mjollnir"; Params = ""} #mjollnir

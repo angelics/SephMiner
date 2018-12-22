@@ -19,7 +19,6 @@ $Fee  = 0
 $Commands = [PSCustomObject[]]@(
     [PSCustomObject]@{Algorithm = "yescrypt"; Params = " -i 12.5"; Zpool = ""; MiningPoolHubCoins = ""} #yescrypt
     [PSCustomObject]@{Algorithm = "yescryptR8"; Params = " -i 12.5"; Zpool = ""; MiningPoolHubCoins = ""} #yescryptR8
-    [PSCustomObject]@{Algorithm = "yescryptR16"; Params = " -i 12.5"; Zpool = ""; MiningPoolHubCoins = ""} #Yenten
     [PSCustomObject]@{Algorithm = "yescryptR24"; Params = " -i 12.5"; Zpool = ""; MiningPoolHubCoins = ""} #yescryptR24
     [PSCustomObject]@{Algorithm = "yescryptR32"; Params = " -i 11"; Zpool = ""; MiningPoolHubCoins = ""} #WAVI
 )
