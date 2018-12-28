@@ -52,6 +52,7 @@
     "lyra2z":  "Lyra2z",
     "m7m":  "Magi",
     "maxcoin":  "Keccak",
+    "mtp":  "mtp",
     "neoscrypt":  "NeoScrypt",
     "padihash":  "padihash",
     "pawelhash":  "pawelhash",
