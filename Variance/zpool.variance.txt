@@ -29,6 +29,6 @@
 "X16s":{"variance":0.02,"variance2":0.06,"coin":"RABBIT"},
 "X17":{"variance":0.23,"variance2":0.23},
 "X22i":{"variance":0.00,"variance2":0.04},
-"Xevan":{"variance":0.16,"variance2":0.17,"coin":"BSD"},
+"Xevan":{"variance":0.16,"variance2":0.19,"coin":"BSD"},
 "Yescrypt":{"variance":0.25}
 }
