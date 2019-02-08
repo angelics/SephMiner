@@ -12,7 +12,7 @@
       "Worker": "$WorkerName",
       "ExcludeAlgorithm":  ["Sia", "Qubit", "X11", "MyriadGroestl", "Groestl", "Scrypt"],
       "DisableExchange":  ["Ethereum", "EthereumClassic", "DigibyteSkein"],
-      "ExcludeCoin":  ["maxcoin", "Electroneum", "BitcoinGold"],
+      "ExcludeCoin":  ["maxcoin", "Electroneum", "BitcoinGold", "globalboosty"],
       "API_ID": "$API_ID",
       "API_Key": "$API_Key"
     },

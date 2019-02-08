@@ -10,9 +10,9 @@ param(
 if (-not $Devices.NVIDIA) {return} # No NVIDIA mining device present in system
 
 $Type = "NVIDIA"
-$Path = ".\Bin\NVIDIA-CryptoDredge-0160\CryptoDredge.exe"
+$Path = ".\Bin\NVIDIA-CryptoDredge-0161\CryptoDredge.exe"
 $API  = "Ccminer"
-$Uri  = "https://github.com/technobyl/CryptoDredge/releases/download/v0.16.0/CryptoDredge_0.16.0_cuda_10.0_linux.tar.gz"
+$Uri  = "https://github.com/technobyl/CryptoDredge/releases/download/v0.16.1/CryptoDredge_0.16.1_cuda_10.0_windows.zip"
 $Port = Get-FreeTcpPort -DefaultPort 4068
 $Fee  = 1
 
@@ -23,12 +23,9 @@ $Commands = [PSCustomObject[]]@(
     [PSCustomObject]@{Algorithm = "cnv8"; Params = ""; Zpool = ""} #cnv8
     [PSCustomObject]@{Algorithm = "cnheavy"; Params = ""; Zpool = ""} #cnheavy
     #[PSCustomObject]@{Algorithm = "dedal"; Params = ""; Zpool = ""} #dedal NVIDIA-TRex-088
-    [PSCustomObject]@{Algorithm = "exosis"; Params = ""; Zpool = ""} #exosis
     [PSCustomObject]@{Algorithm = "hmq1725"; Params = ""; Zpool = ""} #hmq1725
-    [PSCustomObject]@{Algorithm = "lbk3"; Params = ""; Zpool = ""} #lbk3
     [PSCustomObject]@{Algorithm = "Lyra2REv3"; Params = ""; Zpool = ""} #Lyra2REv3
     [PSCustomObject]@{Algorithm = "Lyra2vc0banHash"; Params = ""; Zpool = ""; MiningPoolHubCoins = ""} #Lyra2vc0banHash
-    [PSCustomObject]@{Algorithm = "lyra2v2"; Params = ""; Zpool = ""; MiningPoolHubCoins = ""} #Lyra2REv2
     [PSCustomObject]@{Algorithm = "lyra2z"; Params = ""; Zpool = ""} #Lyra2z
     [PSCustomObject]@{Algorithm = "Lyra2zz"; Params = ""; Zpool = ""} #Lyra2zz
     [PSCustomObject]@{Algorithm = "mtp"; Params = ""; Zpool = ""; MiningPoolHubCoins = ""} #mtp
@@ -36,13 +33,11 @@ $Commands = [PSCustomObject[]]@(
     [PSCustomObject]@{Algorithm = "phi2"; Params = ""; Zpool = ""} #PHI2
     #[PSCustomObject]@{Algorithm = "phi1612"; Params = ""; Zpool = ""} #PHI1612 NVIDIA-TRex-073
     [PSCustomObject]@{Algorithm = "pipe"; Params = ""; Zpool = ""} #pipe
-    #[PSCustomObject]@{Algorithm = "polytimos"; Params = ""; Zpool = ""} #polytimos NVIDIA-TRex-073
-    #[PSCustomObject]@{Algorithm = "skein"; Params = ""; Zpool = ""; MiningPoolHubCoins = ""} #Skein NVIDIA-Alexis78-12b1
     #[PSCustomObject]@{Algorithm = "skunkhash"; Params = ""; Zpool = ""} #Skunk error on zpool
     #[PSCustomObject]@{Algorithm = "tribus"; Params = ""; Zpool = ""} #Tribus NVIDIA-ZEnemy-122
-    #[PSCustomObject]@{Algorithm = "x16r"; Params = ""; Zpool = ""} #x16r NVIDIA-TRex-085
+    [PSCustomObject]@{Algorithm = "x16r"; Params = ""; Zpool = ""} #x16r
     [PSCustomObject]@{Algorithm = "x16rt"; Params = ""; Zpool = ""} #x16rt
-    #[PSCustomObject]@{Algorithm = "x16s"; Params = ""; Zpool = ""} #x16s NVIDIA-TRex-085
+    [PSCustomObject]@{Algorithm = "x16s"; Params = ""; Zpool = ""} #x16s
     #[PSCustomObject]@{Algorithm = "x17"; Params = ""; Zpool = ""} #x17 NVIDIA-ZEnemy-125
     [PSCustomObject]@{Algorithm = "x21s"; Params = ""; Zpool = ""} #x21s
     #[PSCustomObject]@{Algorithm = "x22i"; Params = ""; Zpool = ""} #x22i NVIDIA-TRex-088
