@@ -19,7 +19,6 @@
 "Phi":{"variance":0.02,"variance2":0.06,"coin":"FNO"},
 "Phi2":{"variance":0.02,"variance2":0.05,"coin":"LUX"},
 "Skein":{"variance":0.05,"variance2":0.10},
-"Sha256t":{"variance":0.45},
 "Skunk":{"variance":0.04},
 "Sonoa":{"variance":0.05,"variance2":0.07,"coin":"SONO"},
 "Timetravel":{"variance":0.04,"variance2":0.08,"coin":"MAC"},
