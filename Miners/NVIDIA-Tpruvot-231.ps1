@@ -12,7 +12,7 @@ if (-not $Devices.NVIDIA) {return} # No NVIDIA mining device present in system
 $Type = "NVIDIA"
 $Path = ".\Bin\NVIDIA-TPruvot-231\ccminer-x64.exe"
 $API  = "Ccminer"
-$Uri  = "https://github.com/tpruvot/ccminer/releases/download/2.3-tpruvot/ccminer-2.3-cuda9.7z"
+$Uri  = "https://github.com/tpruvot/ccminer/releases/download/2.3.1-tpruvot/ccminer-2.3.1-cuda10.7z"
 $Port = Get-FreeTcpPort -DefaultPort 4068
 $Fee  = 0
 
