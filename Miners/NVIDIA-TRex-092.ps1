@@ -10,9 +10,9 @@ param(
 if (-not $Devices.NVIDIA) {return} # No NVIDIA mining device present in system
 
 $Type = "NVIDIA"
-$Path = ".\Bin\NVIDIA-TRex-091\t-rex.exe"
+$Path = ".\Bin\NVIDIA-TRex-092\t-rex.exe"
 $API  = "Ccminer"
-$Uri  = "https://github.com/trexminer/T-Rex/releases/download/0.9.1/t-rex-0.9.1-win-cuda10.0.zip"
+$Uri  = "https://github.com/trexminer/T-Rex/releases/download/0.9.2/t-rex-0.9.2-win-cuda10.0.zip"
 $Port = Get-FreeTcpPort -DefaultPort 4068
 $Fee  = 1
 
@@ -33,7 +33,6 @@ $Commands = [PSCustomObject[]]@(
     [PSCustomObject]@{Algorithm = "phi"; Params = ""; Zpool = ""} #phi
     [PSCustomObject]@{Algorithm = "renesis"; Params = ""} #renesis
     [PSCustomObject]@{Algorithm = "skunk"; Params = ""; Zpool = ""} #skunk
-    [PSCustomObject]@{Algorithm = "sha256t"; Params = ""} #sha256t
     [PSCustomObject]@{Algorithm = "sha256q"; Params = ""} #sha256q
     [PSCustomObject]@{Algorithm = "sonoa"; Params = ""} #sonoa
     [PSCustomObject]@{Algorithm = "timetravel"; Params = ""} #timetravel

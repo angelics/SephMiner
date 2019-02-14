@@ -17,7 +17,7 @@ $Port = Get-FreeTcpPort -DefaultPort 4068
 $Fee  = 0
 
 $Commands = [PSCustomObject[]]@(
-    #[PSCustomObject]@{Algorithm = "allium"; Params = " -i 21"; Zpool = ""; ZergpoolCoins = ""} #allium CcminerTpruvot-23b1
+    [PSCustomObject]@{Algorithm = "allium"; Params = " -i 21"; Zpool = ""; ZergpoolCoins = ""} #allium
     #[PSCustomObject]@{Algorithm = "bitcore"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #bitcore CcminerZEnemy-111v3
     [PSCustomObject]@{Algorithm = "blake2b"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #blake2b
     #[PSCustomObject]@{Algorithm = "blake2s"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Blake2s
@@ -47,7 +47,6 @@ $Commands = [PSCustomObject[]]@(
     #[PSCustomObject]@{Algorithm = "polytimos"; Params = ""} #polytimos NVIDIA-TRex-064
     [PSCustomObject]@{Algorithm = "scrypt-jane"; Params = ""} #scrypt-jane
     [PSCustomObject]@{Algorithm = "s3"; Params = ""} #s3
-    #[PSCustomObject]@{Algorithm = "sha256t"; Params = " -i 29"; Zpool = ""; ZergpoolCoins = ""} #sha256t crash
     [PSCustomObject]@{Algorithm = "sha256q"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #sha256q
     [PSCustomObject]@{Algorithm = "skein2"; Params = ""} #Skein2
     #[PSCustomObject]@{Algorithm = "skunk"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Skunk CcminerZEnemy-111v3
