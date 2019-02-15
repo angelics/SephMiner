@@ -47,7 +47,6 @@
     "equihash1927":  "Equihash1927",
     "equihash2109":  "Equihash2109",
     "equihash1505":  "Equihash1505",
-    "equihash192":  "Equihash192",
     "equihash96":  "Equihash965",
     "equihash965":  "Equihash965",
     "exosis":  "exosis",
