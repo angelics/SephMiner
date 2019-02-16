@@ -28,7 +28,6 @@ $Commands = [PSCustomObject[]]@(
     [PSCustomObject]@{Algorithm = "lbk3"; Params = ""; Zpool = ""} #lbk3
     [PSCustomObject]@{Algorithm = "Lyra2REv3"; Params = ""; Zpool = ""} #Lyra2REv3
     [PSCustomObject]@{Algorithm = "Lyra2vc0banHash"; Params = ""; Zpool = ""; MiningPoolHubCoins = ""} #Lyra2vc0banHash
-    [PSCustomObject]@{Algorithm = "lyra2v2"; Params = ""; Zpool = ""; MiningPoolHubCoins = ""} #Lyra2REv2
     [PSCustomObject]@{Algorithm = "lyra2z"; Params = ""; Zpool = ""} #Lyra2z
     [PSCustomObject]@{Algorithm = "Lyra2zz"; Params = ""; Zpool = ""} #Lyra2zz
     [PSCustomObject]@{Algorithm = "mtp"; Params = ""; Zpool = ""; MiningPoolHubCoins = ""} #mtp
@@ -76,6 +75,8 @@ $Commands | Where-Object {$Pools.(Get-Algorithm $_.Algorithm).Protocol -eq "stra
         default         {$ExtendInterval = 0}
     }
 
+    if ($_.fee){$Fee = $_.fee}
+	
     $HashRate = $Stats."$($Name)_$($Algorithm_Norm)_HashRate".Week * (1 - $Fee / 100)
 
     [PSCustomObject]@{
