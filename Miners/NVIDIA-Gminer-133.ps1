@@ -17,7 +17,7 @@ $Port = Get-FreeTcpPort -DefaultPort 42000
 $Fee  = 2
  
 $Commands = [PSCustomObject[]]@(
-    #[PSCustomObject]@{Algorithm = "grin29"; Params = ""} #Cuckaroo29 ~ 5.6GB VRAM
+    [PSCustomObject]@{Algorithm = "grin29"; Params = ""} #Cuckaroo29 ~ 5.6GB VRAM
     #[PSCustomObject]@{Algorithm = "grin31"; Params = ""} #Cuckatoo31 ~ 7.4GB VRAM
     #[PSCustomObject]@{Algorithm = "aeternity"; Params = ""} #Cuckoo29 ~ 5.6GB VRAM Aeternity
     [PSCustomObject]@{Algorithm = "Equihash-96_5"; Params = ""} #equihash965 ~0.75GB VRAM
