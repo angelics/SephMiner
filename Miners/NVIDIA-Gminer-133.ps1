@@ -22,8 +22,8 @@ $Commands = [PSCustomObject[]]@(
     #[PSCustomObject]@{Algorithm = "aeternity"; Params = ""} #Cuckoo29 ~ 5.6GB VRAM Aeternity
     [PSCustomObject]@{Algorithm = "Equihash-96_5"; Params = ""} #equihash965 ~0.75GB VRAM
     [PSCustomObject]@{Algorithm = "Equihash-144_5"; Params = ""} #Equihash1445 ~1.75GB VRAM
-    [PSCustomObject]@{Algorithm = "Equihash-150_5"; Params = ""} #Equihash1505 ~2.9GB VRAM BEAM
-    [PSCustomObject]@{Algorithm = "Equihash-192_7"; Params = ""} #Equihash1927 ~2.75GB VRAM
+    [PSCustomObject]@{Algorithm = "Equihash-150_5"; Params = ""} #Equihash1505 ~3GB VRAM BEAM
+    [PSCustomObject]@{Algorithm = "Equihash-192_7"; Params = ""} #Equihash1927 ~3GB VRAM
     [PSCustomObject]@{Algorithm = "Equihash-210_9"; Params = ""} #Equihash2109 ~1GB VRAM
 )
 
