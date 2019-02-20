@@ -17,32 +17,32 @@ $Port = Get-FreeTcpPort -DefaultPort 4068
 $Fee  = 1
 
 $Commands = [PSCustomObject[]]@(
-    [PSCustomObject]@{Algorithm = "astralhash"; Params = ""} #astralhash
-    [PSCustomObject]@{Algorithm = "balloon"; Params = ""} #balloon
-    [PSCustomObject]@{Algorithm = "bcd"; Params = ""; Zpool = ""} #bcd
-    [PSCustomObject]@{Algorithm = "bitcore"; Params = ""; Zpool = ""} #bitcore
-    [PSCustomObject]@{Algorithm = "dedal"; Params = ""; Zpool = ""} #dedal
-    [PSCustomObject]@{Algorithm = "geek"; Params = ""; Zpool = ""} #geek
-    [PSCustomObject]@{Algorithm = "hsr"; Params = ""; Zpool = ""} #hsr
-    [PSCustomObject]@{Algorithm = "hmq1725"; Params = ""; Zpool = ""} #hmq1725
-    [PSCustomObject]@{Algorithm = "jeonghash"; Params = ""; Zpool = ""} #jeonghash
+    [PSCustomObject]@{Algorithm = "astralhash"; Params = ""; ZergpoolCoins = ""} #astralhash
+    [PSCustomObject]@{Algorithm = "balloon"; Params = ""; ZergpoolCoins = ""} #balloon
+    [PSCustomObject]@{Algorithm = "bcd"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #bcd
+    [PSCustomObject]@{Algorithm = "bitcore"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #bitcore
+    [PSCustomObject]@{Algorithm = "dedal"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #dedal
+    [PSCustomObject]@{Algorithm = "geek"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #geek
+    [PSCustomObject]@{Algorithm = "hsr"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #hsr
+    [PSCustomObject]@{Algorithm = "hmq1725"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #hmq1725
+    [PSCustomObject]@{Algorithm = "jeonghash"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #jeonghash
     #[PSCustomObject]@{Algorithm = "lyra2z"; Params = ""; Zpool = ""} #lyra2z NVIDIA-CryptoDredge-0140
-    [PSCustomObject]@{Algorithm = "padihash"; Params = ""; Zpool = ""} #padihash
-    [PSCustomObject]@{Algorithm = "pawelhash"; Params = ""; Zpool = ""} #pawelhash
-    [PSCustomObject]@{Algorithm = "polytimos"; Params = ""; Zpool = ""} #polytimos
-    [PSCustomObject]@{Algorithm = "phi"; Params = ""; Zpool = ""} #phi
-    [PSCustomObject]@{Algorithm = "renesis"; Params = ""} #renesis
-    [PSCustomObject]@{Algorithm = "skunk"; Params = ""; Zpool = ""} #skunk
-    [PSCustomObject]@{Algorithm = "sha256q"; Params = ""} #sha256q
-    [PSCustomObject]@{Algorithm = "sonoa"; Params = ""} #sonoa
-    [PSCustomObject]@{Algorithm = "timetravel"; Params = ""} #timetravel
-    [PSCustomObject]@{Algorithm = "tribus"; Params = ""; Zpool = ""} #tribus
-    [PSCustomObject]@{Algorithm = "x16r"; Params = ""; Zpool = ""} #x16r
-    [PSCustomObject]@{Algorithm = "x16rt"; Params = ""; Zpool = ""} #x16rt
-    [PSCustomObject]@{Algorithm = "x16s"; Params = ""; Zpool = ""} #x16s
-    [PSCustomObject]@{Algorithm = "x22i"; Params = ""; Zpool = ""} #x22i
-    [PSCustomObject]@{Algorithm = "x22s"; Params = ""; Zpool = ""} #x22s
-    [PSCustomObject]@{Algorithm = "x17"; Params = ""; Zpool = ""} #x17
+    [PSCustomObject]@{Algorithm = "padihash"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #padihash
+    [PSCustomObject]@{Algorithm = "pawelhash"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #pawelhash
+    [PSCustomObject]@{Algorithm = "polytimos"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #polytimos
+    [PSCustomObject]@{Algorithm = "phi"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #phi
+    [PSCustomObject]@{Algorithm = "renesis"; Params = ""; ZergpoolCoins = ""} #renesis
+    [PSCustomObject]@{Algorithm = "skunk"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #skunk
+    [PSCustomObject]@{Algorithm = "sha256q"; Params = ""; ZergpoolCoins = ""} #sha256q
+    [PSCustomObject]@{Algorithm = "sonoa"; Params = ""; ZergpoolCoins = ""} #sonoa
+    [PSCustomObject]@{Algorithm = "timetravel"; Params = ""; ZergpoolCoins = ""} #timetravel
+    [PSCustomObject]@{Algorithm = "tribus"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #tribus
+    [PSCustomObject]@{Algorithm = "x16r"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #x16r
+    [PSCustomObject]@{Algorithm = "x16rt"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #x16rt
+    [PSCustomObject]@{Algorithm = "x16s"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #x16s
+    [PSCustomObject]@{Algorithm = "x22i"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #x22i
+    [PSCustomObject]@{Algorithm = "x22s"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #x22s
+    [PSCustomObject]@{Algorithm = "x17"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #x17
 )
 
 $CommonCommands = " -N 60" #eg. " -d 0,1,8,9"
@@ -67,6 +67,7 @@ $Commands | Where-Object {$Pools.(Get-Algorithm $_.Algorithm).Protocol -eq "stra
         "phi2"          {$ExtendInterval = 2}
         "tribus"        {$ExtendInterval = 2}
         "X16R"          {$ExtendInterval = 3}
+        "x16rt"         {$ExtendInterval = 3}
         "X16S"          {$ExtendInterval = 3}
         "X17"           {$ExtendInterval = 2}
         "Xevan"         {$ExtendInterval = 2}

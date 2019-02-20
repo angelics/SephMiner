@@ -17,31 +17,31 @@ $Port = Get-FreeTcpPort -DefaultPort 4068
 $Fee  = 1
 
 $Commands = [PSCustomObject[]]@(
-    [PSCustomObject]@{Algorithm = "allium"; Params = ""; Zpool = ""} #Allium
+    [PSCustomObject]@{Algorithm = "allium"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Allium
     #[PSCustomObject]@{Algorithm = "bcd"; Params = ""; Zpool = ""} #bcd NVIDIA-TRex-080
     #[PSCustomObject]@{Algorithm = "bitcore"; Params = ""; Zpool = ""} #bitcore NVIDIA-TRex-080
-    [PSCustomObject]@{Algorithm = "cnv8"; Params = ""; Zpool = ""} #cnv8
-    [PSCustomObject]@{Algorithm = "cnheavy"; Params = ""; Zpool = ""} #cnheavy
-    [PSCustomObject]@{Algorithm = "CNFastv2"; Params = ""; Zpool = ""} #CNFastv2
-    [PSCustomObject]@{Algorithm = "CNSuperFast"; Params = ""; Zpool = ""} #CNSuperFast
+    [PSCustomObject]@{Algorithm = "cnv8"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #cnv8
+    [PSCustomObject]@{Algorithm = "cnheavy"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #cnheavy
+    [PSCustomObject]@{Algorithm = "CNFastv2"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #CNFastv2
+    [PSCustomObject]@{Algorithm = "CNSuperFast"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #CNSuperFast
     #[PSCustomObject]@{Algorithm = "dedal"; Params = ""; Zpool = ""} #dedal NVIDIA-TRex-088
-    [PSCustomObject]@{Algorithm = "hmq1725"; Params = ""; Zpool = ""} #hmq1725
-    [PSCustomObject]@{Algorithm = "Lyra2REv3"; Params = ""; Zpool = ""} #Lyra2REv3
-    [PSCustomObject]@{Algorithm = "Lyra2vc0banHash"; Params = ""; Zpool = ""; MiningPoolHubCoins = ""} #Lyra2vc0banHash
-    [PSCustomObject]@{Algorithm = "lyra2z"; Params = ""; Zpool = ""} #Lyra2z
-    [PSCustomObject]@{Algorithm = "Lyra2zz"; Params = ""; Zpool = ""} #Lyra2zz
-    [PSCustomObject]@{Algorithm = "mtp"; Params = ""; Zpool = ""; MiningPoolHubCoins = ""; fee=2} #mtp
-    [PSCustomObject]@{Algorithm = "neoscrypt"; Params = ""; Zpool = ""; MiningPoolHubCoins = ""} #NeoScrypt
-    [PSCustomObject]@{Algorithm = "phi2"; Params = ""; Zpool = ""} #PHI2
+    [PSCustomObject]@{Algorithm = "hmq1725"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #hmq1725
+    [PSCustomObject]@{Algorithm = "Lyra2REv3"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Lyra2REv3
+    [PSCustomObject]@{Algorithm = "Lyra2vc0banHash"; Params = ""; Zpool = ""; MiningPoolHubCoins = ""; ZergpoolCoins = ""} #Lyra2vc0banHash
+    [PSCustomObject]@{Algorithm = "lyra2z"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Lyra2z
+    [PSCustomObject]@{Algorithm = "Lyra2zz"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Lyra2zz
+    [PSCustomObject]@{Algorithm = "mtp"; Params = ""; Zpool = ""; MiningPoolHubCoins = ""; ZergpoolCoins = ""; fee=2} #mtp
+    [PSCustomObject]@{Algorithm = "neoscrypt"; Params = ""; Zpool = ""; MiningPoolHubCoins = ""; ZergpoolCoins = ""} #NeoScrypt
+    [PSCustomObject]@{Algorithm = "phi2"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #PHI2
     #[PSCustomObject]@{Algorithm = "phi1612"; Params = ""; Zpool = ""} #PHI1612 NVIDIA-TRex-073
-    [PSCustomObject]@{Algorithm = "pipe"; Params = ""; Zpool = ""} #pipe
+    [PSCustomObject]@{Algorithm = "pipe"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #pipe
     #[PSCustomObject]@{Algorithm = "skunkhash"; Params = ""; Zpool = ""} #Skunk error on zpool
     #[PSCustomObject]@{Algorithm = "tribus"; Params = ""; Zpool = ""} #Tribus NVIDIA-ZEnemy-122
-    [PSCustomObject]@{Algorithm = "x16r"; Params = ""; Zpool = ""} #x16r
-    [PSCustomObject]@{Algorithm = "x16rt"; Params = ""; Zpool = ""} #x16rt
-    [PSCustomObject]@{Algorithm = "x16s"; Params = ""; Zpool = ""} #x16s
+    [PSCustomObject]@{Algorithm = "x16r"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #x16r
+    [PSCustomObject]@{Algorithm = "x16rt"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #x16rt
+    [PSCustomObject]@{Algorithm = "x16s"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #x16s
     #[PSCustomObject]@{Algorithm = "x17"; Params = ""; Zpool = ""} #x17 NVIDIA-ZEnemy-125
-    [PSCustomObject]@{Algorithm = "x21s"; Params = ""; Zpool = ""} #x21s
+    [PSCustomObject]@{Algorithm = "x21s"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #x21s
     #[PSCustomObject]@{Algorithm = "x22i"; Params = ""; Zpool = ""} #x22i NVIDIA-TRex-088
 )
 
@@ -59,7 +59,7 @@ $Commands | Where-Object {$Pools.(Get-Algorithm $_.Algorithm).Protocol -eq "stra
 	
     Switch ($Algorithm_Norm) {
         "allium"        {$ExtendInterval = 2}
-        "CryptoNightV8" {$ExtendInterval = 2}
+        "CryptoNightV7" {$ExtendInterval = 2}
         "dedal"         {$ExtendInterval = 3}
         "hmq1725"       {$ExtendInterval = 2}
         "Lyra2RE2"      {$ExtendInterval = 2}
@@ -67,6 +67,7 @@ $Commands | Where-Object {$Pools.(Get-Algorithm $_.Algorithm).Protocol -eq "stra
         "phi2"          {$ExtendInterval = 2}
         "tribus"        {$ExtendInterval = 2}
         "X16R"          {$ExtendInterval = 3}
+        "x16rt"         {$ExtendInterval = 3}
         "X16S"          {$ExtendInterval = 3}
         "X17"           {$ExtendInterval = 2}
         "Xevan"         {$ExtendInterval = 2}

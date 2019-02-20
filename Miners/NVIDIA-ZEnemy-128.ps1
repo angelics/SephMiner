@@ -17,15 +17,15 @@ $Port = Get-FreeTcpPort -DefaultPort 4068
 $Fee  = 1
 
 $Commands = [PSCustomObject[]]@(
-    [PSCustomObject]@{Algorithm = "aeriumx"; Params = ""; Zpool = ""} #aeriumx
+    [PSCustomObject]@{Algorithm = "aeriumx"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #aeriumx
     #[PSCustomObject]@{Algorithm = "bcd"; Params = ""; Zpool = "";} #bcd NVIDIA-TRex-089
     #[PSCustomObject]@{Algorithm = "bitcore"; Params = ""; Zpool = ""} #Bitcore NVIDIA-TRex-088
-    [PSCustomObject]@{Algorithm = "hex"; Params = ""; Zpool = ""} #HEX
-    [PSCustomObject]@{Algorithm = "hsr"; Params = ""; Zpool = ""} #hsr
+    [PSCustomObject]@{Algorithm = "hex"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #HEX
+    [PSCustomObject]@{Algorithm = "hsr"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #hsr
     #[PSCustomObject]@{Algorithm = "phi"; Params = ""; Zpool = ""} #Phi NVIDIA-TRex-088
     #[PSCustomObject]@{Algorithm = "phi2"; Params = ""; Zpool = ""} #Phi2 NVIDIA-CryptoDredge-0140
     #[PSCustomObject]@{Algorithm = "poly"; Params = ""; Zpool = ""} #poly NVIDIA-TRex-088
-    [PSCustomObject]@{Algorithm = "vit"; Params = ""; Zpool = ""} #Vitalium
+    [PSCustomObject]@{Algorithm = "vit"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Vitalium
     #[PSCustomObject]@{Algorithm = "skunk"; Params = ""; Zpool = ""} #skunk NVIDIA-TRex-088
     #[PSCustomObject]@{Algorithm = "sonoa"; Params = ""} #sonoa NVIDIA-TRex-089
     #[PSCustomObject]@{Algorithm = "timetravel"; Params = ""; Zpool = ""} #timetravel NVIDIA-TRex-088
@@ -33,7 +33,7 @@ $Commands = [PSCustomObject[]]@(
     #[PSCustomObject]@{Algorithm = "x16s"; Params = " -i 22"; Zpool = ""} #x16s NVIDIA-TRex-089
     #[PSCustomObject]@{Algorithm = "x16r"; Params = " -i 22"; Zpool = ""} #x16r NVIDIA-TRex-089
     #[PSCustomObject]@{Algorithm = "x17"; Params = ""; Zpool = ""} #x17 NVIDIA-TRex-089
-    [PSCustomObject]@{Algorithm = "xevan"; Params = ""; Zpool = ""} #xevan
+    [PSCustomObject]@{Algorithm = "xevan"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #xevan
 )
 
 $CommonCommands = "" #eg. " --cpu-affinity=0x3" core0,1
