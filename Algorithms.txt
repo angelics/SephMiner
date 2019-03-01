@@ -4,6 +4,7 @@
     "aeternity":  "Cuckoo29",
     "aion":  "Equihash2109",
     "allium":  "Allium",
+    "argon2d4096":  "argon2d4096",
     "astralhash":  "astralhash",
     "axiom":  "MemoHash",
     "balloon":  "Balloon",
