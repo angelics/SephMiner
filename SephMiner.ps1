@@ -114,6 +114,9 @@ if (!(Test-Path "Config.txt")) {
 }
 
 while ($true) {
+    #Display downloader progress
+    if ($Downloader) {$Downloader | Receive-Job}
+	
     #Load the config
     $ConfigBackup = $Config
     if (Test-Path "Config.txt") {
@@ -249,7 +252,6 @@ while ($true) {
     #Update the active pools
     if ($AllPools.Count -eq 0) {
         Write-Log -Level Warn "No pools available. "
-        if ($Downloader) {$Downloader | Receive-Job}
         Start-Sleep $Config.Interval
         continue
     }
@@ -380,7 +382,6 @@ while ($true) {
     #Update the active miners
     if ($Miners.Count -eq 0) {
         Write-Log -Level Warn "No miners available. "
-        if ($Downloader) {$Downloader | Receive-Job}
         Start-Sleep $Config.Interval
         continue
     }
@@ -526,7 +527,6 @@ while ($true) {
         }
     }
     if ($ActiveMiners | ForEach-Object {$_.GetProcessNames()}) {Get-Process -Name @($ActiveMiners | ForEach-Object {$_.GetProcessNames()}) -ErrorAction Ignore | Select-Object -ExpandProperty ProcessName | Compare-Object @($ActiveMiners | Where-Object Best -EQ $true | Where-Object {$_.Status -EQ "Running"} | ForEach-Object {$_.GetProcessNames()}) | Where-Object SideIndicator -EQ "=>" | Select-Object -ExpandProperty InputObject | Select-Object -Unique | ForEach-Object {Stop-Process -Name $_ -Force -ErrorAction Ignore}}
-    if ($Downloader) {$Downloader | Receive-Job}
     Start-Sleep $Config.Delay #Wait to prevent BSOD
     $ActiveMiners | Where-Object Best -EQ $true | ForEach-Object {
         if ($_.Process -eq $null -or $_.Process.HasExited -ne $false) {
@@ -711,7 +711,6 @@ while ($true) {
     #Do nothing for a few seconds as to not overload the APIs and display miner download status
     Write-Log "Start waiting before next run. "
     for ($i = $Strikes; $i -gt 0 -or $Timer -lt $StatEnd; $i--) {
-        if ($Downloader) {$Downloader | Receive-Job}
         Start-Sleep 10
         $Timer = (Get-Date).ToUniversalTime()
     }

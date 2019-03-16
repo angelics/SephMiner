@@ -99,6 +99,8 @@
     "timetravel10":  "Bitcore",
     "tribus":  "Tribus",
     "vit":  "Vitalium",
+    "verus":  "verus",
+    "verushash":  "verus",
     "whirlpoolx":  "whirlpoolx",
     "x11evo":  "X11evo",
     "x12":  "X12",
