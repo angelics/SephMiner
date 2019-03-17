@@ -13,6 +13,7 @@
 "AXS":{"variance":0.09,"variance2":0.11},
 "BANQ":{"variance":0.04},
 "BCD":{"variance":0.12,"variance2":0.35},
+"BCI":{"variance":0.04},
 "BHD":{"variance":0.01},
 "BRAZ":{"variance":0.19,"variance2":0.23,"algo":"hmq1725"},
 "BSD":{"variance":0.17,"variance2":0.23},

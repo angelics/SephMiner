@@ -28,7 +28,7 @@ class Claymore : Miner {
             if (-not $HashRate_Name) {$HashRate_Name = [String]($Algorithm -like "$(Get-Algorithm ($Data.result[0] -split " - ")[1])*")} #temp fix
             if (-not $HashRate_Name) {$HashRate_Name = [String]$Algorithm[0]}
             $HashRate_Value = [Double]($Data.result[2] -split ";")[0]
-            if ($Algorithm -like "ethash*") {$HashRate_Value *= 1000}
+            if ($Algorithm -like "ethash*" -and $Data.result[0] -notlike "TT-Miner*") {$HashRate_Value *= 1000}
             if ($Algorithm -like "neoscrypt") {$HashRate_Value *= 1000}
 
             $HashRate | Where-Object {$HashRate_Name} | Add-Member @{$HashRate_Name = [Int64]$HashRate_Value}

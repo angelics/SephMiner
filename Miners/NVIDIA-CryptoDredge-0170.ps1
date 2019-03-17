@@ -9,10 +9,24 @@ param(
 
 if (-not $Devices.NVIDIA) {return} # No NVIDIA mining device present in system
 
+# Miner requires CUDA 9.2 or higher
+$CUDAVersion = ($Devices.NVIDIA.Platform.Version | Select-Object -Unique) -replace ".*CUDA ",""
+$RequiredCUDAVersion = "9.2.00"
+if ($CUDAVersion -and [System.Version]$CUDAVersion -lt [System.Version]$RequiredCUDAVersion) {
+    Write-Log -Level Warn "Miner ($($Name)) requires CUDA version $($RequiredCUDAVersion) or above (installed version is $($CUDAVersion)). Please update your Nvidia drivers. "
+    return
+}
+
+if ($CUDAVersion -lt [System.Version]("10.0.0")) {
+    $Uri = "https://github.com/technobyl/CryptoDredge/releases/download/v0.17.0/CryptoDredge_0.17.0_cuda_9.2_windows.zip"
+}
+else {
+    $Uri = "https://github.com/technobyl/CryptoDredge/releases/download/v0.17.0/CryptoDredge_0.17.0_cuda_10.0_windows.zip"
+}
+
 $Type = "NVIDIA"
 $Path = ".\Bin\NVIDIA-CryptoDredge-0170\CryptoDredge.exe"
 $API  = "Ccminer"
-$Uri  = "https://github.com/technobyl/CryptoDredge/releases/download/v0.17.0/CryptoDredge_0.17.0_cuda_10.0_windows.zip"
 $Port = Get-FreeTcpPort -DefaultPort 4068
 $Fee  = 1
 

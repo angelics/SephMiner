@@ -9,10 +9,24 @@ param(
 
 if (-not $Devices.NVIDIA) {return} # No NVIDIA mining device present in system
 
+# Miner requires CUDA 9.2.00 or higher
+$CUDAVersion = ($Devices.NVIDIA.Platform.Version | Select-Object -Unique) -replace ".*CUDA ",""
+$RequiredCUDAVersion = "9.2.00"
+if ($CUDAVersion -and [System.Version]$CUDAVersion -lt [System.Version]$RequiredCUDAVersion) {
+    Write-Log -Level Warn "Miner ($($Name)) requires CUDA version $($RequiredCUDAVersion) or above (installed version is $($CUDAVersion)). Please update your Nvidia drivers. "
+    return
+}
+
+if ($CUDAVersion -lt [System.Version]("10.0.0")) {
+    $Uri = "hhttps://github.com/MultiPoolMiner/miner-binaries/releases/download/Zenemy/z-enemy.1-28-cuda9.2.zip"
+}
+else {
+    $Uri = "https://github.com/MultiPoolMiner/miner-binaries/releases/download/Zenemy/z-enemy.1-28-cuda10.0.zip"
+}
+
 $Type = "NVIDIA"
 $Path = ".\Bin\NVIDIA-ZEnemy-128\z-enemy.exe"
 $API  = "Ccminer"
-$Uri  = "http://semitest.000webhostapp.com/binary/z-enemy.1-28-cuda10.0.zip"
 $Port = Get-FreeTcpPort -DefaultPort 4068
 $Fee  = 1
 
