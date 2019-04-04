@@ -40,7 +40,6 @@ $Commands = [PSCustomObject[]]@(
     #[PSCustomObject]@{Algorithm = "keccakc"; Params = " -i 29"; Zpool = ""; ZergpoolCoins = ""} #keccakc
     [PSCustomObject]@{Algorithm = "luffa"; Params = ""} #luffa
     [PSCustomObject]@{Algorithm = "lyra2"; Params = ""} #lyra2
-    #[PSCustomObject]@{Algorithm = "lyra2z"; Params = " -i 20"; Zpool = ""; ZergpoolCoins = ""} #Lyra2z
     [PSCustomObject]@{Algorithm = "mjollnir"; Params = ""} #mjollnir
     #[PSCustomObject]@{Algorithm = "neoscrypt"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #NeoScrypt PalginNvidiaFork-45ee8fa
     [PSCustomObject]@{Algorithm = "penta"; Params = ""} #penta

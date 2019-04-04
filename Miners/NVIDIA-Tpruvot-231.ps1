@@ -37,7 +37,6 @@ $Commands = [PSCustomObject[]]@(
     [PSCustomObject]@{Algorithm = "luffa"; Params = ""} #luffa
     [PSCustomObject]@{Algorithm = "lyra2"; Params = "";} #lyra2
     [PSCustomObject]@{Algorithm = "Lyra2v3"; Params = "";} #Lyra2v3
-    #[PSCustomObject]@{Algorithm = "lyra2z"; Params = " -i 20"; Zpool = ""; ZergpoolCoins = ""} #Lyra2z
     #[PSCustomObject]@{Algorithm = "monero"; Params = ""; MiningPoolHubCoins = ""} #CryptoNightV7 NVIDIA-Tpruvot-23b1
     [PSCustomObject]@{Algorithm = "mjollnir"; Params = ""} #mjollnir
     #[PSCustomObject]@{Algorithm = "neoscrypt"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #NeoScrypt PalginNvidiaFork-45ee8fa

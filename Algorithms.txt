@@ -72,7 +72,6 @@
     "Lyra2RE3":  "Lyra2REv3",
     "lyra2v3":  "Lyra2REv3",
     "Lyra2vc0banHash":  "Lyra2vc0banHash",
-    "lyra2z":  "Lyra2z",
     "Lyra2zz":  "Lyra2zz",
     "m7m":  "Magi",
     "monero": "CryptoNightV8",

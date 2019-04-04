@@ -40,7 +40,6 @@ $Commands = [PSCustomObject[]]@(
     [PSCustomObject]@{Algorithm = "hsr"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #hsr
     [PSCustomObject]@{Algorithm = "hmq1725"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #hmq1725
     [PSCustomObject]@{Algorithm = "jeonghash"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #jeonghash
-    #[PSCustomObject]@{Algorithm = "lyra2z"; Params = ""; Zpool = ""} #lyra2z NVIDIA-CryptoDredge-0140
     [PSCustomObject]@{Algorithm = "padihash"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #padihash
     [PSCustomObject]@{Algorithm = "pawelhash"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #pawelhash
     [PSCustomObject]@{Algorithm = "polytimos"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #polytimos

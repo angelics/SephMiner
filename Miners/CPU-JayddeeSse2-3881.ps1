@@ -40,7 +40,6 @@ $Commands = [PSCustomObject]@{
     #"luffa"         = "" #Luffa
     "lyra2h"        = "" #Hppcoin
     #"lyra2re"       = "" #lyra2 not profitable
-    "lyra2z"        = "" #Lyra2z
     #"lyra2z330"     = "" #ZOI
     #"m7m"           = "" #Magi
     #"neoscrypt"     = "" #NeoScrypt crash

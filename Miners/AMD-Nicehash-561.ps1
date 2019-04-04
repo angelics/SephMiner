@@ -23,7 +23,6 @@ $Commands = [PSCustomObject]@{
     #"hmq1725"    = "" #HMQ1725
     #"jha"        = "" #JHA
     "maxcoin"     = "" #Keccak
-    #"lyra2z"     = " --worksize 32 --intensity 18" #Lyra2z
     #"neoscrypt"  = " --gpu-threads 1 --worksize 64 --intensity 15" #NeoScrypt
     #"skunk"      = "" #Skunk
     #"timetravel" = "" #Timetravel

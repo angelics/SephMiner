@@ -17,10 +17,8 @@ $Port = Get-FreeTcpPort -DefaultPort 4068
 $Fee = 0
 
 $Commands = [PSCustomObject[]]@(
-    [PSCustomObject]@{Algorithm = "lyra2z"; Params = ""; Zpool = ""} #Lyra2z
     [PSCustomObject]@{Algorithm = "x16r"; Params = ""; Zpool = ""} #x16r
     [PSCustomObject]@{Algorithm = "x16rt"; Params = ""; Zpool = ""} #x16rt
-    [PSCustomObject]@{Algorithm = "lyra2z"; Params = ""; Zpool = ""} #Lyra2z
     [PSCustomObject]@{Algorithm = "x16s"; Params = ""; Zpool = ""} #x16s
 )
 
