@@ -24,11 +24,10 @@ $Commands = [PSCustomObject[]]@(
     [PSCustomObject]@{Algorithm = "cnheavy"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #cnheavy
     #[PSCustomObject]@{Algorithm = "dedal"; Params = ""; Zpool = ""} #dedal NVIDIA-TRex-088
     [PSCustomObject]@{Algorithm = "exosis"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #exosis
-    [PSCustomObject]@{Algorithm = "hmq1725"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #hmq1725
+    #[PSCustomObject]@{Algorithm = "hmq1725"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #hmq1725 NVIDIA-CryptoDredge-0180
     [PSCustomObject]@{Algorithm = "lbk3"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #lbk3
     [PSCustomObject]@{Algorithm = "Lyra2REv3"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Lyra2REv3
     [PSCustomObject]@{Algorithm = "Lyra2vc0banHash"; Params = ""; Zpool = ""; MiningPoolHubCoins = ""; ZergpoolCoins = ""} #Lyra2vc0banHash
-    [PSCustomObject]@{Algorithm = "lyra2z"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Lyra2z
     [PSCustomObject]@{Algorithm = "Lyra2zz"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Lyra2zz
     #[PSCustomObject]@{Algorithm = "mtp"; Params = ""; Zpool = ""; MiningPoolHubCoins = ""} #mtp
     [PSCustomObject]@{Algorithm = "neoscrypt"; Params = ""; Zpool = ""; MiningPoolHubCoins = ""; ZergpoolCoins = ""} #NeoScrypt

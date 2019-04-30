@@ -18,7 +18,7 @@ $Fee  = 1
 
 $Commands = [PSCustomObject]@{
     "ethash"                = @("")
-    "ethash2gb"             = @("")
+    #"ethash2gb"             = @("") NVIDIA-PhoenixMiner-41c
     "ethash3gb"             = @("")
     "ethash;blake2s:105"    = @("", "")
     "ethash;blake2s:130"    = @("", "")

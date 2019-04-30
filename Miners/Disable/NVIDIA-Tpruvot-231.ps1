@@ -17,7 +17,7 @@ $Port = Get-FreeTcpPort -DefaultPort 4068
 $Fee  = 0
 
 $Commands = [PSCustomObject[]]@(
-    [PSCustomObject]@{Algorithm = "allium"; Params = " -i 21"; Zpool = ""; ZergpoolCoins = ""} #allium
+    #[PSCustomObject]@{Algorithm = "allium"; Params = " -i 21"; Zpool = ""; ZergpoolCoins = ""} #allium NVIDIA-CryptoDredge-0160
     #[PSCustomObject]@{Algorithm = "bitcore"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #bitcore CcminerZEnemy-111v3
     [PSCustomObject]@{Algorithm = "blake2b"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #blake2b
     #[PSCustomObject]@{Algorithm = "blake2s"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Blake2s
@@ -26,17 +26,17 @@ $Commands = [PSCustomObject[]]@(
     [PSCustomObject]@{Algorithm = "dmd-gr"; Params = ""} #dmd-gr
     [PSCustomObject]@{Algorithm = "fresh"; Params = ""} #fresh
     [PSCustomObject]@{Algorithm = "fugue256"; Params = ""} #fugue256
-    [PSCustomObject]@{Algorithm = "exosis"; Params = ""} #exosis
+    #[PSCustomObject]@{Algorithm = "exosis"; Params = ""} #exosis NVIDIA-CryptoDredge-0160
     [PSCustomObject]@{Algorithm = "graft"; Params = ""} #graft
     [PSCustomObject]@{Algorithm = "heavy"; Params = ""} #heavy
     #[PSCustomObject]@{Algorithm = "hsr"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #hsr NVIDIA-CcminerAlexis78-12b1
     #[PSCustomObject]@{Algorithm = "hmq1725"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #hmq1725 crash
     [PSCustomObject]@{Algorithm = "jha"; Params = ""} #JHA
     #[PSCustomObject]@{Algorithm = "keccak"; Params = " -i 29"; Zpool = " -m 2"; ZergpoolCoins = " -m 2"; MiningPoolHubCoins = ""} #Keccak ExcavatorNvidia-144a
-    [PSCustomObject]@{Algorithm = "keccakc"; Params = " -i 29"; Zpool = ""; ZergpoolCoins = ""} #keccakc
+    #[PSCustomObject]@{Algorithm = "keccakc"; Params = " -i 29"; Zpool = ""; ZergpoolCoins = ""} #keccakc NVIDIA-Alexis78-12b1
     [PSCustomObject]@{Algorithm = "luffa"; Params = ""} #luffa
     [PSCustomObject]@{Algorithm = "lyra2"; Params = "";} #lyra2
-    [PSCustomObject]@{Algorithm = "Lyra2v3"; Params = "";} #Lyra2v3
+    #[PSCustomObject]@{Algorithm = "Lyra2v3"; Params = "";} #Lyra2v3 NVIDIA-CryptoDredge-0180
     #[PSCustomObject]@{Algorithm = "monero"; Params = ""; MiningPoolHubCoins = ""} #CryptoNightV7 NVIDIA-Tpruvot-23b1
     [PSCustomObject]@{Algorithm = "mjollnir"; Params = ""} #mjollnir
     #[PSCustomObject]@{Algorithm = "neoscrypt"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #NeoScrypt PalginNvidiaFork-45ee8fa

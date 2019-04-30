@@ -44,8 +44,8 @@ $Commands = [PSCustomObject[]]@(
     #[PSCustomObject]@{Algorithm = "sonoa"; Params = ""} #sonoa NVIDIA-TRex-089
     #[PSCustomObject]@{Algorithm = "timetravel"; Params = ""; Zpool = ""} #timetravel NVIDIA-TRex-088
     #[PSCustomObject]@{Algorithm = "tribus"; Params = ""; Zpool = ""} #Tribus NVIDIA-TRex-089
-    #[PSCustomObject]@{Algorithm = "x16s"; Params = " -i 22"; Zpool = ""} #x16s NVIDIA-TRex-089
-    #[PSCustomObject]@{Algorithm = "x16r"; Params = " -i 22"; Zpool = ""} #x16r NVIDIA-TRex-089
+    [PSCustomObject]@{Algorithm = "x16s"; Params = " -i 22"; Zpool = ""} #x16s
+    [PSCustomObject]@{Algorithm = "x16r"; Params = " -i 22"; Zpool = ""} #x16r
     #[PSCustomObject]@{Algorithm = "x17"; Params = ""; Zpool = ""} #x17 NVIDIA-TRex-089
     [PSCustomObject]@{Algorithm = "xevan"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #xevan
 )

@@ -31,11 +31,11 @@ $Port = Get-FreeTcpPort -DefaultPort 4068
 $Fee  = 1
 
 $Commands = [PSCustomObject[]]@(
-    [PSCustomObject]@{Algorithm = "allium"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Allium
+    #[PSCustomObject]@{Algorithm = "allium"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Allium NVIDIA-CryptoDredge-0160
     [PSCustomObject]@{Algorithm = "Argon2d"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Argon2d
-    [PSCustomObject]@{Algorithm = "bcd"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #bcd
-    [PSCustomObject]@{Algorithm = "bitcore"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #bitcore
-    [PSCustomObject]@{Algorithm = "cnv8"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #cnv8
+    #[PSCustomObject]@{Algorithm = "bcd"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #bcd
+    #[PSCustomObject]@{Algorithm = "bitcore"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #bitcore NVIDIA-TRex-092
+    #[PSCustomObject]@{Algorithm = "cnv8"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #cnv8 NVIDIA-CryptoDredge-0160
     [PSCustomObject]@{Algorithm = "cnheavy"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #cnheavy
     [PSCustomObject]@{Algorithm = "Cuckaroo29"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Cuckaroo29
     [PSCustomObject]@{Algorithm = "CuckooCycle"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #aeternity
@@ -48,16 +48,16 @@ $Commands = [PSCustomObject[]]@(
     [PSCustomObject]@{Algorithm = "mtp"; Params = ""; Zpool = ""; MiningPoolHubCoins = ""; ZergpoolCoins = ""; fee=2} #mtp ~ 5GB VRAM
     [PSCustomObject]@{Algorithm = "neoscrypt"; Params = ""; Zpool = ""; MiningPoolHubCoins = ""; ZergpoolCoins = ""} #NeoScrypt
     [PSCustomObject]@{Algorithm = "phi2"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #PHI2
-    [PSCustomObject]@{Algorithm = "phi1612"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #PHI1612
+    #[PSCustomObject]@{Algorithm = "phi1612"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #PHI1612 NVIDIA-TRex-092
     [PSCustomObject]@{Algorithm = "pipe"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #pipe
-    [PSCustomObject]@{Algorithm = "skunkhash"; Params = ""; Zpool = ""} #Skunk error on zpool
+    #[PSCustomObject]@{Algorithm = "skunkhash"; Params = ""; Zpool = ""} #Skunk error on zpool NVIDIA-TRex-092
     [PSCustomObject]@{Algorithm = "tribus"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Tribus
     [PSCustomObject]@{Algorithm = "x16r"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #x16r
-    [PSCustomObject]@{Algorithm = "x16rt"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #x16rt
-    [PSCustomObject]@{Algorithm = "x16s"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #x16s
-    [PSCustomObject]@{Algorithm = "x17"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #x17
+    #[PSCustomObject]@{Algorithm = "x16rt"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #x16rt NVIDIA-TRex-092
+    #[PSCustomObject]@{Algorithm = "x16s"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #x16s NVIDIA-TRex-092
+    #[PSCustomObject]@{Algorithm = "x17"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #x17 NVIDIA-TRex-092
     [PSCustomObject]@{Algorithm = "x21s"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #x21s
-    [PSCustomObject]@{Algorithm = "x22i"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #x22i
+    #[PSCustomObject]@{Algorithm = "x22i"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #x22i NVIDIA-TRex-092
 )
 
 $CommonCommands = " --no-color"

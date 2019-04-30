@@ -24,7 +24,7 @@ $Port = Get-FreeTcpPort -DefaultPort 42000
 $Fee  = 0
 
 $Commands = [PSCustomObject]@{
-    "Equihash144" = @("144_5","") #Equihash144
+    #"Equihash144" = @("144_5","") #Equihash144 NVIDIA-Gminer-139
     "equihash192" = @("192_7","") #Equihash192
     "equihash210" = @("210_9","") #Equihash210
     "Minexcoin"   = @("96_5","") #Equihash96

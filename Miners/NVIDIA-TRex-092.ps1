@@ -31,14 +31,13 @@ $Port = Get-FreeTcpPort -DefaultPort 4068
 $Fee  = 1
 
 $Commands = [PSCustomObject[]]@(
-    [PSCustomObject]@{Algorithm = "astralhash"; Params = ""; ZergpoolCoins = ""} #astralhash
     [PSCustomObject]@{Algorithm = "balloon"; Params = ""; ZergpoolCoins = ""} #balloon
     [PSCustomObject]@{Algorithm = "bcd"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #bcd
     [PSCustomObject]@{Algorithm = "bitcore"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #bitcore
     [PSCustomObject]@{Algorithm = "dedal"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #dedal
     [PSCustomObject]@{Algorithm = "geek"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #geek
     [PSCustomObject]@{Algorithm = "hsr"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #hsr
-    [PSCustomObject]@{Algorithm = "hmq1725"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #hmq1725
+    #[PSCustomObject]@{Algorithm = "hmq1725"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #hmq1725 NVIDIA-CryptoDredge-0180
     [PSCustomObject]@{Algorithm = "jeonghash"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #jeonghash
     [PSCustomObject]@{Algorithm = "padihash"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #padihash
     [PSCustomObject]@{Algorithm = "pawelhash"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #pawelhash

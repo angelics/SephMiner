@@ -8,6 +8,7 @@
 "musicoin":0.01,
 "MyriadcoinSkein":0.00,
 "MyriadcoinYescrypt":0.02,
+"ravencoin":0.02,
 "vertcoin":0.03,
 "zcash":0.01,
 "zclassic":0.01,

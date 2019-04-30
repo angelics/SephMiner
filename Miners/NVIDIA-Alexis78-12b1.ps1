@@ -20,7 +20,6 @@ $Commands = [PSCustomObject[]]@(
     #[PSCustomObject]@{Algorithm = "blake2s"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #blake2s not profit
     #[PSCustomObject]@{Algorithm = "hsr"; Params = ""; Zpool = ""; ZergpoolCoins = ""} #Hsr NVIDIA-TRex-051
     #[PSCustomObject]@{Algorithm = "keccak"; Params = " -m 2 -i 29"; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #Keccak ExcavatorNvidia-144a
-    [PSCustomObject]@{Algorithm = "keccakc"; Params = " -i 29"; Zpool = ""; ZergpoolCoins = ""} #keccakc
     [PSCustomObject]@{Algorithm = "lyra2"; Params = ""} #lyra2
     #[PSCustomObject]@{Algorithm = "neoscrypt"; Params = ""; Zpool = ""; ZergpoolCoins = ""; MiningPoolHubCoins = ""} #NeoScrypt PalginNvidiaFork-45ee8fa
     #[PSCustomObject]@{Algorithm = "poly"; Params = ""} #poly NVIDIA-TRex-066
