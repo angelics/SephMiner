@@ -10,9 +10,9 @@ param(
 if (-not $Devices.NVIDIA) {return} # No NVIDIA mining device present in system
 
 $Type = "NVIDIA"
-$Path = ".\Bin\PhoenixMiner-41c\PhoenixMiner.exe"
+$Path = ".\Bin\PhoenixMiner-42c\PhoenixMiner.exe"
 $API  = "Claymore"
-$Uri  = "http://semitest.000webhostapp.com/binary/PhoenixMiner_4.1c_Windows.zip"
+$Uri  = "http://semitest.000webhostapp.com/binary/PhoenixMiner_4.2c_Windows.zip"
 $Port = Get-FreeTcpPort -DefaultPort 23334
 $Fee  = 0.65
 
