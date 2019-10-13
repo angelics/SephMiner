@@ -14,10 +14,11 @@ $MiningPoolHubCoins_Request = [PSCustomObject]@{}
 
 #defines minimum memory required per coin, default is 4gb
 $MinMem = [PSCustomObject]@{
-    "Expanse"  = "2gb"
-    "Soilcoin" = "2gb"
-    "Ubiq"     = "2gb"
-    "Musicoin" = "3gb"
+    "Expanse"         = "2gb"
+    "Soilcoin"        = "2gb"
+    "Ubiq"            = "2gb"
+    "ethersocial"     = "2gb"
+    "Musicoin"        = "3gb"
 }
 
 try {

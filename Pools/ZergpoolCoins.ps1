@@ -44,7 +44,9 @@ else {
 $ZergPoolCoins_Regions = "europe"
 $ZergPoolCoins_Currencies = @("BTC","LTC","DASH","BCH") + ($ZergPoolCoins_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name) | Select-Object -Unique | Where-Object {Get-Variable $_ -ValueOnly -ErrorAction SilentlyContinue}
 
-$ZergPoolCoins_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name | Where-Object {$ExcludeCoin -inotcontains $ZergPoolCoins_Request.$_.name -and $ExcludeAlgorithm -inotcontains (Get-Algorithm $ZergPoolCoins_Request.$_.algo) -and ($Coin.count -eq 0 -or $Coin -icontains $ZergPoolCoins_Request.$_.name) -and $ZergPoolCoins_Request.$_.hashrate -gt 0 -and $ZergPoolCoins_Request.$_.noautotrade -eq 0 -and $ZergPoolCoins_Request.$_.timesincelast -ne 0} | ForEach-Object {
+$ZergPoolCoins_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore | Select-Object -ExpandProperty Name | 
+ Where-Object {$ExcludeCoin -inotcontains $ZergPoolCoins_Request.$_.name -and $ExcludeAlgorithm -inotcontains (Get-Algorithm $ZergPoolCoins_Request.$_.algo) -and ($Coin.count -eq 0 -or $Coin -icontains $ZergPoolCoins_Request.$_.name) -and $ZergPoolCoins_Request.$_.hashrate -gt 0 -and $ZergPoolCoins_Request.$_.noautotrade -eq 0 -and $ZergPoolCoins_Request.$_.timesincelast -ne 0} |
+ ForEach-Object {
     $ZergPoolCoins_Host = "mine.zergpool.com"
     $ZergPoolCoins_Port = $ZergPoolCoins_Request.$_.port
     $ZergPoolCoins_Algorithm = $ZergPoolCoins_Request.$_.algo
@@ -72,6 +74,8 @@ $ZergPoolCoins_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore
     $Stat.Live = $Stat.Live * $ZergpoolCoins_Fees * $Variance
     $Stat.Week = $Stat.Week * $ZergpoolCoins_Fees * $Variance
     $Stat.Week_Fluctuation = $Stat.Week_Fluctuation * $ZergpoolCoins_Fees * $Variance
+	
+	$Pool_ExCurrency = if ($Wallets.$Pool_Currency) {$Pool_Currency} elseif ($PoolCoins_Request.$Pool_Currency.noautotrade -eq 0)
 	
     $ZergPoolCoins_Regions | ForEach-Object {
         $ZergPoolCoins_Region = $_

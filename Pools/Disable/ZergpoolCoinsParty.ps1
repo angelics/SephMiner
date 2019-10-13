@@ -55,6 +55,8 @@ $ZergPoolCoins_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore
 
 	if($ZergpoolCoins_Variance.$ZergPoolCoins_Currency.variance2){$Variances = $ZergpoolCoins_Variance.$ZergPoolCoins_Currency.variance2} else{$Variances = $ZergpoolCoins_Variance.$ZergPoolCoins_Currency.variance}
 	
+	$BLK = $ZergpoolCoins_Variance.$ZergPoolCoins_Currency.found
+	
     $Divisor = 1000000000 * [Double]$ZergPoolCoins_Request.$_.mbtc_mh_factor
     if ($Divisor -eq 0) {
         Write-Log -Level Info "Unable to determine divisor for $ZergPoolCoins_Coin using $ZergPoolCoins_Algorithm_Norm algorithm"
@@ -69,9 +71,9 @@ $ZergPoolCoins_Request | Get-Member -MemberType NoteProperty -ErrorAction Ignore
 	
     $Stat = Set-Stat -Name "$($Name)_$($_)_Profit" -Value ([Double]$ZergPoolCoins_Request.$_.estimate / $Divisor) -Duration $StatSpan -ChangeDetection $true
 
-    $Stat.Live = $Stat.Live * $ZergpoolCoins_Fees * $Variance
-    $Stat.Week = $Stat.Week * $ZergpoolCoins_Fees * $Variance
-    $Stat.Week_Fluctuation = $Stat.Week_Fluctuation * $ZergpoolCoins_Fees * $Variance
+    $Stat.Live = $Stat.Live * $ZergpoolCoins_Fees * $Variance * ($BLK/100)
+    $Stat.Week = $Stat.Week * $ZergpoolCoins_Fees * $Variance * ($BLK/100)
+    $Stat.Week_Fluctuation = $Stat.Week_Fluctuation * $ZergpoolCoins_Fees * $Variance * ($BLK/100)
 	
     $ZergPoolCoins_Regions | ForEach-Object {
         $ZergPoolCoins_Region = $_

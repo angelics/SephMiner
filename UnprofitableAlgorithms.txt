@@ -1,4 +1,5 @@
 [
+     "astralhash",
      "Bitcore",
      "Blake2s",
      "Blakecoin",
@@ -6,9 +7,11 @@
      "blake256r8",
      "blake256r8vnl",
      "blake256r14",
+     "c11",
      "CryptoLight",
      "CryptoNight",
      "Groestl",
+     "jeonghash",
      "Keccak",
      "KeccakC",
      "Lbry",
@@ -16,6 +19,7 @@
      "lyra2z",
      "Decred",
      "Pascal",
+     "pawelhash",
      "Quark",
      "Qubit",
      "MyriadGroestl",
@@ -29,9 +33,13 @@
      "SHA256t",
      "Sia",
      "Sib",
+     "Timetravel",
+     "Tribus",
+     "verus",
      "X11",
      "X13",
      "X14",
      "X15",
-	 "Yescryptr16"
+	 "Yescryptr16",
+	 "yescryptR32"
  ]
